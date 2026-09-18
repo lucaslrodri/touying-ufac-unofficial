@@ -1,0 +1,12 @@
+{
+  // Test Explorer integration for the Tytanic suite (see tests/README.md).
+  // Requires the extension "Command Line Test Adapter" (jvcdk-at-github.vscode-commandline-test-adapter).
+  "commandLineTestAdapter.discoveryCommand": "${workspaceFolder}/.vscode/tt-discover.sh",
+  "commandLineTestAdapter.discoveryArgs": [],
+  "commandLineTestAdapter.testFolder": "${workspaceFolder}",
+  "commandLineTestAdapter.cpuCount": "4",
+  "commandLineTestAdapter.watch": [
+    "tests/**/test.typ",
+    "typst.toml"
+  ]
+}

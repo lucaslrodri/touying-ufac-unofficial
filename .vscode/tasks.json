@@ -1,0 +1,45 @@
+{
+  // Terminal > Run Test Task (or Cmd+Shift+P > "Tasks: Run Test Task") runs the whole Tytanic suite.
+  // Typst compile errors inside tests land in the Problems panel with file:line links.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "tt: run all tests",
+      "type": "shell",
+      "command": "tt",
+      "args": ["run", "--use-system-fonts", "--no-fail-fast", "--diagnostic-format", "short"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "test", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": {
+        "owner": "tytanic",
+        "source": "typst",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^\\s*\"\\/?([^\"]+)\":(\\d+):(\\d+):\\s+(error|warning):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    },
+    {
+      "label": "tt: update references",
+      "type": "shell",
+      "command": "tt",
+      "args": ["update", "--use-system-fonts", "${input:ttTest}"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "ttTest",
+      "type": "promptString",
+      "description": "Tytanic test id to re-record (e.g. elements/code)"
+    }
+  ]
+}

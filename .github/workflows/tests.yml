@@ -1,0 +1,90 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  # release.yml runs this workflow as a gate before publishing
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  tytanic:
+    # Tytanic bundles its own compiler: 0.4.x is Typst 0.15.x, the version the reference images were rendered with.
+    name: Tytanic 0.4.1 (Typst 0.15)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Cache fonts
+        uses: actions/cache@v4
+        with:
+          path: fonts
+          key: newcomputermodern-1
+
+      # The suite needs New Computer Modern Sans, which Typst does not bundle. No system fonts: only fonts/ and the
+      # ones embedded in Tytanic, so the result does not depend on the runner image.
+      - name: Download fonts
+        run: sh scripts/fonts.sh
+
+      # The decks and the tests import `@preview/touying-ufac:<version>`: point it to this checkout.
+      - name: Link the package
+        run: sh scripts/link.sh
+
+      - name: Setup Tytanic
+        uses: typst-community/setup-tytanic@v1
+        with:
+          tytanic-version: 0.4.1
+
+      - name: Run test suite
+        run: tt run --font-path fonts --no-fail-fast
+
+      - name: Archive test results
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: tytanic-results
+          path: |
+            tests/**/diff/*.png
+            tests/**/out/*.png
+            tests/**/ref/*.png
+          retention-days: 5
+
+  minimum-compiler:
+    # `compiler` in typst.toml promises that the package works from that Typst version on: compile the two decks with it.
+    name: Decks on the minimum Typst version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Cache fonts
+        uses: actions/cache@v4
+        with:
+          path: fonts
+          key: newcomputermodern-1
+
+      - name: Download fonts
+        run: sh scripts/fonts.sh
+
+      - name: Link the package
+        run: sh scripts/link.sh
+
+      - name: Read the minimum version
+        id: manifest
+        run: echo "compiler=$(sed -n 's/^compiler *= *"\(.*\)"/\1/p' typst.toml)" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: ${{ steps.manifest.outputs.compiler }}
+
+      - name: Compile the template and the example
+        run: |
+          typst --version
+          typst compile --font-path fonts --ignore-system-fonts template/main.typ /tmp/template.pdf
+          typst compile --font-path fonts --ignore-system-fonts example/main.typ /tmp/example.pdf

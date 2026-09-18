@@ -1,0 +1,29 @@
+# General
+.idea
+desktop.ini
+.DS_Store
+tinymist-lsp.log
+
+# VS Code: only the Tytanic integration is shared (see tests/README.md)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/tt-discover.sh
+
+# Packaging: output of scripts/package.sh
+/dist
+
+# Fonts downloaded by scripts/fonts.sh
+/fonts
+
+# act (local runs of the GitHub workflows): artifacts and secrets
+/.act
+.secrets
+.env
+
+# Manual: temporary folder of docs/build.sh
+/docs/examples/.out.tmp
+
+# Tytanic also writes a .gitignore inside every tests/**/out and tests/**/diff
+/tests/**/out/
+/tests/**/diff/
