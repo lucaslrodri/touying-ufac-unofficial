@@ -5,13 +5,11 @@
 #
 # Only the list below is published. The rest of the repository (tests, manual, scripts, CI) stays out of
 # typst/packages, as its guidelines ask (docs/tips.md, "What to commit? What to exclude?"): the README reaches the
-# manual and its pictures by their GitHub URL, at the tag of the version. `example/` is linked from the README by a
-# relative path, so it is committed there, and `exclude` in typst.toml keeps it out of the archive that the compiler
-# downloads.
+# manual, its pictures and the example deck (example/) by their GitHub URL, at the tag of the version.
 set -eu
 cd "$(dirname "$0")/.."
 
-files="typst.toml LICENSE LICENSE-MIT-0 README.md thumbnail.png src assets template example"
+files="typst.toml LICENSE LICENSE-MIT-0 README.md thumbnail.png src assets template"
 
 name=$(sed -n 's/^name *= *"\(.*\)"/\1/p' typst.toml | head -n 1)
 version=$(sed -n 's/^version *= *"\(.*\)"/\1/p' typst.toml | head -n 1)

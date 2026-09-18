@@ -1,7 +1,7 @@
 # Development
 
-The repository root is the package: `typst.toml`, `src/`, `template/`, `example/`. The rest is development only and is
-not published: `tests/` ([Tytanic](https://typst-community.github.io/tytanic/) suite, see
+The repository root is the package: `typst.toml`, `src/`, `assets/`, `template/`. The rest is development only and is
+not published: the example deck in `example/`, `tests/` ([Tytanic](https://typst-community.github.io/tytanic/) suite, see
 [tests/README.md](tests/README.md)), the sources of the manual in `docs/`, `scripts/`, `.githooks/`, `.github/` and
 `.vscode/`.
 
@@ -53,8 +53,8 @@ template, which Typst Universe wants as the template is initialized. Edit the de
 `scripts/local.sh` refuses a commit whose README does not match the decks (`sh scripts/readme.sh --check`) and warns
 when a picture is out of date.
 
-`docs/` is not published, so the README reaches the pictures and the manual by their GitHub URL, never by a relative
-path, which would be broken on Typst Universe. The URL is the one of the tag `v<version>` (built from `repository` and
+`docs/` and `example/` are not published, so the README reaches the pictures, the manual and the example deck by their
+GitHub URL, never by a relative path, which would be broken on Typst Universe. The URL is the one of the tag `v<version>` (built from `repository` and
 `version` of `typst.toml`), as `typst/packages` recommends: the README of a version keeps the manual and the pictures
 of that version. On GitHub they therefore show only once the tag is pushed. `scripts/package.sh` refuses a README with a
 link into the repository that is not at the tag of the version.
@@ -111,7 +111,7 @@ For every version:
 
 1. Set `version` in `typst.toml` and update every `@preview/touying-ufac-unofficial:<version>` (template, example,
    tests, README, manual): `grep -rn "touying-ufac-unofficial:" --include='*.typ' --include='*.md' .`. The links of
-   the README to the manual and the license carry the tag (`blob/v<version>/`) too. `scripts/package.sh` refuses to
+   the README to the manual, the license and the example deck carry the tag (`blob/v<version>/`) too. `scripts/package.sh` refuses to
    package a mismatch. Run `sh scripts/link.sh` again (the link carries the version) and `sh scripts/readme.sh` (the
    README carries the decks and the tag).
 2. `tt run --use-system-fonts`, `sh docs/build.sh`, commit, and rehearse with act if the workflows changed.

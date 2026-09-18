@@ -43,7 +43,7 @@ the fonts are not installed, and in the CI (`.github/workflows/tests.yml`, see [
   For a new case: `tt new`, replace the copied deck by the 3-line `test.typ` (preamble + `#show: setup` + `#include
   "body.typ"`), write the markup in `body.typ`, `tt update` the reference and add the matching `#include` to `tests.typ`.
 - `placeholder.typ` and `logo.svg`: test assets (provisional figure helper and a yellow square used as a real image).
-- `deck/`: the two decks shipped with the package, `template/main.typ` and `example/main.typ`, included as they are
+- `deck/`: the two decks of the repository, `template/main.typ` (published) and `example/main.typ`, included as they are
   (`#include "../../../template/main.typ"`) and compared pixel by pixel; Tytanic's own `@template` only compiles.
 - `config/`: theme parameters (names, `part-name`, footers, `counter-prefix`, including `counter-prefix: none`), `aspect-ratio: "4-3"` and `lang`
   (`lang-default`, `lang-en`, `lang-es`, sharing `config/lang-body.typ`); they have
