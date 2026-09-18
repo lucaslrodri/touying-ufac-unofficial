@@ -31,7 +31,7 @@ jobs:
       - name: Download fonts
         run: sh scripts/fonts.sh
 
-      # The decks and the tests import `@preview/touying-ufac:<version>`: point it to this checkout.
+      # The decks and the tests import `@preview/touying-ufac-unofficial:<version>`: point it to this checkout.
       - name: Link the package
         run: sh scripts/link.sh
 

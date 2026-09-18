@@ -1,0 +1,4 @@
+#!/bin/sh
+# Git runs this before every commit, from the root of the working copy, when `git config core.hooksPath .githooks` is
+# set (see CONTRIBUTING.md). A failure aborts the commit; `git commit --no-verify` skips it.
+exec sh scripts/local.sh

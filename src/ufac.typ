@@ -1,5 +1,6 @@
-// touying-ufac — the theme: slide header, `slide`, `empty-slide`, `exercise-slide`/`example-slide`, the section and
-// title slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, codly setup, Touying configuration).
+// touying-ufac-unofficial — the theme: slide header, `slide`, `empty-slide`, `exercise-slide`/`example-slide`, the
+// section and title slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, codly setup, Touying
+// configuration).
 #import "@preview/touying:0.7.4": *
 #import "@preview/codly:1.3.0": codly, codly-init
 #import "constants.typ": colors, ufac-logo, code-languages

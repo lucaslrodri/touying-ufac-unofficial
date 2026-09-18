@@ -3,8 +3,8 @@
 Visual test suite of the theme, run with [Tytanic](https://typst-community.github.io/tytanic/) (`tt`, installed with
 `brew install tytanic`; validated version: 0.4.1). The project root is the repository root (Tytanic finds it through
 `typst.toml`, which also holds the `[tool.tytanic]` settings). The tests import the package by its published name
-(`@preview/touying-ufac:0.1.0`), like the template and the example do, so that name must resolve to this working copy:
-run `sh scripts/link.sh` once (it symlinks the repository into Typst's local package directory, under `preview`).
+(`@preview/touying-ufac-unofficial:0.1.0`), like the template and the example do, so that name must resolve to this
+working copy: run `sh scripts/link.sh` once (it symlinks the repository into Typst's local package directory, under `preview`).
 
 ```sh
 tt run --use-system-fonts                        # compiles everything and compares with tests/*/*/ref/*.png

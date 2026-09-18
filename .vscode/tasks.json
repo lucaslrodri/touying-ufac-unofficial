@@ -33,6 +33,27 @@
       "options": { "cwd": "${workspaceFolder}" },
       "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
       "problemMatcher": []
+    },
+    {
+      // By hand, once per clone and again when `version` of typst.toml changes (Cmd+Shift+P > "Tasks: Run Task").
+      "label": "typst: link the package",
+      "detail": "@preview/touying-ufac-unofficial:<version> -> this working copy (scripts/link.sh)",
+      "type": "shell",
+      "command": "sh",
+      "args": ["scripts/link.sh"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "readme: update from the decks",
+      "detail": "README.md and docs/readme/*.png from template/ and example/ (scripts/readme.sh)",
+      "type": "shell",
+      "command": "sh",
+      "args": ["scripts/readme.sh"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
     }
   ],
   "inputs": [

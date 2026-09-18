@@ -6,10 +6,17 @@
 set -eu
 cd "$(dirname "$0")/.."
 
-if ls fonts/NewCMSans10-Regular.otf fonts/NewCMMath-Regular.otf > /dev/null 2>&1; then
+# The two cuts the theme uses. Typst embeds a New Computer Modern Math, not necessarily in the release of the reference
+# images, so Math comes from fonts/ too: when either file is missing, the family is downloaded again.
+missing=""
+for font in NewCMSans10-Regular.otf NewCMMath-Regular.otf; do
+  [ -f "fonts/$font" ] || missing="$missing $font"
+done
+if [ -z "$missing" ]; then
   echo "fonts/ is already populated"
   exit 0
 fi
+echo "missing in fonts/:$missing"
 
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT

@@ -1,5 +1,6 @@
-// touying-ufac manual (PDF). The content lives in `chapters/`, one file per chapter, so that the same sources can
-// later feed a website (one page per chapter). Build with `sh docs/build.sh`, which also renders the slide examples.
+// touying-ufac-unofficial manual (PDF). The content lives in `chapters/`, one file per chapter, so that the same
+// sources can later feed a website (one page per chapter). Build with `sh docs/build.sh`, which also renders the slide
+// examples.
 #import "template.typ": *
 
 #show: project.with(

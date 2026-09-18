@@ -1,4 +1,4 @@
-// touying-ufac — internal helpers: content inspection, the context color stack, the `raw` gate and code box,
+// touying-ufac-unofficial — internal helpers: content inspection, the context color stack, the `raw` gate and code box,
 // backslash escapes, exercise/example labels, the current-subtitle query and the footer pieces.
 // Names starting with `_` are not part of the public API (Typst has no private bindings, so they stay reachable).
 #import "@preview/touying:0.7.4": *

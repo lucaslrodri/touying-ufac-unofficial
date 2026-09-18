@@ -1,4 +1,5 @@
-// Stand-alone helper, not part of the touying-ufac theme: marks the place of a figure that does not exist yet.
+// Stand-alone helper, not part of the touying-ufac-unofficial theme: marks the place of a figure that does not exist
+// yet.
 // Usage: #import "placeholder.typ": placeholder (from common.typ; "../../placeholder.typ" from a test body)
 // Rectangle with `color.lighten(90%)` fill, 1pt border in the color (`stroke: auto`; accepts `none` or any stroke), an
 // image icon (lucide "image") and a caption at 0.6em. Default 12em × 66%: the size of `#image` on the section slide.

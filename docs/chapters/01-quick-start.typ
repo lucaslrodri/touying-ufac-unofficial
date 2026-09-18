@@ -7,13 +7,13 @@ A deck imports Touying and the theme, applies `ufac-theme` and usually starts wi
 
 ```typ
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac:0.1.0": *
+#import "@preview/touying-ufac-unofficial:0.1.0": *
 ```
 
 #slide-example("cover")
 
-`typst init @preview/touying-ufac:0.1.0` creates a deck from the package template, and `example/main.typ` shows the
-elements of the syntax in a short deck. From here on, every example shows the source on the left and the result on
+`typst init @preview/touying-ufac-unofficial:0.1.0` creates a deck from the package template, and `example/main.typ`
+shows the elements of the syntax in a short deck. From here on, every example shows the source on the left and the result on
 the right: a real slide when the feature belongs to the slide (headers, pills, continuations), otherwise the content
 alone, laid out by the same rules as in a deck.
 

@@ -1,7 +1,7 @@
-// touying-ufac manual — tidy style with the look of Mantys manuals (Mantys itself does not compile on Typst 0.15):
-// the signature in a frame with one parameter per line, default values and filled type chips; every parameter in a
-// thin box with an "Argument" legend on its border, `name: default` on the left and the types on the right. The frames
-// take UFAC blue instead of Mantys' teal; the type colors are tidy's, the ones of the Typst documentation.
+// touying-ufac-unofficial manual — tidy style with the look of Mantys manuals (Mantys itself does not compile on Typst
+// 0.15): the signature in a frame with one parameter per line, default values and filled type chips; every parameter in
+// a thin box with an "Argument" legend on its border, `name: default` on the left and the types on the right. The
+// frames take UFAC blue instead of Mantys' teal; the type colors are tidy's, the ones of the Typst documentation.
 #import "@preview/tidy:0.4.3"
 #import "../src/constants.typ": colors
 

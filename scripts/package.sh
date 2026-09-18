@@ -1,16 +1,17 @@
 #!/bin/sh
 # Assembles the files that are published on Typst Universe into <target>/preview/<name>/<version>/ (default target:
 # dist/), the layout of `packages/` in https://github.com/typst/packages, so <target> also works as a package path:
-# `typst init --package-path dist @preview/touying-ufac:<version> deck`.
+# `typst init --package-path dist @preview/touying-ufac-unofficial:<version> deck`.
 #
-# Only the list below is published. The rest of the repository (tests, manual sources, scripts, CI) stays out of
-# typst/packages, as its guidelines ask (docs/tips.md, "What to commit? What to exclude?"); `docs/manual.pdf` and
-# `example/` are linked from the README, so they are committed there, and `exclude` in typst.toml keeps the manual
-# out of the archive that the compiler downloads.
+# Only the list below is published. The rest of the repository (tests, manual, scripts, CI) stays out of
+# typst/packages, as its guidelines ask (docs/tips.md, "What to commit? What to exclude?"): the README reaches the
+# manual and its pictures by their GitHub URL, at the tag of the version. `example/` is linked from the README by a
+# relative path, so it is committed there, and `exclude` in typst.toml keeps it out of the archive that the compiler
+# downloads.
 set -eu
 cd "$(dirname "$0")/.."
 
-files="typst.toml LICENSE README.md thumbnail.png src assets template example docs/manual.pdf"
+files="typst.toml LICENSE LICENSE-MIT-0 README.md thumbnail.png src assets template example"
 
 name=$(sed -n 's/^name *= *"\(.*\)"/\1/p' typst.toml | head -n 1)
 version=$(sed -n 's/^version *= *"\(.*\)"/\1/p' typst.toml | head -n 1)
@@ -46,6 +47,16 @@ stale=$(grep -rnoE "@preview/$name:[0-9]+\.[0-9]+\.[0-9]+" "$out" --include='*.t
 if [ -n "$stale" ]; then
   echo "$stale" >&2
   fail "the references above do not point to version $version"
+fi
+
+# The README reaches the manual, the license and its pictures in the repository, at the tag of this version
+# (scripts/readme.sh writes the pictures). The badges read typst.toml of main through an encoded URL: not matched here.
+repository=$(sed -n 's/^repository *= *"https:\/\/github\.com\/\(.*\)"/\1/p' typst.toml | head -n 1)
+stale=$(grep -noE "(github\.com/$repository/(blob|raw|tree)|raw\.githubusercontent\.com/$repository)/[^/]+/" "$out/README.md" \
+  | grep -v "/v$version/\$" || true)
+if [ -n "$stale" ]; then
+  echo "$stale" >&2
+  fail "the links above must point to the tag v$version"
 fi
 
 echo "$out"

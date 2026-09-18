@@ -1,4 +1,4 @@
-// touying-ufac — constants: the color palette, the UFAC logo and the code-block language table.
+// touying-ufac-unofficial — constants: the color palette, the UFAC logo and the code-block language table.
 // Everything derived from these values (tones, `config-colors`, the footer logo) lives in the other modules.
 
 /// Seven-tone ramp of a base color, derived in RGB: `darkest`/`darker`/`dark` by `darken(75% / 55% / 30%)` and
@@ -79,7 +79,7 @@
 )
 
 // The logo lives in its own file, assets/ufac-logo.svg: it is copyrighted by the Universidade Federal do Acre (UFAC) and
-// is not covered by the MIT license of this package (see the License section of the README).
+// is not covered by the license of this package (see the License section of the README).
 /// Official UFAC logo as an SVG string (yellow shield and blue lettering), rendered in the footer with
 /// `image(bytes(ufac-logo), height: 0.64em)`. The title slide replaces the blue `#0c4da2` with white.
 ///

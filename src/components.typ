@@ -1,5 +1,5 @@
-// touying-ufac — components: color emphases, list markers and pills, `#icon`, the boxes (`emph-box`, `quote-box`,
-// `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`) and
+// touying-ufac-unofficial — components: color emphases, list markers and pills, `#icon`, the boxes (`emph-box`,
+// `quote-box`, `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`) and
 // the `local` wrapper around codly.
 #import "@preview/touying:0.7.4": *
 #import "@preview/codly:1.3.0" as _codly

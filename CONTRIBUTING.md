@@ -2,27 +2,62 @@
 
 The repository root is the package: `typst.toml`, `src/`, `template/`, `example/`. The rest is development only and is
 not published: `tests/` ([Tytanic](https://typst-community.github.io/tytanic/) suite, see
-[tests/README.md](tests/README.md)), the sources of the manual in `docs/`, `scripts/`, `.github/` and `.vscode/`.
+[tests/README.md](tests/README.md)), the sources of the manual in `docs/`, `scripts/`, `.githooks/`, `.github/` and
+`.vscode/`.
+
+Besides the dependencies of the README, development needs [Tytanic](https://typst-community.github.io/tytanic/) 0.4.1
+(`tt`, the test suite) and [tidy](https://typst.app/universe/package/tidy) 0.4.3 (manual and doc-comment tests; fetched
+automatically).
+
+The package was developed on macOS. The scripts are POSIX `sh` and also run on the Linux runners of the CI, but nothing
+was tried on Windows, where they would need WSL or Git Bash and probably adjustments (`scripts/link.sh` only knows
+Typst's package directory of macOS and Linux). Paths such as `~/Library/...` below are the macOS ones.
 
 ## Setup
 
 ```sh
-sh scripts/link.sh    # @preview/touying-ufac:<version> -> this working copy (`--remove` undoes it)
-sh scripts/fonts.sh   # only if New Computer Modern is not installed: downloads it into fonts/
+sh scripts/link.sh                    # links @preview/touying-ufac-unofficial:<version> here (`--remove` undoes it)
+sh scripts/fonts.sh                   # only if New Computer Modern (Sans and Math) is not installed: downloads it into fonts/
+git config core.hooksPath .githooks   # runs scripts/local.sh before every commit
 ```
 
-The template, the example, the tests and the README import the package as `@preview/touying-ufac:<version>`, which
-Typst Universe requires from a template (a fresh deck must compile untouched). `scripts/link.sh` symlinks the
+The template, the example, the tests and the README import the package as
+`@preview/touying-ufac-unofficial:<version>`, which Typst Universe requires from a template (a fresh deck must compile untouched). `scripts/link.sh` symlinks the
 repository into Typst's local package directory under the `preview` namespace, where Typst looks before downloading,
 so that name resolves to the working copy in `tt`, in `typst compile` and in the editor. It does not touch the `local`
-namespace.
+namespace. It is run by hand, once per clone and again when the version changes; in VS Code it is the task
+**typst: link the package** (Cmd+Shift+P > *Tasks: Run Task*).
 
 ```sh
 tt run --use-system-fonts       # test suite, with the installed fonts
 tt run --font-path fonts        # the same, as the CI runs it: fonts/ plus the fonts embedded in Tytanic
 sh docs/build.sh                # docs/manual.pdf
-sh scripts/package.sh           # dist/preview/touying-ufac/<version>/: the files that go to Typst Universe
+sh scripts/package.sh           # dist/preview/touying-ufac-unofficial/<version>/: the files that go to Typst Universe
+sh scripts/readme.sh            # README.md (Basic usage, Example), docs/readme/*.png and thumbnail.png from the decks
+sh scripts/local.sh             # what tests.yml checks, in seconds: test suite, the two decks, packaging, README
 ```
+
+`scripts/local.sh` is the pre-commit hook (`.githooks/pre-commit`): a failure aborts the commit, and
+`git commit --no-verify` skips it. It uses `fonts/` as the CI does when that folder exists, else the installed fonts,
+and it checks the working copy, not only what is staged. It does not link the package: when the link is missing or
+points elsewhere it stops and asks for `scripts/link.sh`. Git does not version its configuration, so the `git config`
+line above is needed once in every clone.
+
+### README
+
+The sections *Basic usage* and *Example* of the README are generated: `scripts/readme.sh` (VS Code task
+**readme: update from the decks**) copies `template/main.typ` and `example/main.typ` between the
+`<!-- template:begin -->`/`<!-- example:begin -->` markers and renders each deck into one picture,
+`docs/readme/<deck>.png` (the layout is `docs/readme/sheet.typ`); it also renders `thumbnail.png`, the cover of the
+template, which Typst Universe wants as the template is initialized. Edit the decks, never those blocks;
+`scripts/local.sh` refuses a commit whose README does not match the decks (`sh scripts/readme.sh --check`) and warns
+when a picture is out of date.
+
+`docs/` is not published, so the README reaches the pictures and the manual by their GitHub URL, never by a relative
+path, which would be broken on Typst Universe. The URL is the one of the tag `v<version>` (built from `repository` and
+`version` of `typst.toml`), as `typst/packages` recommends: the README of a version keeps the manual and the pictures
+of that version. On GitHub they therefore show only once the tag is pushed. `scripts/package.sh` refuses a README with a
+link into the repository that is not at the tag of the version.
 
 ## Workflows
 
@@ -57,7 +92,7 @@ cache, so compile the template once before):
 
 ```sh
 sh scripts/package.sh
-docker run --rm -v "$PWD/dist/preview/touying-ufac/0.1.0:/data" \
+docker run --rm -v "$PWD/dist/preview/touying-ufac-unofficial/0.1.0:/data" \
   -v "$HOME/Library/Caches/typst/packages:/.cache/typst/packages:ro" ghcr.io/typst/package-check check
 ```
 
@@ -74,11 +109,13 @@ One-time setup:
 
 For every version:
 
-1. Set `version` in `typst.toml` and update every `@preview/touying-ufac:<version>` (template, example, tests, README,
-   manual): `grep -rn "touying-ufac:" --include='*.typ' --include='*.md' .`. `scripts/package.sh` refuses to package a
-   mismatch. Run `sh scripts/link.sh` again (the link carries the version).
+1. Set `version` in `typst.toml` and update every `@preview/touying-ufac-unofficial:<version>` (template, example,
+   tests, README, manual): `grep -rn "touying-ufac-unofficial:" --include='*.typ' --include='*.md' .`. The links of
+   the README to the manual and the license carry the tag (`blob/v<version>/`) too. `scripts/package.sh` refuses to
+   package a mismatch. Run `sh scripts/link.sh` again (the link carries the version) and `sh scripts/readme.sh` (the
+   README carries the decks and the tag).
 2. `tt run --use-system-fonts`, `sh docs/build.sh`, commit, and rehearse with act if the workflows changed.
 3. `git tag v<version> && git push origin main v<version>`.
 4. When the workflow finishes, open the link of its summary: a pull request to `typst/packages` named
-   `touying-ufac:<version>`, with the checklist of its template filled in. After the merge the version is on
+   `touying-ufac-unofficial:<version>`, with the checklist of its template filled in. After the merge the version is on
    [Typst Universe](https://typst.app/universe/) within minutes. Published versions are immutable: a fix is a new version.

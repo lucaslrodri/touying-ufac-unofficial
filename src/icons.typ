@@ -1,7 +1,26 @@
 // GitHub Octicons (16×16, 320 names): icon name → `<path …>` content of the SVG. Data only: the `#icon` function
 // lives in components.typ. Do not edit by hand; regenerate from the source if the set changes.
 //
-// Octicons (https://github.com/primer/octicons), Copyright (c) GitHub Inc., MIT License (the terms of the LICENSE file).
+// The icons are Octicons (https://github.com/primer/octicons), under the MIT License, whose notice follows. It covers
+// only this file; the rest of the package is under the LICENSE files at its root (MIT, and MIT-0 for template/).
+//
+//   MIT License
+//
+//   Copyright (c) 2026 GitHub Inc.
+//
+//   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+//   documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+//   the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and
+//   to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+//   The above copyright notice and this permission notice shall be included in all copies or substantial portions of
+//   the Software.
+//
+//   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+//   THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+//   CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+//   IN THE SOFTWARE.
 #let data = (
   accessibility-inset: "<path d=\"M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm2 4a2 2 0 1 0-2.95 1.76 1.87 1.87 0 0 0-.32.24H3.75a.75.75 0 0 0 0 1.5h2.363l-.607 5.67a.75.75 0 1 0 1.49.16l.25-2.33h1.508l.25 2.33a.75.75 0 0 0 1.492-.16L9.888 7.5h2.362a.75.75 0 0 0 0-1.5H9.27a1.98 1.98 0 0 0-.32-.24A2 2 0 0 0 10 4Z\" />",
   accessibility: "<path d=\"M9.923 5.302c.063.063.122.129.178.198H14A.75.75 0 0 1 14 7h-3.3l.578 5.163.362 2.997a.75.75 0 0 1-1.49.18L9.868 13H6.132l-.282 2.34a.75.75 0 0 1-1.49-.18l.362-2.997L5.3 7H2a.75.75 0 0 1 0-1.5h3.9a2.54 2.54 0 0 1 .176-.198 3 3 0 1 1 3.847 0ZM9.2 7.073h-.001a1.206 1.206 0 0 0-2.398 0L6.305 11.5h3.39ZM9.5 3a1.5 1.5 0 1 0-3.001.001A1.5 1.5 0 0 0 9.5 3Z\" />",

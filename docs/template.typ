@@ -1,7 +1,7 @@
-// touying-ufac manual — template, modelled on tidy's own `docs/template.typ`: one `project` function for the PDF shell
-// (title block, abstract, outline, page numbers) and a few helpers. The look comes from the theme itself: `chapter`
-// applies the theme's `_rules` (emphases, markers, enums, tables, `raw` chips, code blocks, boxes and shorthands) with a
-// stand-in `self`, so the manual is written in the same syntax as the decks.
+// touying-ufac-unofficial manual — template, modelled on tidy's own `docs/template.typ`: one `project` function for the
+// PDF shell (title block, abstract, outline, page numbers) and a few helpers. The look comes from the theme itself:
+// `chapter` applies the theme's `_rules` (emphases, markers, enums, tables, `raw` chips, code blocks, boxes and
+// shorthands) with a stand-in `self`, so the manual is written in the same syntax as the decks.
 //
 // Every chapter in `chapters/` starts with `#show: chapter` and holds content only, so that the same files feed the
 // PDF (`manual.typ` includes them) and, later, one web page each (shiroa: `chapter` is the place to wrap `book-page`).

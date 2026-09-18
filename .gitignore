@@ -23,6 +23,9 @@ tinymist-lsp.log
 # Manual: temporary folder of docs/build.sh
 /docs/examples/.out.tmp
 
+# README: temporary folder of scripts/readme.sh
+/docs/readme/.tmp
+
 # Tytanic also writes a .gitignore inside every tests/**/out and tests/**/diff
 /tests/**/out/
 /tests/**/diff/
