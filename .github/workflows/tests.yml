@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Cache fonts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: fonts
           key: newcomputermodern-1
@@ -43,9 +43,10 @@ jobs:
       - name: Run test suite
         run: tt run --font-path fonts --no-fail-fast
 
+      # Not under act: its artifact server does not speak the protocol of upload-artifact v6+ (act 0.2.89).
       - name: Archive test results
-        uses: actions/upload-artifact@v4
-        if: failure()
+        uses: actions/upload-artifact@v7
+        if: ${{ failure() && !env.ACT }}
         with:
           name: tytanic-results
           path: |
@@ -63,7 +64,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Cache fonts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: fonts
           key: newcomputermodern-1

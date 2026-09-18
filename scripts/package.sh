@@ -10,7 +10,7 @@
 set -eu
 cd "$(dirname "$0")/.."
 
-files="typst.toml LICENSE README.md thumbnail.png src template example docs/manual.pdf"
+files="typst.toml LICENSE README.md thumbnail.png src assets template example docs/manual.pdf"
 
 name=$(sed -n 's/^name *= *"\(.*\)"/\1/p' typst.toml | head -n 1)
 version=$(sed -n 's/^version *= *"\(.*\)"/\1/p' typst.toml | head -n 1)

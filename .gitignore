@@ -16,8 +16,7 @@ tinymist-lsp.log
 # Fonts downloaded by scripts/fonts.sh
 /fonts
 
-# act (local runs of the GitHub workflows): artifacts and secrets
-/.act
+# act (local runs of the GitHub workflows): secrets
 .secrets
 .env
 

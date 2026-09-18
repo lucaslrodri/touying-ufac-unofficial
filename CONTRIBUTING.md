@@ -38,8 +38,7 @@ as the artifact `tytanic-results`.
 ### Running them locally with act
 
 [act](https://github.com/nektos/act) runs the workflows in Docker (`brew install act`, Docker running). `.actrc` sets the
-runner image and the artifact folder (`.act/`, git-ignored). The first run is slow: it downloads the image and clones
-the actions.
+runner image. The first run is slow: it downloads the image and clones the actions.
 
 ```sh
 act push -W .github/workflows/tests.yml                                  # both test jobs
@@ -49,8 +48,9 @@ act push -W .github/workflows/release.yml -e .github/act/release.json    # dry r
 
 `.github/act/release.json` is the event of a tag push; edit its `ref` to the tag being rehearsed (it must be
 `v<version of typst.toml>`, the workflow checks it). Under act the steps that leave the machine are skipped
-(`if: ${{ !env.ACT }}`): the package check in Docker, the GitHub release and the push to the fork. Everything else runs,
-up to the commit in a clone of `typst/packages`, and the packaged zip and manual land in `.act/artifacts/`.
+(`if: ${{ !env.ACT }}`): the package check in Docker, the artifact uploads (act 0.2.89 does not support
+`upload-artifact` v6+), the GitHub release and the push to the fork. Everything else runs, up to the commit in a clone
+of `typst/packages`, whose file list is printed; `sh scripts/package.sh` gives the same files in `dist/`.
 
 The package linter of `typst/packages` can be run by hand on the packaged files (it works offline, from the package
 cache, so compile the template once before):

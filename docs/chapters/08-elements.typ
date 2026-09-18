@@ -55,7 +55,7 @@ split across pages. The theme re-exports codly, and its `local` wraps codly's fo
 ]
 ```
 
-The 320 names, from #link("https://primer.style/octicons/")[Octicons]:
+The 320 names, from #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT license):
 
 #{
   set text(size: 6.5pt)

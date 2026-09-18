@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Cache fonts
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: fonts
           key: newcomputermodern-1
@@ -86,8 +86,10 @@ jobs:
             -v "${XDG_CACHE_HOME:-$HOME/.cache}/typst/packages:/.cache/typst/packages:ro" \
             ghcr.io/typst/package-check check
 
+      # Not under act (see tests.yml); there, `sh scripts/package.sh` gives the same files in dist/.
       - name: Upload the package
-        uses: actions/upload-artifact@v4
+        if: ${{ !env.ACT }}
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.package.outputs.name }}-${{ steps.package.outputs.version }}
           path: |

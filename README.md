@@ -132,4 +132,11 @@ are re-exported by the theme. Languages with a label: `python`, `typst`, `bash`,
 
 ## License
 
-This project is licensed under the terms of the [MIT license](./LICENSE).
+This project is licensed under the [MIT License](LICENSE).
+
+It also includes third-party components licensed under other open source licenses: the icons in
+[src/icons.typ](src/icons.typ) are [Octicons](https://primer.style/octicons/), © GitHub Inc., licensed under the MIT License.
+
+The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is copyrighted by the
+[Federal University of Acre](https://www.ufac.br/) and may be used solely for academic purposes by current students and
+faculty.
