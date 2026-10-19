@@ -13,8 +13,12 @@ Find the transfer function of the system.
 
 Two hidden neurons are enough.
 
-#exercise-slide(title: [Haykin 4.2], color: colors.primary)[
-  The function form, with another color.
+#exercise-slide(title: [Haykin 4.2], color: colors.primary, icon: "tools")[
+  The function form, with another color and icon.
+]
+
+#example-slide(title: [Perceptron], icon: none)[
+  Without icon: `icon: none`.
 ]
 
 == Review

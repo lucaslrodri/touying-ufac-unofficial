@@ -112,6 +112,32 @@
     box(baseline: baseline, image(bytes(_icon-svg(name, c)), width: size, height: size, alt: name, format: "svg"))
   }
 }
+/// Icon at the start of a pill (the header of an exercise or example, the badge of an @emph-box), followed by a small
+/// space and centered on the height of the capitals of the text, whatever its height: the name of an @icon (white in
+/// the pill) or any content, such as an image. `none` gives nothing.
+/// -> content
+#let _pill-icon(
+  /// Name of an icon, content or `none`. -> none | str | content
+  ic,
+  /// Space after the icon, before the text. -> length
+  gap: .35em,
+) = if ic != none {
+  let c = if type(ic) == str { icon(ic, baseline: 0pt) } else { ic }
+  context {
+    let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
+    box(baseline: (measure(c).height - cap) / 2, c)
+  }
+  h(gap)
+}
+/// Line of a pill that may have an icon (the header of an exercise or example, the badge of an @emph-box): at least as
+/// tall as a pill icon (1em) and with the content centered, so that the pills with and without an icon have the same
+/// height. Without it the line is as tall as the capitals, shorter than the icon centered on them. A taller icon
+/// (content) makes the line taller.
+/// -> content
+#let _pill-line(
+  /// Content of the pill, with or without a `_pill-icon`. -> content
+  body,
+) = context box(height: calc.max(1em.to-absolute(), measure(body).height), std.align(horizon, body))
 
 // ---------- boxes ----------
 /// Box without title: thin border (the old `note-box`).
@@ -135,7 +161,7 @@
   body,
 ) = {
   // the badge is a pill: `*x*` white, `~~x~~`/`#primary` yellow and `raw` inverted, as in `_pill` (kind "pill")
-  let badge = box(fill: color, radius: 5pt, inset: (x: .8em, y: .3em), text(fill: white, weight: "bold", _in-box(color, title, kind: "pill")))
+  let badge = box(fill: color, radius: 5pt, inset: (x: .8em, y: .3em), text(fill: white, weight: "bold", _in-box(color, _pill-line(title), kind: "pill")))
   context {
     let h = measure(badge).height
     pad(top: h / 2, block(stroke: 0.05em + color, radius: 5pt, width: 100%, inset: (x: .9em, top: h / 2 + .45em, bottom: .55em), {
@@ -169,6 +195,9 @@
 ///   - Fast and *simple*
 ///   - Works with ==highlights==
 /// ]
+/// #emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[
+///   An icon before the title.
+/// ]
 /// ```
 ///
 /// Shorthand, always in the primary color: a paragraph whose lines start with `>`; a first line `> == Title` gives the
@@ -177,14 +206,21 @@
 #let emph-box(
   /// Color of the border and badge, and of the bold text, markers, arrows and highlights inside. -> color
   color: colors.primary,
-  /// Badge over the top border; `none` gives the thin-border box. -> none | content
+  /// Badge over the top border; `none` gives the thin-border box (unless there is an `icon`). -> none | content
   title: none,
+  /// Icon at the start of the badge, before the title: the name of an @icon, any content (an image, a symbol) or
+  /// `none`. It is centered on the capitals of the title, as in the exercise and example pills; without a title it
+  /// is the whole badge. The badge has the same height with or without an icon. -> none | str | content
+  icon: none,
   /// Content of the box. -> content
   body,
 ) = {
   set list(marker: _markers(color))
   set text(fill: colors.neutral-darkest)
-  _in-box(color, if title == none { _note-box(color, body) } else { _fancy-box(color, title, body) })
+  let badge = if icon == none { title } else if title == none { _pill-icon(icon, gap: 0pt) } else {
+    [#_pill-icon(icon)#title]
+  }
+  _in-box(color, if badge == none { _note-box(color, body) } else { _fancy-box(color, badge, body) })
 }
 /// Equation box: a light frame around a key equation (the `key-eq` helper of the lecture decks). It goes *inside*
 /// the equation, like the `boxeq` of the bookly package, so the equation keeps its centering, spacing and numbering,
@@ -423,7 +459,8 @@
 /// Per-block code settings: codly's `local`, re-exported by the theme so that its code box and `raw` handling also
 /// apply inside (this `local` shadows codly's). Typical uses: `#local(number-format: none)[…]` hides the line numbers,
 /// `#local(display-name: true)[…]` shows the language label and
-/// `#local(highlights: ((line: 2, fill: colors.secondary-lighter),))[…]` highlights a line. codly's `codly-range` and
+/// `#local(highlights: ((line: 2, fill: colors.secondary-lighter),))[…]` highlights a line and
+/// `#local(breakable: true)[…]` lets a long block split across pages, box included. codly's `codly-range` and
 /// `no-codly` need no wrapper.
 /// -> content
 #let local(
@@ -434,7 +471,7 @@
 ) = {
   // codly's `local` installs a `show raw.where(block: true)` that is more inner than the theme's rules, so the gate
   // and the box go inside the body (see `_gate-raw`, `_code-box`)
-  _codly.local(_gate-raw(_code-box(body)), ..args)
+  _codly.local(_gate-raw(_code-box(body, breakable: args.named().at("breakable", default: auto))), ..args)
 }
 
 // ---------- outline ----------

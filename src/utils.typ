@@ -105,7 +105,9 @@
 /// label used to touch the border). The rule is inner to codly's (it wraps the `raw` in a block and codly transforms
 /// the `raw` inside; codly itself is left without fill/stroke). An outer rule would not work: codly's output is no
 /// longer `raw`. For the same reason as the gate it also goes inside `local`. With `#no-codly` (state
-/// `codly-enabled` = false) the plain raw is kept.
+/// `codly-enabled` = false) the plain raw is kept. By default the box splits across pages when codly's lines do
+/// (codly's `breakable`, off in the theme); `local(breakable: ..)` passes its own value here, since codly's `local`
+/// does not change that state.
 /// -> content
 #let _code-box(
   /// Content whose code blocks are boxed. -> content
@@ -118,10 +120,13 @@
   radius: .35em,
   /// Padding between the border and the code. -> length | dictionary
   inset: (x: .3em, y: .3em),
+  /// Whether the box may split across pages; `auto` follows codly's `breakable`. -> auto | bool
+  breakable: auto,
 ) = {
   show raw.where(block: true): it => context {
     if state("codly-enabled", true).get() {
-      block(width: 100%, fill: fill, stroke: stroke, radius: radius, inset: inset, breakable: false, it)
+      let breakable = if breakable == auto { state("codly-breakable", true).get() } else { breakable }
+      block(width: 100%, fill: fill, stroke: stroke, radius: radius, inset: inset, breakable: breakable, it)
     } else { it }
   }
   body
@@ -256,6 +261,15 @@
   /// `"exercise"` or `"example"`. -> str
   kind,
 ) = if kind == "exercise" { (_name(self, "exercise"), self.colors.tertiary) } else { (_name(self, "example"), self.colors.quaternary) }
+/// Icon of a kind in its pill: the theme parameter `<kind>-icon` (`ufac-theme(exercise-icon:, example-icon:)`), a
+/// pencil for exercises and a beaker for examples when the theme did not set it (a stand-in `self`).
+/// -> none | str | content
+#let _kind-icon(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// `"exercise"` or `"example"`. -> str
+  kind,
+) = self.store.at(kind + "-icon", default: if kind == "exercise" { "pencil" } else { "beaker" })
 /// Index of an "Exercise"/"Example": position among the level-2 headings of the same kind whose page is ≤ the given
 /// page (page based, like `utils.current-heading`, because the header is laid out before the body). The headings
 /// re-emitted by Touying on `---` continuations do not show up in `query`, only the original, which keeps the count simple.
@@ -474,27 +488,31 @@
 /// "CODE - SUBJECT", rule 1fr, author, rule 2em, slide number (0.6em), rule 1em. The last column is as wide as the
 /// last slide number. The two texts take their natural width and the `1fr` rule between them the rest: when each
 /// text carried its own `1fr` rule, both cells claimed the whole width and got half of it each, so a long left text
-/// broke into two lines with room to spare on the right (2026-10-16).
+/// broke into two lines with room to spare on the right (2026-10-16). `white: true` draws it in white, with the white
+/// logos of the cover, for a slide on a dark background (`empty-slide(color:)`).
 /// -> content
 #let _footer(
   /// Touying's `self`. -> dictionary
   self,
+  /// White text, rules and logos. -> bool
+  white: false,
 ) = {
-  set text(self.colors.primary)
+  set text(if white { self.colors.neutral-lightest } else { self.colors.primary })
   set std.align(bottom)
+  let rule = if white { _line-white(self) } else { _line(self) }
   context {
     let last-column-size = measure(box(text(utils.last-slide-number, size: 0.6em), inset: 0.4em)).width
     move(grid(
       columns: (1em, auto, auto, 1fr, auto, last-column-size, 1em),
       rows: 1.5em,
       align: horizon,
-      _line(self),
-      _logos(self),
-      _cell(self, pad-left: 1.25em, pos: "left", grow: false, utils.call-or-display(self, self.store.footer-left)),
-      _line(self),
-      _cell(self, pad-right: 2em, pos: "right", grow: false, utils.call-or-display(self, self.store.footer-right)),
-      _cell(self, pos: "center", size: 0.6em, utils.slide-counter.display()),
-      _line(self),
+      rule,
+      _logos(self, white: white),
+      _cell(self, pad-left: 1.25em, pos: "left", grow: false, white: white, utils.call-or-display(self, self.store.footer-left)),
+      rule,
+      _cell(self, pad-right: 2em, pos: "right", grow: false, white: white, utils.call-or-display(self, self.store.footer-right)),
+      _cell(self, pos: "center", size: 0.6em, white: white, utils.slide-counter.display()),
+      rule,
     ), dy: -0.05em)
   }
 }

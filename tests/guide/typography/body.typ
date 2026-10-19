@@ -10,7 +10,7 @@
   lbl[0.8em], text(size: .8em)[Body reduced to 0.8em, the most common override in dense slides.],
   lbl[`==` 1.2em], text(size: 1.2em, weight: "bold", fill: colors.primary)[Slide header, blue bold],
   lbl[`=` 2em], text(size: 2em, weight: "bold", fill: colors.primary)[Part N: Section],
-  lbl[pill], [#_pill[Subtitle `===` / `====`] #_pill(color: colors.tertiary)[Exercise 1.1 (Title)] #_pill(color: colors.quaternary)[Example 1.1]],
+  lbl[pill], [#_pill[Subtitle `===` / `====`] #_pill(color: colors.tertiary)[#_pill-icon("pencil")Exercise 1.1 — Title] #_pill(color: colors.quaternary)[#_pill-icon("beaker")Example 1.1]],
   lbl[math], [$f(x) = a x^2 + b x + c, quad integral_0^1 f(x) dif x = a/3 + b/2 + c$ in New Computer Modern Math],
   lbl[term], [/ Term: description in `terms` (term in black bold)],
   lbl[raw], [Inline code `x = 1` in a gray chip (0.85em); 0.75em block with codly (line numbers, gray fill, thin border).],

@@ -61,3 +61,33 @@ In the `==` header (next slide) and in the `=` title the chip uses the `primary`
 ```typst
 // The shorthands are off in a raw block: ==x==, > a, -> b, ~~c~~, ~d~, "quote"
 ```
+
+== Code that splits: `#local(breakable: true)`
+A code block never splits by default (it moves whole to the next page); with `#local(breakable: true)` the lines and
+the box split across pages:
+#local(breakable: true)[
+```python
+def trapezoid(f, a, b, n=100):
+    """Trapezoidal rule with n intervals."""
+    h = (b - a) / n
+    total = (f(a) + f(b)) / 2
+    for i in range(1, n):
+        total += f(a + i * h)
+    return h * total
+
+def simpson(f, a, b, n=100):
+    """Simpson's rule (n even)."""
+    if n % 2:
+        n += 1
+    h = (b - a) / n
+    total = f(a) + f(b)
+    for i in range(1, n):
+        total += (4 if i % 2 else 2) * f(a + i * h)
+    return h * total / 3
+
+if __name__ == "__main__":
+    import math
+    print(trapezoid(math.sin, 0, math.pi))
+    print(simpson(math.sin, 0, math.pi))
+```
+]

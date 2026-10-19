@@ -113,8 +113,8 @@ Headings drive the deck: no function call is needed for the ordinary slides.
   table.header([Markup], [Effect]),
   [`= Title`], [section slide "Part N: Title"; what follows the heading goes to the right],
   [`== Title`], [new slide with a blue header, fitted to the width],
-  [`== Title <exercise>`], [exercise slide: red pill "Exercise 1.N (Title)", numbered automatically],
-  [`== Title <example>`], [example slide: green pill "Example 1.N (Title)", with its own counter],
+  [`== Title <exercise>`], [exercise slide: red pill with a pencil, "Exercise 1.N — Title", numbered automatically],
+  [`== Title <example>`], [example slide: green pill with a beaker, "Example 1.N — Title", with its own counter],
   [`=== Subtitle`], [blue pill; no new slide; repeated at the top of every continuation page],
   [`==== Subtitle`], [the same pill, not repeated],
   [`---`], [alone on a line: next page of the same slide (same header, same number)],
@@ -156,12 +156,17 @@ slide of its own, right after the cover. In a deck it stands for Typst's `outlin
 
 == Exercises and examples
 
-A label on the `==` heading turns the header into a numbered pill. Any suffix gives the same slide and makes the
+A label on the `==` heading turns the header into a numbered pill: the icon of the kind (a pencil for exercises, a
+beaker for examples), the name, the number and, after a dash, the title. Any suffix gives the same slide and makes the
 label unique, so the slide can be cited: `@exercise-ogata` becomes "Exercise 1.N", bold, in the color of the kind and
-linked to the slide. `#exercise-slide` and `#example-slide` are the function forms, with a `color` option; they
-cannot be cited.
+linked to the slide. `#exercise-slide` and `#example-slide` are the function forms, with `color` and `icon` options;
+they cannot be cited.
 
-#slide-example("exercise", pages: (1, 2, 3, 4))
+The icon is the name of an `icon`, any content (an image) or `none`, which leaves only the text. It is centered on the
+capitals of the text, whatever its height. `ufac-theme(exercise-icon:, example-icon:)` changes it in the whole deck;
+`icon:` changes it on one slide.
+
+#slide-example("exercise", pages: (1, 2, 3, 4, 5))
 
 #reference("ufac", "exercise-slide", "example-slide")
 
@@ -183,6 +188,16 @@ Only a top-level `===` is repeated; inside `#[ ]`, a column or a box the pill st
 `#empty-slide` drops the header and keeps the footer. `#title-slide()` is the cover, shown in @quick-start; `#title-slide[..]` adds content below its titles.
 
 #slide-example("slides", pages: (1, 2))
+
+=== Closing and transition slides: `<empty-slide>`
+
+A `==` heading labelled `<empty-slide>` opens an `#empty-slide` with the heading as its title, large and centered,
+and the content centered below it. `<empty-slide-primary>` paints the page in that color of the palette; any key of
+`colors` works (`<empty-slide-secondary>`, `<empty-slide-tertiary-dark>`, …). On a dark color the text and the
+footer turn white, and bold, code and icons follow the pill convention; on a light one (`secondary`, the `-lighter`
+tones) they stay as on a white slide. The function form is `#empty-slide(color: colors.primary, title: [..])[..]`.
+
+#slide-example("empty-slide", pages: (1, 2, 3, 4, 5, 6), columns: (1fr, 1fr))
 
 #reference("ufac", "slide", "empty-slide", "new-section-slide")
 
@@ -336,6 +351,10 @@ keeps the colors. Typst only knows `+` and `1.` as enum markers in markup, so `a
 
   -> the arrow is red too
 ]
+
+#emph-box(color: colors.quaternary, icon: "light-bulb", title: [Tip])[
+  An `icon` before the title, as in the exercise pills.
+]
 ```
 
 == The box shorthand
@@ -431,7 +450,10 @@ on a background where the yellow would not stand out, such as the cover of a han
 
 == Tables
 
-The header row is blue with white text, and formulas in it turn white too.
+The header row is blue with white text, and formulas in it turn white too. Code chips follow the background, as in
+the pills and boxes: in the header they are inverted (dark blue with light text); in a cell filled with a tone of a
+family of `colors` (`table.cell(fill: colors.secondary-lighter)`) they take the tones of the family's `-dark` color,
+which also colors `*bold*` there.
 
 ```example
 #table(
@@ -460,7 +482,8 @@ $ bold(w) <- bold(w) - eta nabla E(bold(w)) $
 == Code
 
 Inline `raw` is the chip of @inline. Code blocks go through codly: a gray box, gray line numbers, no zebra, never
-split across pages. The theme re-exports codly, and its `local` wraps codly's for per-block settings;
+split across pages unless `#local(breakable: true)[..]` (or `codly(breakable: true)`) allows it; the box then splits
+with the lines. The theme re-exports codly, and its `local` wraps codly's for per-block settings;
 `#codly-range(..)` and `#no-codly[..]` work as usual. The languages with a label are `python`, `typst`, `bash` and
 `text` (labelled "saída").
 

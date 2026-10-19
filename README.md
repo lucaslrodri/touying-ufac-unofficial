@@ -64,7 +64,8 @@ Text.
 
 Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio`
 accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `exercise-name`, `example-name` and `part-name` (override the localized
-names), `footer-left` and `footer-right` (content or `self => ...`), `logos` (logos after the UFAC one in the
+names), `exercise-icon` and `example-icon` (the icon in the pill of the exercises and examples: the name of an icon,
+content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `logos` (logos after the UFAC one in the
 footer and on the cover, separated by dots: content, `color => ...` or `auto` for the UFAC logo), `section-margin`
 (`true` keeps the page margin to the right of the content of the section slides, for images without a background;
 a length sets the distance; `false`, the default, puts it flush with the edge).
@@ -171,14 +172,14 @@ Citing the @exercise-a.
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
 | `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, flush with the page edge (`section-margin: true` in `ufac-theme`, or `#pad(right: 1.8em)[...]` on one slide, keeps the margin) |
 | `== Title`                      | New slide with a blue header                                                                 |
-| `== Title <exercise>`           | Exercise slide: red pill "Exercise 1.N (Title)" (`Exercício`/`Ejercicio`), numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
-| `== Title <example>`            | Example slide: green pill "Example 1.N (Title)" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
+| `== Title <exercise>`           | Exercise slide: red pill with a pencil, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`), numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
+| `== Title <example>`            | Example slide: green pill with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
 | `=== Subtitle`                  | Blue pill, no new slide; repeated at the top of every `---` continuation                     |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line)         | Next page of the same slide (same header, same pill, same number)                            |
 
-Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#empty-slide[...]` (footer only), `#exercise-slide(title:, color:)[...]`,
-`#example-slide(title:, color:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the
+Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#empty-slide[...]` (footer only), `#exercise-slide(title:, color:, icon:)[...]`,
+`#example-slide(title:, color:, icon:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the
 theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`,
 `#slide(composer:)` etc. work as usual.
 

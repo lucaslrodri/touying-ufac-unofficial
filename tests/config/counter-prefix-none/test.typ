@@ -6,9 +6,9 @@
 ))
 
 == First exercise <exercise-a>
-Pill "Exercise 1 (First exercise)", without the "1." prefix; cited as @exercise-a.
+Pill "Exercise 1" and the title, without the "1." prefix; cited as @exercise-a.
 
 == An example <example-b>
-Pill "Example 1 (An example)"; cited as @example-b.
+Pill "Example 1" and the title; cited as @example-b.
 
-#exercise-slide(title: [Second])[Pill "Exercise 2 (Second)".]
+#exercise-slide(title: [Second])[Pill "Exercise 2" and the title.]

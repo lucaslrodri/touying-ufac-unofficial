@@ -9,8 +9,9 @@
 
 // ---------- header ----------
 /// Header of a content slide: the current `==` in blue (fit to width), or, when the heading carries an
-/// `<exercise…>`/`<example…>` label, a pill "Exercise 1.N (Title)" / "Example 1.N (Title)" in the kind's color.
-/// An explicit color from `exercise-slide(color:)` travels in the heading's `supplement` as `metadata((color: …))`.
+/// `<exercise…>`/`<example…>` label, a pill with the kind's icon, "Exercise 1.N — Title" / "Example 1.N — Title", in
+/// the kind's color. An explicit color or icon from `exercise-slide(color:, icon:)` travels in the heading's
+/// `supplement` as `metadata((color: …, icon: …))`.
 /// -> content
 #let _header(
   /// Touying's `self`. -> dictionary
@@ -22,8 +23,13 @@
     let kind = if h != none { _label-kind(h.at("label", default: none)) } else { none }
     if kind != none {
       let (name, color) = _kind-style(self, kind)
-      let sup = h.at("supplement", default: auto); if sup != auto and sup.func() == metadata { color = sup.value.color }
-      _pill(color: color)[#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ (#h.body)]]
+      let ic = _kind-icon(self, kind)
+      let sup = h.at("supplement", default: auto)
+      if sup != auto and sup.func() == metadata {
+        if sup.value.color != auto { color = sup.value.color }
+        if sup.value.icon != auto { ic = sup.value.icon }
+      }
+      _pill(color: color, _pill-line[#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ — #h.body]])
     } else {
       set text(self.colors.primary, size: 1.2em, weight: "bold")
       _in-box(self.colors.primary, utils.display-current-heading(level: 2, setting: utils.fit-to-width.with(grow: false, 100%)), kind: "title")
@@ -96,12 +102,78 @@
     }
   }
 }
+// ---------- empty slides ----------
+/// Background asked by the label of the current `==` heading: `<empty-slide>` gives `none` (the white page),
+/// `<empty-slide-NAME>` the color `NAME` of the palette (`primary`, `secondary`, `tertiary-dark`, … any key of
+/// `colors`), and `auto` means that the heading has no such label. The label is read from Touying's `self.headings`
+/// while the slide is built, as Touying does with its own `touying:hidden`.
+/// -> auto | none | color
+#let _empty-label(
+  /// Touying's `self`. -> dictionary
+  self,
+) = {
+  let hs = self.at("headings", default: ())
+  if hs.len() == 0 { return auto }
+  let h = hs.last()
+  if h.depth != 2 or not h.has("label") { return auto }
+  let s = str(h.label)
+  if s == "empty-slide" { return none }
+  if not s.starts-with("empty-slide-") { return auto }
+  let name = s.slice("empty-slide-".len())
+  assert(name in self.colors, message: "empty-slide: <" + s + "> names no color of the palette; use <empty-slide> or"
+    + " <empty-slide-primary>, -secondary, -tertiary, -quaternary, -neutral (or a tone, such as -primary-dark)")
+  self.colors.at(name)
+}
+/// True for a light background (a luma of 70% or more: `secondary` and the `-light`, `-lighter` and `-lightest`
+/// tones), where the text stays dark and the footer blue; on a darker one (`primary`, `tertiary`, `quaternary`,
+/// `neutral`) they turn white, as in the pills.
+/// -> bool
+#let _is-light(
+  /// Background color. -> color
+  c,
+) = luma(c).components().first() >= 70%
+/// Slide without the header, shared by @empty-slide and the `<empty-slide>` labels: the page in `color` (`none` keeps
+/// it white) and, with a `title`, the title large and the bodies below it, centered. On a dark color the text and
+/// the footer are white, and `*bold*`, code and icons follow the pill convention (`_in-box(kind: "pill")`).
+/// -> content
+#let _empty-slide(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Page color, or `none`. -> none | color
+  color,
+  /// Title, or `none`. -> none | content
+  title,
+  /// Arguments of @slide. -> dictionary
+  config, repeat, setting, composer,
+  /// The slide bodies. -> array
+  bodies,
+) = {
+  let dark = color != none and not _is-light(color)
+  let page = config-page(header: none, footer: self => _footer(self, white: dark))
+  let page = if color == none { page } else { utils.merge-dicts(page, config-page(fill: color)) }
+  let self = utils.merge-dicts(self, page, config)
+  let decorate(body) = {
+    let body = if title == none { body } else {
+      std.align(center + horizon, {
+        text(size: 1.6em, weight: "bold", fill: if dark { self.colors.neutral-lightest } else { self.colors.primary }, title)
+        parbreak()
+        body
+      })
+    }
+    if dark { set text(fill: self.colors.neutral-lightest); _in-box(color, body, kind: "pill") } else { body }
+  }
+  touying-slide(self: self, repeat: repeat, setting: body => decorate(setting(body)), composer: composer, ..bodies)
+}
+
 /// Default slide of the theme, with header and footer. Every `==` heading opens one, so it is rarely called by
 /// hand; the explicit form gives access to Touying's arguments.
 ///
 /// A top-level `===` subtitle is repeated at the top of every continuation page of the slide, whether the page comes
 /// from `---`, from `#pagebreak()` or from content that overflows by itself, unless the continuation starts with
 /// another `===`. A subtitle nested in `#[ ]`, a column or a box is not repeated.
+///
+/// A `==` heading labelled `<empty-slide>` or `<empty-slide-primary>` (any color of the palette) opens an
+/// @empty-slide instead, with the heading as its title.
 ///
 /// ```typ
 /// #slide(composer: (1fr, 2fr))[Left][Right]
@@ -119,13 +191,32 @@
   /// The slide bodies. -> content
   ..bodies,
 ) = touying-slide-wrapper(self => {
+  let empty = _empty-label(self)
+  if empty != auto {
+    return _empty-slide(self, empty, self.headings.last().body, config, repeat, setting, composer, bodies.pos())
+  }
   let self = utils.merge-dicts(self, config-page(header: _header, footer: _footer), config)
   let bodies = bodies.pos()
   if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
   touying-slide(self: self, repeat: repeat, setting: setting, composer: composer, ..bodies)
 })
 
-/// Slide without the header but with the footer (Touying's `empty-slide` removes both). Same arguments as @slide.
+/// Slide without the header but with the footer (Touying's `empty-slide` removes both). Same arguments as @slide,
+/// plus the page color and an optional title. On a dark color (`primary`, `tertiary`, `quaternary`, `neutral`) the
+/// text and the footer turn white, and `*bold*`, code and icons follow the pill convention; on a light one
+/// (`secondary`, the `-lighter` tones) they stay as on a white slide.
+///
+/// The heading form, for a closing or transition slide: `== Title <empty-slide>` (white page) or
+/// `== Title <empty-slide-primary>`, `<empty-slide-secondary>`, … (any key of `colors`, including the tones, such as
+/// `<empty-slide-primary-dark>`). It is the same slide with the heading as the `title`: large and centered, with
+/// the content centered below it.
+///
+/// ```typ
+/// == Thank you! <empty-slide-primary>
+/// Questions: `name@ufac.br`
+///
+/// #empty-slide(color: colors.tertiary)[#align(center + horizon)[*Break*: 15 minutes]]
+/// ```
 /// -> content
 #let empty-slide(
   /// Slide configuration, see @slide.config. -> dictionary
@@ -136,50 +227,68 @@
   setting: body => body,
   /// Layout of the bodies. -> auto | array | function
   composer: auto,
+  /// Color of the page, such as `colors.primary`; `none` keeps it white. -> none | color
+  color: none,
+  /// Title, large and centered, with the bodies centered below it (the layout of the heading form); `none` leaves the
+  /// bodies as they are. -> none | content
+  title: none,
   /// The slide bodies. -> content
   ..bodies,
-) = touying-slide-wrapper(self => {
-  let self = utils.merge-dicts(self, config-page(footer: _footer), config)
-  touying-slide(self: self, repeat: repeat, setting: setting, composer: composer, ..bodies.pos())
-})
+) = touying-slide-wrapper(self => _empty-slide(self, color, title, config, repeat, setting, composer, bodies.pos()))
 
 // `exercise-slide`/`example-slide` return a level-2 heading with the label followed by the body (no
 // `touying-slide-wrapper`: Touying flattens sequences at document level, so `---` inside the body works too). An
-// explicit color travels in the heading `supplement`. `depth` is used rather than `level` because Touying reads
-// `depth` before layout.
+// explicit color or icon travels in the heading `supplement`. `depth` is used rather than `level` because Touying
+// reads `depth` before layout.
 
-/// Exercise slide: the header becomes a pill "Exercise 1.N (Title)", numbered automatically. The function form of
-/// `== Title <exercise>`. Only the heading form can carry a unique label (`== Title <exercise-ogata>`) and be cited
-/// with `@exercise-ogata`, which shows "Exercise 1.N" linked to the slide.
+/// `supplement` of the heading of an exercise or example slide: `auto`, or the color and the icon of the slide.
+/// -> auto | content
+#let _kind-supplement(
+  /// Color of the pill, or `auto`. -> auto | color
+  color,
+  /// Icon of the pill, or `auto`. -> auto | none | str | content
+  icon,
+) = if color == auto and icon == auto { auto } else { metadata((color: color, icon: icon)) }
+
+/// Exercise slide: the header becomes a pill with a pencil, "Exercise 1.N — Title", numbered automatically. The
+/// function form of `== Title <exercise>`. Only the heading form can carry a unique label (`== Title <exercise-ogata>`)
+/// and be cited with `@exercise-ogata`, which shows "Exercise 1.N" linked to the slide.
 ///
 /// ```typ
 /// #exercise-slide(title: [Ogata 4.6])[Find the transfer function.]
+/// #exercise-slide(title: [Lab], color: colors.primary, icon: "tools")[Another color and icon.]
 /// ```
 /// -> content
 #let exercise-slide(
-  /// Text in parentheses after the number; empty omits the parentheses. -> content
+  /// Text after the number, following a dash; empty omits the dash. -> content
   title: [],
   /// Color of the pill; `auto` is red (`tertiary`). -> auto | color
   color: auto,
+  /// Icon before the name: the name of an `icon`, any content (an image) or `none` for no icon; `auto` is the icon of
+  /// the theme, `ufac-theme(exercise-icon:)` (a pencil). -> auto | none | str | content
+  icon: auto,
   /// Content of the slide; `---` inside it continues the same exercise. -> content
   body,
-) = [#heading(depth: 2, supplement: if color == auto { auto } else { metadata((color: color)) }, title) <exercise> #body]
+) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <exercise> #body]
 
-/// Example slide: a pill "Example 1.N (Title)", with a counter independent from the exercises. The function form
-/// of `== Title <example>`; see @exercise-slide.
+/// Example slide: a pill with a beaker, "Example 1.N — Title", with a counter independent from the exercises. The
+/// function form of `== Title <example>`; see @exercise-slide.
 ///
 /// ```typ
 /// #example-slide(title: [XOR network])[Two hidden neurons are enough.]
 /// ```
 /// -> content
 #let example-slide(
-  /// Text in parentheses after the number; empty omits the parentheses. -> content
+  /// Text after the number, following a dash; empty omits the dash. -> content
   title: [],
   /// Color of the pill; `auto` is green (`quaternary`). -> auto | color
   color: auto,
+  /// Icon before the name: the name of an `icon`, any content (an image) or `none` for no icon; `auto` is the icon of
+  /// the theme, `ufac-theme(example-icon:)` (a beaker). -> auto | none | str | content
+  icon: auto,
   /// Content of the slide. -> content
   body,
-) = [#heading(depth: 2, supplement: if color == auto { auto } else { metadata((color: color)) }, title) <example> #body]
+) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <example> #body]
 
 /// Section slide, created by every `= Title`: "Part N: Title" in blue on the left and the content right after the
 /// `=` (typically an `#image`) on the right, flush with the page edge. `ufac-theme(section-margin: true)` keeps the
@@ -306,7 +415,7 @@
   self,
   /// The content. -> content
   body,
-  /// Look of the code-block box: `fill`, `stroke`, `radius` and `inset` of `_code-box` (the manual frames its code differently). -> dictionary
+  /// Look of the code-block box: `fill`, `stroke`, `radius`, `inset` and `breakable` of `_code-box` (the manual frames its code differently). -> dictionary
   code-box: (:),
 ) = {
   set list(marker: _markers(self.colors.secondary))
@@ -426,7 +535,16 @@
   // tables, terms and captions, ported from 0.0.1 (blue header with white text and white formulas)
   set table(inset: 0.5em, fill: (_, y) => if y == 0 { self.colors.primary },
     stroke: (x, y) => (y: self.colors.primary, right: self.colors.primary, x: if x > 0 and y == 0 { self.colors.neutral-lightest } else { self.colors.primary }))
-  show table.cell.where(y: 0): it => { set text(fill: self.colors.neutral-lightest, weight: "bold"); show math.equation: set text(fill: self.colors.neutral-lightest); it }
+  // the header is a pill (white text on the color), so its code chips, `*bold*` and icons follow the pill convention
+  show table.cell.where(y: 0): it => { set text(fill: self.colors.neutral-lightest, weight: "bold"); show math.equation: set text(fill: self.colors.neutral-lightest); _in-box(self.colors.primary, it, kind: "pill") }
+  // a cell filled with a light tone of a family (`table.cell(fill: colors.secondary-lighter)`) is a box of the
+  // family's `-dark` tone, readable on the fill: code chips in light tones of it, as in an @emph-box
+  show table.cell: it => {
+    if it.y == 0 or type(it.fill) != color { return it }
+    let family = ("primary", "secondary", "tertiary", "quaternary", "neutral").find(f =>
+      ("", "-light", "-lighter", "-lightest").any(t => self.colors.at(f + t, default: none) == it.fill))
+    if family == none { it } else { _in-box(self.colors.at(family + "-dark"), it) }
+  }
   show figure.caption: it => it.body
   set terms(tight: false)
   show terms.item: it => { text(weight: "bold", fill: self.colors.neutral-darkest, it.term + ": "); it.description; linebreak() }
@@ -461,6 +579,12 @@
   exercise-name: auto,
   /// Name in the pill of example slides; `auto` is Exemplo / Example / Ejemplo. -> auto | content
   example-name: auto,
+  /// Icon before the name in the pill of exercise slides: the name of an `icon`, any content (an image, centered on
+  /// the capitals like the icons) or `none` for no icon. `exercise-slide(icon:)` changes it on one slide.
+  /// -> none | str | content
+  exercise-icon: "pencil",
+  /// Icon before the name in the pill of example slides, like `exercise-icon`. -> none | str | content
+  example-icon: "beaker",
   /// Prefix of the section slide ("Part N:"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
   /// Left text of the footer; a function receives `self`. `auto` is the subject code, a dot and the subject (the dot
@@ -496,6 +620,10 @@
     message: "ufac-theme: logos is auto or a non-empty array of logos (content, functions of the colour, or auto)")
   assert(type(section-margin) in (bool, length),
     message: "ufac-theme: section-margin is true (the page margin), false (flush with the edge) or a length")
+  for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
+    assert(ic == none or type(ic) in (str, content),
+      message: "ufac-theme: " + key + " is the name of an icon, content (an image) or none")
+  }
   set text(size: 20pt)
   show: touying-slides.with(
     config-page(..utils.page-args-from-aspect-ratio(aspect-ratio), header-ascent: 0em, footer-descent: 0em, margin: (top: 3.25em, bottom: 1.75em, x: 1.8em)),
@@ -506,7 +634,9 @@
       cover: _cover,   // veil in the page colour at 85% over the laid-out content (see `_cover` in utils.typ)
     ),
     config-colors(..colors),
-    config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name, part-name: part-name, footer-left: footer-left, footer-right: footer-right, logos: logos, section-margin: section-margin),
+    config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
+      exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
+      footer-right: footer-right, logos: logos, section-margin: section-margin),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile
     config-info(title: [], subtitle: [], subject: [], subject-code: [], author: none, counter-prefix: [1.]),

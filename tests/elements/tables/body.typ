@@ -19,3 +19,12 @@
   #table(columns: 2, table.header([A], [B]), [1], [2])
 ]
 ]
+
+== Tables: code chips
+Code chips follow the background, as in pills and boxes: inverted in the header, in the family's tones in a filled cell:
+#table(columns: 3,
+  [], [`mean(N, 2)` →], [*Bold*],
+  [Plain cell], [`x(1)`], [*bold*],
+  table.cell(fill: colors.secondary-lighter)[`mean(N)` ↓], table.cell(fill: colors.secondary-lighter)[*bold*],
+  table.cell(fill: colors.quaternary-lightest)[`ok`],
+)

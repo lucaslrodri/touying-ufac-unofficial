@@ -60,3 +60,22 @@
   ]
 ]
 ]
+
+== Emphasis box: `icon`
+#[
+#set text(size: .8em)
+#cols[
+  #emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[`icon: "alert"`: an icon of the set before the title, centered on the capitals.]
+][
+  #emph-box(color: colors.primary, icon: sym.Sigma, title: [Theory])[`icon: sym.Sigma`: any content as the icon.]
+][
+  #emph-box(color: colors.quaternary, icon: "light-bulb")[`icon:` without a title: the icon is the whole badge.]
+]
+#demo[
+```typst
+#emph-box(color: colors.secondary-dark, icon: "gear", title: [Application: *control*])[
+  In the badge *bold* stays white; in the body, *bold* takes the box color.
+]
+```
+]
+]

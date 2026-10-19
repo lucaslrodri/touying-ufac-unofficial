@@ -52,6 +52,7 @@
 #include "./sections/animations/body.typ"
 #include "./sections/pause-cover/body.typ"
 #include "./sections/explicit-slides/body.typ"
+#include "./sections/empty-slides/body.typ"
 
 #include "./sections/edge-cases/body.typ"
 

@@ -2,14 +2,14 @@
 #import "../../common.typ": *
 
 == Exercise from the book <exercise>
-`== Title <exercise>`: red pill "Exercise 1.1 (Exercise from the book)" (the names follow `lang`; the suite uses `lang: "en"`).
+`== Title <exercise>`: red pill with a pencil, "Exercise 1.1" and, after a dash, the title (the names follow `lang`; the suite uses `lang: "en"`).
 
 ---
 
 Continuation of the exercise: same number.
 
 == Simple example <example>
-`== Title <example>`: green pill "Example 1.1", counter independent from the exercise one.
+`== Title <example>`: green pill with a beaker, "Example 1.1", counter independent from the exercise one.
 
 #exercise-slide(title: [Ch. 4, ex. 6])[
   `#exercise-slide(title: [Ch. 4, ex. 6])[..]`: Exercise 1.2, with `---` inside.
@@ -20,7 +20,7 @@ Continuation of the exercise: same number.
 ]
 
 #exercise-slide[
-  `#exercise-slide[..]` without title: "Exercise 1.3", no parentheses.
+  `#exercise-slide[..]` without title: "Exercise 1.3", no dash.
 ]
 
 #example-slide(title: [Custom color], color: colors.primary)[`#example-slide(color: colors.primary)`: Example 1.2, blue.]
@@ -42,3 +42,11 @@ Expected so far: 5 exercises and 3 examples; the next exercise is 1.6 and the ne
 
 == One more <exercise>
 Exercise 1.6.
+
+#exercise-slide(title: [Custom icon], icon: "tools")[`#exercise-slide(icon: "tools")`: Exercise 1.7, another icon of the set.]
+
+#example-slide(title: [Content as icon], icon: circle(radius: 0.55em, fill: white))[`#example-slide(icon: circle(..))`: Example 1.4, any content as the icon, centered on the capitals.]
+
+#exercise-slide(title: [No icon], icon: none)[`#exercise-slide(icon: none)`: Exercise 1.8, without icon.]
+
+#example-slide(title: [No icon], icon: none)[`#example-slide(icon: none)`: Example 1.5, without icon.]
