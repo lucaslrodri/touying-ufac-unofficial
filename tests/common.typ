@@ -1,8 +1,8 @@
-// Common preamble of the Tytanic tests: imports the package (`@preview/touying-ufac-unofficial:0.1.0`, i.e. this very
+// Common preamble of the Tytanic tests: imports the package (`@preview/touying-ufac-unofficial:0.2.0`, i.e. this very
 // folder linked by scripts/link.sh), defines `setup` (theme + fixed config-info) and the `demo` helper (code on the
 // left, the same text evaluated on the right).
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.1.0": *
+#import "@preview/touying-ufac-unofficial:0.2.0": *
 #import "placeholder.typ": placeholder
 
 #let info = config-info(
@@ -18,6 +18,7 @@
 // version, the same as `#primary`: Touying's wrapper does not work inside function arguments).
 #let _demo-scope = (
   emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, cols: cols, colors: colors, icon: icon,
+  ufac-logo-image: ufac-logo-image,
   primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: primary,
   slide: slide, empty-slide: empty-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,

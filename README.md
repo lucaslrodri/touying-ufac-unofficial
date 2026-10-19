@@ -2,10 +2,10 @@
 
 <p align="center">
   <a href="https://typst.app/universe/package/touying-ufac-unofficial"><img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Flucaslrodri%2Ftouying-ufac-unofficial%2Fmain%2Ftypst.toml&amp;query=%24.package.version&amp;label=Typst%20Universe&amp;logo=typst&amp;color=239dad" alt="Version on Typst Universe"></a>
-  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.1.0/docs/manual.pdf"><img src="https://img.shields.io/badge/manual-PDF-orange" alt="Manual (PDF)"></a>
+  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/docs/manual.pdf"><img src="https://img.shields.io/badge/manual-PDF-orange" alt="Manual (PDF)"></a>
   <a href="https://typst.app/"><img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Flucaslrodri%2Ftouying-ufac-unofficial%2Fmain%2Ftypst.toml&amp;query=%24.package.compiler&amp;prefix=%E2%89%A5%20&amp;label=Typst&amp;logo=typst&amp;color=239dad" alt="Minimum Typst version"></a>
   <a href="https://typst.app/universe/package/touying"><img src="https://img.shields.io/badge/Touying-0.7.4-blue" alt="Touying version: 0.7.4"></a>
-  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.1.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT and MIT-0"></a>
+  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT and MIT-0"></a>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 ## Basic usage
 
 ```sh
-typst init @preview/touying-ufac-unofficial:0.1.0
+typst init @preview/touying-ufac-unofficial:0.2.0
 ```
 
 creates a deck from [template/main.typ](template/main.typ), the cover and one slide. The font
@@ -25,7 +25,7 @@ creates a deck from [template/main.typ](template/main.typ), the cover and one sl
 ```typst
 // Starting deck for the touying-ufac-unofficial theme. Syntax: package README; every element: example/main.typ.
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.1.0": *
+#import "@preview/touying-ufac-unofficial:0.2.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
@@ -48,7 +48,7 @@ creates a deck from [template/main.typ](template/main.typ), the cover and one sl
 Text.
 ```
 
-![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.1.0/docs/readme/template.png)
+![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.2.0/docs/readme/template.png)
 <!-- template:end -->
 
 `config-info` fills the cover and the footer (on the cover, the footer texts go to the line at the top):
@@ -64,17 +64,20 @@ Text.
 
 Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio`
 accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `exercise-name`, `example-name` and `part-name` (override the localized
-names), `footer-left` and `footer-right` (content or `self => ...`).
+names), `footer-left` and `footer-right` (content or `self => ...`), `logos` (logos after the UFAC one in the
+footer and on the cover, separated by dots: content, `color => ...` or `auto` for the UFAC logo), `section-margin`
+(`true` keeps the page margin to the right of the content of the section slides, for images without a background;
+a length sets the distance; `false`, the default, puts it flush with the edge).
 
 ## Example
 
-[example/main.typ](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.1.0/example/main.typ) shows the elements of the [syntax](#syntax) in a short deck:
+[example/main.typ](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/example/main.typ) shows the elements of the [syntax](#syntax) in a short deck:
 
 <!-- example:begin (generated from example/main.typ by scripts/readme.sh: do not edit by hand) -->
 ```typst
 // Example deck of the touying-ufac-unofficial theme: the elements of the syntax at a glance (details: package README).
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.1.0": *
+#import "@preview/touying-ufac-unofficial:0.2.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
@@ -157,7 +160,7 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 Citing the @exercise-a.
 ```
 
-![The 8 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.1.0/docs/readme/example.png)
+![The 8 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.2.0/docs/readme/example.png)
 <!-- example:end -->
 
 ## Syntax
@@ -166,7 +169,7 @@ Citing the @exercise-a.
 
 | Markup                          | Effect                                                                                       |
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
-| `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, flush with the page edge (`#pad(right: 1.8em)[...]` restores a margin) |
+| `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, flush with the page edge (`section-margin: true` in `ufac-theme`, or `#pad(right: 1.8em)[...]` on one slide, keeps the margin) |
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: red pill "Exercise 1.N (Title)" (`Exercício`/`Ejercicio`), numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: green pill "Example 1.N (Title)" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
@@ -174,8 +177,9 @@ Citing the @exercise-a.
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line)         | Next page of the same slide (same header, same pill, same number)                            |
 
-Functions: `#title-slide()`, `#slide[...]`, `#empty-slide[...]` (footer only), `#exercise-slide(title:, color:)[...]`,
-`#example-slide(title:, color:)[...]`. Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`,
+Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#empty-slide[...]` (footer only), `#exercise-slide(title:, color:)[...]`,
+`#example-slide(title:, color:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the
+theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`,
 `#slide(composer:)` etc. work as usual.
 
 ### Inline formatting
@@ -233,7 +237,7 @@ Markdown-like short forms (inline content only, always primary):
 ## Documentation
 
 A full set of documentation in PDF can be found in the
-[repository](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.1.0/docs/manual.pdf).
+[repository](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/docs/manual.pdf).
 
 ## Dependencies
 

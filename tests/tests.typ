@@ -26,6 +26,7 @@
 #include "./elements/tables/body.typ"
 #include "./elements/figures/body.typ"
 #include "./elements/icons/body.typ"
+#include "./elements/logo/body.typ"
 #include "./elements/equations/body.typ"
 #include "./elements/code/body.typ"
 #include "./elements/quotes/body.typ"

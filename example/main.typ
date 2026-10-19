@@ -1,6 +1,6 @@
 // Example deck of the touying-ufac-unofficial theme: the elements of the syntax at a glance (details: package README).
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.1.0": *
+#import "@preview/touying-ufac-unofficial:0.2.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",

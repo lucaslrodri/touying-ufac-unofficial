@@ -4,7 +4,10 @@ desktop.ini
 .DS_Store
 tinymist-lsp.log
 
-# VS Code: only the Tytanic integration is shared (see tests/README.md)
+# tinymist's project lock, written by scripts/lock.sh: its routes live in tinymist's cache, on each machine
+tinymist.lock
+
+# VS Code: only the Tytanic integration and the tinymist project setting are shared (see tests/README.md)
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json

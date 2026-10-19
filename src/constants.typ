@@ -1,5 +1,6 @@
-// touying-ufac-unofficial — constants: the color palette, the UFAC logo and the code-block language table.
-// Everything derived from these values (tones, `config-colors`, the footer logo) lives in the other modules.
+// touying-ufac-unofficial — constants: the color palette, the UFAC logo (its SVG and `ufac-logo-image`, which draws it in
+// the colours of the theme) and the code-block language table. Everything else derived from these values (tones,
+// `config-colors`, the footer) lives in the other modules.
 
 /// Seven-tone ramp of a base color, derived in RGB: `darkest`/`darker`/`dark` by `darken(75% / 55% / 30%)` and
 /// `light`/`lighter`/`lightest` by `lighten(30% / 60% / 85%)`. The base tone itself is inserted by the caller.
@@ -80,8 +81,8 @@
 
 // The logo lives in its own file, assets/ufac-logo.svg: it is copyrighted by the Universidade Federal do Acre (UFAC) and
 // is not covered by the license of this package (see the License section of the README).
-/// Official UFAC logo as an SVG string (yellow shield and blue lettering), rendered in the footer with
-/// `image(bytes(ufac-logo), height: 0.64em)`. The title slide replaces the blue `#0c4da2` with white.
+/// Official UFAC logo as an SVG string (yellow shield and blue lettering). @ufac-logo-image draws it, also in other
+/// colours (the footer, blue; the cover, white with the yellow shield).
 ///
 /// The logo belongs to the Universidade Federal do Acre and is not covered by the license of the package.
 ///
@@ -90,3 +91,30 @@
 /// ```
 /// -> str
 #let ufac-logo = read("../assets/ufac-logo.svg")
+
+/// The UFAC logo as an image, in the colours the theme uses: blue lettering with the yellow shield, as in the footer
+/// of the slides; the lettering in another colour, as on the cover (`color: white`, the shield still yellow); or all
+/// in one colour (`color: white, shield: white`), on a background where the yellow would not stand out. For a
+/// document that goes with the slides, such as a handout, or a logo next to it in `ufac-theme(logos:)`.
+///
+/// ```example
+/// #ufac-logo-image(height: 2em)
+/// #box(fill: colors.primary, inset: 0.4em,
+///   ufac-logo-image(height: 2em, color: white))
+/// #box(fill: colors.primary, inset: 0.4em,
+///   ufac-logo-image(height: 2em, color: white, shield: white))
+/// ```
+/// -> content
+#let ufac-logo-image(
+  /// Height of the logo; `0.64em` is its height in the footer. -> length
+  height: 0.64em,
+  /// Colour of the lettering, the blue `#0c4da2` of the logo; `auto` keeps it. -> auto | color
+  color: auto,
+  /// Colour of the shield, the yellow `#fdb813` of the logo; `auto` keeps it. -> auto | color
+  shield: auto,
+) = {
+  let svg = ufac-logo
+  if color != auto { svg = svg.replace("#0c4da2", color.to-hex()) }
+  if shield != auto { svg = svg.replace("#fdb813", shield.to-hex()) }
+  image(bytes(svg), height: height)
+}

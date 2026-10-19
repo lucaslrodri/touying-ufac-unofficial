@@ -3,7 +3,7 @@
 Visual test suite of the theme, run with [Tytanic](https://typst-community.github.io/tytanic/) (`tt`, installed with
 `brew install tytanic`; validated version: 0.4.1). The project root is the repository root (Tytanic finds it through
 `typst.toml`, which also holds the `[tool.tytanic]` settings). The tests import the package by its published name
-(`@preview/touying-ufac-unofficial:0.1.0`), like the template and the example do, so that name must resolve to this
+(`@preview/touying-ufac-unofficial:0.2.0`), like the template and the example do, so that name must resolve to this
 working copy: run `sh scripts/link.sh` once (it symlinks the repository into Typst's local package directory, under `preview`).
 
 ```sh
@@ -25,6 +25,10 @@ the fonts are not installed, and in the CI (`.github/workflows/tests.yml`, see [
 
 - `<group>/<case>/body.typ`: the markup of the case (slides), starting with `#import "../../common.typ": *` (no `#show`).
 - `<group>/<case>/test.typ`: 3 lines, preamble + `#show: setup` + `#include "body.typ"`. This is what Tytanic compiles.
+- In the editor, a `body.typ` compiled alone has no theme, so its `@exercise-…` references fail. `sh scripts/lock.sh`
+  records every test with a body in `tinymist.lock`, and tinymist (`projectResolution: "lockDatabase"`, in
+  `.vscode/settings.json`) then compiles the body inside its `test.typ`. `unit/api` uses Tytanic's `assert-panic` and
+  `catch`, so it only compiles inside Tytanic.
 - `tests.typ` (this folder): catalogue that includes **all** the `body.typ` files in the order of the parts (cover, Style guide,
   Elements, New elements, Sections, edge cases and the section-slide variants last). The catalogue and the suite cannot
   diverge: they are the same body. Every path in the suite is **relative** (`../../common.typ`, `../../logo.svg`), so the
@@ -45,7 +49,7 @@ the fonts are not installed, and in the CI (`.github/workflows/tests.yml`, see [
 - `placeholder.typ` and `logo.svg`: test assets (provisional figure helper and a yellow square used as a real image).
 - `deck/`: the two decks of the repository, `template/main.typ` (published) and `example/main.typ`, included as they are
   (`#include "../../../template/main.typ"`) and compared pixel by pixel; Tytanic's own `@template` only compiles.
-- `config/`: theme parameters (names, `part-name`, footers, `counter-prefix`, including `counter-prefix: none`), `aspect-ratio: "4-3"` and `lang`
+- `config/`: theme parameters (names, `part-name`, footers, `counter-prefix`, including `counter-prefix: none`, `section-margin`, `logos`), `aspect-ratio: "4-3"` and `lang`, and `config/outline`, a whole deck for `#outline()` (it lists the parts of the whole document, so it cannot share one)
   (`lang-default`, `lang-en`, `lang-es`, sharing `config/lang-body.typ`); they have
   their own preamble, so they are not part of the catalogue. `unit/api`: compile only, assertions about the API
   (`assert`, `assert-panic`, `catch`). `unit/docstrings`: compile only; it feeds every module of `src/` to

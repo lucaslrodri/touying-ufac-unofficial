@@ -3,11 +3,12 @@
 // Names starting with `_` are not part of the public API (Typst has no private bindings, so they stay reachable).
 #import "@preview/touying:0.7.4": *
 #import "@preview/linguify:0.5.0": linguify
-#import "constants.typ": colors, ufac-logo
+#import "constants.typ": colors, ufac-logo-image
 
 // ---------- content inspection ----------
 #let _seq = [].func()
-#let _children(it) = if it.func() == _seq { it.children } else { (it,) }
+// (`none` is the body of an empty slide, a `== Title` with nothing under it: no children)
+#let _children(it) = if it == none { () } else if it.func() == _seq { it.children } else { (it,) }
 #let _styled = { set text(fill: red); [x] }.func()
 /// Already-realized content arrives as `styled(child: …)`; peel the layers off.
 ///
@@ -61,7 +62,8 @@
 
 // ---------- context color stack ----------
 /// Stack of `(color:, kind:)` entries, `kind` ∈ "box" | "pill" | "title", pushed by `emph-box` (body: "box";
-/// title badge: "pill"), `_pill`, the slide header ("title") and the section title ("title"). `*bold*`,
+/// title badge: "pill"), `_pill`, the slide header ("title"), the section title ("title") and the content of the
+/// cover ("pill": white on blue). `*bold*`,
 /// `==highlight==`, the `->` arrow, `#underline`, `#icon` and inline `raw` read the color at layout time (in
 /// `context`): in the `> box` form the paragraph reaches `show par` already realized (strong/highlight become
 /// `styled(...)` with black/yellow baked in), so set/show rules inside the box cannot reach them anymore; a `state`
@@ -400,6 +402,9 @@
   pad-right: 0em,
   /// White text and rules (the cover). -> bool
   white: false,
+  /// A `1fr` rule on the free side of a `"left"`/`"right"` cell, so that the cell fills its column. `false` gives the
+  /// text and its fixed rule only, at its natural width, for a grid that puts the `1fr` rule between the cells. -> bool
+  grow: true,
   /// Text of the cell. -> content | str
   it,
 ) = {
@@ -408,7 +413,7 @@
     context {
       let get-content(it) = {
         if type(it) == str {
-          return h(0.4em) + upper(it) + h(0.4em)
+          if it.trim() != "" { return h(0.4em) + upper(it) + h(0.4em) }
         } else if type(it) == content {
           if measure(it).width > 0pt {
             return h(0.4em) + box(upper(it)) + h(0.4em)
@@ -417,7 +422,9 @@
           return none
         }
       }
-      block(above: 0pt, below: 0pt, outset: 0pt, breakable: false, inset: 1mm, height: 100%, get-content(it))
+      // An empty cell has no block: its 1mm inset left a gap in the rule (2026-10-16).
+      let c = get-content(it)
+      if c != none { block(above: 0pt, below: 0pt, outset: 0pt, breakable: false, inset: 1mm, height: 100%, c) }
     }
   }
 
@@ -427,15 +434,47 @@
 
   if pos == "center" {
     grid(columns: (pad-left, 1fr, auto, 1fr, pad-right), l, l, _content(it), l, l)
+  } else if pos == "left" and not grow {
+    grid(columns: (pad-left, auto), l, _content(it))
   } else if pos == "left" {
     grid(columns: (pad-left, auto, 1fr, pad-right), l, _content(it), l, l)
+  } else if pos == "right" and not grow {
+    grid(columns: (auto, pad-right), _content(it), l)
   } else if pos == "right" {
     grid(columns: (pad-left, 1fr, auto, pad-right), l, l, _content(it), l)
   }
 }
 
-/// Footer of every slide except the cover: rule 1em, UFAC logo (0.64em), rule 1.25em, "CODE - SUBJECT", rule 1fr,
-/// author, rule 2em, slide number (0.6em), rule 1em. The last column is as wide as the last slide number.
+/// The logos of the footer and of the cover (`ufac-theme(logos:)`), in a row separated by a dot. `auto` is the UFAC
+/// logo, blue on the slides and white with its yellow shield on the cover; a function receives the colour of the
+/// footer (the primary colour, or white on the cover); content goes as it is. A single logo is the same box as the
+/// UFAC logo alone had before the option (0.1.0), so the default footer did not change (2026-10-16). The dot has the
+/// size of `_sep-dot` in the 0.4em text (radius 0.18 × 0.4em) and sits in its own cell, centred on the logos.
+/// -> content
+#let _logos(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// White logos and dot, for the cover. -> bool
+  white: false,
+  /// The logos; `auto` takes those of `ufac-theme` (the UFAC logo when the theme has none). -> auto | array
+  logos: auto,
+) = {
+  let logos = if logos == auto { self.store.at("logos", default: (auto,)) } else { logos }
+  let color = if white { self.colors.neutral-lightest } else { self.colors.primary }
+  // the UFAC logo keeps its blue on the slides and takes the white of the cover, the shield yellow on both
+  let one(logo) = if logo == auto { ufac-logo-image(color: if white { color } else { auto }) } else if (
+    type(logo) == function) { logo(color) } else { logo }
+  if logos.len() == 1 { return box(one(logos.first()), inset: 0.2em) }
+  let dot = circle(radius: 0.072em, fill: color)
+  box(inset: 0.2em, grid(columns: 2 * logos.len() - 1, column-gutter: 0.3em, align: horizon,
+    ..logos.map(one).intersperse(dot)))
+}
+
+/// Footer of every slide except the cover: rule 1em, the logos (the UFAC logo, 0.64em, by default), rule 1.25em,
+/// "CODE - SUBJECT", rule 1fr, author, rule 2em, slide number (0.6em), rule 1em. The last column is as wide as the
+/// last slide number. The two texts take their natural width and the `1fr` rule between them the rest: when each
+/// text carried its own `1fr` rule, both cells claimed the whole width and got half of it each, so a long left text
+/// broke into two lines with room to spare on the right (2026-10-16).
 /// -> content
 #let _footer(
   /// Touying's `self`. -> dictionary
@@ -446,13 +485,14 @@
   context {
     let last-column-size = measure(box(text(utils.last-slide-number, size: 0.6em), inset: 0.4em)).width
     move(grid(
-      columns: (1em, auto, auto, auto, last-column-size, 1em),
+      columns: (1em, auto, auto, 1fr, auto, last-column-size, 1em),
       rows: 1.5em,
       align: horizon,
       _line(self),
-      box(image(bytes(ufac-logo), height: 0.64em), inset: 0.2em),
-      _cell(self, pad-left: 1.25em, pos: "left", utils.call-or-display(self, self.store.footer-left)),
-      _cell(self, pad-right: 2em, pos: "right", utils.call-or-display(self, self.store.footer-right)),
+      _logos(self),
+      _cell(self, pad-left: 1.25em, pos: "left", grow: false, utils.call-or-display(self, self.store.footer-left)),
+      _line(self),
+      _cell(self, pad-right: 2em, pos: "right", grow: false, utils.call-or-display(self, self.store.footer-right)),
       _cell(self, pos: "center", size: 0.6em, utils.slide-counter.display()),
       _line(self),
     ), dy: -0.05em)

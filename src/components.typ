@@ -1,6 +1,6 @@
 // touying-ufac-unofficial — components: color emphases, list markers and pills, `#icon`, the boxes (`emph-box`,
-// `quote-box`, `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`) and
-// the `local` wrapper around codly.
+// `quote-box`, `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`),
+// the `local` wrapper around codly and the deck's `outline`.
 #import "@preview/touying:0.7.4": *
 #import "@preview/codly:1.3.0" as _codly
 #import "constants.typ": colors
@@ -435,4 +435,35 @@
   // codly's `local` installs a `show raw.where(block: true)` that is more inner than the theme's rules, so the gate
   // and the box go inside the body (see `_gate-raw`, `_code-box`)
   _codly.local(_gate-raw(_code-box(body)), ..args)
+}
+
+// ---------- outline ----------
+/// Outline of the deck: its parts (the `= Title` headings, the "Part N" of the section slides), one per line, with the
+/// number in a small pill, the title in bold blue and, after a dotted leader, the number of the section slide (the
+/// slide number of the footer, which skips the cover); every line is a link to that slide. In a deck it takes the place of Typst's
+/// `outline`, which is still `std.outline`. It goes on a slide of its own, usually the first after the cover:
+///
+/// ```typ
+/// == Contents
+/// #outline()
+/// ```
+/// -> content
+#let outline() = context {
+  let parts = query(heading.where(level: 1))
+  // the number in a pill smaller than the subtitles' (`_pill`), its vertical room outside (`outset`), so that it does
+  // not change the height of the line
+  let number(n) = box(fill: colors.primary, radius: 3pt, inset: (x: .4em), outset: (y: .25em),
+    text(size: .78em, fill: white, weight: "bold", str(n)))
+  // one grid for all the parts, so that the titles line up when a number has two digits
+  grid(columns: (auto, 1fr, auto), column-gutter: .7em, row-gutter: 1.1em, align: horizon,
+    ..parts.map(h => {
+      let at = h.location()
+      (
+        link(at, number(counter(heading).at(at).first())),
+        // the title as in the title of a slide (`kind: "title"`): a code chip in it takes the blue of the title
+        link(at, [#_in-box(colors.primary, text(fill: colors.primary, weight: "bold", h.body), kind: "title") #box(
+          width: 1fr, text(fill: colors.neutral-light, repeat(gap: .3em)[.]))]),
+        link(at, text(fill: colors.primary, weight: "bold", str(utils.slide-counter.at(at).first()))),
+      )
+    }).flatten())
 }

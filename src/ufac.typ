@@ -3,7 +3,7 @@
 // configuration).
 #import "@preview/touying:0.7.4": *
 #import "@preview/codly:1.3.0": codly, codly-init
-#import "constants.typ": colors, ufac-logo, code-languages
+#import "constants.typ": colors, code-languages
 #import "utils.typ": *
 #import "components.typ": *
 
@@ -182,8 +182,9 @@
 ) = [#heading(depth: 2, supplement: if color == auto { auto } else { metadata((color: color)) }, title) <example> #body]
 
 /// Section slide, created by every `= Title`: "Part N: Title" in blue on the left and the content right after the
-/// `=` (typically an `#image`) on the right, flush with the page edge. `#pad(right: 1.8em)[#image(..)]` restores the
-/// page margin. Not meant to be called by hand.
+/// `=` (typically an `#image`) on the right, flush with the page edge. `ufac-theme(section-margin: true)` keeps the
+/// page margin on every section slide, for images without a background; `#pad(right: 1.8em)[#image(..)]` does the
+/// same on a single one. Not meant to be called by hand.
 /// -> content
 #let new-section-slide(
   /// Slide configuration, see @slide.config. -> dictionary
@@ -196,12 +197,16 @@
   body,
 ) = touying-slide-wrapper(self => {
   // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the
-  // grid still reserves its width and the title never runs under it
+  // grid still reserves its width and the title never runs under it; `section-margin` pads it on the right inside
+  // the move (as `#pad(right:)` in the deck does), so it stops that far from the edge
   let slide-body = {
     set std.align(left + horizon)
     set image(width: 12em, height: 66%)
     let margin = self.page.at("margin", default: (:))
     let dx = if type(margin) == dictionary { margin.at("x", default: 1.8em) } else { margin }
+    let gap = self.store.at("section-margin", default: false)
+    let gap = if gap == true { dx } else if gap == false { 0pt } else { gap }
+    let body = if body in (none, []) or gap == 0pt { body } else { pad(right: gap, body) }
     grid(columns: (1fr, auto), {
       set text(size: 2em, fill: self.colors.primary, weight: "bold")
       _in-box(self.colors.primary, context [#_name(self, "part") #utils.display-current-heading-number(level: 1, numbering: "1"): \ #utils.display-current-heading(level: 1, numbered: false)], kind: "title")
@@ -212,32 +217,59 @@
 })
 
 /// Cover: blue page with the subject (large, white), the subtitle (yellow) and the title (white) of `config-info`
-/// centered, `footer-left`/`footer-right` in white at the top and the white logo at the bottom. The slide counter is
-/// frozen, so the cover does not count.
+/// centered, `footer-left`/`footer-right` in white at the top and the logos (`ufac-theme(logos:)`) in white at the
+/// bottom. The slide counter is frozen, so the cover does not count.
+///
+/// Content given to it, such as a partner's logo or the name of a program, goes below the titles, centered at the
+/// bottom of the cover, in white (`*bold*` and `#icon` too, as in a pill). It is placed, so the titles stay where they
+/// are without it; the space under them takes about a logo and two lines, and a taller content reaches them.
+///
+/// ```typ
+/// #title-slide[#image("lab-white.svg", height: 1.7em)]
+/// ```
 /// -> content
-#let title-slide() = touying-slide-wrapper(self => {
-  let footer(self) = {
-    set std.align(bottom)
-    move(grid(columns: (1em, auto, 1fr), rows: 1.5em, align: horizon,
-      _line-white(self),
-      box(image(bytes(ufac-logo.replace("#0c4da2", "#fff")), height: 0.64em), inset: 0.2em),
-      _line-white(self)), dy: -0.05em)
-  }
-  let header(self) = {
-    set text(self.colors.neutral-lightest)
-    set std.align(center + top)
-    show: block.with(width: 100%, height: 1.3em)
-    grid(columns: (auto, auto), rows: 1.5em, align: horizon,
-      _cell(self, pad-left: 1em, pos: "left", white: true, utils.call-or-display(self, self.store.footer-left)),
-      _cell(self, pad-right: 1em, pos: "right", white: true, utils.call-or-display(self, self.store.footer-right)))
-  }
-  let self = utils.merge-dicts(self, config-page(fill: self.colors.primary, header: header, footer: footer), config-common(freeze-slide-counter: true))
-  touying-slide(self: self, std.align(center + horizon, {
-    text(size: 2em, fill: white, weight: "bold", self.info.subject); parbreak()
-    text(size: 1.2em, fill: self.colors.secondary, self.info.subtitle); linebreak()
-    text(size: 1.2em, fill: white, self.info.title)
-  }))
-})
+#let title-slide(
+  /// Content below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
+  ..body,
+) = {
+  assert(body.named().len() == 0 and body.pos().len() <= 1,
+    message: "title-slide: takes one optional content, `#title-slide[..]`, and no named argument")
+  let body = body.pos().at(0, default: none)
+  touying-slide-wrapper(self => {
+    let footer(self) = {
+      set std.align(bottom)
+      move(grid(columns: (1em, auto, 1fr), rows: 1.5em, align: horizon,
+        _line-white(self),
+        _logos(self, white: true),
+        _line-white(self)), dy: -0.05em)
+    }
+    let header(self) = {
+      set text(self.colors.neutral-lightest)
+      set std.align(center + top)
+      show: block.with(width: 100%, height: 1.3em)
+      grid(columns: (auto, auto), rows: 1.5em, align: horizon,
+        _cell(self, pad-left: 1em, pos: "left", white: true, utils.call-or-display(self, self.store.footer-left)),
+        _cell(self, pad-right: 1em, pos: "right", white: true, utils.call-or-display(self, self.store.footer-right)))
+    }
+    let self = utils.merge-dicts(self, config-page(fill: self.colors.primary, header: header, footer: footer), config-common(freeze-slide-counter: true))
+    touying-slide(self: self, {
+      std.align(center + horizon, {
+        text(size: 2em, fill: white, weight: "bold", self.info.subject); parbreak()
+        text(size: 1.2em, fill: self.colors.secondary, self.info.subtitle); linebreak()
+        text(size: 1.2em, fill: white, self.info.title)
+      })
+      // white on blue, as in a pill (`kind: "pill"`), 0.5em above the bottom of the page body. Placed, not measured:
+      // inside `layout`/`context` Touying's marks (`#alert`, `#pause`) are out of its reach and panic
+      if body != none {
+        place(bottom + center, dy: -0.5em, {
+          set text(fill: self.colors.neutral-lightest)
+          set std.align(center)
+          _in-box(self.colors.primary, body, kind: "pill")
+        })
+      }
+    })
+  })
+}
 
 // ---------- rules ----------
 // The `init` method of the theme is `_slide-rules` around `_rules`, in that order (the slide rules stay the outermost
@@ -436,6 +468,18 @@
   footer-left: auto,
   /// Right text of the footer; a function receives `self`. `auto` is the author. -> auto | content | function
   footer-right: auto,
+  /// Logos at the left of the footer and at the bottom of the cover, in this order, separated by a dot. Each one is
+  /// content, a function that receives the colour of the footer (the primary colour on the slides, white on the
+  /// cover), or `auto`, the UFAC logo (blue on the slides, white with the yellow shield on the cover). A logo should
+  /// be about `0.64em` high, the height of the UFAC logo. `auto` is the UFAC logo alone; for the UFAC logo and a
+  /// partner's, `(auto, color => image(bytes(read("lab.svg").replace("#000000", color.to-hex())), height: 0.64em))`.
+  /// -> auto | array
+  logos: auto,
+  /// Distance between the content of the section slides (what follows `=`, on the right) and the right edge of the
+  /// page. `false` puts it flush with the edge, which suits a photo or a figure with a background; `true` keeps the
+  /// page margin (`1.8em`, the same as the text), for an image without a background or an icon; a length sets the
+  /// distance. -> bool | length
+  section-margin: false,
   /// Touying configs, typically `config-info(..)`; also `config-common(..)`, `config-page(..)`. -> dictionary
   ..args,
   /// The deck. -> content
@@ -447,6 +491,11 @@
     self => (self.info.subject-code, self.info.subject).filter(given).join(" " + _sep-dot + " ")
   }
   let footer-right = if footer-right != auto { footer-right } else { self => self.info.author }
+  let logos = if logos == auto { (auto,) } else { logos }
+  assert(type(logos) == array and logos.len() > 0,
+    message: "ufac-theme: logos is auto or a non-empty array of logos (content, functions of the colour, or auto)")
+  assert(type(section-margin) in (bool, length),
+    message: "ufac-theme: section-margin is true (the page margin), false (flush with the edge) or a length")
   set text(size: 20pt)
   show: touying-slides.with(
     config-page(..utils.page-args-from-aspect-ratio(aspect-ratio), header-ascent: 0em, footer-descent: 0em, margin: (top: 3.25em, bottom: 1.75em, x: 1.8em)),
@@ -457,7 +506,7 @@
       cover: _cover,   // veil in the page colour at 85% over the laid-out content (see `_cover` in utils.typ)
     ),
     config-colors(..colors),
-    config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name, part-name: part-name, footer-left: footer-left, footer-right: footer-right),
+    config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name, part-name: part-name, footer-left: footer-left, footer-right: footer-right, logos: logos, section-margin: section-margin),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile
     config-info(title: [], subtitle: [], subject: [], subject-code: [], author: none, counter-prefix: [1.]),

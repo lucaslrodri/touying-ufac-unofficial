@@ -8,5 +8,8 @@
   "commandLineTestAdapter.watch": [
     "tests/**/test.typ",
     "typst.toml"
-  ]
+  ],
+  // tinymist compiles a file that a test includes (its body.typ) inside that test, as recorded in tinymist.lock
+  // (sh scripts/lock.sh); otherwise every file is compiled alone (see tests/README.md).
+  "tinymist.projectResolution": "lockDatabase"
 }

@@ -3,8 +3,8 @@
 // `chapter` applies the theme's `_rules` (emphases, markers, enums, tables, `raw` chips, code blocks, boxes and
 // shorthands) with a stand-in `self`, so the manual is written in the same syntax as the decks.
 //
-// Every chapter in `chapters/` starts with `#show: chapter` and holds content only, so that the same files feed the
-// PDF (`manual.typ` includes them) and, later, one web page each (shiroa: `chapter` is the place to wrap `book-page`).
+// The whole manual is one file, `manual.typ`, with `#show: chapter` right after `#show: project.with(..)`: a chapter
+// split into several files left every label of another chapter unknown when one file was opened in the editor.
 #import "@preview/tidy:0.4.3"
 #import "../src/lib.typ": *
 #import "../src/lib.typ" as ufac-lib
@@ -119,7 +119,7 @@
 }
 
 // ---------- shells ----------
-/// First line of every chapter: the look, the theme rules and the example blocks.
+/// The look of the chapters, the theme rules and the example blocks: `manual.typ` applies it once, after `project`.
 #let chapter(body) = {
   show: _base
   // code blocks: the theme's codly setup plus a zebra; the theme's gray box is switched off and every block that is
@@ -156,9 +156,10 @@
     pad(x: 3.8em, align(center, abstract))
     v(3em, weak: true)
     {
-      show outline.entry.where(level: 1): it => { v(.4em, weak: true); strong(it) }
+      // Typst's outline: the theme's `outline` (the parts of a deck) shadows it in this file, as in a deck
+      show std.outline.entry.where(level: 1): it => { v(.4em, weak: true); strong(it) }
       heading(numbering: none, outlined: false, [Contents])
-      columns(2, gutter: 2em, outline(title: none, depth: 2, indent: 1.2em))
+      columns(2, gutter: 2em, std.outline(title: none, depth: 2, indent: 1.2em))
     }
   })
   pagebreak()

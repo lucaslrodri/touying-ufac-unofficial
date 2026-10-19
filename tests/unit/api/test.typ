@@ -1,9 +1,9 @@
 /// Synopsis: compile-only test (no `ref/`): checks the exported API of the theme with assertions.
-#import "@preview/touying-ufac-unofficial:0.1.0": *
+#import "@preview/touying-ufac-unofficial:0.2.0": *
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, empty-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
-  primary, secondary, tertiary, quaternary, icon, local, eq-box) {
+  primary, secondary, tertiary, quaternary, icon, local, eq-box, ufac-logo-image, outline) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
@@ -44,6 +44,12 @@
 #assert.eq(type(eq-box(color: colors.quaternary, $x = 2$)), content)
 #assert.eq(type(icon("link", color: colors.tertiary, size: 2em)), content)
 
+// title-slide: one optional content and no named argument, checked at the call
+#assert.eq(type(title-slide()), content)
+#assert.eq(type(title-slide[Partner]), content)
+#assert-panic(() => title-slide[a][b])
+#assert(catch(() => title-slide(color: red)).contains("title-slide"))
+
 // slides by function: level-2 heading with the kind's label
 #assert.eq(type(exercise-slide(title: [T])[body]), content)
 #assert.eq(type(example-slide[body]), content)
@@ -58,5 +64,33 @@
 #assert-panic(() => _lang-parse("de"))
 #assert(catch(() => _lang-parse("de")).contains("unknown lang"))
 #assert-panic(() => _lang-parse(none))
+
+// the UFAC logo: the SVG (blue `#0c4da2` lettering, yellow `#fdb813` shield) and `ufac-logo-image`, which replaces
+// each colour only when it is given
+#assert.eq(type(ufac-logo), str)
+#let logo-svg(..args) = str(ufac-logo-image(..args).source)
+#assert.eq(ufac-logo-image().func(), image)
+#assert(logo-svg().contains("#0c4da2") and logo-svg().contains("#fdb813"))
+#assert(not logo-svg(color: white).contains("#0c4da2") and logo-svg(color: white).contains("#fdb813"))
+#assert(not logo-svg(color: white, shield: white).contains("#fdb813"))
+#assert.eq(ufac-logo-image().height, 0.64em)
+#assert.eq(ufac-logo-image(height: 2em).height, 2em)
+
+// outline: content (the parts of the deck, read where it stands); Typst's own is still there as `std.outline`
+#assert.eq(type(outline()), content)
+#assert.eq(type(std.outline), function)
+
+// an empty slide, a `== Title` with nothing under it, compiles: its body is `none` (it used to fail in `_children`)
+#ufac-theme[
+  == An empty slide
+
+  == The next slide
+  Text.
+]
+
+// section-margin: true, false or a length; anything else fails at the call, with a clear message
+#assert-panic(() => ufac-theme(section-margin: "yes")[])
+#assert(catch(() => ufac-theme(section-margin: "yes")[]).contains("section-margin"))
+#assert.eq(type(ufac-theme(section-margin: 2em)[= Part]), content)   // Touying needs a slide: an empty deck fails
 
 API test done.

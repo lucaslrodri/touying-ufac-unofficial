@@ -19,6 +19,7 @@ Typst's package directory of macOS and Linux). Paths such as `~/Library/...` bel
 sh scripts/link.sh                    # links @preview/touying-ufac-unofficial:<version> here (`--remove` undoes it)
 sh scripts/fonts.sh                   # only if New Computer Modern (Sans and Math) is not installed: downloads it into fonts/
 git config core.hooksPath .githooks   # runs scripts/local.sh before every commit
+sh scripts/lock.sh                    # tinymist.lock: the editor opens the body of a test through its test.typ
 ```
 
 The template, the example, the tests and the README import the package as
@@ -27,6 +28,12 @@ repository into Typst's local package directory under the `preview` namespace, w
 so that name resolves to the working copy in `tt`, in `typst compile` and in the editor. It does not touch the `local`
 namespace. It is run by hand, once per clone and again when the version changes; in VS Code it is the task
 **typst: link the package** (Cmd+Shift+P > *Tasks: Run Task*).
+
+`scripts/lock.sh` writes `tinymist.lock` (ignored by git) for the editor. With `tinymist.projectResolution:
+"lockDatabase"`, set in `.vscode/settings.json`, tinymist compiles a file that a test includes (its `body.typ`) inside
+that test, where the theme is applied; alone, a body with `@exercise-…` references fails. The routes go to tinymist's
+cache, so the lock is written once per clone and again when a test is added; it needs the tinymist CLI
+(`brew install tinymist`). The manual is a single file, `docs/manual.typ`, so every file of `docs/` opens by itself.
 
 ```sh
 tt run --use-system-fonts       # test suite, with the installed fonts
@@ -92,7 +99,7 @@ cache, so compile the template once before):
 
 ```sh
 sh scripts/package.sh
-docker run --rm -v "$PWD/dist/preview/touying-ufac-unofficial/0.1.0:/data" \
+docker run --rm -v "$PWD/dist/preview/touying-ufac-unofficial/0.2.0:/data" \
   -v "$HOME/Library/Caches/typst/packages:/.cache/typst/packages:ro" ghcr.io/typst/package-check check
 ```
 
