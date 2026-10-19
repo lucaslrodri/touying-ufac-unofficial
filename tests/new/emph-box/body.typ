@@ -79,3 +79,13 @@
 ```
 ]
 ]
+
+== Emphasis box: long badge titles
+A title that wraps makes the badge taller and pushes the body down; `title: []` is the box without a badge:
+#cols[
+  #emph-box(title: [A definition with a title long enough to wrap in a narrow column])[The body starts below it.]
+][
+  #emph-box(color: colors.tertiary, icon: "alert", title: [Caution with a title that also wraps here])[Body.]
+][
+  #emph-box(title: [])[`title: []`: thin box.]
+]

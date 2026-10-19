@@ -5,7 +5,7 @@
   <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/docs/manual.pdf"><img src="https://img.shields.io/badge/manual-PDF-orange" alt="Manual (PDF)"></a>
   <a href="https://typst.app/"><img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Flucaslrodri%2Ftouying-ufac-unofficial%2Fmain%2Ftypst.toml&amp;query=%24.package.compiler&amp;prefix=%E2%89%A5%20&amp;label=Typst&amp;logo=typst&amp;color=239dad" alt="Minimum Typst version"></a>
   <a href="https://typst.app/universe/package/touying"><img src="https://img.shields.io/badge/Touying-0.7.4-blue" alt="Touying version: 0.7.4"></a>
-  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT and MIT-0"></a>
+  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT%20AND%20MIT--0-green" alt="License: MIT and MIT-0"></a>
 </p>
 
 <p align="center">
@@ -65,8 +65,9 @@ Text.
 Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio`
 accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `exercise-name`, `example-name` and `part-name` (override the localized
 names), `exercise-icon` and `example-icon` (the icon in the pill of the exercises and examples: the name of an icon,
-content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `logos` (logos after the UFAC one in the
-footer and on the cover, separated by dots: content, `color => ...` or `auto` for the UFAC logo), `section-margin`
+content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `logos` (an array: the logos of the footer and
+of the cover, in order and separated by dots; each one is content, `color => ...` or `auto` for the UFAC logo, which is
+the default alone: `(auto, x)` keeps it and adds `x`, `(x,)` replaces it), `section-margin`
 (`true` keeps the page margin to the right of the content of the section slides, for images without a background;
 a length sets the distance; `false`, the default, puts it flush with the edge).
 
@@ -122,8 +123,8 @@ Text with *bold*, _italic_, ~~blue emphasis~~, ==yellow highlight== and ~underli
 "A quotation in a box."
 
 
-$ 
-x -3x + 2 = 0 
+$
+x^2 - 3x + 2 = 0
 $
 
 Equation box:
@@ -134,7 +135,7 @@ $
 
 ---
 
-"A list of quotation box"
+"A list of quotation boxes"
 "Another item"
 "Another item \
 with 2 lines"
@@ -152,6 +153,16 @@ with 2 lines"
 
 #cols[Col without divider][Column 2]
 
+== Boxes with an icon
+
+#emph-box(color: colors.quaternary, icon: "light-bulb", title: [Tip])[
+  An icon before the title: any `#icon` of the set (`"light-bulb"`, `"alert"`, …) or any content.
+]
+
+#emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[
+  The icon is centered on the capitals of the title, and the badge keeps the same height.
+]
+
 == An exercise <exercise-a>
 
 Statement. (Also `#exercise-slide(title: [Title])[...]`.)
@@ -159,9 +170,15 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 == An example <example>
 
 Citing the @exercise-a.
+
+== Thank you! <empty-slide-primary>
+// closing slide: no header, title and text centered; `<empty-slide>` keeps the page white, and any color of the
+// palette works (`<empty-slide-tertiary>`, …)
+
+Questions and suggestions: `your.name@ufac.br`
 ```
 
-![The 8 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.2.0/docs/readme/example.png)
+![The 10 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.2.0/docs/readme/example.png)
 <!-- example:end -->
 
 ## Syntax
@@ -177,11 +194,14 @@ Citing the @exercise-a.
 | `=== Subtitle`                  | Blue pill, no new slide; repeated at the top of every `---` continuation                     |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line)         | Next page of the same slide (same header, same pill, same number)                            |
+| `== Title <empty-slide>`        | Closing or transition slide: no header, the title large and centered, the content centered below it (a `---` continuation is a normal slide) |
+| `== Title <empty-slide-primary>` | The same on a page of that color: any key of `colors` (`-secondary`, `-tertiary`, `-quaternary`, `-neutral`, tones such as `-primary-dark`); on a dark color the text and the footer turn white |
 
-Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#empty-slide[...]` (footer only), `#exercise-slide(title:, color:, icon:)[...]`,
+Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#empty-slide(color:, title:)[...]` (footer only; `color` paints the page, `title` gives the centered layout of `<empty-slide>`), `#exercise-slide(title:, color:, icon:)[...]`,
 `#example-slide(title:, color:, icon:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the
 theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`,
-`#slide(composer:)` etc. work as usual.
+`#slide(composer:)` etc. work as usual. Code blocks never split across pages; `#local(breakable: true)[...]` (the
+theme's wrapper of codly's `local`, which takes any codly option) lets a long block split, box included.
 
 ### Inline formatting
 
@@ -192,7 +212,7 @@ theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`,
 | `==text==`, `#highlight[...]` | light-yellow background (`#highlight(fill: colors.quaternary-lighter)` for other tones) |
 | `~text~`, `#underline[...]` | strong yellow underline (box color inside `emph-box`)                                   |
 | `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green                       |
-| `` `code` ``               | gray chip; inside titles, boxes and pills it follows the container color                 |
+| `` `code` ``               | gray chip; inside titles, boxes, pills and table cells it follows the container color (inverted in the blue header and in cells of a dark palette tone, light tones in cells of a light one) |
 | `#icon("name", color: auto, size: 1em)` | one of 320 Octicons, colored by context                                    |
 
 Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand is applied inside `raw`.
@@ -211,6 +231,7 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 ```typst
 #emph-box[...]                                        // thin blue border; `color:` for another family
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
+#emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
@@ -268,3 +289,29 @@ Third-party components: the icons in [src/icons.typ](src/icons.typ) are [Octicon
 The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of the
 [Federal University of Acre](https://www.ufac.br/), and the theme is used for academic purposes. This theme is
 unofficial: it is not affiliated with or endorsed by the university.
+
+## Changelog
+
+### 0.2.0
+
+- Closing and transition slides: a `==` heading labelled `<empty-slide>` (white page) or `<empty-slide-primary>`,
+  `<empty-slide-secondary>`, … (any color of the palette) opens a slide without header, with the title large and
+  centered and the content below it; on a dark color the text and the footer turn white. Function form:
+  `#empty-slide(color:, title:)[...]`.
+- Exercise and example pills show an icon and "Exercise 1.N — Title". The icon is a parameter:
+  `exercise-slide(icon:)`, `example-slide(icon:)`, `ufac-theme(exercise-icon:, example-icon:)` (a name, content or
+  `none`).
+- `emph-box(icon:)`: an icon before the title, centered on the capitals. Badges and pills have the same height with or
+  without an icon, and a long title wraps inside them.
+- `#title-slide[...]` puts content below the titles of the cover; `#outline()` lists the parts of the deck, with links.
+- `ufac-theme(logos:)`: several logos in the footer and on the cover; `ufac-logo-image` draws the UFAC logo in other
+  colors. `ufac-theme(section-margin:)`: distance between the content of the section slides and the page edge.
+- Code blocks can split across pages, box included, with `#local(breakable: true)[...]`.
+- Tables: code in the blue header and in cells filled with a palette tone follows the background, as in pills and boxes.
+- The manual is a single document with an example for each feature; the example deck stays in the repository and is no
+  longer shipped in the package.
+
+### 0.1.0
+
+- First release on Typst Universe: theme, cover, section slides, exercise and example slides, boxes, quotes, columns,
+  icons, code blocks (codly), template and manual.

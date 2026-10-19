@@ -129,15 +129,20 @@
   }
   h(gap)
 }
-/// Line of a pill that may have an icon (the header of an exercise or example, the badge of an @emph-box): at least as
-/// tall as a pill icon (1em) and with the content centered, so that the pills with and without an icon have the same
-/// height. Without it the line is as tall as the capitals, shorter than the icon centered on them. A taller icon
-/// (content) makes the line taller.
+/// Line of a pill that may have an icon (the header of an exercise or example, the badge of an @emph-box). It starts
+/// with an invisible strut as tall as a pill icon (1em) and placed like one, centered on the capitals, so that the
+/// pills with and without an icon have the same height: without it the line is as tall as the capitals, shorter than
+/// the icon centered on them. A long title still wraps and the pill grows with it (a fixed height would cut the second
+/// line); a taller icon (content) makes the line taller.
 /// -> content
 #let _pill-line(
   /// Content of the pill, with or without a `_pill-icon`. -> content
   body,
-) = context box(height: calc.max(1em.to-absolute(), measure(body).height), std.align(horizon, body))
+) = context {
+  let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
+  box(width: 0pt, height: 1em, baseline: (1em.to-absolute() - cap) / 2)
+  body
+}
 
 // ---------- boxes ----------
 /// Box without title: thin border (the old `note-box`).
@@ -162,13 +167,15 @@
 ) = {
   // the badge is a pill: `*x*` white, `~~x~~`/`#primary` yellow and `raw` inverted, as in `_pill` (kind "pill")
   let badge = box(fill: color, radius: 5pt, inset: (x: .8em, y: .3em), text(fill: white, weight: "bold", _in-box(color, _pill-line(title), kind: "pill")))
-  context {
-    let h = measure(badge).height
+  // the badge is measured in the width it has inside the box (the container minus the side insets), so that a title
+  // that wraps pushes the body down instead of covering it
+  layout(size => {
+    let h = measure(badge, width: size.width - 1.8em).height
     pad(top: h / 2, block(stroke: 0.05em + color, radius: 5pt, width: 100%, inset: (x: .9em, top: h / 2 + .45em, bottom: .55em), {
       place(top + left, dx: 0.05em, dy: -(h + .45em), badge)
       _flow(body)
     }))
-  }
+  })
 }
 /// The equation when `body` (ignoring spaces) is a single equation, else `none`.
 ///
@@ -217,6 +224,7 @@
 ) = {
   set list(marker: _markers(color))
   set text(fill: colors.neutral-darkest)
+  let title = if title == [] { none } else { title }   // an empty title is no title (no empty badge)
   let badge = if icon == none { title } else if title == none { _pill-icon(icon, gap: 0pt) } else {
     [#_pill-icon(icon)#title]
   }

@@ -62,7 +62,8 @@ of a program.
 
 == Logos
 
-The footer and the cover show the UFAC logo; `logos` puts others after it, separated by dots. A logo is content, or a
+The footer and the cover show the UFAC logo. `logos` is the list of logos shown there, separated by dots: `(auto, x)`
+keeps the UFAC logo and adds `x` after it, `(x,)` replaces it. A logo is content, or a
 function that receives the colour of the footer (blue on the slides, white on the cover), so that one drawing serves
 both; `auto` stands for the UFAC logo. A logo about `0.64em` high matches the UFAC one. Outside the footer, as in a
 handout that goes with the slides, `ufac-logo-image` draws the UFAC logo in the same colours (@colors).
@@ -86,8 +87,9 @@ the text language and those three names, and each name can still be overridden.
   linguify: [localized names (Exercise, Example, Part)],
 )
 
-The versions below are read from the sources of the package, so this table cannot go stale. All of them are the
-latest releases at the time of writing and are fetched automatically by Typst.
+The versions below are read from the sources of the package, so this table cannot go stale. They are fetched
+automatically by Typst. Newer major releases (touying 0.8, codly 2) require Typst 0.15; this version stays on the
+ones above, which also work with Typst 0.14.
 
 #table(
   columns: (auto, auto, 1fr),
@@ -196,6 +198,7 @@ and the content centered below it. `<empty-slide-primary>` paints the page in th
 `colors` works (`<empty-slide-secondary>`, `<empty-slide-tertiary-dark>`, …). On a dark color the text and the
 footer turn white, and bold, code and icons follow the pill convention; on a light one (`secondary`, the `-lighter`
 tones) they stay as on a white slide. The function form is `#empty-slide(color: colors.primary, title: [..])[..]`.
+The label styles the page its heading opens; a `---` continuation is a normal slide.
 
 #slide-example("empty-slide", pages: (1, 2, 3, 4, 5, 6), columns: (1fr, 1fr))
 
@@ -451,9 +454,10 @@ on a background where the yellow would not stand out, such as the cover of a han
 == Tables
 
 The header row is blue with white text, and formulas in it turn white too. Code chips follow the background, as in
-the pills and boxes: in the header they are inverted (dark blue with light text); in a cell filled with a tone of a
-family of `colors` (`table.cell(fill: colors.secondary-lighter)`) they take the tones of the family's `-dark` color,
-which also colors `*bold*` there.
+the pills and boxes: in the header they are inverted (dark blue with light text). A cell filled with a light tone of a
+family of `colors` (`table.cell(fill: colors.secondary-lighter)`) is like a box of the family's `-dark` color, which
+colors its chips and `*bold*`; a cell filled with a dark tone (`colors.primary`, `colors.tertiary-dark`) is like a
+pill, with white text and inverted chips. White and colors outside the palette change nothing.
 
 ```example
 #table(

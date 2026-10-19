@@ -21,10 +21,13 @@
 ]
 
 == Tables: code chips
-Code chips follow the background, as in pills and boxes: inverted in the header, in the family's tones in a filled cell:
+Code chips follow the background, as in pills and boxes: inverted in the header and in a dark cell (white text), in
+the family's tones in a light cell; white and colors outside the palette change nothing:
 #table(columns: 3,
   [], [`mean(N, 2)` →], [*Bold*],
   [Plain cell], [`x(1)`], [*bold*],
   table.cell(fill: colors.secondary-lighter)[`mean(N)` ↓], table.cell(fill: colors.secondary-lighter)[*bold*],
   table.cell(fill: colors.quaternary-lightest)[`ok`],
+  table.cell(fill: colors.primary)[*bold* `code`], table.cell(fill: white)[*bold* `w`],
+  table.cell(fill: red.lighten(50%))[*other* `r`],
 )

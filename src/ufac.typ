@@ -106,7 +106,8 @@
 /// Background asked by the label of the current `==` heading: `<empty-slide>` gives `none` (the white page),
 /// `<empty-slide-NAME>` the color `NAME` of the palette (`primary`, `secondary`, `tertiary-dark`, … any key of
 /// `colors`), and `auto` means that the heading has no such label. The label is read from Touying's `self.headings`
-/// while the slide is built, as Touying does with its own `touying:hidden`.
+/// while the slide is built, as Touying does with its own `touying:hidden`. Touying empties `self.headings` at a `---`,
+/// so the label styles the page its heading opens; a `---` continuation is a normal slide.
 /// -> auto | none | color
 #let _empty-label(
   /// Touying's `self`. -> dictionary
@@ -124,9 +125,9 @@
     + " <empty-slide-primary>, -secondary, -tertiary, -quaternary, -neutral (or a tone, such as -primary-dark)")
   self.colors.at(name)
 }
-/// True for a light background (a luma of 70% or more: `secondary` and the `-light`, `-lighter` and `-lightest`
-/// tones), where the text stays dark and the footer blue; on a darker one (`primary`, `tertiary`, `quaternary`,
-/// `neutral`) they turn white, as in the pills.
+/// True for a light background (a luma of 70% or more: `secondary`, `secondary-light`, `quaternary-light` and the
+/// `-lighter` and `-lightest` tones), where the text stays dark and the footer blue; on a darker one (`primary`,
+/// `tertiary`, `quaternary`, `neutral`, the other `-light` tones and the `-dark` ones) they turn white, as in the pills.
 /// -> bool
 #let _is-light(
   /// Background color. -> color
@@ -209,7 +210,8 @@
 /// The heading form, for a closing or transition slide: `== Title <empty-slide>` (white page) or
 /// `== Title <empty-slide-primary>`, `<empty-slide-secondary>`, … (any key of `colors`, including the tones, such as
 /// `<empty-slide-primary-dark>`). It is the same slide with the heading as the `title`: large and centered, with
-/// the content centered below it.
+/// the content centered below it. The label styles the page its heading opens: a `---` continuation is a normal
+/// slide, so a closing slide fits on one page (or each page is an `#empty-slide(color:, title:)`).
 ///
 /// ```typ
 /// == Thank you! <empty-slide-primary>
@@ -481,7 +483,7 @@
   show math.equation: set text(font: "New Computer Modern Math")
   show math.equation.where(block: true): set block(above: 0.55em, below: 0.55em)
   // code: inline `raw` as a gray chip (0.85em); blocks at 0.75em via codly (gray numbers, no zebra nor language
-  // header, smart indent, never split across pages). Chip colors: gray out of context; inside a title or
+  // header, smart indent, split across pages only with `breakable: true`). Chip colors: gray out of context; inside a title or
   // `emph-box` fill lightest / border lighter / text dark of the container color; inside a pill (already dark)
   // fill dark / border darker / text lightest.
   show raw.where(block: false): it => context {
@@ -537,13 +539,19 @@
     stroke: (x, y) => (y: self.colors.primary, right: self.colors.primary, x: if x > 0 and y == 0 { self.colors.neutral-lightest } else { self.colors.primary }))
   // the header is a pill (white text on the color), so its code chips, `*bold*` and icons follow the pill convention
   show table.cell.where(y: 0): it => { set text(fill: self.colors.neutral-lightest, weight: "bold"); show math.equation: set text(fill: self.colors.neutral-lightest); _in-box(self.colors.primary, it, kind: "pill") }
-  // a cell filled with a light tone of a family (`table.cell(fill: colors.secondary-lighter)`) is a box of the
-  // family's `-dark` tone, readable on the fill: code chips in light tones of it, as in an @emph-box
+  // a cell filled with a tone of the palette follows its background, as the boxes and the pills do: on a light tone
+  // (`table.cell(fill: colors.secondary-lighter)`) it is a box of the family's `-dark` color, readable on the fill
+  // (code chips in light tones of it, `*bold*` in it); on a dark one (`colors.primary`, `colors.tertiary-dark`) it is a
+  // pill, with white text as in the header. White (`neutral-lightest`) counts as no fill.
   show table.cell: it => {
-    if it.y == 0 or type(it.fill) != color { return it }
+    if it.y == 0 or type(it.fill) != color or it.fill == self.colors.neutral-lightest { return it }
+    let tones = ("", "-light", "-lighter", "-lightest", "-dark", "-darker", "-darkest")
     let family = ("primary", "secondary", "tertiary", "quaternary", "neutral").find(f =>
-      ("", "-light", "-lighter", "-lightest").any(t => self.colors.at(f + t, default: none) == it.fill))
-    if family == none { it } else { _in-box(self.colors.at(family + "-dark"), it) }
+      tones.any(t => self.colors.at(f + t, default: none) == it.fill))
+    if family == none { it } else if _is-light(it.fill) { _in-box(self.colors.at(family + "-dark"), it) } else {
+      set text(fill: self.colors.neutral-lightest)
+      _in-box(it.fill, it, kind: "pill")
+    }
   }
   show figure.caption: it => it.body
   set terms(tight: false)
@@ -579,11 +587,11 @@
   exercise-name: auto,
   /// Name in the pill of example slides; `auto` is Exemplo / Example / Ejemplo. -> auto | content
   example-name: auto,
-  /// Icon before the name in the pill of exercise slides: the name of an `icon`, any content (an image, centered on
-  /// the capitals like the icons) or `none` for no icon. `exercise-slide(icon:)` changes it on one slide.
-  /// -> none | str | content
+  /// Icon before the name in the pill of exercise slides: the name of an `icon`, any content (an image or a symbol,
+  /// centered on the capitals like the icons) or `none` for no icon. `exercise-slide(icon:)` changes it on one slide.
+  /// -> none | str | content | symbol
   exercise-icon: "pencil",
-  /// Icon before the name in the pill of example slides, like `exercise-icon`. -> none | str | content
+  /// Icon before the name in the pill of example slides, like `exercise-icon`. -> none | str | content | symbol
   example-icon: "beaker",
   /// Prefix of the section slide ("Part N:"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
@@ -621,8 +629,8 @@
   assert(type(section-margin) in (bool, length),
     message: "ufac-theme: section-margin is true (the page margin), false (flush with the edge) or a length")
   for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
-    assert(ic == none or type(ic) in (str, content),
-      message: "ufac-theme: " + key + " is the name of an icon, content (an image) or none")
+    assert(ic == none or type(ic) in (str, content, symbol),
+      message: "ufac-theme: " + key + " is the name of an icon, content (an image, a symbol) or none")
   }
   set text(size: 20pt)
   show: touying-slides.with(

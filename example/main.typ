@@ -44,8 +44,8 @@ Text with *bold*, _italic_, ~~blue emphasis~~, ==yellow highlight== and ~underli
 "A quotation in a box."
 
 
-$ 
-x -3x + 2 = 0 
+$
+x^2 - 3x + 2 = 0
 $
 
 Equation box:
@@ -56,7 +56,7 @@ $
 
 ---
 
-"A list of quotation box"
+"A list of quotation boxes"
 "Another item"
 "Another item \
 with 2 lines"
@@ -74,6 +74,16 @@ with 2 lines"
 
 #cols[Col without divider][Column 2]
 
+== Boxes with an icon
+
+#emph-box(color: colors.quaternary, icon: "light-bulb", title: [Tip])[
+  An icon before the title: any `#icon` of the set (`"light-bulb"`, `"alert"`, …) or any content.
+]
+
+#emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[
+  The icon is centered on the capitals of the title, and the badge keeps the same height.
+]
+
 == An exercise <exercise-a>
 
 Statement. (Also `#exercise-slide(title: [Title])[...]`.)
@@ -81,3 +91,9 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 == An example <example>
 
 Citing the @exercise-a.
+
+== Thank you! <empty-slide-primary>
+// closing slide: no header, title and text centered; `<empty-slide>` keeps the page white, and any color of the
+// palette works (`<empty-slide-tertiary>`, …)
+
+Questions and suggestions: `your.name@ufac.br`
