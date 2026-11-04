@@ -273,7 +273,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 
 | Markup                          | Effect                                                                                       |
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
-| `= Title` + `#image(...)`       | Section slide: the title under "PART N" in a yellow tag (`PARTE` in Portuguese and Spanish); the content right after `=` sits on the right, at the page margin from the edge; an image fits whole in a frame of 12em × 66% of the height (a limit: neither cropped nor stretched) |
+| `= Title` + `#image(...)`       | Section slide: the title under "PART N" in a yellow tag (`PARTE` in Portuguese and Spanish); the content right after `=` sits on the right, one page margin away from the edge, in a frame of 12em × 66% of the height: an image without a size fills it, one with a size keeps it and shrinks when it passes it (never cropped nor stretched) |
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
@@ -445,7 +445,7 @@ New:
 - Callouts (`#caution`, `#tip`, `#remark`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo; `code-languages` adds languages, and the output has its pill in the language of the deck.
 - `provide-icons` gives the deck the icons of any collection of Iconify.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
-- The figure of a section fits whole in a frame of 12em × 66%, neither cropped nor stretched.
+- The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks to it when it passes it.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
 ### 0.2.0

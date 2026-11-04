@@ -198,11 +198,11 @@ Headings build the deck: no function call is needed for the ordinary slides.
 == Sections and their figure
 
 Every `=` heading opens a section slide: "PART N" in the yellow tag, the title in blue and the yellow rule. The content
-right after the `=`, typically an image, sits on the right, at the page margin from the edge. The image fits in a frame
-of 12em × 66% of the height, which is a limit and not a size: an image without a size fits whole in it, with its
-proportions; an image with only its height or only its width keeps its proportions and shrinks whole if the other side
-passes the frame. It is neither cropped nor stretched, also inside a figure, an `align` or a link; an `#icon`
-there keeps its size.
+right after the `=`, typically an image, sits on the right, one page margin away from the edge, in a frame of 12em ×
+66% of the height. An image without a size fills the frame, scaled up or down with its proportions. An image with a
+size keeps it, and shrinks whole when it passes the frame, so a small image or an `#icon` keeps its size; a size
+relative to the room (`width: 100%`, `height: 50%`) is taken against the frame. The image is neither cropped nor
+stretched, also inside a figure, an `align` or a link.
 
 #see("ufac", "new-section-slide()")
 

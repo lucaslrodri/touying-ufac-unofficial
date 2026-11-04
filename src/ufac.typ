@@ -841,30 +841,29 @@
   /// Content that follows the `=` heading. -> content
   body,
 ) = touying-slide-wrapper(self => {
-  // The figure of the section has a frame of 12em × 66%, a limit and not a size: an image without a size fits whole in
-  // it, with its proportions, never cropped; an image with one size keeps it and is scaled down whole if the other side
-  // passes the frame; with both, `fit: "contain"` keeps the proportions. The image goes to the right of the frame, so it
-  // keeps the margin from the edge. The rule reaches an image inside a figure, an `align` or a link too; an image with
-  // one size that already fits, as the icons (on a line of text, in a callout, in a badge), is left alone. An image in
-  // a line takes its natural size, not the room it is in, hence the scaling by hand.
-  let scaled(it, f) = scale(f * 100%, reflow: true, it)
-  let limit(it) = {
+  // The figure of the section has a frame of 12em × 66% of the height, at the right. An image without a size fills
+  // it, scaled up or down with its proportions, never cropped (`fit: "contain"`); an image with a size keeps it, and is
+  // scaled down whole when it passes the frame, so a small image or an icon (on a line of text, in a callout, in a
+  // badge) is left alone. A size relative to the room (`width: 100%`, `height: 50%`) is taken against the frame. The
+  // rule reaches an image inside a figure, an `align` or a link too. An image in a line takes its natural size, not
+  // the room it is in, hence the measures by hand; the scale goes on the image itself, so a caption sits under it.
+  // Typst gives a length as a `relative` (`0% + 8em`): only one with a ratio is relative to the room.
+  let has-ratio(x) = type(x) == ratio or (type(x) == relative and x.ratio != 0%)
+  let limit(it) = context {
     let (w, h) = (it.at("width", default: auto), it.at("height", default: auto))
-    if w != auto and h != auto { return it }
-    // a size relative to the room (`width: 100%`, `50%`) is taken against the 12em of the frame, at its right
-    if type(w) in (ratio, relative) { return box(width: 12em, std.align(right, it)) }
-    if type(h) in (ratio, relative) { return it }
-    context {
-      let n = measure(it)
-      // the frame: 12em wide, and 66% of the height of the page between its margins (about)
-      let (fw, fh) = (12em.to-absolute(), (page.height - 5em.to-absolute()) * 66%)
-      // the scale that brings the image to the frame: without a size up or down until a side meets it; with one
-      // size only down, when the other side passes it. The scale goes on the image itself, so a caption sits under it
-      let f = if w == auto and h == auto { calc.min(fw / n.width, fh / n.height) } else if w == auto {
-        calc.min(1, fw / n.width)
-      } else { calc.min(1, fh / n.height) }
-      if f == 1 { it } else { scaled(it, f) }
+    // the frame: 12em wide, and 66% of the height of the page between its margins (about)
+    let (fw, fh) = (12em.to-absolute(), (page.height - 5em.to-absolute()) * 66%)
+    // a relative size is resolved in a box of the width or the height of the frame, at its right
+    let it = if has-ratio(w) and has-ratio(h) { box(width: fw, height: fh, std.align(right + horizon, it)) } else if (
+      has-ratio(w)
+    ) { box(width: fw, std.align(right, it)) } else if has-ratio(h) { box(height: fh, std.align(right + horizon, it)) } else {
+      it
     }
+    let n = measure(it)
+    let f = if (w, h) == (auto, auto) { calc.min(fw / n.width, fh / n.height) } else {
+      calc.min(1, fw / n.width, fh / n.height)
+    }
+    if calc.abs(f - 1) < 0.001 { it } else { scale(f * 100%, reflow: true, it) }
   }
   let body = if body in (none, []) { body } else {
     set image(fit: "contain")

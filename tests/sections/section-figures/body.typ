@@ -26,6 +26,12 @@
 = Both sizes (10em × 10em): contained, not stretched
 #sized(300, 100, width: 10em, height: 10em)
 
+= A large width (15cm): scaled down whole to the frame
+#sized(300, 200, width: 15cm)
+
+= A small image with a size (3em) keeps it
+#sized(100, 100, width: 3em)
+
 = An image inside a figure, with a caption: in the frame
 #figure(shape(300, 100), caption: [A caption under the figure.])
 
@@ -39,6 +45,9 @@
 #sized(300, 100, width: 100%)
 
 #sized(300, 100, width: 50%)
+
+= A height relative to the room (`80%`): against the frame
+#sized(300, 200, height: 80%)
 
 = An icon in the title #icon("tip") stays inline
 #shape(200, 100)
