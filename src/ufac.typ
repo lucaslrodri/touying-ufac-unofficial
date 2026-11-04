@@ -756,9 +756,18 @@
       }
       // three bands: the top, the center and the bottom. The titles and the body stay in the middle of the center, both
       // ways: in the middle of the page when the top and the bottom have similar heights, and in the middle of the free
-      // room when the authors take many lines (at the top or at the bottom), without touching them
+      // room when the authors take many lines (at the top or at the bottom), without touching them. A center taller
+      // than its room (a long title with many authors) is scaled down whole, with some room around it. Not with a body: Touying's marks
+      // (`#pause`, `#alert`) do not go through `layout`
+      let middle = if body != none { titles } else {
+        layout(size => {
+          let h = measure(titles, width: size.width).height
+          // scaled with a room of 1em above and below, as the bands of the top and the bottom have no margin of their own
+          if h <= size.height { titles } else { scale((size.height - 2em.to-absolute()) / h * 100%, reflow: true, titles) }
+        })
+      }
       block(width: 100%, height: 100%, grid(columns: 100%, rows: (auto, 1fr, auto), row-gutter: 0.6em,
-        _row(header, top), std.align(center + horizon, titles), foot))
+        _row(header, top), std.align(center + horizon, middle), foot))
     }))
   })
 }
