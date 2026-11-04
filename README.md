@@ -66,7 +66,7 @@ Text.
 | `institution` | | `auto` (the Universidade Federal do Acre) or an array; only for `#info` |
 | `logo` | | the logos of the footer and of the cover, separated by dots: `auto` is the UFAC logo, `(auto, x)` adds `x` after it; a logo is content or `color => ...` (the color of the footer) |
 | `contact` | | one or an array (an e-mail, a page); only for `#info`, such as in the body of `#ending-slide` |
-| `counter-prefix` | | "Exercise 1.N" / "Example 1.N"; `[3.]` gives "Exercise 3.N", `none` gives "Exercise N" (the default of every `kind` but `"lecture"` and `"course"`) |
+| `counter-prefix` | | "Exercise 1.N" / "Example 1.N"; `[3.]` gives "Exercise 3.N", `none` gives "Exercise N", the default of the kinds without units (below) |
 
 ### The kind of work and the aliases
 
@@ -74,10 +74,13 @@ A deck of a course uses the aliases of the table above; two names of one field a
 
 | `kind` | Recommends |
 | ------ | ---------- |
-| `"lecture"`, `"talk"` | the style `"line"`: the authors and the date on one line at the bottom; a talk numbers the exercises without a prefix |
+| `"lecture"` | the style `"line"`: the authors and the date on one line at the bottom |
 | `"course"` (an extension course) | the style `"top"` and the label "Instructors" over the authors |
-| `"coursework"` | the style `"stack"`: the authors in groups at the bottom left; exercises without a prefix ("Exercise 1") |
-| `"tcc"`, `"dissertation"`, `"thesis"` | the style `"top"` and the tag of the work ("Undergraduate Thesis", …); exercises without a prefix |
+| `"talk"` | the style `"line"`; no units: exercises without a prefix ("Exercise 1") |
+| `"coursework"` | the style `"stack"`: the authors in groups at the bottom left; no units: exercises without a prefix |
+| `"tcc"`, `"dissertation"`, `"thesis"` | the style `"top"` and the tag of the work ("Undergraduate Thesis", …); no units: exercises without a prefix |
+
+Without a `kind`, the cover has the style `"line"` and the exercises the prefix `[1.]`.
 
 ```typst
 // the work of students for a course

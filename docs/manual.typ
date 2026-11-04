@@ -97,7 +97,7 @@ reads these fields:
   [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; shown with `#info` (@info)],
   [`logo`], [`auto`], [the logos of the footer and of the cover (@logos)],
   [`contact`], [`none`], [one or an array (an e-mail, a page); shown with `#info` (@info)],
-  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N"; `none` gives "Exercise N", the default of a work (@kinds)],
+  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N"; `none` gives "Exercise N", the default of the kinds without units (@kinds)],
 )
 
 An author written as free content keeps its lines (broken with `\`), and a line only in emphasis is a label over a
@@ -120,17 +120,21 @@ error. A date given as `semester` or `year` is short, and also goes to the foote
   [`course` (the program, in a final paper)], [`short-subtitle`], [`semester`, `year`], [`date`],
 )
 
-`kind` tells what the presentation is, and brings the recommended cover; anything the deck writes wins over it. A
-lecture and a course keep the prefix of the unit in the numbers of exercises and examples ("Exercise 1.1"); the other
-kinds are not part of a course and number them without a prefix ("Exercise 1").
+`kind` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes wins
+over it. The prefix of the exercises and examples ("Exercise 1.1") stands for the unit of a course, so the kinds
+without units number them without it ("Exercise 1"). Without a `kind`, the cover has the style `"line"` and the
+numbers have the prefix `[1.]`.
 
 #table(
   columns: (auto, 1fr),
   table.header([`kind`], [Recommends]),
-  [`"lecture"`, `"talk"`], [the style `"line"`: the authors and the date on one line at the bottom],
+  [`"lecture"`], [the style `"line"`: the authors and the date on one line at the bottom],
   [`"course"`], [the style `"top"` and the label "Instructors" ("Ministrantes") over the authors],
-  [`"coursework"`], [the style `"stack"`: the authors in groups at the bottom left],
-  [`"tcc"`, `"dissertation"`, `"thesis"`], [the style `"top"` and the tag of the work ("Undergraduate Thesis", …)],
+  [`"talk"`], [the style `"line"`; no units: exercises without a prefix],
+  [`"coursework"`], [the style `"stack"`: the authors in groups at the bottom left; no units: exercises without a
+    prefix],
+  [`"tcc"`, `"dissertation"`, `"thesis"`], [the style `"top"` and the tag of the work ("Undergraduate Thesis", …); no
+    units: exercises without a prefix],
 )
 
 The work of students for a course keeps the names of the course and takes `kind: "coursework"`: the students and the
@@ -253,7 +257,7 @@ as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "
 
 Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
 gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
-"Exercise 1", the default of a coursework, a talk and a final paper (@kinds).
+"Exercise 1", the default of the kinds without units (@kinds).
 
 ```typ
 #show: ufac-theme.with(config-info(

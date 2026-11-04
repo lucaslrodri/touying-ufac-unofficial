@@ -117,8 +117,14 @@
 #assert.eq(_prepare-configs("pt", (config-info(kind: "course"),)).after.first().store,
   (cover-style: "top", author-label: "Ministrantes"))
 // the kinds that are not part of a course number the exercises without a prefix, before the configs of the deck
-#assert.eq(_prepare-configs("en", (config-info(kind: "coursework"),)).before.map(c => c.info), ((counter-prefix: none),))
-#assert.eq(_prepare-configs("en", (config-info(kind: "lecture"),)).before, ())
+#for kind in ("coursework", "talk", "tcc", "dissertation", "thesis") {
+  let prefix = _prepare-configs("en", (config-info(kind: kind),)).before.map(c => c.info).filter(i => "counter-prefix" in i)
+  assert.eq(prefix, ((counter-prefix: none),), message: kind + " has no units: no prefix")
+}
+#for kind in ("lecture", "course") {
+  let infos = _prepare-configs("en", (config-info(kind: kind),)).before.map(c => c.info)
+  assert(infos.all(i => "counter-prefix" not in i), message: kind + " keeps the prefix of the theme")
+}
 #assert(catch(() => info("nope")).contains("unknown key"))
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form

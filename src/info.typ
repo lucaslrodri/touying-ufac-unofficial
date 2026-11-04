@@ -170,8 +170,8 @@
 
 /// The kinds of presentation (`config-info(kind:)`) and what each one recommends: the style of the cover, the label of
 /// the authors, the tag of the cover (the `short-title`), these two by their key in `lang.toml`, and, for the kinds
-/// that are not part of a course, numbers of exercises and examples without a prefix (`counter-prefix: none`, "Exercise
-/// 1"): the prefix stands for the unit of a course. The deck can always change any of them.
+/// without units, numbers of exercises and examples without a prefix (`counter-prefix: none`, "Exercise 1"): the
+/// prefix stands for the unit of a course. The deck can always change any of them.
 ///
 /// #test(`_kinds.lecture.style == "line"`, `_kinds.tcc.short-title == "tcc"`, `"counter-prefix" not in _kinds.course`,
 ///   `_kinds.coursework.counter-prefix == none`)
