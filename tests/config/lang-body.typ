@@ -23,7 +23,7 @@ Green pill with the localized name.
 The word of the solution.
 
 == More words of the language
-#remark[The title of a remark.] #note[The title of a note.]
+#remark[The title of a reminder.] #note[The title of a note.]
 ```text
 the output of a program
 ```

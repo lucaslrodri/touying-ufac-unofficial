@@ -1,4 +1,4 @@
-/// Synopsis: `ufac-theme(code-languages:)` without codly: a new language with an icon given as content, `python` renamed with its icon kept, `matlab` renamed without `icon:` (no icon), and a `text` entry, which is ignored: the output keeps its pill, "Output" in the language of the deck.
+/// Synopsis: `ufac-theme(code-languages:)` without codly: a new language with an icon given as content, `python` replaced by a new entry with its logo given again, `matlab` replaced without `icon:` (an entry replaces the whole language, so no icon), and a `text` entry, which is ignored: the output keeps its pill, "Output" in the language of the deck.
 #import "../../common.typ": *
 #show: ufac-theme.with(
   lang: "en",

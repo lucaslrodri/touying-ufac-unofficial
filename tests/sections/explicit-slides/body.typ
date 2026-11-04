@@ -16,3 +16,6 @@
 #empty-slide[
   #align(center + horizon)[`#empty-slide[..]` of Touying: no header, no footer.]
 ]
+
+== A label of 0.2.0 <empty-slide>
+`<empty-slide>` was a slide of the theme in 0.2.0; it is now an ordinary label, so this is an ordinary slide, with its header and its footer.
