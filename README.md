@@ -208,7 +208,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 | `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header, same box, same number); a long content also goes on by itself |
 | `==` (without text)            | A slide without a title, with the footer |
 
-Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`. Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual. Code blocks never split across pages; with codly 2 (`ufac-theme(codly: codly)`) codly's own options apply.
+Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`. Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual. Code blocks never split across pages; for codly, see [Integrations](#integrations).
 
 ### Inline formatting
 
@@ -220,7 +220,7 @@ Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-le
 | `~text~`, `#underline[...]` | strong yellow underline (box color inside `emph-box`)                                   |
 | `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green                       |
 | `` `code` ``               | gray chip; inside titles, boxes, pills and table cells it follows the container color (inverted in the blue header and in cells of a dark palette tone, light tones in cells of a light one) |
-| `#icon("name", color: auto, size: 1em)` | an icon of the theme (`"warning"`, `"tip"`, `"python"`, …) or of a collection given with `#provide-icons(json(..))`, as `"collection:name"`; colored by context |
+| `#icon("name", color: auto, size: 1em)` | an icon of the theme (`"warning"`, `"tip"`, `"python"`, …), colored by context; other icons come from iconify (see [Integrations](#integrations)) |
 | `#tag[text]`               | the yellow tag of the cover, for the text, the titles and the tables; `color:` for another one |
 
 Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand is applied inside `raw`.
@@ -263,6 +263,57 @@ Markdown-like short forms (inline content only, always primary):
 
 `colors` has five families (`primary` `#0C4DA2`, `secondary` `#FFBF14`, `tertiary` `#BE1E2D`, `quaternary` `#09B081`, `neutral` `#808080`) × seven tones (`-darkest`, `-darker`, `-dark`, base, `-light`, `-lighter`, `-lightest`), e.g. `colors.primary-lighter`. The same keys are available as `self.colors.*`.
 
+## Integrations
+
+The theme depends only on Touying. Other packages work with it in a deck that imports them.
+
+### Code blocks with codly
+
+The theme draws its own code box and does not need [codly](https://typst.app/universe/package/codly). For codly's features (a file name, highlights, ranges, `diff`), import codly 2 (Typst ≥ 0.15) and pass it to the theme: every block goes through codly with the same look.
+
+````typst
+#import "@preview/codly:2.0.0" as codly
+#show: ufac-theme.with(codly: codly, config-info(..))
+
+#codly.new(
+  ```python
+  def scale(grams, people, serves=4):
+      return grams * people / serves
+  ```,
+  file: "recipe.py",
+  highlights: ((line: 2, start: 12, end: 26, tag: [per person]),),
+)
+````
+
+### Icons with iconify
+
+The theme ships only its own icons. Any other icon comes from the [iconify](https://typst.app/universe/package/iconify) package, used directly: import it, give it one or more collections in the JSON format of [Iconify](https://iconify.design/) and write `iconify.icon("collection:name")`. The icon is content, so it goes wherever the theme takes an icon (the badge of an `emph-box`, a callout, the pill of an exercise or example), and it takes the colour of the text there.
+
+```typst
+#import "@preview/touying:0.7.4": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/iconify:0.5.3"
+
+#show: ufac-theme.with(lang: "en", config-info(subject: [Ocean Science], author: [Prof. Author Name]))
+#let ic = iconify.icon.with(height: 1em)
+
+== Field trip
+// only the chosen icons, from https://api.iconify.design/ph.json?icons=boat-bold,sun-bold,waves-bold
+#iconify.provide-icons(json("ph.json"))
+#emph-box(icon: ic("ph:boat-bold"), title: [On the boat])[
+  Bring a hat #ic("ph:sun-bold", y: -0.2em) and water.
+]
+#tip(icon: ic("ph:waves-bold"))[The tide turns at 14:20.]
+
+#exercise-slide(title: [Wave height], icon: ic("ph:waves-bold"))[Measure the height of ten waves.]
+```
+
+The names of the icons are on [icones.js.org](https://icones.js.org/); a whole collection can also be downloaded from the site of the iconify package. Each collection has its own license.
+
+### Touying's integrations
+
+The packages Touying integrates work as in any Touying theme: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and Fletcher, whose diagrams reveal their parts with `#pause` through `touying-reduce`, [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex).
+
 ## Documentation
 
 A full set of documentation in PDF can be found in the [repository](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
@@ -273,10 +324,11 @@ A full set of documentation in PDF can be found in the [repository](https://gith
 | ---------- | ------- | ---- |
 | [Typst](https://typst.app/) | ≥ 0.14 | compiler |
 | [touying](https://typst.app/universe/package/touying) | 0.7.4 | slide engine (the deck imports it too) |
-| [iconify](https://typst.app/universe/package/iconify) | 0.5.3 | the icons of a collection the deck provides (`provide-icons`); the theme's own icons are shipped with it |
+| [codly](https://typst.app/universe/package/codly) | 2.0.0 | optional: the code blocks through codly (Typst ≥ 0.15); see [Integrations](#integrations) |
+| [iconify](https://typst.app/universe/package/iconify) | 0.5.3 | optional: icons beyond those of the theme; see [Integrations](#integrations) |
 | *New Computer Modern Sans* | | font, installed on the system (not bundled with Typst, unlike *New Computer Modern Math*, used for the equations) |
 
-The packages are fetched automatically. [codly](https://typst.app/universe/package/codly) is optional: a deck that wants it imports codly 2 itself (Typst ≥ 0.15) and passes it to the theme, `ufac-theme(codly: codly)`. The font is not: *New Computer Modern Sans* belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family (download the archive from CTAN; the fonts are the `NewCMSans10-*.otf` files of its `otf` folder). Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
+The packages are fetched automatically; the theme imports only touying, and a deck imports codly or iconify when it wants them. The font is not fetched: *New Computer Modern Sans* belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family (download the archive from CTAN; the fonts are the `NewCMSans10-*.otf` files of its `otf` folder). Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
 ## License
 
@@ -295,7 +347,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The information of the deck is Touying's `config-info`: `subject` → `title` (or keep `subject`, now an alias), `subject-code` → `short-title`, the old `title` → `subtitle`, the old `subtitle` → `short-subtitle`; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
 - The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and `#empty-slide` are gone (a slide without a title is a `==` without text).
 - The theme no longer depends on codly nor on linguify: `local`, `codly-range` and `no-codly` are gone; with codly 2, `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
-- The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
+- The theme ships only its own icons: `#icon("rocket")` of 0.2.0 comes from the iconify package, with the Octicons collection: `#import "@preview/iconify:0.5.3"`, `#iconify.provide-icons(json("octicon.json"))` and `#iconify.icon("octicon:rocket-16", height: 1em)`.
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
 - `ufac-logo-image` is gone: in a slide, `#deck-info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
 

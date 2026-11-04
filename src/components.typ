@@ -83,11 +83,11 @@
 ) = context _pill(color: _current-box-color(colors.primary), body)
 
 // ---------- icons ----------
-/// An icon, already wrapped in a `box` for inline use: a role of the theme (`"warning"`, `"tip"`, `"info"`, `"note"`,
-/// `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
-/// Octicons the theme ships by its 0.2.0 name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
-/// collection given with `provide-icons`, as `"collection:name"` (`"octicon:rocket-16"`, `"mdi:home"`). An unknown name
-/// is a compile error that says how to get the icon.
+/// An icon of the theme, already wrapped in a `box` for inline use: a role of the theme (`"warning"`, `"tip"`,
+/// `"info"`, `"note"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`,
+/// `"python"`, …) or one of the Octicons the theme ships by its 0.2.0 name (`"alert"`, `"light-bulb"`, `"pencil"`,
+/// `"beaker"`, …). Any other icon comes from the iconify package, used directly by the deck (the manual,
+/// Integrations); an unknown name is a compile error that says so.
 ///
 /// ```example
 /// #icon("tip", color: colors.quaternary) A tip,
@@ -352,7 +352,10 @@
       if ic != none { context {
         let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
         let size = 0.9em.to-absolute()
-        move(dy: -(size - cap) / 2, if type(ic) == str { icon(ic, color: c, size: size, baseline: 0pt) } else { box(height: size, ic) })
+        move(dy: -(size - cap) / 2, if type(ic) == str { icon(ic, color: c, size: size, baseline: 0pt) } else {
+          // content, such as an icon of the iconify package, which takes the colour of the text: the callout's
+          text(fill: c, box(height: size, ic))
+        })
       } },
       _flow[#if label != none [#text(weight: "bold", fill: c.darken(25%), label)#h(0.35em)]#body],
     ))

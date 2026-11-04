@@ -136,16 +136,24 @@ the text language and those three names, and each name can still be overridden.
 
 == Dependencies <dependencies>
 
-#let sources = ("lib.typ", "ufac.typ", "components.typ", "utils.typ", "icons.typ", "code.typ").map(f => read("../src/" + f)).join()
-#let found = sources.matches(regex("@preview/([a-z0-9-]+):([0-9.]+)")).map(m => m.captures).dedup().sorted()
+// every `@preview/name:version` in the sources (the import of touying, and the hints that name codly and iconify) and
+// in the examples of the integrations; touying, the only one the theme imports, first
+#let found = {
+  let files = ("lib.typ", "ufac.typ", "components.typ", "utils.typ", "icons.typ", "code.typ", "info.typ")
+    .map(f => read("../src/" + f)) + ("code-codly.typ", "icons-iconify.typ").map(f => read("examples/" + f))
+  files.join().matches(regex("@preview/([a-z0-9-]+):([0-9.]+)")).map(m => m.captures).dedup()
+    .sorted(key: p => (p.first() != "touying", p.first()))
+}
 #let roles = (
   touying: [the slide engine; the deck imports it too, with the same version],
-  iconify: [the icons of a collection the deck provides (`provide-icons`); the theme's own icons are shipped with it],
+  codly: [optional: the code blocks through codly (requires Typst 0.15)],
+  iconify: [optional: icons beyond those of the theme],
 )
 
-The versions below are read from the sources of the package, so this table cannot go stale. They are fetched
-automatically by Typst. touying 0.8 requires Typst 0.15; this version stays on 0.7.4, which also works with Typst 0.14.
-codly is optional: a deck that wants it imports codly 2 itself and passes it to the theme (see @code).
+The versions below are read from the sources of the package and from the examples of @integrations, so this table
+cannot go stale. Typst fetches them by itself. touying 0.8 requires Typst 0.15; this version stays on 0.7.4, which
+also works with Typst 0.14. The theme imports only touying; codly and iconify are optional, imported by a deck that
+wants them (@integrations).
 
 #table(
   columns: (auto, auto, 1fr),
@@ -579,15 +587,11 @@ pill are `python`, `typst`, `matlab`, `bash` and `sh` (these two with the termin
 
 #slide-example("code")
 
-With codly 2, the deck imports it and passes it to the theme, `ufac-theme(codly: codly)`: every block goes through
-codly with the same look, and codly's own features (a file name, highlights, ranges, `diff`) are at hand through its
-functions (`codly.new(..)`, `codly.set_(..)`). The theme never imports codly; codly 2 requires Typst 0.15.
+For a file name, highlights or ranges, codly 2 gives every block the same look (@integrations).
 
-#slide-example("code-codly")
+#reference("code", "code-languages", "ufac-syntax")
 
-#reference("code", "code-languages", "codly-ufac-theme", "ufac-syntax")
-
-== Icons
+== Icons <icons>
 
 #reference("components", "icon")
 
@@ -612,23 +616,10 @@ one has a role in the theme, which is also its name for `#icon`:
 }
 
 The Octicons of the theme keep their 0.2.0 names (`"alert"`, `"light-bulb"`, `"info"`, `"note"`, `"pencil"`, `"beaker"`,
-`"file-code"`, `"terminal"`, `"mail"`). Any other icon comes from a collection in the JSON format of
-#link("https://iconify.design/")[Iconify], given to `provide-icons` and written as `"collection:name"`:
+`"file-code"`, `"terminal"`, `"mail"`). Any other icon, such as an Octicon of 0.2.0 that the theme no longer ships
+(`#icon("rocket")`), comes from the iconify package, which the deck uses directly (@integrations).
 
-- *The whole collection*: download its JSON from the site of the
-  #link("https://typst.app/universe/package/iconify")[iconify package] (some are several megabytes).
-- *Only the chosen icons*: ask the Iconify API for them, such as
-  `https://api.iconify.design/octicon.json?icons=rocket-16,tools-16`, and save the answer as `octicon.json`.
-
-```typ
-#provide-icons(json("octicon.json"))
-#icon("octicon:rocket-16") launch
-```
-
-The names of a collection are on #link("https://icones.js.org/")[icones.js.org]. An Octicon of 0.2.0 that the theme no
-longer ships, such as `#icon("rocket")`, is written `#icon("octicon:rocket-16")` with its collection provided.
-
-#reference("icons", "theme-icons", "provide-icons")
+#reference("icons", "theme-icons")
 
 = Touying features <touying>
 
@@ -656,6 +647,55 @@ Available without any wrapper from the theme:
 
 Slides of other Touying themes that this one does not have: `outline-slide` (here, a slide with `#outline()`, see
 @slides), `focus-slide`, `ending-slide` and `matrix-slide`.
+
+= Integrations <integrations>
+
+The theme depends only on Touying. Other packages work with it in a deck that imports them: codly for the code blocks,
+iconify for more icons, and the packages Touying itself integrates.
+
+== Code blocks with codly
+
+The theme draws its own code box (@code) and does not need codly. For codly's features (a file name, highlights,
+ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
+through codly with the same look, and codly's functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2
+requires Typst 0.15.
+
+#slide-example("code-codly")
+
+#reference("code", "codly-ufac-theme")
+
+== Icons with iconify
+
+The theme ships only its own icons (@icons). Any other icon comes from the
+#link("https://typst.app/universe/package/iconify")[iconify package], used directly: the deck imports it, gives it
+one or more collections in the JSON format of #link("https://iconify.design/")[Iconify] with `provide-icons`, and writes
+`iconify.icon("collection:name")`. An icon of iconify is content, so it goes wherever the theme takes an icon: the badge
+of an `emph-box`, a callout, the pill of an exercise or example (`icon:`, or `ufac-theme(exercise-icon:)`). It takes the
+colour of the text there: white on a badge or a pill, the colour of the callout. A height of `1em` matches the text;
+`y: -0.2em` lowers it on a line of text.
+
+#slide-example("icons-iconify", pages: (1, 2), columns: (1fr, 1fr))
+
+A collection can be had in two ways; the names of its icons are on #link("https://icones.js.org/")[icones.js.org], and
+each collection has its license.
+
+#[
+#set par(justify: false)
+- *Only the chosen icons*: ask the Iconify API for them and save the answer, here as `ph.json`:
+  `https://api.iconify.design/ph.json?icons=boat-bold,sun-bold,waves-bold`.
+- *The whole collection*: download its JSON from the site of the iconify package (some are several megabytes).
+]
+
+On a section slide, whose figure has a frame of its own (`12em` wide), an icon also takes `width: auto`, so that it
+keeps its proportions: `iconify.icon("ph:waves-bold", height: 7em, width: auto)`.
+
+== Touying's integrations
+
+The packages Touying integrates work as in any Touying theme: #link("https://touying-typ.github.io/docs/integration/cetz")[CeTZ]
+and Fletcher, whose diagrams reveal their parts with `#pause` through `touying-reduce`;
+#link("https://touying-typ.github.io/docs/integration/pinit")[pinit], for pointing at parts of a slide; and
+#link("https://touying-typ.github.io/docs/integration/mitex")[MiTeX], for LaTeX formulas. Their pages in the documentation
+of Touying show how.
 
 = Index of definitions <index>
 

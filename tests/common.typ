@@ -13,8 +13,9 @@
   author: [Author Name],
 )
 #let setup = ufac-theme.with(lang: "en", test-info)
-// Octicons the theme does not ship (it ships only its own icons), for the tests that use other icons: a test gives
-// them with `#provide-icons(octicons)` inside a slide and writes them as `"octicon:name-16"`
+// Other icons come from the iconify package, used directly as a deck would (the theme ships only its own icons): a test
+// gives the Octicons with `#iconify.provide-icons(octicons)` and writes `iconify.icon("octicon:name-16", height: 1em)`
+#import "@preview/iconify:0.5.3"
 #let octicons = json("octicon.json")   // the suite is in English; the default language (pt-br) is covered by config/lang-default
 
 // `eval` does not see the file scope, hence the dictionary with everything the snippets use (`alert` is the plain
@@ -25,7 +26,7 @@
   primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: primary,
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,
-  utils: utils, components: components, provide-icons: provide-icons, octicons: octicons, tag: tag, callout: callout,
+  utils: utils, components: components, iconify: iconify, octicons: octicons, tag: tag, callout: callout,
   warning: warning, tip: tip, info: info, note: note, deck-info: deck-info,
   placeholder: placeholder,
 )
