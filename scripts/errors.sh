@@ -16,7 +16,7 @@ for f in tests/errors/*.typ; do
   if [ -z "$want" ]; then
     echo "error: $f has no '// error: <text>' first line" >&2
     status=1
-  elif out=$(typst compile "$f" "$tmp/out.pdf" 2>&1); then
+  elif out=$(typst compile --root . "$f" "$tmp/out.pdf" 2>&1); then
     echo "error: $f compiled; expected an error with: $want" >&2
     status=1
   elif ! printf '%s\n' "$out" | grep -qF -- "$want"; then
