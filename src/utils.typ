@@ -348,7 +348,8 @@
 /// `_cover` leaves a block-level chunk in the normal flow, so the layout is identical covered or not, and paints the
 /// veil over it afterwards with a `place`d rectangle whose height is the distance between two real positions (the
 /// start of the chunk and the point after it): no `measure`, hence no second layout. The `parbreak()` after the chunk
-/// forces block mode inside the `context`, which turns a lone shorthand paragraph into a real `par` (§11 of CLAUDE.md).
+/// forces block mode inside the `context`, which turns a lone shorthand paragraph into a real `par`, so the show rules of
+/// the shorthands (`_flow`) see it.
 /// The rectangle's outset reaches what the theme paints outside the layout box (pill outset, quote bar, box stroke).
 /// A chunk that breaks across pages cannot be veiled by one rectangle: it is hidden instead (same space, breakable),
 /// decided from the end marker of the previous layout pass. Plain running text (no block element, no shorthand) goes to
