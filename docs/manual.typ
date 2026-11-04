@@ -54,6 +54,15 @@ alone, laid out by the same rules as in a deck.
   [`counter-prefix`], [`[1.]`], [prefix of the exercise and example numbers: `[1.]` gives "Exercise 1.N", `none` gives "Exercise N"],
 )
 
+An author can be written as free content: the lines broken with `\`, and a line only in emphasis is a label. The
+cover shows it as written; the footer and the metadata of the PDF get the names of the first group, those who present.
+
+```typ
+config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Prof. Dr. Advisor Name])
+```
+
+== The kind of work and the aliases
+
 In a course, some fields have clearer names, which are aliases of the fields above (two names of one field are an
 error). A date given as `semester` or `year` is short, and also goes to the footer, after the title.
 
@@ -76,12 +85,24 @@ tag of the cover; anything the deck writes wins over it.
   [`"tcc"`, `"dissertation"`, `"thesis"`], [the style `"top"` and the tag of the work ("Trabalho de Conclusão de Curso", …)],
 )
 
-An author can be written as free content: the lines broken with `\`, and a line only in emphasis is a label. The
-cover shows it as written; the footer and the metadata of the PDF get the names of the first group, those who present.
+The work of students for a course keeps the words of the course and takes `kind: "coursework"`: the students and the
+teacher stack at the bottom left, each group under its label, and the top right is free, for the name of the group.
 
-```typ
-config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Prof. Dr. Advisor Name])
-```
+#slide-example("cover-coursework", pages: (1, 2), columns: (1fr, 1fr))
+
+A final paper takes `kind: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
+advisors at the top right. `"dissertation"` and `"thesis"` do the same with their own tag.
+
+#slide-example("cover-tcc", columns: (1fr, 1fr))
+
+== Showing the information: `#deck-info`
+
+The information of the deck is not only for the cover and the footer: `#deck-info` shows any field, or any alias,
+anywhere in a slide, inside boxes and tables too. The author comes as written, the date in full, the contact as on the
+closing slide, and `"logo"` the logos of the footer, with a height and in white for a dark background. With a function,
+it receives every field at once.
+
+#slide-example("deck-info", pages: (1, 2), columns: (1fr, 1fr))
 
 #reference("info", "deck-info")
 
@@ -96,16 +117,6 @@ authors on several lines at the bottom left; `"top"` puts them at the top right 
 bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#deck-info`.
 
 #slide-example("cover-styles", pages: (1, 2, 3, 4))
-
-The work of students for a course keeps the words of the course and takes `kind: "coursework"`: the students and the
-teacher stack at the bottom left, each group under its label, and the top right is free, for the name of the group.
-
-#slide-example("cover-coursework", pages: (1, 2), columns: (1fr, 1fr))
-
-A final paper takes `kind: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
-advisors at the top right. `"dissertation"` and `"thesis"` do the same with their own tag.
-
-#slide-example("cover-tcc", columns: (1fr, 1fr))
 
 The background of the cover and of the closing slide is a parameter of the theme: `"circles"` (the default),
 `"gradient"` or `"plain"`; here, on the cover of a master's dissertation.

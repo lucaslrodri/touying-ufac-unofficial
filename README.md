@@ -65,9 +65,54 @@ Text.
 | `contact` | one or an array (an e-mail, a page); only for `#deck-info`, such as in the body of `#ending-slide` |
 | `counter-prefix` | "Exercise 1.N" / "Example 1.N"; `none` gives "Exercise N" |
 
-Aliases in the words of a course: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` (`"lecture"`, `"course"`, `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`) brings the recommended style of the cover, label of the authors and tag; what the deck writes wins. `#deck-info("title")` (any field or alias, or `#deck-info(i => ..)`) shows them anywhere.
+### The kind of work and the aliases
 
-Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `codly` (the module of codly 2, when the deck imports it) and `code-languages` (more languages for the code blocks).
+In the words of a course, the fields have aliases: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`; `course` is the program, in a final paper), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` tells what the presentation is and brings the recommended cover; what the deck writes wins:
+
+| `kind` | Recommends |
+| ------ | ---------- |
+| `"lecture"`, `"talk"` | the style `"line"`: the authors and the date on one line at the bottom |
+| `"course"` | the style `"top"` and the label "Instructors" over the authors |
+| `"coursework"` | the style `"stack"`: the authors in groups at the bottom left |
+| `"tcc"`, `"dissertation"`, `"thesis"` | the style `"top"` and the tag of the work ("Undergraduate Thesis", …) |
+
+```typst
+// the work of students for a course
+config-info(
+  kind: "coursework",
+  subject: [Introduction to Economics],
+  subject-code: [ECO101],
+  unit-title: [The price of a cup of coffee in four cities],
+  author: [_Students_ \ First Student, Second Student \ _Teacher_ \ Prof. Dr. Teacher Name],
+  semester: [2026.1],
+)
+
+// a final paper
+config-info(
+  kind: "tcc",
+  title: [A low-cost weather station for schools],
+  course: [Bachelor's in Physics],
+  author: [_Student_ \ Student Name \ _Advisor_ \ Prof. Dr. Advisor Name],
+  year: 2026,
+)
+```
+
+### Showing the information: `#deck-info`
+
+`#deck-info` shows any field or alias anywhere in a slide, inside boxes and tables too: `#deck-info("subject")`, `#deck-info("author")` (as written), `#deck-info("date")` (in full), `#deck-info("logo", height: 2em, white: true)`. With a function, it receives every field at once.
+
+```typst
+#emph-box(title: deck-info("subject-code"))[
+  #deck-info("subject"), #deck-info("semester"), taught by #deck-info("author").
+]
+#deck-info(i => [*#i.unit*: #i.unit-title.])
+
+#ending-slide(subtitle: [Questions?])[#deck-info("contact")]
+```
+
+### Options of the theme
+
+`ufac-theme` takes: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `codly` (the module of codly 2, when the deck imports it) and `code-languages` (more languages for the code blocks).
 
 ## Example
 
