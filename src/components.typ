@@ -175,6 +175,9 @@
     let h = measure(badge, width: size.width - 1.8em).height
     pad(top: h / 2, block(stroke: 0.05em + color, radius: 5pt, width: 100%, inset: (x: .9em, top: h / 2 + .45em, bottom: .55em), {
       place(top + left, dx: 0.05em, dy: -(h + .45em), badge)
+      // a `===` pill that opens the body sticks out of its line (its outset): room for it under the badge
+      let first = _first-child(body)
+      if type(first) == content and first.func() == heading { v(.4em) }
       _flow(body)
     }))
   })
