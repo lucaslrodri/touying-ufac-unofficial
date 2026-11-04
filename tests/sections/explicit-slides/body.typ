@@ -1,7 +1,7 @@
 // Body of the `sections/explicit-slides` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 #import "../../common.typ": *
 == Explicit slides: `#slide`, `#empty-slide`
-`#slide[..]` creates a theme slide without a new `==` (header = current title); `#slide(composer: (1fr, 2fr))[..][..]` splits it into columns; `#empty-slide[..]` has no header but keeps the footer.
+`#slide[..]` creates a theme slide without a new `==` (header = current title); `#slide(composer: (1fr, 2fr))[..][..]` splits it into columns; `#empty-slide[..]` is Touying's own, without header nor footer (the theme's is gone in 0.3.0).
 
 #slide[
   Explicit slide with the same header.
@@ -14,5 +14,5 @@
 ]
 
 #empty-slide[
-  #align(center + horizon)[`#empty-slide[..]`: no header, with footer.]
+  #align(center + horizon)[`#empty-slide[..]` of Touying: no header, no footer.]
 ]

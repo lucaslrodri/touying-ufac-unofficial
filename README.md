@@ -163,11 +163,9 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 
 Citing the @exercise-a.
 
-== Thank you! <empty-slide-primary>
-// closing slide: no header, title and text centered; `<empty-slide>` keeps the page white, and any color of the
-// palette works (`<empty-slide-tertiary>`, …)
-
-Questions and suggestions: `your.name@ufac.br`
+// closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!", and
+// the contact of `config-info(contact:)` goes right below the text
+#ending-slide[Thank you!][Questions and suggestions][`your.name@ufac.br`]
 ```
 
 ![The 10 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)
@@ -186,10 +184,9 @@ Questions and suggestions: `your.name@ufac.br`
 | `=== Subtitle`                  | Blue pill, no new slide; repeated at the top of every `---` continuation                     |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line)         | Next page of the same slide (same header, same pill, same number)                            |
-| `== Title <empty-slide>`        | Closing or transition slide: no header, the title large and centered, the content centered below it (a `---` continuation is a normal slide) |
-| `== Title <empty-slide-primary>` | The same on a page of that color: any key of `colors` (`-secondary`, `-tertiary`, `-quaternary`, `-neutral`, tones such as `-primary-dark`); on a dark color the text and the footer turn white |
+| `==` (without text)            | A slide without a title, with the footer |
 
-Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#empty-slide(color:, title:)[...]` (footer only; `color` paints the page, `title` gives the centered layout of `<empty-slide>`), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual. Code blocks never split across pages; `#local(breakable: true)[...]` (the theme's wrapper of codly's `local`, which takes any codly option) lets a long block split, box included.
+Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual. Code blocks never split across pages; with codly 2 (`ufac-theme(codly: codly)`) codly's own options apply.
 
 ### Inline formatting
 

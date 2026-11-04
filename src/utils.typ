@@ -488,7 +488,7 @@
 /// last slide number. The two texts take their natural width and the `1fr` rule between them the rest: when each
 /// text carried its own `1fr` rule, both cells claimed the whole width and got half of it each, so a long left text
 /// broke into two lines with room to spare on the right (2026-10-16). `white: true` draws it in white, with the white
-/// logos of the cover, for a slide on a dark background (`empty-slide(color:)`).
+/// logos of the cover, for the closing slide (`#ending-slide`).
 /// -> content
 #let _footer(
   /// Touying's `self`. -> dictionary

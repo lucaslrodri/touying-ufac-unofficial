@@ -234,23 +234,23 @@ Only a top-level `===` is repeated; inside `#[ ]`, a column or a box the pill st
 
 == Slide functions
 
-`#slide` is the slide that every `==` opens; calling it gives access to Touying's arguments, such as `composer`.
-`#empty-slide` drops the header and keeps the footer. `#title-slide()` is the cover, shown in @quick-start; `#title-slide[..]` adds content below its titles.
+`#slide` is the slide that every `==` opens; calling it gives access to Touying's arguments, such as `composer`. A
+`==` heading without text gives a slide without a title, with the footer. `#title-slide()` is the cover, shown in
+@quick-start; `#title-slide[..]` adds content below its titles.
 
 #slide-example("slides", pages: (1, 2))
 
-=== Closing and transition slides: `<empty-slide>`
+=== The closing slide: `#ending-slide`
 
-A `==` heading labelled `<empty-slide>` opens an `#empty-slide` with the heading as its title, large and centered,
-and the content centered below it. `<empty-slide-primary>` paints the page in that color of the palette; any key of
-`colors` works (`<empty-slide-secondary>`, `<empty-slide-tertiary-dark>`, …). On a dark color the text and the
-footer turn white, and bold, code and icons follow the pill convention; on a light one (`secondary`, the `-lighter`
-tones) they stay as on a white slide. The function form is `#empty-slide(color: colors.primary, title: [..])[..]`.
-The label styles the page its heading opens; a `---` continuation is a normal slide.
+`#ending-slide` closes the deck on the blue page of the cover: the logos where the cover put them, a large title with
+the yellow rule, a subtitle in yellow, a free body and the contact of `config-info` right below them, and the footer of
+the slides in white. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
+`<empty-slide>` and `<empty-slide-primary>` of 0.2.0 are gone; Touying's own `#empty-slide` (no header nor footer) is
+still there for whoever imports Touying.
 
-#slide-example("empty-slide", pages: (1, 2, 3, 4, 5, 6), columns: (1fr, 1fr))
+#slide-example("ending-slide", pages: (1, 2, 3), columns: (1fr, 1fr))
 
-#reference("ufac", "slide", "empty-slide", "new-section-slide")
+#reference("ufac", "slide", "ending-slide", "new-section-slide")
 
 = Inline formatting and shorthands <inline>
 

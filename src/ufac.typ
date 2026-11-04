@@ -1,11 +1,11 @@
-// touying-ufac-unofficial — the theme: slide header, `slide`, `empty-slide`, `exercise-slide`/`example-slide`, the
-// section and title slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, Touying configuration).
+// touying-ufac-unofficial — the theme: slide header, `slide`, `exercise-slide`/`example-slide`, the cover, the
+// closing and section slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, Touying configuration).
 #import "@preview/touying:0.7.4": *
 #import "constants.typ": colors
 #import "utils.typ": *
 #import "components.typ": *
 #import "code.typ": _code-rules
-#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors
+#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors, _contact
 
 // ---------- header ----------
 /// Header of a content slide: the current `==` in blue (fit to width), or, when the heading carries an
@@ -102,29 +102,7 @@
     }
   }
 }
-// ---------- empty slides ----------
-/// Background asked by the label of the current `==` heading: `<empty-slide>` gives `none` (the white page),
-/// `<empty-slide-NAME>` the color `NAME` of the palette (`primary`, `secondary`, `tertiary-dark`, … any key of
-/// `colors`), and `auto` means that the heading has no such label. The label is read from Touying's `self.headings`
-/// while the slide is built, as Touying does with its own `touying:hidden`. Touying empties `self.headings` at a `---`,
-/// so the label styles the page its heading opens; a `---` continuation is a normal slide.
-/// -> auto | none | color
-#let _empty-label(
-  /// Touying's `self`. -> dictionary
-  self,
-) = {
-  let hs = self.at("headings", default: ())
-  if hs.len() == 0 { return auto }
-  let h = hs.last()
-  if h.depth != 2 or not h.has("label") { return auto }
-  let s = str(h.label)
-  if s == "empty-slide" { return none }
-  if not s.starts-with("empty-slide-") { return auto }
-  let name = s.slice("empty-slide-".len())
-  assert(name in self.colors, message: "empty-slide: <" + s + "> names no color of the palette; use <empty-slide> or"
-    + " <empty-slide-primary>, -secondary, -tertiary, -quaternary, -neutral (or a tone, such as -primary-dark)")
-  self.colors.at(name)
-}
+// ---------- light colours ----------
 /// True for a light background (a luma of 70% or more: `secondary`, `secondary-light`, `quaternary-light` and the
 /// `-lighter` and `-lightest` tones), where the text stays dark and the footer blue; on a darker one (`primary`,
 /// `tertiary`, `quaternary`, `neutral`, the other `-light` tones and the `-dark` ones) they turn white, as in the pills.
@@ -133,39 +111,6 @@
   /// Background color. -> color
   c,
 ) = luma(c).components().first() >= 70%
-/// Slide without the header, shared by @empty-slide and the `<empty-slide>` labels: the page in `color` (`none` keeps
-/// it white) and, with a `title`, the title large and the bodies below it, centered. On a dark color the text and
-/// the footer are white, and `*bold*`, code and icons follow the pill convention (`_in-box(kind: "pill")`).
-/// -> content
-#let _empty-slide(
-  /// Touying's `self`. -> dictionary
-  self,
-  /// Page color, or `none`. -> none | color
-  color,
-  /// Title, or `none`. -> none | content
-  title,
-  /// Arguments of @slide. -> dictionary
-  config, repeat, setting, composer,
-  /// The slide bodies. -> array
-  bodies,
-) = {
-  let dark = color != none and not _is-light(color)
-  let page = config-page(header: none, footer: self => _footer(self, white: dark))
-  let page = if color == none { page } else { utils.merge-dicts(page, config-page(fill: color)) }
-  let self = utils.merge-dicts(self, page, config)
-  let decorate(body) = {
-    let body = if title == none { body } else {
-      std.align(center + horizon, {
-        text(size: 1.6em, weight: "bold", fill: if dark { self.colors.neutral-lightest } else { self.colors.primary }, title)
-        parbreak()
-        body
-      })
-    }
-    if dark { set text(fill: self.colors.neutral-lightest); _in-box(color, body, kind: "pill") } else { body }
-  }
-  touying-slide(self: self, repeat: repeat, setting: body => decorate(setting(body)), composer: composer, ..bodies)
-}
-
 /// Default slide of the theme, with header and footer. Every `==` heading opens one, so it is rarely called by
 /// hand; the explicit form gives access to Touying's arguments.
 ///
@@ -173,8 +118,7 @@
 /// from `---`, from `#pagebreak()` or from content that overflows by itself, unless the continuation starts with
 /// another `===`. A subtitle nested in `#[ ]`, a column or a box is not repeated.
 ///
-/// A `==` heading labelled `<empty-slide>` or `<empty-slide-primary>` (any color of the palette) opens an
-/// @empty-slide instead, with the heading as its title.
+/// A slide without a title is a `==` heading without text: it keeps the footer. The closing slide is @ending-slide.
 ///
 /// ```typ
 /// #slide(composer: (1fr, 2fr))[Left][Right]
@@ -192,51 +136,17 @@
   /// The slide bodies. -> content
   ..bodies,
 ) = touying-slide-wrapper(self => {
-  let empty = _empty-label(self)
-  if empty != auto {
-    return _empty-slide(self, empty, self.headings.last().body, config, repeat, setting, composer, bodies.pos())
-  }
+  // the labels of the `empty-slide` of 0.2.0 are gone: say what replaces them
+  let hs = self.at("headings", default: ())
+  let lbl = if hs.len() > 0 and hs.last().depth == 2 and hs.last().has("label") { str(hs.last().label) }
+  assert(lbl == none or not (lbl == "empty-slide" or lbl.starts-with("empty-slide-")), message: "<" + lbl
+    + "> was removed in 0.3.0: use #ending-slide[..] for the closing slide, or a `==` heading without text for a slide"
+    + " without a title")
   let self = utils.merge-dicts(self, config-page(header: _header, footer: _footer), config)
   let bodies = bodies.pos()
   if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
   touying-slide(self: self, repeat: repeat, setting: setting, composer: composer, ..bodies)
 })
-
-/// Slide without the header but with the footer (Touying's `empty-slide` removes both). Same arguments as @slide,
-/// plus the page color and an optional title. On a dark color (`primary`, `tertiary`, `quaternary`, `neutral`) the
-/// text and the footer turn white, and `*bold*`, code and icons follow the pill convention; on a light one
-/// (`secondary`, the `-lighter` tones) they stay as on a white slide.
-///
-/// The heading form, for a closing or transition slide: `== Title <empty-slide>` (white page) or
-/// `== Title <empty-slide-primary>`, `<empty-slide-secondary>`, … (any key of `colors`, including the tones, such as
-/// `<empty-slide-primary-dark>`). It is the same slide with the heading as the `title`: large and centered, with
-/// the content centered below it. The label styles the page its heading opens: a `---` continuation is a normal
-/// slide, so a closing slide fits on one page (or each page is an `#empty-slide(color:, title:)`).
-///
-/// ```typ
-/// == Thank you! <empty-slide-primary>
-/// Questions: `name@ufac.br`
-///
-/// #empty-slide(color: colors.tertiary)[#align(center + horizon)[*Break*: 15 minutes]]
-/// ```
-/// -> content
-#let empty-slide(
-  /// Slide configuration, see @slide.config. -> dictionary
-  config: (:),
-  /// Number of subslides. -> auto | int
-  repeat: auto,
-  /// Set/show rules applied to the slide body. -> function
-  setting: body => body,
-  /// Layout of the bodies. -> auto | array | function
-  composer: auto,
-  /// Color of the page, such as `colors.primary`; `none` keeps it white. -> none | color
-  color: none,
-  /// Title, large and centered, with the bodies centered below it (the layout of the heading form); `none` leaves the
-  /// bodies as they are. -> none | content
-  title: none,
-  /// The slide bodies. -> content
-  ..bodies,
-) = touying-slide-wrapper(self => _empty-slide(self, color, title, config, repeat, setting, composer, bodies.pos()))
 
 // `exercise-slide`/`example-slide` return a level-2 heading with the label followed by the body (no
 // `touying-slide-wrapper`: Touying flattens sequences at document level, so `---` inside the body works too). An
@@ -566,6 +476,100 @@
       block(width: 100%, height: 100%, grid(columns: 100%, rows: (auto, 1fr, auto), row-gutter: 0.6em,
         _row(header, top), std.align(center + horizon, titles), foot))
     }))
+  })
+}
+
+// ---------- closing ----------
+/// The checks of the arguments of @ending-slide, at the call: `(title, subtitle, body)`.
+/// -> array
+#let _ending-args(
+  /// `title:` of the call. -> auto | none | content
+  title,
+  /// `subtitle:` of the call. -> auto | none | content
+  subtitle,
+  /// The other arguments. -> arguments
+  args,
+) = {
+  assert(args.named().len() == 0, message: "ending-slide: unknown argument " + repr(args.named().keys().at(0, default: "")))
+  let pos = args.pos()
+  if title != auto or subtitle != auto {
+    assert(pos.len() <= 1, message: "ending-slide: with title: or subtitle:, give at most one content, the body")
+    (title, subtitle, pos.at(0, default: none))
+  } else {
+    assert(pos.len() <= 3, message: "ending-slide: at most three contents, [title][subtitle][body]")
+    (pos.at(0, default: auto), pos.at(1, default: none), pos.at(2, default: none))
+  }
+}
+
+/// Closing slide (the name of the templates of Tylina): the blue page of the cover, with the logos where the cover put
+/// them (in the centre for its style `"line"`), a large title with the yellow rule under it, a subtitle in yellow, a
+/// free body and the contact of `config-info` right below them, centered; and the footer of the slides in white (the
+/// logos, the title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the
+/// language of the deck; `title: none` removes the title and the rule.
+///
+/// Two forms: up to three contents in order, `[title][subtitle][body]`, or the named `title:` and `subtitle:` with
+/// the content as the body.
+///
+/// ```typ
+/// #ending-slide()
+/// #ending-slide[Good work!][Next lecture: functions][Read chapter 3.]
+/// #ending-slide(title: [Questions?], subtitle: [Lab 4 on Friday])[*See you!*]
+/// ```
+/// -> content
+#let ending-slide(
+  /// The title; `auto` is "Obrigado!" in the language of the deck, `none` removes it. -> auto | none | content
+  title: auto,
+  /// The subtitle, in yellow; `auto` and `none` give none. -> auto | none | content
+  subtitle: auto,
+  /// The contact under the content; `auto` is the one of `config-info(contact:)`, `none` hides it.
+  /// -> auto | none | content
+  contact: auto,
+  /// Up to three contents, `[title][subtitle][body]`, or the body alone with `title:` or `subtitle:`. -> content
+  ..args,
+) = {
+  let (t, st, body) = _ending-args(title, subtitle, args)
+  touying-slide-wrapper(self => {
+    let t = if t == auto { _tr("thanks") } else { t }
+    let st = if st == auto { none } else { st }
+    let c = if contact == auto { _contact(self) } else { contact }
+    // the page of the cover, with the footer of the slides in white (the logos, the title, the authors, the number)
+    let self = utils.merge-dicts(self, _blue-page(self), config-page(footer: self => _footer(self, white: true),
+      margin: (x: 1.8em, top: 1.2em, bottom: 1.75em)))
+    let decorate(body) = _on-blue(self, {
+      set par(leading: 0.45em, justify: false)
+      // the logos where the cover put them: in the centre for "line", on the left for the other styles; without a
+      // cover, the style of the `kind` of the deck
+      context {
+        let style = _cover-style.get()
+        let style = if style == none { self.store.at("cover-style", default: "line") } else { style }
+        place(top + if style == "line" { center } else { left }, _logos-white(self))
+      }
+      std.align(center + horizon, {
+        let gap = false   // room before every part but the first
+        if t != none {
+          block(spacing: 0pt, {
+            set par(spacing: 0pt)
+            text(size: 2em, weight: "bold", t)
+            v(0.6em)
+            _rule(self)
+          })
+          gap = true
+        }
+        if st != none {
+          if gap { v(0.75em) }
+          block(spacing: 0pt, text(size: 1.2em, fill: self.colors.secondary, st))
+          gap = true
+        }
+        if body not in (none, []) {
+          if gap { v(0.75em) }
+          // the body goes through `_flow`, so that a lone `-> item`, `> box` or `"quote"` is rewritten
+          _flow(body)
+          gap = true
+        }
+        if _given(c) { if gap { v(1.1em) }; text(size: 0.8em, c) }
+      })
+    })
+    touying-slide(self: self, setting: decorate, if body == none { [] } else { body })
   })
 }
 

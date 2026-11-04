@@ -462,7 +462,10 @@
     }
   }
   if cur != () { items.push(cur) }
-  let marker = if color == auto { context text(fill: _current-box-color(colors.primary), sym.arrow.r) } else { text(fill: color, sym.arrow.r) }
+  // `auto`: the colour of the box around it, or white inside a pill (white text on a colour), like bold text
+  let marker = if color == auto {
+    context text(fill: if _in-pill() { white } else { _current-box-color(colors.primary) }, sym.arrow.r)
+  } else { text(fill: color, sym.arrow.r) }
   list(marker: marker, ..items.map(it => it.sum(default: [])))
 }
 /// The `show par` rule of the theme. It inspects `it.body.children`: a lone `>` → signal for the next block

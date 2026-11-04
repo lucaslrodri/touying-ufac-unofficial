@@ -14,6 +14,5 @@
   Right body, twice as wide.
 ]
 
-#empty-slide[
-  #align(center + horizon)[No header, footer kept.]
-]
+==
+A `==` heading without text: a slide without a title, with the footer.

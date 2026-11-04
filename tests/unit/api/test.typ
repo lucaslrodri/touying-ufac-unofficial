@@ -2,7 +2,7 @@
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
 // public functions exist
-#for f in (ufac-theme, title-slide, slide, empty-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
+#for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
   primary, secondary, tertiary, quaternary, icon, eq-box, ufac-logo-image, outline, provide-icons) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
@@ -130,3 +130,12 @@ API test done.
 // cover: an unknown style or background fails with the names that exist
 #assert(catch(() => title-slide(style: "left")).contains("\"stack\""))
 #assert(catch(() => ufac-theme(background: "dark")[x]).contains("\"gradient\""))
+
+// closing slide: up to three contents, or the body alone with the named title/subtitle; checked at the call
+#assert.eq(type(ending-slide()), content)
+#assert.eq(type(ending-slide[T][S][B]), content)
+#assert.eq(type(ending-slide(title: [T])[B]), content)
+#assert(catch(() => ending-slide[a][b][c][d]).contains("at most three"))
+#assert(catch(() => ending-slide(title: [T])[a][b]).contains("the body"))
+#assert(catch(() => ending-slide(color: red)).contains("unknown argument"))
+
