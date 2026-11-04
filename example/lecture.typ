@@ -8,10 +8,10 @@
   lang: "en",
   config-info(
     kind: "lecture",
-    subject: [Control Systems],
-    subject-code: [CODE123],
+    subject: [Introductory Astronomy],
+    subject-code: [AST101],
     unit: [Unit II],
-    unit-title: [Frequency response],
+    unit-title: [The solar system],
     semester: [2026.2],
     author: [Prof. Dr. Your Name],
     contact: [`your.name@example.com`],
@@ -23,53 +23,53 @@
 == Contents
 #outline()
 
-= Bode plots
+= The planets
 
-== The idea
-=== Why look at the frequency?
--> The response to a sinusoid is another sinusoid, at the same frequency
--> Only the *amplitude* and the *phase* change
--> The plot of both against $omega$ is the Bode plot
+== Orbits
+=== Kepler's laws
+-> The planets move on ellipses, with the Sun at a focus
+-> A planet sweeps equal areas in equal times
+-> The square of the period grows with the cube of the orbit
 
 > == Definition
-> The transfer function at $s = j omega$: $G(j omega) = |G(j omega)| e^(j phi(omega))$.
+> An astronomical unit (au) is the mean distance from the Earth to the Sun, about $1.5 times 10^8$ km.
 
-#callout("tip")[In decibels, a gain of 10 is $20$ dB.]
+#callout("tip")[In years and astronomical units, Kepler's third law is just $T^2 = a^3$.]
 
-== A single pole <example>
-Sketch the magnitude plot of $G(s) = 1 / (s + 10)$.
+== The period of Mars <example>
+Mars orbits the Sun at $a = 1.52$ au. How long is its year?
 
 #pause
 #solution
-Below $omega = 10$ rad/s the magnitude is flat, at $-20$ dB; above it, it falls $20$ dB per decade:
+From $T^2 = a^3$:
 
-$ |G(j omega)|_"dB" = -20 log_10 sqrt(omega^2 + 100) $
+$ T = sqrt(1.52^3) approx 1.87 "years" $
 
-== Two poles <exercise>
-For $G(s) = 100 / ((s + 1)(s + 100))$, find:
+== Jupiter and Saturn <exercise>
+Find the period of:
 
-+ the corner frequencies
-+ the slope after each one
-+ the gain at low frequency, in dB
++ Jupiter, at $5.2$ au
++ Saturn, at $9.5$ au
++ an asteroid at $2.8$ au
 
 #answer
-$omega = 1$ and $omega = 100$ rad/s; $-20$ and $-40$ dB/decade; $0$ dB.
+About $11.9$, $29.3$ and $4.7$ years.
 
 = On the computer
 
-== The frequency response in Python
+== The periods in Python
 ```python
-import numpy as np
-from scipy import signal
+planets = {"Mercury": 0.39, "Earth": 1.00, "Mars": 1.52}
 
-G = signal.TransferFunction([100], [1, 101, 100])
-w, mag, phase = signal.bode(G, np.logspace(-1, 3, 200))
-print(round(mag[0], 1))
+for name, a in planets.items():
+    print(name, round(a ** 1.5, 2))
 ```
 ```text
--0.0
+Mercury 0.24
+Earth 1.0
+Mars 1.87
 ```
 
-#callout("warning")[`signal.bode` returns the magnitude already in dB.]
+#callout("warning")[`a ** 1.5` is the same as `sqrt(a ** 3)`.]
 
-#ending-slide[Thank you!][Next lecture: stability margins][Read chapter 8 of the book.]
+#ending-slide[Thank you!][Next lecture: the Moon][Read chapter 3 of the book.]

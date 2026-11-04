@@ -4,7 +4,7 @@
   lang: "en",
   config-info(
     title: [Neural Networks],
-    short-title: [PPGEE016],
+    short-title: [NN101],
     subtitle: [Training and evaluation],
     author: [Prof. Author Name],
   ),

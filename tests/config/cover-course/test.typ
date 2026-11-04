@@ -2,13 +2,13 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
   kind: "course",
-  title: [MATLAB for Engineering],
+  title: [Photography for Beginners],
   short-title: [Extension course],
   short-subtitle: [Module 1],
-  subtitle: [Vectors, plots and scripts],
+  subtitle: [Light, exposure and composition],
   author: ([First Author], [Second Author], [Third Author]),
   date: [March 2026],
-  institution: (auto, [PEI]),
+  institution: (auto, [Arts Department]),
 ))
 
 #title-slide()

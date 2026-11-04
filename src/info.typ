@@ -67,7 +67,7 @@
   self,
 ) = _join-names(_lang-of(self), _list(self.info.at("author", default: none)).filter(_given))
 
-/// The institutions, one or an array; `auto` is the Universidade Federal do Acre: `(auto, [PPGEE])`.
+/// The institutions, one or an array; `auto` is the Universidade Federal do Acre: `(auto, [Graduate Program])`.
 /// -> array
 #let _institution-list(
   /// Touying's `self`. -> dictionary

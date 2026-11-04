@@ -8,8 +8,8 @@
   background: "plain",
   config-info(
     kind: "tcc",
-    title: [Detecting dental implants in panoramic radiographs],
-    course: [Bachelor's in Electrical Engineering],
+    title: [Recognising bird songs in city parks],
+    course: [Bachelor's in Biology],
     author: [_Student_ \ Student Name \ _Advisor_ \ Prof. Dr. Advisor Name \ _Co-advisor_ \ Prof. Dr. Co-advisor Name],
     date: [December 2026],
     contact: [`student.name@example.com`],
@@ -21,36 +21,36 @@
 = Introduction
 
 == The problem
--> A panoramic radiograph shows the whole dental arch
--> Finding the implants by hand is slow
--> A neural network can mark them with oriented boxes
+-> City parks are full of birds, heard more often than seen
+-> Telling the songs apart by ear takes years of practice
+-> A phone can record them, and a program can name the species
 
 #cols(divider: true)[
   #tag[goal]
 
-  Detect and count the implants.
+  Name the species from a short recording.
 ][
   #tag(color: colors.quaternary)[result]
 
-  A detector evaluated on 120 images.
+  A classifier evaluated on 300 recordings.
 ]
 
 = Method
 
-== The network
-#table(columns: 3, table.header([Stage], [Images], [mAP]),
-  [Training], [480], [--],
-  [Validation], [120], [0.91],
-  [Test], [120], [0.89],
+== The recordings
+#table(columns: 3, table.header([Set], [Recordings], [Accuracy]),
+  [Training], [1200], [--],
+  [Validation], [300], [0.88],
+  [Test], [300], [0.86],
 )
 
-#callout("info")[The mAP measures the quality of the boxes, from 0 to 1.]
+#callout("info")[The accuracy is the share of recordings named right, from 0 to 1.]
 
 = Conclusion
 
 == Contributions
-- A set of 720 annotated radiographs
-- A detector with a mAP of 0.89 on the test set
+- A set of 1800 labelled recordings of 25 species
+- A classifier with an accuracy of 0.86 on the test set
 - The code, open
 
 #ending-slide[Thank you!][Questions?]

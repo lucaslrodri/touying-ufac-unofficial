@@ -5,7 +5,7 @@
 #callout("warning")[`x*y` with two vectors is an error: use `x.*y`.]
 #callout("tip")[The up arrow recalls the last command.]
 #callout("info")[A *function* is a named block of code.]
-#callout("note")[MATLAB and Octave differ here.]
+#callout("note")[two versions of a program differ here.]
 
 == The `"badge"` style and the options
 #cols[

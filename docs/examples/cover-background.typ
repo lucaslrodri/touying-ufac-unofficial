@@ -6,8 +6,8 @@
   background: "gradient",   // "circles" (default), "gradient", "plain"
   config-info(
     kind: "tcc",
-    title: [Implant detection in radiographs],
-    course: [Electrical Engineering],
+    title: [Recognising bird songs in city parks],
+    course: [Biology],
     author: [_Student_ \ First Author \ _Advisor_ \ Prof. Dr. Advisor Name],
     year: 2026,
   ),

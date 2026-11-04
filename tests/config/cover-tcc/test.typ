@@ -2,8 +2,8 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(config-info(
   kind: "tcc",
-  title: [Detecção de implantes dentários em radiografias panorâmicas],
-  course: [Bacharelado em Engenharia Elétrica],
+  title: [Reconhecimento de cantos de aves em parques urbanos],
+  course: [Bacharelado em Ciências Biológicas],
   author: [_Discente_ \ Nome do Discente \ _Orientador_ \ Prof. Dr. Nome do Orientador \ _Coorientadora_ \ Profa. Dra. Nome da Coorientadora],
   date: [Dezembro de 2026],
 ))

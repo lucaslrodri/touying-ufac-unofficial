@@ -2,9 +2,9 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(config-info(
   kind: "talk",
-  title: [Typst na sala de aula],
-  short-title: [Seminário],
-  subtitle: [Slides, apostilas e provas com o mesmo código],
+  title: [Uma breve história do relógio],
+  short-title: [Palestra],
+  subtitle: [Do relógio de sol ao relógio atômico],
   author: [Prof. Dr. Seu Nome],
   date: datetime(year: 2026, month: 11, day: 3),
 ))

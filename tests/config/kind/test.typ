@@ -2,7 +2,7 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(config-info(
   kind: "tcc",
-  title: [Detecção de implantes em radiografias],
+  title: [Cantos de aves em parques urbanos],
   author: [Nome do Autor],
   year: 2026,
 ))

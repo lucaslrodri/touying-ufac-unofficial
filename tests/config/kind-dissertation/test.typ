@@ -2,8 +2,8 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "es", config-info(
   kind: "dissertation",
-  title: [Control predictivo de un microrred],
-  course: [Programa de Posgrado en Ingeniería Eléctrica],
+  title: [Historia de los mapas antiguos de la Amazonia],
+  course: [Programa de Posgrado en Historia],
   author: [_Estudiante_ \ Nombre del Estudiante \ _Director_ \ Prof. Dr. Nombre del Director],
   date: datetime(year: 2026, month: 6, day: 15),
 ))

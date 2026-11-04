@@ -205,8 +205,8 @@ slide of its own, right after the cover. In a deck it stands for Typst's `outlin
 
 == Exercises and examples
 
-A label on the `==` heading turns the slide into the box of an exercise (red) or an example (green), as in the handout
-of the MATLAB course: the box fills the slide, the title goes on a badge over its top border, with the icon of the kind
+A label on the `==` heading turns the slide into the box of an exercise (red) or an example (green), as in a printed
+handout: the box fills the slide, the title goes on a badge over its top border, with the icon of the kind
 (a pencil for exercises, a beaker for examples), the name, the number and, after a dash, the title, and the footer of
 the slide closes the box at the bottom, in the colour of the item. Any suffix gives the same slide and makes the label
 unique, so the slide can be cited: `@exercise-ogata` becomes "Exercise 1.N", bold, in the color of the kind and linked
@@ -451,7 +451,7 @@ A paragraph whose lines start with `>` is a box in the primary color; a first li
 == Callouts
 
 A warning, a tip, a remark or a note, each with its colour, icon and title in the language of the deck. The default
-style is the box of the MATLAB course, with a bar on the left and the title opening the text; `style: "badge"` gives an
+style is the box of a printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an
 emphasis box with the title on a badge.
 
 #reference("components", "callout")

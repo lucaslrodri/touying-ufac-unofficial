@@ -330,7 +330,7 @@
   note: (color: "neutral-dark", icon: "note"),
 )
 
-/// The style `"bar"` of @callout, the box of the MATLAB course: a 3pt bar on the left, the fill in the colour lightened
+/// The style `"bar"` of @callout, the box of a printed handout: a 3pt bar on the left, the fill in the colour lightened
 /// 92%, the icon beside the text, which starts with the label in bold.
 /// -> content
 #let _callout-bar(
@@ -359,7 +359,7 @@
   })
 
 /// Callout: a box with the colour, the icon and the title of its kind, the title in the language of the deck. The
-/// default style, `"bar"`, is the box of the MATLAB course: a bar on the left, a light fill, the icon and the title in
+/// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
 /// bold opening the text ("*Tip.* …", "*Warning!* …"); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its colour; a code block keeps its
 /// own look.

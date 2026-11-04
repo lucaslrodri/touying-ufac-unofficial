@@ -2,7 +2,7 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(background: "plain", config-info(
   kind: "course",
-  title: [MATLAB para Engenharia],
+  title: [Fotografia para Iniciantes],
   short-title: [Curso de extensão],
   author: ([Nome do Primeiro Autor], [Nome do Segundo Autor]),
   contact: ([`primeiro.autor@example.com`], [`segundo.autor@example.com`]),

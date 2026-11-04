@@ -6,7 +6,7 @@
   config-info(
     logo: (auto, color => text(size: 0.5em, weight: "bold", fill: color)[LAB]),
     title: [Neural Networks],
-    short-title: [PPGEE016],
+    short-title: [NN101],
     subtitle: [Training and evaluation],
     author: [Prof. Author Name],
   ),

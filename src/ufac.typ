@@ -192,7 +192,7 @@
   )
 }
 
-/// The box of an exercise or example, as in the handout of the MATLAB course, drawn on the page: the fill in the colour
+/// The box of an exercise or example, as in a printed handout, drawn on the page: the fill in the colour
 /// lightened 95%, the badge with the title over the top border and the footer of the slide over the bottom one, in the
 /// colour of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
 /// them). It is the background of every page of the slide, so a content longer than one page goes on to the next one,
@@ -449,7 +449,7 @@
 // ---------- cover ----------
 /// The backgrounds of the cover and of the closing slide (`ufac-theme(background:)`): the fill of the page and whether
 /// it has the circles. `"circles"`, the default, is the solid UFAC blue with two translucent white circles leaving the
-/// corners; `"gradient"`, the gradient of the MATLAB course (the blue darkened 35% to the blue, at 60°), with the
+/// corners; `"gradient"`, a blue gradient (the blue darkened 35% to the blue, at 60°), with the
 /// circles; `"plain"`, the blue alone, the cover of 0.2.0.
 ///
 /// #test(`_backgrounds.keys() == ("circles", "gradient", "plain")`, `not _backgrounds.plain.circles`)
@@ -946,7 +946,7 @@
   show par: _rewrite-par
   show quote: it => quote-box[#it.body #if it.attribution != none { linebreak(); std.align(right, text(size: .85em)[— #it.attribution]) }]
   // links and references inside a coloured box (an `emph-box`, a callout, an exercise) in the colour of the box,
-  // darkened 25%, as in the boxes of the MATLAB course; elsewhere the theme does not colour them
+  // darkened 25%; elsewhere the theme does not colour them
   let in-box-color(it) = context {
     let s = _box-color.get()
     if s.len() == 0 or s.last().kind != "box" { it } else { show text: set text(fill: s.last().color.darken(25%)); it }
@@ -1040,7 +1040,7 @@
 /// #show: ufac-theme.with(
 ///   aspect-ratio: "16-9",
 ///   config-info(
-///     title: [Neural Networks], short-title: [PPGEE016],
+///     title: [Neural Networks], short-title: [NN101],
 ///     subtitle: [Training and evaluation], short-subtitle: [Units III and IV],
 ///     author: [Prof. Name], counter-prefix: [1.],
 ///   ),
@@ -1072,7 +1072,7 @@
   /// Prefix of the section slide ("Part N:"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
   /// Left text of the footer; a function receives `self`. `auto` is the `short-title` and the `title` separated by a
-  /// dot and, when the date is a `semester` or a `year`, the date too ("CCET123 • Control Systems • 2026.2").
+  /// dot and, when the date is a `semester` or a `year`, the date too ("AST101 • Astronomy • 2026.2").
   /// -> auto | content | function
   footer-left: auto,
   /// Right text of the footer; a function receives `self`. `auto` is the authors in running text ("A, B and C"); of an

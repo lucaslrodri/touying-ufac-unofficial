@@ -4,7 +4,7 @@
 #import "@preview/codly:2.0.0" as codly
 #show: ufac-theme.with(lang: "en", codly: codly, config-info(
   title: [Neural Networks],
-  short-title: [PPGEE016],
+  short-title: [NN101],
   subtitle: [Training and evaluation],
   short-subtitle: [Units III and IV],
   author: [Prof. Author Name],

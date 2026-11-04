@@ -2,7 +2,7 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", test-info, config-info(
   date: datetime(year: 2026, month: 3, day: 9),
-  institution: (auto, [PPGEE]),
+  institution: (auto, [Graduate Program]),
   contact: ([`author@example.com`], [`example.com/author`]),
 ))
 
