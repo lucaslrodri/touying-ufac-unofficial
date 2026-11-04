@@ -346,7 +346,7 @@
   inset: (left: 0.8em, right: 1em, y: 0.65em), breakable: false, {
     set list(marker: _markers(c))
     set text(fill: colors.neutral-darkest)
-    _in-box(c, grid(columns: (auto, 1fr), column-gutter: 0.55em,
+    _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em },
       // the icon (0.9em) centered on the capitals of the first line: the line starts at the top of the cell, at the
       // height of the capitals, and the icon goes up half of what it has more than them
       if ic != none { context {
