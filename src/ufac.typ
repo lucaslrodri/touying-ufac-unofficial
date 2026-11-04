@@ -1035,8 +1035,8 @@
 /// #show: ufac-theme.with(
 ///   aspect-ratio: "16-9",
 ///   config-info(
-///     title: [Ocean Science], short-title: [OCE110],
-///     subtitle: [Tides and waves], short-subtitle: [Unit III],
+///     subject: [Ocean Science], subject-code: [OCE110],
+///     unit-title: [Tides and waves], unit: [Unit III],
 ///     author: [Prof. Name], counter-prefix: [1.],
 ///   ),
 /// )

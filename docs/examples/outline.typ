@@ -3,9 +3,9 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    title: [Ocean Science],
-    short-title: [OCE110],
-    subtitle: [Tides and waves],
+    subject: [Ocean Science],
+    subject-code: [OCE110],
+    unit-title: [Tides and waves],
     author: [Prof. Author Name],
   ),
 )

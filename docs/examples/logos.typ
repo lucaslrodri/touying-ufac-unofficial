@@ -5,9 +5,9 @@
   lang: "en",
   config-info(
     logo: (auto, color => text(size: 0.5em, weight: "bold", fill: color)[LAB]),
-    title: [Ocean Science],
-    short-title: [OCE110],
-    subtitle: [Tides and waves],
+    subject: [Ocean Science],
+    subject-code: [OCE110],
+    unit-title: [Tides and waves],
     author: [Prof. Author Name],
   ),
 )
