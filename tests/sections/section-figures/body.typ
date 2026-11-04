@@ -26,14 +26,17 @@
 = Both sizes (10em × 10em): contained, not stretched
 #sized(300, 100, width: 10em, height: 10em)
 
-= An icon of a collection, with only its size
-#provide-icons(octicons)
-#icon("octicon:rocket-16", size: 7em, color: colors.primary-lighter)
+= An image inside a figure, with a caption: in the frame
+#figure(shape(300, 100), caption: [A caption under the figure.])
+
+= An image inside `align` and `link`: in the frame
+#align(center, link("https://example.com", shape(100, 200)))
 
 = An icon in the title #icon("tip") stays inline
 #shape(200, 100)
 
 = The icons of the content keep their size
+A line with #icon("tip") an icon.
 #block(width: 11em)[
   A line with #icon("warning") an icon.
   #tip[A callout keeps its icon.]

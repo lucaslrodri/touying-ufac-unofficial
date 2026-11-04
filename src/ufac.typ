@@ -851,32 +851,36 @@
   body,
 ) = touying-slide-wrapper(self => {
   // The figure of the section has a frame of 12em × 66%, a limit and not a size: an image without a size fits whole in
-  // it, with its proportions, never cropped; an image with one size keeps its proportions and is scaled down whole if
-  // the other side passes the frame; with both, `fit: "contain"` keeps the proportions. The image goes to the right of
-  // the frame, so it keeps the margin from the edge. An image in a line takes its natural size, not the room it is in,
-  // hence the scaling by hand.
-  let scaled(it, f) = scale(calc.min(f, 1e9) * 100%, reflow: true, it)
+  // it, with its proportions, never cropped; an image with one size keeps it and is scaled down whole if the other side
+  // passes the frame; with both, `fit: "contain"` keeps the proportions. The image goes to the right of the frame, so it
+  // keeps the margin from the edge. The rule reaches an image inside a figure, an `align` or a link too; an image with
+  // one size that already fits, as the icons (on a line of text, in a callout, in a badge), is left alone. An image in
+  // a line takes its natural size, not the room it is in, hence the scaling by hand.
+  let scaled(it, f) = scale(f * 100%, reflow: true, it)
   let limit(it) = {
     let (w, h) = (it.at("width", default: auto), it.at("height", default: auto))
+    if w != auto and h != auto { return it }
     if w == auto and h == auto {
-      box(width: 12em, height: 66%, layout(room => {
+      return box(width: 12em, height: 66%, layout(room => {
         let n = measure(it)
         std.align(right + horizon, scaled(it, calc.min(room.width / n.width, room.height / n.height)))
       }))
-    } else if w == auto {
-      box(width: 12em, layout(room => std.align(right, scaled(it, calc.min(1, room.width / measure(it).width)))))
-    } else if h == auto {
-      box(height: 66%, layout(room => std.align(horizon, scaled(it, calc.min(1, room.height / measure(it).height)))))
-    } else { it }
+    }
+    context {
+      let n = measure(it)
+      // the room of the frame: 12em wide, and 66% of the height of the page between its margins (about)
+      let frame-h = (page.height - 5em.to-absolute()) * 66%
+      if w == auto and n.width > 12em.to-absolute() {
+        box(width: 12em, layout(room => std.align(right, scaled(it, room.width / n.width))))
+      } else if h == auto and n.height > frame-h {
+        box(height: 66%, layout(room => std.align(horizon, scaled(it, calc.min(1, room.height / n.height)))))
+      } else { it }
+    }
   }
-  // Only an image that is the content itself gets the frame, not one inside a box: the icons (always in a box, on a
-  // line of text, in a callout, in a pill) keep their size.
-  let frame(c) = if type(c) != content { c } else if c.func() == image { limit(c) } else if utils.is-styled(c) {
-    utils.reconstruct-styled(c, frame(c.child))
-  } else if utils.is-sequence(c) { c.children.map(frame).join() } else { c }
   let body = if body in (none, []) { body } else {
     set image(fit: "contain")
-    frame(body)
+    show image: limit
+    body
   }
   // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the
   // grid still reserves its width and the title never runs under it; `margin` pads it on the right inside the move,
