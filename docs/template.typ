@@ -59,9 +59,9 @@
 #let _in-example = state("manual-in-example", false)   // code inside an example gets no frame of its own
 #let _side-by-side(code, results, columns: (1fr, 1fr), breakable: false) = mantys-like.frame(
   ..mantys-like.code-frame, breakable: breakable, inset: 0pt, clip: true, above: 1.1em, below: 1.1em,
-  grid(columns: columns, inset: (x, _) => if x == 0 { 0pt } else { 8pt },
+  grid(columns: columns, inset: (x, _) => if x == 0 { (x: .6em, y: .45em) } else { 8pt },
     stroke: (x, _) => if x == 1 { (left: mantys-like.code-frame.stroke) },
-    // the zebra code fills the left cell edge to edge; one row per result, the code spanning them all
+    // the code in the left cell, with some room around it; one row per result, the code spanning them all
     grid.cell(rowspan: results.len(), { _in-example.update(true); show raw.where(block: true): set text(size: code-size); code; _in-example.update(false) }),
     ..results),
 )
@@ -125,15 +125,15 @@
   // code blocks: the theme's code box is switched off (`code: false`) and every block that is not part of an example
   // gets the frame of the manual instead (this rule is inner to `_rules`, so it wraps the `raw` first)
   show: _rules.with(_self, code: false)
-  show raw.where(block: true): it => context if _in-example.get() { it } else { mantys-like.frame(..mantys-like.code-frame, inset: 0pt, clip: true, it) }
+  show raw.where(block: true): it => context if _in-example.get() { it } else {
+    mantys-like.frame(..mantys-like.code-frame, inset: (x: .6em, y: .45em), clip: true, it)
+  }
   show raw.where(block: true): set text(size: code-size)
   show raw.where(block: true): set par(justify: false)
   // Typst underlines headings in highlighted markup; without this they would get the theme's thick yellow underline.
   // Only for the displayed `typ` code: tidy evaluates a preview inside the `example` raw, which must keep the theme's.
   show raw.where(lang: "typ"): set underline(stroke: auto, offset: auto, evade: true, background: false)
   show: tidy.render-examples.with(scope: example-scope, layout: example-layout)
-  // the code of the manual has a little room around it inside its frame
-  show raw.where(block: true): it => block(inset: (x: .5em, y: .35em), it)
   body
 }
 

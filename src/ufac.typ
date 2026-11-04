@@ -400,35 +400,35 @@
 /// `supplement` of the heading of an exercise or example slide: `auto`, or the color and the icon of the slide.
 /// -> auto | content
 #let _kind-supplement(
-  /// Color of the pill, or `auto`. -> auto | color
+  /// Color of the box, or `auto`. -> auto | color
   color,
-  /// Icon of the pill, or `auto`. -> auto | none | str | content
+  /// Icon of the badge, or `auto`. -> auto | none | str | content
   icon,
 ) = if color == auto and icon == auto { auto } else { metadata((color: color, icon: icon)) }
 
-/// Exercise slide: the header becomes a pill with a pencil, "Exercise 1.N — Title", numbered automatically. The
-/// function form of `== Title <exercise>`. Only the heading form can carry a unique label (`== Title <exercise-ogata>`)
+/// Exercise slide: the red box of an exercise filling the slide, with a pencil and "Exercise 1.N — Title" on its badge,
+/// numbered automatically. The function form of `== Title <exercise>`. Only the heading form can carry a unique label (`== Title <exercise-ogata>`)
 /// and be cited with `@exercise-ogata`, which shows "Exercise 1.N" linked to the slide.
 ///
 /// ```typ
 /// #exercise-slide(title: [Ogata 4.6])[Find the transfer function.]
-/// #exercise-slide(title: [Lab], color: colors.primary, icon: "tools")[Another color and icon.]
+/// #exercise-slide(title: [Lab], color: colors.primary, icon: "terminal")[Another color and icon.]
 /// ```
 /// -> content
 #let exercise-slide(
   /// Text after the number, following a dash; empty omits the dash. -> content
   title: [],
-  /// Color of the pill; `auto` is red (`tertiary`). -> auto | color
+  /// Color of the box; `auto` is red (`tertiary`). -> auto | color
   color: auto,
   /// Icon before the name: the name of an `icon`, any content (an image) or `none` for no icon; `auto` is the icon of
   /// the theme, `ufac-theme(exercise-icon:)` (a pencil). -> auto | none | str | content
   icon: auto,
-  /// Content of the slide; `---` inside it continues the same exercise. -> content
+  /// Content of the slide; `---` or `#pagebreak()` inside it continues the same exercise. -> content
   body,
 ) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <exercise> #body]
 
-/// Example slide: a pill with a beaker, "Example 1.N — Title", with a counter independent from the exercises. The
-/// function form of `== Title <example>`; see @exercise-slide.
+/// Example slide: the green box of an example, with a beaker and "Example 1.N — Title" on its badge, with a counter
+/// independent from the exercises. The function form of `== Title <example>`; see @exercise-slide.
 ///
 /// ```typ
 /// #example-slide(title: [XOR network])[Two hidden neurons are enough.]
@@ -437,7 +437,7 @@
 #let example-slide(
   /// Text after the number, following a dash; empty omits the dash. -> content
   title: [],
-  /// Color of the pill; `auto` is green (`quaternary`). -> auto | color
+  /// Color of the box; `auto` is green (`quaternary`). -> auto | color
   color: auto,
   /// Icon before the name: the name of an `icon`, any content (an image) or `none` for no icon; `auto` is the icon of
   /// the theme, `ufac-theme(example-icon:)` (a beaker). -> auto | none | str | content
@@ -1046,15 +1046,15 @@
   /// Language of the deck: `"pt-br"` (or `"pt"`), `"en"` or `"es"`, optionally with a region (`"en-US"`). It sets
   /// `text.lang`/`region` and the localized names below. -> str
   lang: "pt-br",
-  /// Name in the pill of exercise slides; `auto` is Exercício / Exercise / Ejercicio. -> auto | content
+  /// Name on the badge of exercise slides; `auto` is Exercício / Exercise / Ejercicio. -> auto | content
   exercise-name: auto,
-  /// Name in the pill of example slides; `auto` is Exemplo / Example / Ejemplo. -> auto | content
+  /// Name on the badge of example slides; `auto` is Exemplo / Example / Ejemplo. -> auto | content
   example-name: auto,
-  /// Icon before the name in the pill of exercise slides: the name of an `icon`, any content (an image or a symbol,
+  /// Icon before the name on the badge of exercise slides: the name of an `icon`, any content (an image or a symbol,
   /// centered on the capitals like the icons) or `none` for no icon. `exercise-slide(icon:)` changes it on one slide.
   /// -> none | str | content | symbol
   exercise-icon: "pencil",
-  /// Icon before the name in the pill of example slides, like `exercise-icon`. -> none | str | content | symbol
+  /// Icon before the name on the badge of example slides, like `exercise-icon`. -> none | str | content | symbol
   example-icon: "beaker",
   /// Prefix of the section slide ("Part N:"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
