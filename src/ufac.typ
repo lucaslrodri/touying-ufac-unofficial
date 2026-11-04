@@ -8,10 +8,8 @@
 #import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors, _contact
 
 // ---------- header ----------
-/// Header of a content slide: the current `==` in blue (fit to width), or, when the heading carries an
-/// `<exercise…>`/`<example…>` label, a pill with the kind's icon, "Exercise 1.N — Title" / "Example 1.N — Title", in
-/// the kind's color. An explicit color or icon from `exercise-slide(color:, icon:)` travels in the heading's
-/// `supplement` as `metadata((color: …, icon: …))`.
+/// Header of a content slide: the current `==` in blue, fit to width. (Exercises and examples have no header: their
+/// title is on the badge of their box.)
 /// -> content
 #let _header(
   /// Touying's `self`. -> dictionary
@@ -19,21 +17,8 @@
 ) = {
   set std.align(horizon)
   block(inset: (x: 1em), width: 100%, height: 1.5em, context {
-    let h = utils.current-heading(level: 2, depth: 2)
-    let kind = if h != none { _label-kind(h.at("label", default: none)) } else { none }
-    if kind != none {
-      let (name, color) = _kind-style(self, kind)
-      let ic = _kind-icon(self, kind)
-      let sup = h.at("supplement", default: auto)
-      if sup != auto and sup.func() == metadata {
-        if sup.value.color != auto { color = sup.value.color }
-        if sup.value.icon != auto { ic = sup.value.icon }
-      }
-      _pill(color: color, _pill-line[#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ — #h.body]])
-    } else {
-      set text(self.colors.primary, size: 1.2em, weight: "bold")
-      _in-box(self.colors.primary, utils.display-current-heading(level: 2, setting: utils.fit-to-width.with(grow: false, 100%)), kind: "title")
-    }
+    set text(self.colors.primary, size: 1.2em, weight: "bold")
+    _in-box(self.colors.primary, utils.display-current-heading(level: 2, setting: utils.fit-to-width.with(grow: false, 100%)), kind: "title")
   })
 }
 
@@ -111,6 +96,238 @@
   /// Background color. -> color
   c,
 ) = luma(c).components().first() >= 70%
+// ---------- exercises and examples ----------
+/// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
+/// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." in
+/// bold. With a `#pause` right before or right after it, the solution appears on the next subslide, opening included.
+///
+/// ```typ
+/// == The state of water <example>
+/// A script that reads the temperature and prints the state of the water.
+/// #pause
+/// #solution
+/// Every condition is an `if`: …
+/// ```
+/// -> content
+#let solution = metadata((kind: "ufac-solution", word: "solution"))
+
+/// The marker of the start of the answer of an exercise: the same as @solution, opened by "Resposta." / "Answer.".
+/// -> content
+#let answer = metadata((kind: "ufac-solution", word: "answer"))
+
+/// The opening of a solution: a thin dashed line almost from border to border of the box and the word ("Solução.",
+/// "Resposta.") in bold, in the colour of the box darkened. The word is in the same paragraph as what follows the
+/// marker; before a block (a code block), it is alone on its line. At the top of a slide (a continuation after `---`)
+/// there is nothing to separate, and the line is left out.
+/// -> content
+#let _solution-head(
+  /// `"solution"` or `"answer"`. -> str
+  word,
+  /// Whether to draw the dashed line. -> bool
+  line: true,
+) = {
+  // the line goes 0.5em past the text (1em from the border) on each side: almost from border to border, and whole under
+  // the veil of `#pause` (which goes 0.5em past the text)
+  if line {
+    context block(above: 0.65em, below: 0.65em, move(dx: -0.5em, std.line(length: 100% + 1em,
+      stroke: (paint: _current-box-color(colors.primary), thickness: 0.4pt, dash: "dashed"))))
+  }
+  context {
+    text(weight: "bold", fill: _current-box-color(colors.primary).darken(30%), _words(text.lang).at(word))
+    h(0.35em)
+  }
+}
+
+/// The body of an exercise or example with the solution opened at its marker (`#solution`, `#answer`): the opening
+/// takes the place of the marker. A `#pause` right after the marker goes before the opening, which then appears with
+/// the solution. Done before Touying handles the `#pause`.
+/// -> any
+#let _split-solution(
+  /// A body of the slide. -> any
+  body,
+) = {
+  if type(body) != content or not body.has("children") { return body }
+  let ch = body.children
+  let i = ch.position(c => _is-meta(c, "ufac-solution"))
+  if i == none { return body }
+  let head = ch.slice(0, i)
+  let rest = ch.slice(i + 1)
+  // the spaces and the paragraph breaks after the marker, and a `#pause` among them, which goes before the opening;
+  // the word opens the next paragraph
+  while rest.len() > 0 and (rest.first().func() in ([ ].func(), parbreak)
+    or _is-meta(rest.first(), "touying-jump/pause/meanwhile")) {
+    if rest.first().func() == metadata { head.push(rest.first()) }
+    rest = rest.slice(1)
+  }
+  // nothing before the marker but spaces and markers (a continuation after `---`): no line to separate
+  let alone = head.all(c => c.func() in ([ ].func(), parbreak, metadata))
+  (head + (_solution-head(ch.at(i).value.word, line: not alone),) + rest).join()
+}
+
+/// The outline of the box of an exercise, open at the bottom: the sides go down, turn a quarter of a circle and end
+/// where the line of the footer starts, which closes the box. A `curve`: a block without its bottom border draws only
+/// half of the bottom corners, and covering the bottom border with a band of the fill leaves a thread of the border at
+/// the edges of the band (the antialiasing of the PDF viewer).
+/// -> content
+#let _box-outline(
+  /// Width. -> length
+  w,
+  /// Height. -> length
+  h,
+  /// Radius of the corners. -> length
+  r,
+  /// Stroke. -> stroke
+  stroke,
+) = {
+  let k = 0.5523 * r   // the control points of a quarter of a circle in a Bézier curve
+  curve(stroke: stroke,
+    curve.move((r, h)),
+    curve.cubic((r - k, h), (0pt, h - r + k), (0pt, h - r)),
+    curve.line((0pt, r)),
+    curve.cubic((0pt, r - k), (r - k, 0pt), (r, 0pt)),
+    curve.line((w - r, 0pt)),
+    curve.cubic((w - r + k, 0pt), (w, r - k), (w, r)),
+    curve.line((w, h - r)),
+    curve.cubic((w, h - r + k), (w - r + k, h), (w - r, h)),
+  )
+}
+
+/// The box of an exercise or example, as in the handout of the MATLAB course, filling the slide: the fill in the colour
+/// lightened 95%, the badge with the title over the top border and the footer of the slide over the bottom one, in the
+/// colour of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
+/// them). Inside it only what has no style of its own follows the colour of the item (bold text, markers, arrows,
+/// highlights, the numbers of the lists, inline code, links); a code block, a callout and an `emph-box` keep theirs.
+/// -> content
+#let _item-box(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Colour of the item. -> color
+  c,
+  /// The content of the badge. -> content
+  badge,
+  /// The body. -> content
+  body,
+) = {
+  let badge = box(fill: c, radius: 3pt, inset: (x: 0.7em, y: 0.38em),
+    text(fill: white, weight: "bold", _in-box(c, _pill-line(badge), kind: "pill")))
+  // the thickness of the lines of the footer (0.1em of its 20pt text), its height (1.5em) and the radius of the corners
+  let thick = 2pt
+  let foot-h = 30pt
+  let r = 6pt
+  layout(size => {
+    let h = measure(badge, width: size.width - 2em).height
+    let box-h = size.height - h / 2 - foot-h / 2
+    pad(top: h / 2, bottom: foot-h / 2, block(width: 100%, height: box-h, fill: c.lighten(95%), radius: r,
+      breakable: false, {
+        place(top + left, _box-outline(size.width, box-h, r, thick + c))
+        place(top + left, dx: 0.8em, dy: -h / 2, badge)
+        // the footer centred on the bottom border, between the curves of the corners: its lines close the box
+        place(bottom + left, dx: r, dy: foot-h / 2, block(width: size.width - 2 * r, height: foot-h,
+          text(size: 20pt, _footer(self, color: c, lift: false))))
+        block(width: 100%, inset: (x: 1em, top: h / 2 + 0.75em, bottom: foot-h / 2 + 0.6em), {
+          // as inside an `emph-box`, plus the numbers of the lists, always blue elsewhere
+          set list(marker: _markers(c))
+          let num(patterns) = (..nums) => {
+            let d = nums.pos().len()
+            text(fill: c, weight: "bold", numbering(patterns.at(calc.min(d, patterns.len()) - 1), nums.at(-1)))
+          }
+          set enum(full: true, numbering: num(("1.", "a)", "i.")))
+          _in-box(c, _flow(body))
+        })
+      }))
+  })
+}
+
+/// The marker of the continuation of an exercise or example after a `---`, with the heading of the item.
+#let _continue-kind = "ufac-continue"
+
+/// Marks the continuations of the exercises and examples. A `---` inside an exercise breaks the page, and the exercise
+/// goes on in the next slide, until a `==` heading of another kind. Touying calls the slide of a continuation without
+/// headings (`self.headings` is empty), so it would not know that it is an exercise, and its box changes the margins and
+/// drops the header and the footer, which is decided before any `context`. So, before Touying splits the deck, a marker
+/// with the heading of the item goes right after every `---` inside an exercise or example (also in the parts with
+/// `#set`/`#show`, the `styled` ones, and inside `exercise-slide`/`example-slide`).
+/// -> content
+#let _mark-continuations(
+  /// The deck. -> content
+  body,
+) = {
+  let walk(children, h) = {
+    let out = ()
+    for c in children {
+      if c.func() == heading and c.depth <= 2 {
+        // a heading of a section or of a slide ends the item; one of an exercise or example opens another
+        h = if c.depth == 2 and _label-kind(c.at("label", default: none)) != none { c } else { none }
+        out.push(c)
+      } else if utils.is-styled(c) {
+        let (inner, after) = walk(if utils.is-sequence(c.child) { c.child.children } else { (c.child,) }, h)
+        h = after
+        out.push(utils.reconstruct-styled(c, inner))
+      } else if utils.is-sequence(c) {
+        let (inner, after) = walk(c.children, h)
+        h = after
+        out.push(inner)
+      } else {
+        out.push(c)
+        if h != none and c in ([—], [---]) { out.push(metadata((kind: _continue-kind, heading: h))) }
+      }
+    }
+    (out.join(), h)
+  }
+  if utils.is-sequence(body) { walk(body.children, none).first() } else { body }
+}
+
+/// The heading of the item that a body continues, if it starts with the marker of a continuation.
+/// -> content | none
+#let _continued-heading(
+  /// The bodies of the slide. -> arguments
+  bodies,
+) = {
+  let first = bodies.pos().at(0, default: none)
+  if type(first) != content { return none }
+  let ch = if first.has("children") { first.children } else { (first,) }
+  let m = ch.find(c => c.func() != [ ].func() and c.func() != parbreak)
+  if m != none and _is-meta(m, _continue-kind) { m.value.heading }
+}
+
+/// The slide of an exercise or example: the box of the item filling the slide, without the header (the badge carries
+/// the title) and without the footer of the page (it goes into the box, in the colour of the item). The veil of
+/// `#pause` takes the fill of the box.
+/// -> content
+#let _item-slide(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// The heading of the item. -> content
+  h,
+  /// `"exercise"` or `"example"`. -> str
+  kind,
+  /// Arguments of @slide. -> dictionary
+  config, repeat, setting, composer,
+  /// The slide bodies. -> array
+  bodies,
+) = {
+  let (name, color) = _kind-style(self, kind)
+  let ic = _kind-icon(self, kind)
+  let sup = h.at("supplement", default: auto)
+  if sup != auto and sup.func() == metadata {
+    if sup.value.color != auto { color = sup.value.color }
+    if sup.value.icon != auto { ic = sup.value.icon }
+  }
+  let badge = context [#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ — #h.body]]
+  // the veil of `#pause` in the fill of the box: the one of the theme takes the colour of the page (white), which would
+  // show as a patch on the box
+  let fill = color.lighten(95%)
+  let cover(self: none, ..args, body) = {
+    let s = self
+    if type(s) == dictionary { s.page = s.at("page", default: (:)) + (fill: fill) }
+    _cover(self: s, ..args, body)
+  }
+  let self = utils.merge-dicts(self, config-page(header: none, footer: none,
+    margin: (top: 1.3em, bottom: 0.5em, x: 1.2em)), config-methods(cover: cover), config)
+  touying-slide(self: self, repeat: repeat, composer: composer,
+    setting: body => _item-box(self, color, badge, setting(body)), ..bodies.map(_split-solution))
+}
+
 /// Default slide of the theme, with header and footer. Every `==` heading opens one, so it is rarely called by
 /// hand; the explicit form gives access to Touying's arguments.
 ///
@@ -138,6 +355,9 @@
 ) = touying-slide-wrapper(self => {
   // the labels of the `empty-slide` of 0.2.0 are gone: say what replaces them
   let hs = self.at("headings", default: ())
+  let h = if hs.len() > 0 { hs.last() } else { _continued-heading(bodies) }
+  let kind = if h != none and h.depth == 2 { _label-kind(h.at("label", default: none)) }
+  if kind != none { return _item-slide(self, h, kind, config, repeat, setting, composer, bodies.pos()) }
   let lbl = if hs.len() > 0 and hs.last().depth == 2 and hs.last().has("label") { str(hs.last().label) }
   assert(lbl == none or not (lbl == "empty-slide" or lbl.starts-with("empty-slide-")), message: "<" + lbl
     + "> was removed in 0.3.0: use #ending-slide[..] for the closing slide, or a `==` heading without text for a slide"
@@ -900,5 +1120,5 @@
     ..configs.after,
     ..args.named(),
   )
-  body
+  _mark-continuations(body)
 }

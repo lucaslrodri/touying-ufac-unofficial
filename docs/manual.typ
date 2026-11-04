@@ -205,19 +205,30 @@ slide of its own, right after the cover. In a deck it stands for Typst's `outlin
 
 == Exercises and examples
 
-A label on the `==` heading turns the header into a numbered pill: the icon of the kind (a pencil for exercises, a
-beaker for examples), the name, the number and, after a dash, the title. Any suffix gives the same slide and makes the
-label unique, so the slide can be cited: `@exercise-ogata` becomes "Exercise 1.N", bold, in the color of the kind and
-linked to the slide. `#exercise-slide` and `#example-slide` are the function forms, with `color` and `icon` options;
-they cannot be cited.
+A label on the `==` heading turns the slide into the box of an exercise (red) or an example (green), as in the handout
+of the MATLAB course: the box fills the slide, the title goes on a badge over its top border, with the icon of the kind
+(a pencil for exercises, a beaker for examples), the name, the number and, after a dash, the title, and the footer of
+the slide closes the box at the bottom, in the colour of the item. Any suffix gives the same slide and makes the label
+unique, so the slide can be cited: `@exercise-ogata` becomes "Exercise 1.N", bold, in the color of the kind and linked
+to the slide. `#exercise-slide` and `#example-slide` are the function forms, with `color` and `icon` options; they
+cannot be cited.
+
+Inside the box, only what has no style of its own takes the colour of the item: the bold text, the markers, the arrows,
+the highlights, the numbers of the lists, the inline code and the links. A code block, a callout and an `emph-box`
+keep their own look.
+
+`#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
+line and "Solution." / "Answer." in bold. With a `#pause` right before or after the marker, the solution appears on
+the next subslide. A `---` inside an exercise breaks the page and the exercise goes on in the next slide, with the same
+number, until a slide of another kind.
 
 The icon is the name of an `icon`, any content (an image) or `none`, which leaves only the text. It is centered on the
 capitals of the text, whatever its height. `ufac-theme(exercise-icon:, example-icon:)` changes it in the whole deck;
 `icon:` changes it on one slide.
 
-#slide-example("exercise", pages: (1, 2, 3, 4, 5))
+#slide-example("exercise", pages: (1, 2, 3, 4, 5, 6))
 
-#reference("ufac", "exercise-slide", "example-slide")
+#reference("ufac", "exercise-slide", "example-slide", "solution", "answer")
 
 == Subtitles
 

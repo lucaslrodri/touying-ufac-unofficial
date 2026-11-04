@@ -50,6 +50,16 @@
   arr.slice(i, j)
 }
 #let _first-child(body) = { let ch = _trim(_children(body)); if ch.len() > 0 { ch.first() } else { none } }
+/// A `metadata` of a given kind (`value.kind`): a marker of the theme or a `#pause` of Touying.
+///
+/// #test(`_is-meta(metadata((kind: "k")), "k")`, `not _is-meta(metadata("k"), "k")`, `not _is-meta([x], "k")`)
+/// -> bool
+#let _is-meta(
+  /// Any content. -> content
+  c,
+  /// The kind. -> str
+  kind,
+) = c.func() == metadata and type(c.value) == dictionary and c.value.at("kind", default: none) == kind
 /// A value that was given: not `none`, `auto`, `[]` nor `""`.
 ///
 /// #test(`_given([x])`, `not _given([])`, `not _given(none)`, `not _given(auto)`, `not _given("")`)
@@ -468,15 +478,19 @@
   white: false,
   /// The logos; `auto` takes those of `config-info(logo:)` (the UFAC logo by default). -> auto | array
   logos: auto,
-  /// Colour of the logos and the dot; `auto` is the primary colour, or white with `white: true`. -> auto | color
+  /// Colour of the logos and the dot, for the footer of an exercise or example: the UFAC logo all in this colour, its
+  /// shield too. `auto` is the primary colour, or white with `white: true`. -> auto | color
   color: auto,
 ) = {
   let logos = if logos == auto { _list(self.info.at("logo", default: auto)) } else { logos }
   if logos.len() == 0 { return none }
+  let mono = color != auto
   let color = if color != auto { color } else if white { self.colors.neutral-lightest } else { self.colors.primary }
-  // the UFAC logo keeps its blue on the slides and takes the white of the cover, the shield yellow on both
-  let one(logo) = if logo == auto { ufac-logo-image(color: if white { color } else { auto }) } else if (
-    type(logo) == function) { logo(color) } else { logo }
+  // the UFAC logo keeps its blue on the slides and takes the white of the cover, the shield yellow on both; in one
+  // colour (`color:`), letters and shield
+  let one(logo) = if logo == auto {
+    if mono { ufac-logo-image(color: color, shield: color) } else { ufac-logo-image(color: if white { color } else { auto }) }
+  } else if type(logo) == function { logo(color) } else { logo }
   if logos.len() == 1 { return box(one(logos.first()), inset: 0.2em) }
   let dot = circle(radius: 0.072em, fill: color)
   box(inset: 0.2em, grid(columns: 2 * logos.len() - 1, column-gutter: 0.3em, align: horizon,
@@ -484,18 +498,27 @@
 }
 
 /// Footer of every slide except the cover: rule 1em, the logos (the UFAC logo, 0.64em, by default), rule 1.25em,
-/// "CODE - SUBJECT", rule 1fr, author, rule 2em, slide number (0.6em), rule 1em. The last column is as wide as the
+/// "CODE • TITLE", rule 1fr, author, rule 2em, slide number (0.6em), rule 1em. The last column is as wide as the
 /// last slide number. The two texts take their natural width and the `1fr` rule between them the rest: when each
 /// text carried its own `1fr` rule, both cells claimed the whole width and got half of it each, so a long left text
 /// broke into two lines with room to spare on the right (2026-10-16). `white: true` draws it in white, with the white
-/// logos of the cover, for the closing slide (`#ending-slide`).
+/// logos of the cover, for the closing slide (`#ending-slide`); `color:` draws it in another colour, with the UFAC logo
+/// in that colour too, for the box of an exercise or example.
 /// -> content
 #let _footer(
   /// Touying's `self`. -> dictionary
   self,
   /// White text, rules and logos. -> bool
   white: false,
+  /// Colour of the text, the rules and the logos, instead of the primary colour. -> auto | color
+  color: auto,
+  /// Lift the footer by 0.05em, as on the page. The box of an exercise has its border at the exact middle of the
+  /// footer, so its footer is not lifted. -> bool
+  lift: true,
 ) = {
+  let mono = color
+  let self = self
+  if color != auto { self.colors.primary = color }
   set text(if white { self.colors.neutral-lightest } else { self.colors.primary })
   set std.align(bottom)
   let rule = if white { _line-white(self) } else { _line(self) }
@@ -506,12 +529,12 @@
       rows: 1.5em,
       align: horizon,
       rule,
-      _logos(self, white: white),
+      _logos(self, white: white, color: mono),
       _cell(self, pad-left: 1.25em, pos: "left", grow: false, white: white, utils.call-or-display(self, self.store.footer-left)),
       rule,
       _cell(self, pad-right: 2em, pos: "right", grow: false, white: white, utils.call-or-display(self, self.store.footer-right)),
       _cell(self, pos: "center", size: 0.6em, white: white, utils.slide-counter.display()),
       rule,
-    ), dy: -0.05em)
+    ), dy: if lift { -0.05em } else { 0pt })
   }
 }

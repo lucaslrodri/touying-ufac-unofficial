@@ -12,9 +12,16 @@
 
 Find the transfer function of the system.
 
+#answer
+$G(s) = 1 / (s^2 + 2s + 1)$.
+
 == XOR network <example>
 
-Two hidden neurons are enough.
+Can a single neuron learn XOR?
+
+#pause
+#solution
+No: two hidden neurons are enough.
 
 #exercise-slide(title: [Haykin 4.2], color: colors.primary, icon: "terminal")[
   The function form, with another color and icon.

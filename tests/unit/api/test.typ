@@ -139,3 +139,7 @@ API test done.
 #assert(catch(() => ending-slide(title: [T])[a][b]).contains("the body"))
 #assert(catch(() => ending-slide(color: red)).contains("unknown argument"))
 
+
+// exercises and examples: the markers of the solution are content (metadata), alone on a line like `#pause`
+#assert.eq(solution.func(), metadata)
+#assert.eq(answer.value.word, "answer")
