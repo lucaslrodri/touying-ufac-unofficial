@@ -1,4 +1,4 @@
-/// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer and columns on 4:3 paper).
+/// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer, columns, the box of an exercise and the closing slide on 4:3 paper).
 #import "../../common.typ": *
 #show: ufac-theme.with(aspect-ratio: "4-3", test-info)
 
@@ -15,3 +15,11 @@
   -> arrow in a column
 ]
 "Quotation in 4:3"
+
+== An exercise in 4:3 <exercise>
+The box of the item on the 4:3 page.
+
+#answer
+The answer.
+
+#ending-slide()
