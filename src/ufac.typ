@@ -615,7 +615,7 @@
 /// ```typ
 /// #title-slide()
 /// #title-slide(style: "top", footer-center: none, footer-right: info("date"))
-/// #title-slide[#image("lab-white.svg", height: 1.7em)]
+/// #title-slide[Slides at #link("https://example.com/slides")[example.com/slides]]
 /// ```
 /// -> content
 #let title-slide(

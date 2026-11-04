@@ -103,8 +103,8 @@ keeps its lines and labels on the cover.
 
 #slide-example("cover-background")
 
-Content given to the cover goes below the titles, in white, as in a pill: a partner's logo, the name of a lab or
-of a program.
+Content given to the cover goes below the titles, in white, as in a pill: a message, where to find the slides, a
+contact, a partner's logo.
 
 #slide-example("cover-body")
 

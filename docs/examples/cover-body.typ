@@ -13,6 +13,6 @@
 )
 // --- example ---
 #title-slide[
-  #icon("code", size: 1.6em) \
-  *Intelligent Systems Lab*
+  Slides and exercises: #link("https://example.com/nn")[`example.com/nn`] \
+  Questions: *`author@example.com`*
 ]
