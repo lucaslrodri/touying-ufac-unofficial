@@ -518,11 +518,6 @@
   height: 0.9cm,
 ) = { let l = _logos(self, white: true); if l != none { text(size: height / 0.64, l) } }
 
-/// The style of the cover (`"line"`, `"stack"`, `"top"`), kept by `title-slide` for `#ending-slide` to put the logos
-/// in the same place.
-/// -> state
-#let _cover-style = state("ufac-cover-style", none)
-
 /// The size of the text in the positions of the top and of the bottom of the cover, relative to the slide.
 #let _slot-size = 0.7em
 
@@ -673,7 +668,6 @@
     let footer = (left: slot("footer-left", footer-left), center: slot("footer-center", footer-center),
       right: slot("footer-right", footer-right))
     touying-slide(self: self, _on-blue(self, {
-      _cover-style.update(style)   // for `#ending-slide` to put the logos in the same place
       set par(leading: 0.4em, spacing: 0pt, justify: false)
       // the centre: a stack from top to bottom, the tag (`short-title`), the `title`, the rule, the `short-subtitle` and
       // the `subtitle` (together, on two lines) and, last, the body
@@ -745,10 +739,9 @@
   }
 }
 
-/// Closing slide (the name of the templates of Tylina): the blue page of the cover, with the logos where the cover put
-/// them (in the centre for its style `"line"`), a large title with the yellow rule under it, a subtitle in yellow, a
-/// free body and the contact of `config-info` right below them, centered; and the footer of the slides in white (the
-/// logos, the title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the
+/// Closing slide (the name of the templates of Tylina): the blue page of the cover, with a large title with the yellow
+/// rule under it, a subtitle in yellow, a free body and the contact of `config-info` right below them, centered; and the
+/// footer of the slides in white (the logos, the title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the
 /// language of the deck; `title: none` removes the title and the rule.
 ///
 /// Two forms: up to three contents in order, `[title][subtitle][body]`, or the named `title:` and `subtitle:` with
@@ -781,13 +774,7 @@
       margin: (x: 1.8em, top: 1.2em, bottom: 1.75em)))
     let decorate(body) = _on-blue(self, {
       set par(leading: 0.45em, justify: false)
-      // the logos where the cover put them: in the centre for "line", on the left for the other styles; without a
-      // cover, the style of the `kind` of the deck
-      context {
-        let style = _cover-style.get()
-        let style = if style == none { self.store.at("cover-style", default: "line") } else { style }
-        place(top + if style == "line" { center } else { left }, _logos-white(self))
-      }
+      // no logos at the top: they are in the footer
       std.align(center + horizon, {
         let gap = false   // room before every part but the first
         if t != none {

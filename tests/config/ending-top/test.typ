@@ -1,4 +1,4 @@
-/// Synopsis: after a cover in the style `"top"` (`kind: "course"`), the closing slide puts the logos on the left, where the cover put them; the contact comes from `config-info`, in Portuguese ("Obrigado!"), and the `"plain"` background goes to the closing slide too.
+/// Synopsis: after a cover in the style `"top"` (`kind: "course"`), the closing slide in Portuguese ("Obrigado!"), without logos at the top (they are in its footer), with the contact of `config-info` and the `"plain"` background of the cover.
 #import "../../common.typ": *
 #show: ufac-theme.with(background: "plain", config-info(
   kind: "course",

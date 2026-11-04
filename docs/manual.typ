@@ -253,9 +253,9 @@ Only a top-level `===` is repeated; inside `#[ ]`, a column or a box the pill st
 
 === The closing slide: `#ending-slide`
 
-`#ending-slide` closes the deck on the blue page of the cover: the logos where the cover put them, a large title with
-the yellow rule, a subtitle in yellow, a free body and the contact of `config-info` right below them, and the footer of
-the slides in white. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
+`#ending-slide` closes the deck on the blue page of the cover: a large title with the yellow rule, a subtitle in
+yellow, a free body and the contact of `config-info` right below them, and the footer of the slides in white, with the
+logos. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
 `<empty-slide>` and `<empty-slide-primary>` of 0.2.0 are gone; Touying's own `#empty-slide` (no header nor footer) is
 still there for whoever imports Touying.
 
