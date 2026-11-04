@@ -1,18 +1,19 @@
 // Common preamble of the Tytanic tests: imports the package (`@preview/touying-ufac-unofficial:0.3.0`, i.e. this very
-// folder linked by scripts/link.sh), defines `setup` (theme + fixed config-info) and the `demo` helper (code on the
+// folder linked by scripts/link.sh), defines `setup` (theme + fixed config-info, `test-info`; not `info`, the name of the
+// theme's `#info`) and the `demo` helper (code on the
 // left, the same text evaluated on the right).
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "placeholder.typ": placeholder
 
-#let info = config-info(
-  title: [Presentation title],
-  subtitle: [Unit X or subtitle],
+#let test-info = config-info(
+  title: [Course name],
+  short-title: [CODE],
+  subtitle: [Presentation title],
+  short-subtitle: [Unit X or subtitle],
   author: [Author Name],
-  subject: [Course name],
-  subject-code: [CODE],
 )
-#let setup = ufac-theme.with(lang: "en", info)
+#let setup = ufac-theme.with(lang: "en", test-info)
 // Octicons the theme does not ship (it ships only its own icons), for the tests that use other icons: a test gives
 // them with `#provide-icons(octicons)` inside a slide and writes them as `"octicon:name-16"`
 #let octicons = json("octicon.json")   // the suite is in English; the default language (pt-br) is covered by config/lang-default

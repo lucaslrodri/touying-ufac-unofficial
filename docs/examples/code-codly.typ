@@ -3,8 +3,11 @@
 // --- example ---
 #import "@preview/codly:2.0.0" as codly
 #show: ufac-theme.with(lang: "en", codly: codly, config-info(
-  title: [Training and evaluation], subtitle: [Units III and IV], author: [Prof. Author Name],
-  subject: [Neural Networks], subject-code: [PPGEE016],
+  title: [Neural Networks],
+  short-title: [PPGEE016],
+  subtitle: [Training and evaluation],
+  short-subtitle: [Units III and IV],
+  author: [Prof. Author Name],
 ))
 
 == Code blocks through codly 2

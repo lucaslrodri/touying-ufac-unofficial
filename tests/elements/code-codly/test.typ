@@ -2,8 +2,8 @@
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "@preview/codly:2.0.0" as codly
-#import "../../common.typ": info
-#show: ufac-theme.with(lang: "en", codly: codly, code-languages: (rust: (name: "Rust", icon: none)), info)
+#import "../../common.typ": test-info
+#show: ufac-theme.with(lang: "en", codly: codly, code-languages: (rust: (name: "Rust", icon: none)), test-info)
 
 == Code through codly 2
 The same look as without codly: the box, the numbers, the language pill and the output in green.

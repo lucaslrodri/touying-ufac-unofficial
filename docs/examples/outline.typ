@@ -3,10 +3,10 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    subject: [Neural Networks],
-    title: [Training and evaluation],
+    title: [Neural Networks],
+    short-title: [PPGEE016],
+    subtitle: [Training and evaluation],
     author: [Prof. Author Name],
-    subject-code: [PPGEE016],
   ),
 )
 // --- example ---

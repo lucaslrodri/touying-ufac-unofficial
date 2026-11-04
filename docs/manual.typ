@@ -40,15 +40,50 @@ alone, laid out by the same rules as in a deck.
 `config-info` is Touying's; the theme reads these fields:
 
 #table(
-  columns: (auto, 1fr),
-  table.header([Field], [Where it appears]),
-  [`subject`], [first line of the cover (large, white) and left side of the footer],
-  [`subtitle`], [second line of the cover, in yellow],
-  [`title`], [third line of the cover, in white],
-  [`author`], [top right of the cover and right side of the footer],
-  [`subject-code`], [before the subject in the footer: "CODE · SUBJECT"],
-  [`counter-prefix`], [prefix of the exercise and example numbers: `[1.]` gives "Exercise 1.N", `none` gives "Exercise N"],
+  columns: (auto, auto, 1fr),
+  table.header([Field], [Default], [What it is and where it appears]),
+  [`title`], [`[]`], [the name of the course or of the work: large on the cover, and in the footer],
+  [`short-title`], [`none`], [its code or a shorter name: before the title in the footer ("CODE • TITLE")],
+  [`subtitle`], [`[]`], [the topic of the lecture: on the cover],
+  [`short-subtitle`], [`none`], [the lecture or the unit ("Lecture 1", "Unit II"): on the cover, in yellow],
+  [`author`], [`none`], [one, an array or free content (below): on the cover and on the right of the footer],
+  [`date`], [`none`], [`auto` (today), a `datetime` (written in full in the language of the deck) or a text],
+  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; only for `#info`],
+  [`logo`], [`auto`], [one or an array, in the footer and on the cover (see Logos below)],
+  [`contact`], [`none`], [one or an array (an e-mail, a page)],
+  [`counter-prefix`], [`[1.]`], [prefix of the exercise and example numbers: `[1.]` gives "Exercise 1.N", `none` gives "Exercise N"],
 )
+
+In a course, some fields have clearer names, which are aliases of the fields above (two names of one field are an
+error). A date given as `semester` or `year` is short, and also goes to the footer, after the title.
+
+#table(
+  columns: (auto, auto),
+  table.header([Alias], [Field]),
+  [`subject`], [`title`], [`subject-code`], [`short-title`], [`unit`], [`short-subtitle`], [`unit-title`], [`subtitle`],
+  [`course` (the program, in a final paper)], [`short-subtitle`], [`semester`, `year`], [`date`],
+)
+
+`kind` tells what the presentation is, and brings the recommended style of the cover, the label of the authors and the
+tag of the cover; anything the deck writes wins over it.
+
+#table(
+  columns: (auto, 1fr),
+  table.header([`kind`], [Recommends]),
+  [`"lecture"`, `"talk"`], [the style `"line"`],
+  [`"course"`], [the style `"top"` and the label "Ministrantes" / "Instructors" over the authors],
+  [`"coursework"`], [the style `"stack"`],
+  [`"tcc"`, `"dissertation"`, `"thesis"`], [the style `"top"` and the tag of the work ("Trabalho de Conclusão de Curso", …)],
+)
+
+An author can be written as free content: the lines broken with `\`, and a line only in emphasis is a label. The
+cover shows it as written; the footer and the metadata of the PDF get the names of the first group, those who present.
+
+```typ
+config-info(author: [_Students_ \ Ana Souza \ Bruno Lima \ _Advisor_ \ Prof. Dr. Carlos Melo])
+```
+
+#reference("info", "info")
 
 == The theme and the cover
 
@@ -61,8 +96,8 @@ of a program.
 
 == Logos
 
-The footer and the cover show the UFAC logo. `logos` is the list of logos shown there, separated by dots: `(auto, x)`
-keeps the UFAC logo and adds `x` after it, `(x,)` replaces it. A logo is content, or a
+The footer and the cover show the UFAC logo. `config-info(logo:)` is the list of logos shown there, separated by dots: `(auto, x)`
+keeps the UFAC logo and adds `x` after it, `(x,)` replaces it and `none` removes them. A logo is content, or a
 function that receives the colour of the footer (blue on the slides, white on the cover), so that one drawing serves
 both; `auto` stands for the UFAC logo. A logo about `0.64em` high matches the UFAC one. Outside the footer, as in a
 handout that goes with the slides, `ufac-logo-image` draws the UFAC logo in the same colours (@colors).

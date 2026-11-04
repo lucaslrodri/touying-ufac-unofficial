@@ -50,6 +50,22 @@
   arr.slice(i, j)
 }
 #let _first-child(body) = { let ch = _trim(_children(body)); if ch.len() > 0 { ch.first() } else { none } }
+/// A value that was given: not `none`, `auto`, `[]` nor `""`.
+///
+/// #test(`_given([x])`, `not _given([])`, `not _given(none)`, `not _given(auto)`, `not _given("")`)
+/// -> bool
+#let _given(
+  /// Any value. -> any
+  x,
+) = x not in (none, auto, [], "")
+/// A value or an array of values, always as an array (`none` is the empty array).
+///
+/// #test(`_list(none) == ()`, `_list([a]) == ([a],)`, `_list(([a], [b])) == ([a], [b])`, `_list(auto) == (auto,)`)
+/// -> array
+#let _list(
+  /// A value, an array or `none`. -> any
+  x,
+) = if x == none { () } else if type(x) == array { x } else { (x,) }
 /// A body made of a single paragraph inside a `block`/`grid` does not become a `par` element (Typst treats it as
 /// inline content), so the `show par` rewrites (`->`, `> `, `"…"`) never run. A leading `parbreak()` forces the
 /// paragraph without adding space.
@@ -438,22 +454,26 @@
   }
 }
 
-/// The logos of the footer and of the cover (`ufac-theme(logos:)`), in a row separated by a dot. `auto` is the UFAC
+/// The logos of the footer and of the cover (`config-info(logo:)`), in a row separated by a dot. `auto` is the UFAC
 /// logo, blue on the slides and white with its yellow shield on the cover; a function receives the colour of the
 /// footer (the primary colour, or white on the cover); content goes as it is. A single logo is the same box as the
 /// UFAC logo alone had before the option (0.1.0), so the default footer did not change (2026-10-16). The dot has the
 /// size of `_sep-dot` in the 0.4em text (radius 0.18 × 0.4em) and sits in its own cell, centred on the logos.
-/// -> content
+/// `logo: none` gives no logos.
+/// -> content | none
 #let _logos(
   /// Touying's `self`. -> dictionary
   self,
   /// White logos and dot, for the cover. -> bool
   white: false,
-  /// The logos; `auto` takes those of `ufac-theme` (the UFAC logo when the theme has none). -> auto | array
+  /// The logos; `auto` takes those of `config-info(logo:)` (the UFAC logo by default). -> auto | array
   logos: auto,
+  /// Colour of the logos and the dot; `auto` is the primary colour, or white with `white: true`. -> auto | color
+  color: auto,
 ) = {
-  let logos = if logos == auto { self.store.at("logos", default: (auto,)) } else { logos }
-  let color = if white { self.colors.neutral-lightest } else { self.colors.primary }
+  let logos = if logos == auto { _list(self.info.at("logo", default: auto)) } else { logos }
+  if logos.len() == 0 { return none }
+  let color = if color != auto { color } else if white { self.colors.neutral-lightest } else { self.colors.primary }
   // the UFAC logo keeps its blue on the slides and takes the white of the cover, the shield yellow on both
   let one(logo) = if logo == auto { ufac-logo-image(color: if white { color } else { auto }) } else if (
     type(logo) == function) { logo(color) } else { logo }

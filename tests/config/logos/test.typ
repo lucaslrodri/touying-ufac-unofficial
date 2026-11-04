@@ -1,9 +1,9 @@
-/// Synopsis: `logos`: the UFAC logo, a partner's logo (content) and one drawn in the colour of the footer (a function), separated by dots, in the footer and, in white, on the cover.
+/// Synopsis: `config-info(logo:)`: the UFAC logo, a partner's logo (content) and one drawn in the colour of the footer (a function), separated by dots, in the footer and, in white, on the cover.
 #import "../../common.typ": *
 #show: ufac-theme.with(
   lang: "en",
-  logos: (auto, image("../../logo.svg", height: 0.64em), color => text(size: 0.5em, weight: "bold", fill: color)[LAB]),
-  info,
+  test-info,
+  config-info(logo: (auto, image("../../logo.svg", height: 0.64em), color => text(size: 0.5em, weight: "bold", fill: color)[LAB])),
 )
 
 #title-slide()

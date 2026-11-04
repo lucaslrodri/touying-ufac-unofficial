@@ -30,11 +30,11 @@ creates a deck from [template/main.typ](template/main.typ), the cover and one sl
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    title: [Title of the teaching unit],
-    subtitle: [Teaching unit I],
+    title: [Subject name],                    // or `subject:`
+    short-title: [CODE or Department],        // or `subject-code:`
+    subtitle: [Title of the teaching unit],
+    short-subtitle: [Teaching unit I],
     author: [Prof. Dr. Your Name],
-    subject: [Subject name],
-    subject-code: [CODE or Department],
     counter-prefix: [1.],   // "Exercise 1.N"; none gives "Exercise N"
   ),
 )
@@ -78,11 +78,11 @@ Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `
   lang: "en",                         // "pt-br" (default), "en" or "es": text language and pill/section names
   // exercise-name: [Exercise], example-name: [Example], part-name: [Part],   // override the localized names
   config-info(
-    title: [Title of the teaching unit],
-    subtitle: [Teaching unit I],
+    title: [Subject name],
+    short-title: [CODE or Department],
+    subtitle: [Title of the teaching unit],
+    short-subtitle: [Teaching unit I],
     author: [Prof. Dr. Your Name],
-    subject: [Subject name],
-    subject-code: [CODE or Department],
     counter-prefix: [1.],
   ),
 )

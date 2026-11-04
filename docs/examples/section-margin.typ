@@ -5,7 +5,7 @@
   lang: "en",
   section-margin: true,
   config-info(
-    subject: [Networks],
+    title: [Networks],
     author: [Author Name],
   ),
 )

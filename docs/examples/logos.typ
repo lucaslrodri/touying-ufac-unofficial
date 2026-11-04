@@ -3,12 +3,12 @@
 // --- example ---
 #show: ufac-theme.with(
   lang: "en",
-  logos: (auto, color => text(size: 0.5em, weight: "bold", fill: color)[LAB]),
   config-info(
-    subject: [Neural Networks],
-    title: [Training and evaluation],
+    logo: (auto, color => text(size: 0.5em, weight: "bold", fill: color)[LAB]),
+    title: [Neural Networks],
+    short-title: [PPGEE016],
+    subtitle: [Training and evaluation],
     author: [Prof. Author Name],
-    subject-code: [PPGEE016],
   ),
 )
 

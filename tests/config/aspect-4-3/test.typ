@@ -1,6 +1,6 @@
 /// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer and columns on 4:3 paper).
 #import "../../common.typ": *
-#show: ufac-theme.with(aspect-ratio: "4-3", info)
+#show: ufac-theme.with(aspect-ratio: "4-3", test-info)
 
 #title-slide()
 

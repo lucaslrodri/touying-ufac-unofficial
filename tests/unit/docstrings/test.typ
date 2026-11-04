@@ -10,7 +10,7 @@
   show-example: tidy.show-example.show-example.with(layout: (code, preview, ..options) => { code; preview }),
 )
 
-#for file in ("constants.typ", "utils.typ", "icons.typ", "components.typ", "code.typ", "ufac.typ") {
+#for file in ("constants.typ", "utils.typ", "icons.typ", "components.typ", "code.typ", "info.typ", "ufac.typ") {
   let docs = tidy.parse-module(read("/src/" + file), name: file, scope: scope)
   assert(docs.functions.len() + docs.variables.len() > 0, message: "nothing documented in " + file)
   tidy.show-module(docs, style: style, enable-tests: true, omit-private-definitions: false, show-outline: false)

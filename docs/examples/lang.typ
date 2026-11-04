@@ -4,7 +4,7 @@
 #show: ufac-theme.with(
   lang: "es",
   part-name: [Unidad],
-  config-info(subject: [Redes], author: [Autor]),
+  config-info(title: [Redes], author: [Autor]),
 )
 
 = Redes multicapa

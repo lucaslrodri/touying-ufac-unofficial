@@ -5,6 +5,7 @@
 #import "utils.typ": *
 #import "components.typ": *
 #import "code.typ": _code-rules
+#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names
 
 // ---------- header ----------
 /// Header of a content slide: the current `==` in blue (fit to width), or, when the heading carries an
@@ -326,8 +327,8 @@
   touying-slide(self: self, slide-body)
 })
 
-/// Cover: blue page with the subject (large, white), the subtitle (yellow) and the title (white) of `config-info`
-/// centered, `footer-left`/`footer-right` in white at the top and the logos (`ufac-theme(logos:)`) in white at the
+/// Cover: blue page with the title (large, white), the short subtitle (yellow) and the subtitle (white) of `config-info`
+/// centered, `footer-left`/`footer-right` in white at the top and the logos (`config-info(logo:)`) in white at the
 /// bottom. The slide counter is frozen, so the cover does not count.
 ///
 /// Content given to it, such as a partner's logo or the name of a program, goes below the titles, centered at the
@@ -364,9 +365,12 @@
     let self = utils.merge-dicts(self, config-page(fill: self.colors.primary, header: header, footer: footer), config-common(freeze-slide-counter: true))
     touying-slide(self: self, {
       std.align(center + horizon, {
-        text(size: 2em, fill: white, weight: "bold", self.info.subject); parbreak()
-        text(size: 1.2em, fill: self.colors.secondary, self.info.subtitle); linebreak()
-        text(size: 1.2em, fill: white, self.info.title)
+        let i = self.info
+        if _given(i.title) { text(size: 2em, fill: white, weight: "bold", i.title) }
+        parbreak()
+        if _given(i.short-subtitle) { text(size: 1.2em, fill: self.colors.secondary, i.short-subtitle) }
+        linebreak()
+        if _given(i.subtitle) { text(size: 1.2em, fill: white, i.subtitle) }
       })
       // white on blue, as in a pill (`kind: "pill"`), 0.5em above the bottom of the page body. Placed, not measured:
       // inside `layout`/`context` Touying's marks (`#alert`, `#pause`) are out of its reach and panic
@@ -562,15 +566,18 @@
 /// #show: ufac-theme.with(
 ///   aspect-ratio: "16-9",
 ///   config-info(
-///     title: [Training and evaluation], subtitle: [Units III and IV],
-///     author: [Prof. Name], subject: [Neural Networks], subject-code: [PPGEE016],
-///     counter-prefix: [1.],
+///     title: [Neural Networks], short-title: [PPGEE016],
+///     subtitle: [Training and evaluation], short-subtitle: [Units III and IV],
+///     author: [Prof. Name], counter-prefix: [1.],
 ///   ),
 /// )
 /// ```
 ///
-/// `config-info` carries `subject`, `subtitle`, `title`, `author`, `subject-code` and `counter-prefix`, the prefix of
-/// the exercise and example numbers ("Exercise 1.N"; `none` gives "Exercise N").
+/// `config-info` carries the fields of Touying: `title` (the name of the course or of the work), `short-title` (its code
+/// or a shorter name: the tag of the cover), `subtitle` (the topic), `short-subtitle` (the lecture or the unit), `author`
+/// (one, an array or free content), `date`, `institution`, `logo` and `contact`; the aliases of a course (`subject`,
+/// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `kind` of presentation; and
+/// `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives "Exercise N").
 /// -> content
 #let ufac-theme(
   /// Any ratio accepted by Touying's `utils.page-args-from-aspect-ratio`: `"16-9"`, `"4-3"`, … -> str
@@ -590,18 +597,13 @@
   example-icon: "beaker",
   /// Prefix of the section slide ("Part N:"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
-  /// Left text of the footer; a function receives `self`. `auto` is the subject code, a dot and the subject (the dot
-  /// only when both are given). -> auto | content | function
+  /// Left text of the footer; a function receives `self`. `auto` is the `short-title` and the `title` separated by a
+  /// dot and, when the date is a `semester` or a `year`, the date too ("CCET123 • Control Systems • 2026.2").
+  /// -> auto | content | function
   footer-left: auto,
-  /// Right text of the footer; a function receives `self`. `auto` is the author. -> auto | content | function
+  /// Right text of the footer; a function receives `self`. `auto` is the authors in running text ("A, B and C"); of an
+  /// author written as free content, the names of its first group. -> auto | content | function
   footer-right: auto,
-  /// Logos at the left of the footer and at the bottom of the cover, in this order, separated by a dot. Each one is
-  /// content, a function that receives the colour of the footer (the primary colour on the slides, white on the
-  /// cover), or `auto`, the UFAC logo (blue on the slides, white with the yellow shield on the cover). A logo should
-  /// be about `0.64em` high, the height of the UFAC logo. `auto` is the UFAC logo alone; for the UFAC logo and a
-  /// partner's, `(auto, color => image(bytes(read("lab.svg").replace("#000000", color.to-hex())), height: 0.64em))`.
-  /// -> auto | array
-  logos: auto,
   /// Distance between the content of the section slides (what follows `=`, on the right) and the right edge of the
   /// page. `false` puts it flush with the edge, which suits a photo or a figure with a background; `true` keeps the
   /// page margin (`1.8em`, the same as the text), for an image without a background or an icon; a length sets the
@@ -620,14 +622,14 @@
   body,
 ) = {
   let l = _lang-parse(lang)
-  let given(x) = x not in (none, [], "")
-  let footer-left = if footer-left != auto { footer-left } else {
-    self => (self.info.subject-code, self.info.subject).filter(given).join(" " + _sep-dot + " ")
-  }
-  let footer-right = if footer-right != auto { footer-right } else { self => self.info.author }
-  let logos = if logos == auto { (auto,) } else { logos }
-  assert(type(logos) == array and logos.len() > 0,
-    message: "ufac-theme: logos is auto or a non-empty array of logos (content, functions of the colour, or auto)")
+  assert("logos" not in args.named(), message: "ufac-theme: logos moved to config-info(logo: ..) in 0.3.0")
+  let footer-left = if footer-left != auto { footer-left } else { self => {
+    let parts = (self.info.at("short-title", default: none), self.info.title)
+    if self.info.at("date-short", default: false) { parts.push(_date(self)) }
+    parts.filter(_given).map(x => [#x]).join([ #_sep-dot ])
+  } }
+  let footer-right = if footer-right != auto { footer-right } else { self => _author-names(self) }
+  let configs = _prepare-configs(l.lang, args.pos())
   assert(type(section-margin) in (bool, length),
     message: "ufac-theme: section-margin is true (the page margin), false (flush with the edge) or a length")
   for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
@@ -639,7 +641,12 @@
     config-page(..utils.page-args-from-aspect-ratio(aspect-ratio), header-ascent: 0em, footer-descent: 0em, margin: (top: 3.25em, bottom: 1.75em, x: 1.8em)),
     config-common(slide-fn: slide, new-section-slide-fn: new-section-slide, receive-body-for-new-section-slide-fn: true, show-strong-with-alert: false),
     config-methods(
-      init: (self: none, body) => _slide-rules(self, _rules(self, body)),
+      init: (self: none, body) => {
+        // the information of the deck, for `#info` (which reads it in `context`, anywhere)
+        _deck.update((info: self.info, store: self.store, colors: self.colors,
+          datetime-format: self.at("datetime-format", default: auto)))
+        _slide-rules(self, _rules(self, body))
+      },
       // in the colour of the box around it, like bold text (blue elsewhere); yellow in a pill
       alert: (self: none, it) => context text(weight: "bold",
         fill: if _in-pill() { colors.secondary } else { _current-box-color(self.colors.primary) }, it),
@@ -648,12 +655,14 @@
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
       exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
-      footer-right: footer-right, logos: logos, section-margin: section-margin, codly: codly,
-      code-languages: code-languages),
+      footer-right: footer-right, section-margin: section-margin, codly: codly, code-languages: code-languages),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile
-    config-info(title: [], subtitle: [], subject: [], subject-code: [], author: none, counter-prefix: [1.]),
-    ..args,
+    _info-defaults,
+    ..configs.before,
+    ..configs.configs,
+    ..configs.after,
+    ..args.named(),
   )
   body
 }

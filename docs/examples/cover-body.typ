@@ -4,11 +4,11 @@
   aspect-ratio: "16-9",
   lang: "en",
   config-info(
-    subject: [Neural Networks],
-    subtitle: [Units III and IV],
-    title: [Training and evaluation],
+    title: [Neural Networks],
+    short-title: [PPGEE016],
+    subtitle: [Training and evaluation],
+    short-subtitle: [Units III and IV],
     author: [Prof. Author Name],
-    subject-code: [PPGEE016],
   ),
 )
 // --- example ---

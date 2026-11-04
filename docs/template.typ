@@ -24,7 +24,7 @@
 #let _self = (
   colors: colors,
   methods: (alert: (self: none, it) => primary(it)),
-  info: (counter-prefix: [1.]),
+  info: (counter-prefix: [1.], title: [], subtitle: [], logo: auto),
   store: (lang: "en", region: none, exercise-name: auto, example-name: auto, part-name: auto),
 )
 
@@ -87,7 +87,7 @@
 // ---------- API reference ----------
 /// The documented modules of `src/`, parsed once. Labels are `<module>-<name>()` for functions and `<module>-<name>`
 /// for variables (tidy's convention), which the index chapter links to.
-#let modules = ("ufac", "components", "icons", "code", "constants").map(name =>
+#let modules = ("ufac", "components", "icons", "code", "info", "constants").map(name =>
   (name, tidy.parse-module(read("../src/" + name + ".typ"), name: name, scope: example-scope))).to-dict()
 #let api-style = mantys-like.style + (show-example: show-example)
 

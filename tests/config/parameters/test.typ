@@ -10,7 +10,11 @@
   footer-left: self => [Custom left footer],
   footer-right: self => [Right: #self.info.author],
   config-info(
-    title: [Title], subtitle: [Subtitle], author: [Author], subject: [Course], subject-code: [COD123],
+    title: [Course],
+    short-title: [COD123],
+    subtitle: [Title],
+    short-subtitle: [Subtitle],
+    author: [Author],
     counter-prefix: [2.],
   ),
 )

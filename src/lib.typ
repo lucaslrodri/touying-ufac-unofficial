@@ -10,4 +10,5 @@
 #import "icons.typ": *
 #import "components.typ": *
 #import "code.typ": *
+#import "info.typ": *
 #import "ufac.typ": *

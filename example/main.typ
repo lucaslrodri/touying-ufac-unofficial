@@ -7,11 +7,11 @@
   lang: "en",                         // "pt-br" (default), "en" or "es": text language and pill/section names
   // exercise-name: [Exercise], example-name: [Example], part-name: [Part],   // override the localized names
   config-info(
-    title: [Title of the teaching unit],
-    subtitle: [Teaching unit I],
+    title: [Subject name],
+    short-title: [CODE or Department],
+    subtitle: [Title of the teaching unit],
+    short-subtitle: [Teaching unit I],
     author: [Prof. Dr. Your Name],
-    subject: [Subject name],
-    subject-code: [CODE or Department],
     counter-prefix: [1.],
   ),
 )
