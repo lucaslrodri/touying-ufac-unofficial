@@ -100,6 +100,7 @@
 /// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
 /// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." in
 /// bold. With a `#pause` right before or right after it, the solution appears on the next subslide, opening included.
+/// Written alone, `#solution`, the word ends with a period; `#solution(sep: ":")` ends it with another separator.
 ///
 /// ```typ
 /// == The state of water <example>
@@ -109,11 +110,30 @@
 /// Every condition is an `if`: …
 /// ```
 /// -> content
-#let solution = metadata((kind: "ufac-solution", word: "solution"))
+#let solution(
+  /// What follows the word, in bold: `"."`, `":"`, `[:\ ]` (a colon and a line break) or any content. -> str | content
+  sep: ".",
+) = metadata((kind: "ufac-solution", word: "solution", sep: sep))
 
-/// The marker of the start of the answer of an exercise: the same as @solution, opened by "Resposta." / "Answer.".
+/// The marker of the start of the answer of an exercise: the same as @solution, opened by "Resposta." / "Answer.",
+/// with the same separator.
 /// -> content
-#let answer = metadata((kind: "ufac-solution", word: "answer"))
+#let answer(
+  /// What follows the word, in bold: `"."`, `":"`, `[:\ ]` or any content. -> str | content
+  sep: ".",
+) = metadata((kind: "ufac-solution", word: "answer", sep: sep))
+
+/// The marker of a solution or answer in a body, as `(word, sep)`, or `none`: the marker with its separator, or the bare
+/// `#solution` / `#answer`, which Typst writes as a code element with the name of the function (the period).
+///
+/// #test(`_solution-marker(answer(sep: ":")) == ("answer", ":")`, `_solution-marker([x]) == none`)
+/// -> array | none
+#let _solution-marker(
+  /// A child of a body. -> any
+  c,
+) = if _is-meta(c, "ufac-solution") { (c.value.word, c.value.at("sep", default: ".")) } else if (
+  type(c) == content and c.func() == raw and c.at("lang", default: none) == "typc" and c.text in ("solution", "answer")
+) { (c.text, ".") }
 
 /// The opening of a solution: a thin dashed line almost from border to border of the box and the word ("Solução.",
 /// "Resposta.") in bold, in the colour of the box darkened. The word is in the same paragraph as what follows the
@@ -125,6 +145,8 @@
   word,
   /// Whether to draw the dashed line. -> bool
   line: true,
+  /// What follows the word. -> str | content
+  sep: ".",
 ) = {
   // the line goes 0.5em past the text (1em from the border) on each side: almost from border to border, and whole under
   // the veil of `#pause` (which goes 0.5em past the text)
@@ -132,9 +154,13 @@
     context block(above: 0.65em, below: 0.65em, move(dx: -0.5em, std.line(length: 100% + 1em,
       stroke: (paint: _current-box-color(colors.primary), thickness: 0.4pt, dash: "dashed"))))
   }
+  // after a separator that ends with a line break, no space: it would indent the next line
+  let tail = if type(sep) != content { () } else if sep.has("children") { sep.children } else { (sep,) }
+  while tail.len() > 0 and tail.last() == [ ] { tail = tail.slice(0, -1) }
+  let breaks = tail.len() > 0 and tail.last().func() == linebreak
   context {
-    text(weight: "bold", fill: _current-box-color(colors.primary).darken(30%), _words(text.lang).at(word))
-    h(0.35em)
+    text(weight: "bold", fill: _current-box-color(colors.primary).darken(30%), [#_words(text.lang).at(word)#sep])
+    if not breaks { h(0.35em) }
   }
 }
 
@@ -149,8 +175,9 @@
 ) = {
   if type(body) != content or not body.has("children") { return body }
   let ch = body.children
-  let i = ch.position(c => _is-meta(c, "ufac-solution"))
+  let i = ch.position(c => _solution-marker(c) != none)
   if i == none { return body }
+  let (word, sep) = _solution-marker(ch.at(i))
   let head = ch.slice(0, i)
   let rest = ch.slice(i + 1)
   // the spaces and the paragraph breaks after the marker, and a `#pause` among them, which goes before the opening;
@@ -164,7 +191,7 @@
   }
   // nothing before the marker but spaces and markers (a continuation after `---`): no line to separate
   let alone = head.all(c => c.func() in ([ ].func(), parbreak, metadata))
-  let opening = (_solution-head(ch.at(i).value.word, line: not alone),) + if blank { (parbreak(),) } else { () }
+  let opening = (_solution-head(word, line: not alone, sep: sep),) + if blank { (parbreak(),) } else { () }
   (head + opening + rest).join()
 }
 

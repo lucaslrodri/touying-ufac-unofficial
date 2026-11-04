@@ -256,7 +256,8 @@ their own look.
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
 line and "Solution." or "Answer." in bold at the start of the next paragraph; after a blank line, the word stays alone
 and the solution starts a new paragraph. With a `#pause` right before or after the marker, the solution appears on the
-next subslide.
+next subslide. The word ends with a period; `#answer(sep: ":")` ends it with a colon, and `#solution(sep: [:\ ])` with
+a colon and a line break, so that the solution starts on the next line.
 
 An exercise or example goes on until a slide of another kind: a long content continues on the next page in the same
 box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. `#exercise-slide` and
@@ -264,7 +265,7 @@ box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. 
 
 #slide-example("exercise", pages: (1, 2, 3, 4, 5, 6))
 
-#see("ufac", "exercise-slide()", "example-slide()", "solution", "answer")
+#see("ufac", "exercise-slide()", "example-slide()", "solution()", "answer()")
 
 = Writing on a slide <writing>
 

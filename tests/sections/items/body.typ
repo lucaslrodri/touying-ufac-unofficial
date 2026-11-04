@@ -106,3 +106,15 @@ The exercise ends with a slide of another kind; the next one is Exercise 1.4.
 
 == Another one <exercise>
 Exercise 1.4.
+
+== Another separator <exercise>
+`#answer(sep: ":")` ends the word with a colon.
+
+#answer(sep: ":")
+The next high tide is at 18:35.
+
+== A separator with a line break <example>
+`#solution(sep: [:\ ])` ends the word with a colon and a line break.
+
+#solution(sep: [:\ ])
+The solution starts on the next line, without an indent.

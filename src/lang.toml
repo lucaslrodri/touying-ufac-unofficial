@@ -1,7 +1,7 @@
 # Localized words of the theme, by language (the `lang` of `ufac-theme`, read from `text.lang`); an unknown language
 # falls back to Portuguese. Read by `_words` and `_tr` (src/utils.typ).
 #   exercise, example, part     the pill of the exercise and example slides, the label of the section slides
-#   solution, answer            the words that open `#solution` and `#answer`
+#   solution, answer            the words that open `#solution` and `#answer`, before the separator (".")
 #   caution, tip, remark, note  the titles of `callout` in the style "badge"; [lang.xx.bar], the same in the style "bar",
 #                               which open the text (with the punctuation of the language)
 #   output                      the label of the output of a program in a code block
@@ -15,8 +15,8 @@
 exercise = "Exercício"
 example = "Exemplo"
 part = "Parte"
-solution = "Solução."
-answer = "Resposta."
+solution = "Solução"
+answer = "Resposta"
 caution = "Atenção"
 tip = "Dica"
 remark = "Relembrando"
@@ -41,8 +41,8 @@ note = "Nota."
 exercise = "Exercise"
 example = "Example"
 part = "Part"
-solution = "Solution."
-answer = "Answer."
+solution = "Solution"
+answer = "Answer"
 caution = "Caution"
 tip = "Tip"
 remark = "Remark"
@@ -67,8 +67,8 @@ note = "Note."
 exercise = "Ejercicio"
 example = "Ejemplo"
 part = "Parte"
-solution = "Solución."
-answer = "Respuesta."
+solution = "Solución"
+answer = "Respuesta"
 caution = "Precaución"
 tip = "Consejo"
 remark = "Recordando"

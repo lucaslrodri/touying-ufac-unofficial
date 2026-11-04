@@ -140,9 +140,12 @@
 #assert(catch(() => ending-slide(color: red)).contains("unknown argument"))
 
 
-// exercises and examples: the markers of the solution are content (metadata), alone on a line like `#pause`
-#assert.eq(solution.func(), metadata)
-#assert.eq(answer.value.word, "answer")
+// exercises and examples: the markers of the solution are functions that give a metadata, with the separator;
+// written bare (`#solution`), Typst writes the name of the function, which the theme reads as the marker with "."
+#assert.eq(solution().func(), metadata)
+#assert.eq(answer(sep: ":").value, (kind: "ufac-solution", word: "answer", sep: ":"))
+#assert.eq(_solution-marker([#answer]), ("answer", "."))
+#assert.eq(_solution-marker([#solution(sep: [:\ ])]), ("solution", [:\ ]))
 
 // the callouts, the icons and the closing slide refuse what they do not know, with a message that says so
 #assert(catch(() => callout("x")[a]).contains("unknown kind"))
