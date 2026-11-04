@@ -65,3 +65,4 @@
 // =====================================================================================================================
 // Variants of the section slide, one after the other; the last one ("without image") closes the catalogue.
 #include "./sections/section/body.typ"
+#include "./sections/section-figures/body.typ"

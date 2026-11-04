@@ -111,7 +111,6 @@
   let source = _icon-source(name)
   context {
     let c = if color != auto { color } else if _in-pill() { white } else { _current-box-color(colors.neutral-darkest) }
-    // `width: auto` is explicit: the `set image(width:, height:)` of the section slide must not reach the icon
     box(baseline: baseline, image(bytes(_icon-svg(source, c)), width: auto, height: size, alt: name, format: "svg"))
   }
 }

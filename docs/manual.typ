@@ -201,7 +201,9 @@ Headings drive the deck: no function call is needed for the ordinary slides.
 
 Every `=` heading opens a section slide, as the cover in white: "PART N" in the yellow tag (the name follows the
 language of the deck, or `ufac-theme(part-name:)`), the title in blue and the yellow rule. The content right after the
-`=`, typically an image, sits on the right, at the page margin from the edge.
+`=`, typically an image, sits on the right, at the page margin from the edge. An image fits in a frame of 12em × 66%
+of the height, which is a limit: without a size, the image fits whole in it, with its proportions; with only its height
+(or only its width), the frame limits the other one; it is never cropped nor stretched.
 
 #slide-example("section")
 
@@ -696,9 +698,6 @@ each collection has its license.
   `https://api.iconify.design/ph.json?icons=boat-bold,sun-bold,waves-bold`.
 - *The whole collection*: download its JSON from the site of the iconify package (some are several megabytes).
 ]
-
-On a section slide, whose figure has a frame of its own (`12em` wide), an icon also takes `width: auto`, so that it
-keeps its proportions: `iconify.icon("ph:waves-bold", height: 7em, width: auto)`.
 
 == Touying's integrations
 

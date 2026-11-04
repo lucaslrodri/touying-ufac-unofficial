@@ -10,7 +10,7 @@
 
 = Section with an icon (no background)
 #iconify.provide-icons(octicons)
-#text(fill: colors.primary-lighter, iconify.icon("octicon:gear-16", height: 7em, width: auto))
+#text(fill: colors.primary-lighter, iconify.icon("octicon:gear-16", height: 7em))
 
 = Section without image
 

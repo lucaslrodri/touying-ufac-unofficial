@@ -1,6 +1,6 @@
 // Body of the `sections/section` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 // Section slides only (`= Part`), one after the other, without content slides between them: the image on the right
-// comes from the content right after the `=` (`receive-body-for-new-section-slide-fn: true`) and gets `width: 12em, height: 66%`.
+// comes from the content right after the `=` (`receive-body-for-new-section-slide-fn: true`); an image fits in the frame of 12em × 66% (sections/section-figures).
 #import "../../common.typ": *
 
 = Section with an image

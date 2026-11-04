@@ -823,12 +823,32 @@
   /// Content that follows the `=` heading. -> content
   body,
 ) = touying-slide-wrapper(self => {
+  // The figure of the section has a frame of 12em × 66%, a limit and not a size: an image without a size fits whole in
+  // it, with its proportions, never cropped; an image with one size keeps it, and the frame limits only the other one;
+  // with both, `fit: "contain"` keeps the proportions. The image goes to the right of the frame, so it keeps the margin
+  // from the edge. Only the content after the `=` gets it, not the title (an icon in it stays inline).
+  let limit(it) = if it.width == auto and it.height == auto {
+    // an image in a line takes its natural size, not the room it is in: it is scaled until one side meets the frame
+    box(width: 12em, height: 66%, layout(frame => {
+      let n = measure(it)
+      let f = calc.min(frame.width / n.width, frame.height / n.height)
+      std.align(right + horizon, scale(f * 100%, reflow: true, it))
+    }))
+  } else if it.width == auto {
+    box(width: 12em, std.align(right, it))
+  } else if it.height == auto {
+    box(height: 66%, std.align(horizon, it))
+  } else { it }
+  let body = if body in (none, []) { body } else {
+    set image(fit: "contain")
+    show image: limit
+    body
+  }
   // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the
   // grid still reserves its width and the title never runs under it; `margin` pads it on the right inside the move,
   // so it stops that far from the edge
   let slide-body = {
     set std.align(left + horizon)
-    set image(width: 12em, height: 66%)
     let page-margin = self.page.at("margin", default: (:))
     let dx = if type(page-margin) == dictionary { page-margin.at("x", default: 1.8em) } else { page-margin }
     assert(margin == auto or type(margin) == length, message: "new-section-slide: margin is auto (the page margin) or"
