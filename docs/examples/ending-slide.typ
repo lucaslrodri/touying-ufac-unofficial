@@ -11,7 +11,7 @@
 // --- example ---
 #ending-slide()
 
-#ending-slide[Questions?][Next: ocean currents][
+#ending-slide[Questions?][Next: tides][
   #info("contact")
 ]
 

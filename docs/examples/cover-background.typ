@@ -8,7 +8,8 @@
     kind: "dissertation",
     title: [Rainfall and river levels in
       the western Amazon],
-    course: [Graduate Program in Geography],
+    course: [Graduate Program in
+      Geography],
     author: [
       _Student_ \ Student Name \
       _Advisor_ \ Prof. Dr. Advisor Name

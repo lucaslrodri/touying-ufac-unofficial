@@ -391,7 +391,8 @@ whole slide (@deck).
 A backslash on the sign keeps a shorthand literal. An escaped `>` is only recognized when a word follows it.
 
 ````example
-\==not highlighted== and \~not underlined\~
+\==not highlighted== and
+\~not underlined\~
 
 \> not a box
 
@@ -408,13 +409,18 @@ A backslash on the sign keeps a shorthand literal. An escaped `>` is only recogn
 badge over the border, with an optional icon.
 
 ```example
-#emph-box[A definition, in the primary color.]
-
-#emph-box(color: colors.tertiary, title: [Problem])[
-  The anchor *drags* and the boat ~drifts~.
+#emph-box[
+  A definition, in the primary color.
 ]
 
-#emph-box(color: colors.quaternary, icon: "tip", title: [Tip])[
+#emph-box(color: colors.tertiary,
+  title: [Problem])[
+  The anchor *drags* and the boat
+  ~drifts~.
+]
+
+#emph-box(color: colors.quaternary,
+  icon: "tip", title: [Tip])[
   An icon before the title.
 ]
 ```
@@ -424,7 +430,8 @@ Only inline content fits there: lists and code blocks need `#emph-box`. A loose 
 read as a box: write `$a > b$`, or escape it (@escapes).
 
 ```example
-> A box without title, with *bold* and $x^2$.
+> A box without title, with *bold*
+> and $x^2$.
 
 > == Definition
 > A box with a title.
@@ -454,11 +461,18 @@ printed handout, with a bar on the left and the title opening the text; `style: 
 the title on a badge.
 
 ```example
-#caution[`x*y` with two lists is an error.]
+#caution[
+  `x*y` with two lists is an error.
+]
 #tip[The up arrow recalls a command.]
-#remark[A *function* is a named block of code.]
-#note[Two versions of the program differ here.]
-#callout("tip", style: "badge")[The badge style.]
+#remark[
+  A *function* is a named block of code.
+]
+#note[Two versions of the program
+  differ here.]
+#callout("tip", style: "badge")[
+  The badge style.
+]
 ```
 
 #see("components", "callout()", "caution()", "tip()", "remark()", "note()")
@@ -470,7 +484,8 @@ in spaced capitals, on any color. A paragraph made only of quoted lines becomes 
 `#quote-box`; Typst's `#quote(attribution:)` is a `#quote-box` too, with the attribution on the right.
 
 ```example
-#tag[Optional] #tag(color: colors.tertiary)[Hard]
+#tag[Optional]
+#tag(color: colors.tertiary)[Hard]
 
 "All models are wrong"
 "but some are useful"
@@ -493,10 +508,13 @@ with a dark tone is like a pill, with white text.
 ```example
 #table(
   columns: 3,
-  table.header([Fish], [Depth (m)], [$T$ (°C)]),
+  table.header(
+    [Fish], [Depth (m)], [$T$ (°C)],
+  ),
   [Cod], [200], [4],
   [Tuna], [50], table.cell(
-    fill: colors.secondary-lighter)[*18*],
+    fill: colors.secondary-lighter,
+  )[*18*],
 )
 ```
 

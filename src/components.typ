@@ -11,7 +11,8 @@
 /// (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow, where blue would vanish.
 ///
 /// ```example
-/// A #primary[definition], the same as ~~this shorthand~~.
+/// A #primary[definition], the same as
+/// ~~this shorthand~~.
 /// ```
 /// -> content
 #let primary(
@@ -44,7 +45,8 @@
 /// Bold text in green, for advantages and correct answers.
 ///
 /// ```example
-/// #quaternary[Correct:] the series converges.
+/// #quaternary[Correct:] the series
+/// converges.
 /// ```
 /// -> content
 #let quaternary(
@@ -90,7 +92,8 @@
 /// is a compile error that says how to get the icon.
 ///
 /// ```example
-/// #icon("tip", color: colors.quaternary) A tip,
+/// #icon("tip", color: colors.quaternary)
+/// A tip,
 /// #icon("warning") attention and a big
 /// #icon("python", size: 1.6em)
 /// ```
@@ -203,7 +206,8 @@
 /// definitions and what is recalled, quaternary for advantages, tertiary for problems, secondary for side notes.
 ///
 /// ```example
-/// #emph-box(color: colors.quaternary, title: [Pros])[
+/// #emph-box(color: colors.quaternary,
+///   title: [Pros])[
 ///   - Fast and *simple*
 ///   - Works with ==highlights==
 /// ]
@@ -253,14 +257,16 @@
 /// ```example
 /// $ #eq-box[$E = m c^2$] $
 ///
-/// $ F = #eq-box(color: colors.quaternary)[$m a$] + f $
+/// $ F = #eq-box(
+///   color: colors.quaternary,
+/// )[$m a$] + f $
 /// ```
 ///
 /// Shorthand, always in the primary color: `>` in front of a block equation, on the same line or alone on the line
 /// before it.
 ///
 /// ```example
-/// > $ s^2 = 1/(n - 1) sum_i (x_i - overline(x))^2 $
+/// > $ sigma^2 = 1/n sum_i (x_i - mu)^2 $
 /// ```
 /// -> content
 #let eq-box(
@@ -306,7 +312,8 @@
 ///
 /// ```example
 /// #quote-box(color: colors.primary)[
-///   All models are wrong, but some are useful.
+///   All models are wrong, but some
+///   are useful.
 /// ]
 /// ```
 ///
@@ -374,8 +381,12 @@
 /// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark and @note.
 ///
 /// ```example
-/// #callout("caution")[`x*y` with two vectors is an error.]
-/// #callout("tip", style: "badge")[The style with the badge.]
+/// #callout("caution")[
+///   `x*y` with two vectors is an error.
+/// ]
+/// #callout("tip", style: "badge")[
+///   The style with the badge.
+/// ]
 /// #callout("note", title: [Aside.])[
 ///   Another title.
 /// ]
@@ -416,7 +427,9 @@
 /// (`style`, `title`, `color`, `icon`).
 ///
 /// ```example
-/// #caution[`x*y` with two vectors is an error.]
+/// #caution[
+///   `x*y` with two vectors is an error.
+/// ]
 /// ```
 /// -> content
 #let caution(
@@ -439,7 +452,9 @@
 /// `#remark[..]` is `#callout("remark")[..]`, with the same options.
 ///
 /// ```example
-/// #remark[A *function* is a named block of code.]
+/// #remark[
+///   A *function* is a named block of code.
+/// ]
 /// ```
 /// -> content
 #let remark(
@@ -450,7 +465,8 @@
 /// A note, gray, for what is secondary: `#note[..]` is `#callout("note")[..]`, with the same options.
 ///
 /// ```example
-/// #note[Two versions of the program differ here.]
+/// #note[Two versions of the program
+///   differ here.]
 /// ```
 /// -> content
 #let note(
@@ -492,7 +508,7 @@
 ///
 /// ```example
 /// -> `plot3` #tag[new]
-/// -> #tag(color: colors.tertiary)[exam] on Friday
+/// -> #tag(color: colors.tertiary)[exam]
 /// -> #tag(
 ///   color: colors.quaternary-light,
 /// )[optional]
@@ -517,7 +533,8 @@
 /// (no divider) is still available.
 ///
 /// ```example
-/// #cols(divider: true, columns: (1fr, 2fr))[
+/// #cols(divider: true,
+///   columns: (1fr, 2fr))[
 ///   Left
 /// ][
 ///   -> the shorthands work
