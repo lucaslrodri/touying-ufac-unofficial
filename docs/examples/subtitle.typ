@@ -1,20 +1,20 @@
 #import "@preview/touying:0.7.4": *
 #import "../../src/lib.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
-  title: [Neural Networks],
-  short-title: [NN101],
-  subtitle: [Training and evaluation],
-  short-subtitle: [Units III and IV],
+  title: [Ocean Science],
+  short-title: [OCE110],
+  subtitle: [Tides and waves],
+  short-subtitle: [Unit III],
   author: [Prof. Author Name],
 ))
 // --- example ---
-== Activation functions
+== Sea creatures
 
-=== Sigmoid
+=== Octopus
 
-Smooth and bounded, but it saturates.
+Eight arms, three hearts and blue blood.
 
-==== Derivative
+==== Camouflage
 
 Not repeated on the next page.
 

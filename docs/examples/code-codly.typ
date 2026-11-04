@@ -3,10 +3,10 @@
 // --- example ---
 #import "@preview/codly:2.0.0" as codly
 #show: ufac-theme.with(lang: "en", codly: codly, config-info(
-  title: [Neural Networks],
-  short-title: [NN101],
-  subtitle: [Training and evaluation],
-  short-subtitle: [Units III and IV],
+  title: [Ocean Science],
+  short-title: [OCE110],
+  subtitle: [Tides and waves],
+  short-subtitle: [Unit III],
   author: [Prof. Author Name],
 ))
 
@@ -14,13 +14,13 @@
 
 #codly.new(
   ```python
-  def step(w, grad, lr=0.1):
-      return w - lr * grad
+  def scale(grams, people, serves=4):
+      return grams * people / serves
   ```,
-  file: "train.py",
-  highlights: ((line: 2, start: 12, end: 24, tag: [update]),),
+  file: "recipe.py",
+  highlights: ((line: 2, start: 12, end: 26, tag: [per person]),),
 )
 
 ```text
-w = 0.25
+375.0
 ```

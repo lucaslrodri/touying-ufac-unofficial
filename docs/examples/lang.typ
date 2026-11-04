@@ -4,11 +4,11 @@
 #show: ufac-theme.with(
   lang: "es",
   part-name: [Unidad],
-  config-info(title: [Redes], author: [Autor]),
+  config-info(title: [Oceanografía], author: [Autor]),
 )
 
-= Redes multicapa
+= Las mareas
 
-== Perceptrón <exercise>
+== Tabla de mareas <exercise>
 
-Entrene un perceptrón para la puerta AND.
+¿A qué hora es la próxima marea alta?

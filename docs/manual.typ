@@ -209,7 +209,7 @@ A label on the `==` heading turns the slide into the box of an exercise (red) or
 handout: the box fills the slide, the title goes on a badge over its top border, with the icon of the kind
 (a pencil for exercises, a beaker for examples), the name, the number and, after a dash, the title, and the footer of
 the slide closes the box at the bottom, in the colour of the item. Any suffix gives the same slide and makes the label
-unique, so the slide can be cited: `@exercise-ogata` becomes "Exercise 1.N", bold, in the color of the kind and linked
+unique, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", bold, in the color of the kind and linked
 to the slide. `#exercise-slide` and `#example-slide` are the function forms, with `color` and `icon` options; they
 cannot be cited.
 
@@ -397,8 +397,8 @@ keeps the colors. Typst only knows `+` and `1.` as enum markers in markup, so `a
 == Terms
 
 ```example
-/ Epoch: one pass over the training set.
-/ Batch: the samples of one update.
+/ Tide: the rise and fall of the sea.
+/ Swell: waves that travel far from the wind that made them.
 ```
 
 = Boxes and quotes <boxes>
@@ -411,7 +411,7 @@ keeps the colors. Typst only knows `+` and `1.` as enum markers in markup, so `a
 #emph-box[A definition, in the primary color.]
 
 #emph-box(color: colors.tertiary, title: [Problem])[
-  The gradient *vanishes* and ~stalls~.
+  The anchor *drags* and the boat ~drifts~.
 
   -> the arrow is red too
 ]
@@ -538,9 +538,9 @@ pill, with white text and inverted chips. White and colors outside the palette c
 ```example
 #table(
   columns: 3,
-  table.header([Model], [Layers], [$eta$]),
-  [MLP], [3], [0.1],
-  [CNN], [8], [0.01],
+  table.header([Fish], [Depth (m)], [$T$ (°C)]),
+  [Cod], [200], [4],
+  [Tuna], [50], [18],
 )
 ```
 
@@ -555,8 +555,8 @@ sit closer to the text than Typst's default. For a framed key equation, see `eq-
   caption: [The caption, without a number.],
 )
 
-The update rule is
-$ bold(w) <- bold(w) - eta nabla E(bold(w)) $
+The speed of a wave in deep water is
+$ c = sqrt((g lambda) / (2 pi)) $
 ```
 
 == Code <code>

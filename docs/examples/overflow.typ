@@ -1,29 +1,29 @@
 #import "@preview/touying:0.7.4": *
 #import "../../src/lib.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
-  title: [Neural Networks],
-  short-title: [NN101],
-  subtitle: [Training and evaluation],
-  short-subtitle: [Units III and IV],
+  title: [Ocean Science],
+  short-title: [OCE110],
+  subtitle: [Tides and waves],
+  short-subtitle: [Unit III],
   author: [Prof. Author Name],
 ))
 // --- example ---
-== Training loop
+== Field trip to the beach
 
-=== Steps of one epoch
+=== The checklist
 
-+ Shuffle the training set
-+ Split it into batches
-+ Forward pass on the batch
-+ Compute the loss
-+ Backward pass
-+ Update the weights
-+ Repeat for every batch
-+ Evaluate on the validation set
-+ Save the best weights
-+ Check the stopping rule
-+ Decay the learning rate
-+ Log the metrics
-+ Plot the learning curves
-+ Compare with the baseline
-+ Start the next epoch
++ Check the tide table
++ Pack water and a snack
++ Wear a hat and sunscreen
++ Bring a notebook and a pencil
++ Charge the phone
++ Take a bucket and a net
++ Walk to the rock pools
++ Count the crabs
++ Sketch three shells
++ Measure the water temperature
++ Photograph the waves
++ Collect any litter
++ Leave the animals where they were
++ Walk back before high tide
++ Write the report at home

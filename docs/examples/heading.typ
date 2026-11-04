@@ -1,17 +1,17 @@
 #import "@preview/touying:0.7.4": *
 #import "../../src/lib.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
-  title: [Neural Networks],
-  short-title: [NN101],
-  subtitle: [Training and evaluation],
-  short-subtitle: [Units III and IV],
+  title: [Ocean Science],
+  short-title: [OCE110],
+  subtitle: [Tides and waves],
+  short-subtitle: [Unit III],
   author: [Prof. Author Name],
 ))
 // --- example ---
-== Gradient descent
+== Tides
 
-The weights follow the negative gradient of the error,
-one step per batch.
+The sea rises and falls about twice a day,
+pulled by the Moon and the Sun.
 
 ---
 

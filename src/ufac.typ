@@ -407,11 +407,11 @@
 ) = if color == auto and icon == auto { auto } else { metadata((color: color, icon: icon)) }
 
 /// Exercise slide: the red box of an exercise filling the slide, with a pencil and "Exercise 1.N — Title" on its badge,
-/// numbered automatically. The function form of `== Title <exercise>`. Only the heading form can carry a unique label (`== Title <exercise-ogata>`)
-/// and be cited with `@exercise-ogata`, which shows "Exercise 1.N" linked to the slide.
+/// numbered automatically. The function form of `== Title <exercise>`. Only the heading form can carry a unique label
+/// (`== Title <exercise-tides>`) and be cited with `@exercise-tides`, which shows "Exercise 1.N" linked to the slide.
 ///
 /// ```typ
-/// #exercise-slide(title: [Ogata 4.6])[Find the transfer function.]
+/// #exercise-slide(title: [Tide table])[Find the next high tide.]
 /// #exercise-slide(title: [Lab], color: colors.primary, icon: "terminal")[Another color and icon.]
 /// ```
 /// -> content
@@ -431,7 +431,7 @@
 /// independent from the exercises. The function form of `== Title <example>`; see @exercise-slide.
 ///
 /// ```typ
-/// #example-slide(title: [XOR network])[Two hidden neurons are enough.]
+/// #example-slide(title: [Wave speed])[Longer waves travel faster in deep water.]
 /// ```
 /// -> content
 #let example-slide(
@@ -1028,8 +1028,8 @@
 /// #show: ufac-theme.with(
 ///   aspect-ratio: "16-9",
 ///   config-info(
-///     title: [Neural Networks], short-title: [NN101],
-///     subtitle: [Training and evaluation], short-subtitle: [Units III and IV],
+///     title: [Ocean Science], short-title: [OCE110],
+///     subtitle: [Tides and waves], short-subtitle: [Unit III],
 ///     author: [Prof. Name], counter-prefix: [1.],
 ///   ),
 /// )

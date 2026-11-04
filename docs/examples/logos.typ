@@ -5,9 +5,9 @@
   lang: "en",
   config-info(
     logo: (auto, color => text(size: 0.5em, weight: "bold", fill: color)[LAB]),
-    title: [Neural Networks],
-    short-title: [NN101],
-    subtitle: [Training and evaluation],
+    title: [Ocean Science],
+    short-title: [OCE110],
+    subtitle: [Tides and waves],
     author: [Prof. Author Name],
   ),
 )

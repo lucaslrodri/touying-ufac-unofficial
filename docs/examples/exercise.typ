@@ -1,36 +1,36 @@
 #import "@preview/touying:0.7.4": *
 #import "../../src/lib.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
-  title: [Neural Networks],
-  short-title: [NN101],
-  subtitle: [Training and evaluation],
-  short-subtitle: [Units III and IV],
+  title: [Ocean Science],
+  short-title: [OCE110],
+  subtitle: [Tides and waves],
+  short-subtitle: [Unit III],
   author: [Prof. Author Name],
 ))
 // --- example ---
-== Ogata 4.6 <exercise-ogata>
+== Tide table <exercise-tides>
 
-Find the transfer function of the system.
+High tide was at 6:10. When is the next one?
 
 #answer
-$G(s) = 1 / (s^2 + 2s + 1)$.
+About 12 h 25 min later, at 18:35.
 
-== XOR network <example>
+== Wave speed <example>
 
-Can a single neuron learn XOR?
+Is a long wave faster than a short one in deep water?
 
 #pause
 #solution
-No: two hidden neurons are enough.
+Yes: the speed grows with the square root of the wavelength.
 
-#exercise-slide(title: [Haykin 4.2], color: colors.primary, icon: "terminal")[
+#exercise-slide(title: [Field trip], color: colors.primary, icon: "terminal")[
   The function form, with another color and icon.
 ]
 
-#example-slide(title: [Perceptron], icon: none)[
+#example-slide(title: [Lighthouse], icon: none)[
   Without icon: `icon: none`.
 ]
 
 == Review
 
-Solve @exercise-ogata before the next class.
+Solve @exercise-tides before the next class.

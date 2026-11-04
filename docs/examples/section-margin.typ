@@ -5,10 +5,10 @@
   lang: "en",
   section-margin: false,   // flush with the edge
   config-info(
-    title: [Networks],
+    title: [Astronomy],
     author: [Author Name],
   ),
 )
 
-= Multilayer networks
-#image("network.svg")
+= The planets
+#image("planet.svg")

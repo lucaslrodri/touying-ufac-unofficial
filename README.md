@@ -254,7 +254,7 @@ Markdown-like short forms (inline content only, always primary):
 > == Title
 > Box with title.
 
-> $ y = phi(v) $        // `>` before a block equation (same line or the line above): equation box
+> $ E = m c^2 $         // `>` before a block equation (same line or the line above): equation box
 
 "A quotation."          // paragraph made only of quoted lines → one quote box per line
 ```

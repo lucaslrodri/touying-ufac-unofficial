@@ -3,9 +3,9 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    title: [Neural Networks],
-    short-title: [NN101],
-    subtitle: [Training and evaluation],
+    title: [Ocean Science],
+    short-title: [OCE110],
+    subtitle: [Tides and waves],
     author: [Prof. Author Name],
   ),
 )
@@ -13,14 +13,14 @@
 == Contents
 #outline()
 
-= The perceptron
-== One neuron
-A weighted sum and a threshold.
+= Tides
+== The pull of the Moon
+Two high tides a day.
 
-= Training
-== Gradient descent
-Small steps against the gradient.
+= Waves
+== Wind
+Longer waves travel faster.
 
-= Evaluation
-== Metrics
-Accuracy, precision and recall.
+= Currents
+== The Gulf Stream
+A river inside the ocean.

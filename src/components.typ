@@ -33,7 +33,7 @@
 /// Bold text in red, for warnings and problems.
 ///
 /// ```example
-/// #tertiary[Caution:] the gradient vanishes.
+/// #tertiary[Caution:] the ice is thin.
 /// ```
 /// -> content
 #let tertiary(
@@ -243,21 +243,21 @@
 /// change the line spacing.
 ///
 /// ```example
-/// The output #eq-box[$y = phi(v)$] and the
-/// mean #eq-box[$1/N sum_i y_i$].
+/// The area #eq-box[$A = pi r^2$] and the
+/// mean #eq-box[$1/N sum_i x_i$].
 /// ```
 ///
 /// ```example
-/// $ #eq-box[$v = bold(w)^top bold(x)$] $
+/// $ #eq-box[$E = m c^2$] $
 ///
-/// $ y = #eq-box(color: colors.quaternary)[$phi(v)$] + b $
+/// $ F = #eq-box(color: colors.quaternary)[$m a$] + f $
 /// ```
 ///
 /// Shorthand, always in the primary color: `>` in front of a block equation, on the same line or alone on the line
 /// before it.
 ///
 /// ```example
-/// > $ E = 1/(2N) sum_i (y_i - hat(y)_i)^2 $
+/// > $ s^2 = 1/(n - 1) sum_i (x_i - overline(x))^2 $
 /// ```
 /// -> content
 #let eq-box(
