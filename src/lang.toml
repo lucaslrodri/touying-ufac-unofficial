@@ -45,7 +45,7 @@ solution = "Solution"
 answer = "Answer"
 caution = "Caution"
 tip = "Tip"
-remark = "Remark"
+remark = "Reminder"
 note = "Note"
 output = "Output"
 thanks = "Thank you!"
@@ -60,7 +60,7 @@ thesis = "Doctoral Thesis"
 [lang.en.bar]
 caution = "Caution!"
 tip = "Tip."
-remark = "Remark."
+remark = "Reminder."
 note = "Note."
 
 [lang.es]

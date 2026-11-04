@@ -442,8 +442,8 @@ $ #eq-box[$E = m c^2$] $
 == Callouts
 
 A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. Each
-kind has a role and a function of its own: `#caution`, a mistake to avoid; `#tip`, a shortcut; `#remark`
-("Relembrando" in Portuguese), to recall what was seen before; `#note`, something secondary. The default style is the box of a
+kind has a role and a function of its own: `#caution`, a mistake to avoid; `#tip`, a shortcut; `#remark`,
+titled "Reminder" ("Relembrando" in Portuguese), to recall what was seen before; `#note`, something secondary. The default style is the box of a
 printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an emphasis box with
 the title on a badge.
 

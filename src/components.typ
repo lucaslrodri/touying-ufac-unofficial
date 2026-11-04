@@ -383,7 +383,7 @@
 /// -> content
 #let callout(
   /// `"caution"` (red, a mistake to avoid), `"tip"` (green, a shortcut), `"remark"` (blue, to recall what was seen:
-  /// "Relembrando" / "Remark" / "Recordando") or `"note"` (gray, something secondary). -> str
+  /// "Relembrando" / "Reminder" / "Recordando") or `"note"` (gray, something secondary). -> str
   kind,
   /// `"bar"` (a bar on the left and the title opening the text) or `"badge"` (the title on a badge over the border).
   /// -> str
@@ -435,7 +435,7 @@
   ..args,
 ) = callout("tip", ..args)
 
-/// A remark that recalls what was seen before ("Relembrando" / "Remark" / "Recordando"), blue:
+/// A reminder of what was seen before ("Relembrando" / "Reminder" / "Recordando"), blue:
 /// `#remark[..]` is `#callout("remark")[..]`, with the same options.
 ///
 /// ```example
