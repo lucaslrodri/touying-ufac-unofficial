@@ -1,5 +1,5 @@
 // touying-ufac-unofficial — components: color emphases, list markers and pills, `#icon`, the boxes (`emph-box`,
-// `quote-box`, `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`)
+// `quote-box`, `eq-box`), `#tag`, `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`)
 // and the deck's `outline`.
 #import "@preview/touying:0.7.4": *
 #import "constants.typ": colors
@@ -308,6 +308,58 @@
   /// The quotation. -> content
   body,
 ) = block(stroke: (left: .25em + color), inset: (left: 1em, y: .6em), width: 100%, body)
+
+// ---------- tag ----------
+/// Relative luminance of a colour (WCAG 2), to choose the colour of the text of a @tag by the contrast.
+///
+/// #test(`calc.abs(_luminance(white) - 1) < 0.001`, `_luminance(black) == 0`)
+/// -> float
+#let _luminance(
+  /// Any colour. -> color
+  c,
+) = {
+  let lin(x) = if x <= 0.04045 { x / 12.92 } else { calc.pow((x + 0.055) / 1.055, 2.4) }
+  let (r, g, b, ..) = rgb(c).components().map(x => x / 100%)
+  0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+}
+/// Contrast ratio between two colours (WCAG 2), from 1 to 21.
+///
+/// #test(`calc.abs(_contrast(white, black) - 21) < 0.01`)
+/// -> float
+#let _contrast(
+  /// A colour. -> color
+  a,
+  /// Another colour. -> color
+  b,
+) = {
+  let (x, y) = (_luminance(a), _luminance(b))
+  (calc.max(x, y) + 0.05) / (calc.min(x, y) + 0.05)
+}
+
+/// Tag: capitals, spaced and bold, on a colour, with rounded corners; by default UFAC yellow with the text in dark blue,
+/// as on the cover ("CURSO DE EXTENSÃO") and on the section slides ("PARTE 2"). The text is dark blue or white,
+/// whichever contrasts more with the colour. The vertical padding is an `outset`, as in @eq-box: in a line of text the
+/// tag does not change the height of the line.
+///
+/// ```example
+/// -> `plot3` #tag[new]
+/// -> #tag(color: colors.tertiary)[exam] on Friday
+/// -> #tag(color: colors.quaternary-light)[optional]
+/// ```
+/// -> content
+#let tag(
+  /// The colour of the tag. -> color
+  color: colors.secondary,
+  /// The size of the text, relative to the text around it. -> length
+  size: 0.6em,
+  /// The text, in capitals. -> content
+  body,
+) = {
+  let dark = colors.primary.darken(45%)
+  let ink = if _contrast(dark, color) >= _contrast(white, color) { dark } else { white }
+  text(size: size, box(fill: color, radius: 3pt, inset: (x: 0.7em), outset: (y: 0.5em),
+    text(weight: "bold", fill: ink, tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline", upper(body))))
+}
 
 // ---------- columns ----------
 /// Columns: a thin wrapper over Touying's `cols` (a `grid`), with an optional divider. Touying's own `side-by-side`

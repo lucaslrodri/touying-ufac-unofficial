@@ -39,6 +39,7 @@
 #include "./new/emph-box/body.typ"
 #include "./new/eq-box/body.typ"
 #include "./new/quote-box/body.typ"
+#include "./new/tag/body.typ"
 #include "./new/arrows/body.typ"
 #include "./new/cols/body.typ"
 

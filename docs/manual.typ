@@ -420,6 +420,13 @@ A paragraph whose lines start with `>` is a box in the primary color; a first li
   inline equation, is an ordinary box: the shorthand takes a block equation.
 ]
 
+== Tags
+
+The yellow tag of the cover and of the section slides is an element of its own, for the text, the titles and the tables:
+a short label in spaced capitals, on any colour.
+
+#reference("components", "tag")
+
 == Quotations
 
 #reference("components", "quote-box")
