@@ -4,7 +4,10 @@
 #show: ufac-theme.with(
   lang: "es",
   part-name: [Unidad],
-  config-info(title: [Oceanografía], author: [Autor]),
+  config-info(
+    title: [Oceanografía],
+    author: [Autor],
+  ),
 )
 
 = Las mareas

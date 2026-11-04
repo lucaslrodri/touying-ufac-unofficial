@@ -74,7 +74,7 @@
 ) = box(fill: color, radius: 5pt, inset: (x: .7em), outset: (y: .4em),
   text(fill: white, weight: "bold", _in-box(color, body, kind: "pill")))
 
-/// Pill of a subtitle (`===`, `====`): in the colour of the box around it, the colour of the item inside an exercise
+/// Pill of a subtitle (`===`, `====`): in the color of the box around it, the color of the item inside an exercise
 /// (red) or an example (green), and blue elsewhere.
 /// -> content
 #let _subtitle-pill(
@@ -85,7 +85,7 @@
 // ---------- icons ----------
 /// An icon, already wrapped in a `box` for inline use: a role of the theme (`"warning"`, `"tip"`, `"info"`, `"note"`,
 /// `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
-/// Octicons the theme ships by its 0.2.0 name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
+/// Octicons the theme ships by its own name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
 /// collection given with `provide-icons`, as `"collection:name"` (`"octicon:rocket-16"`, `"mdi:home"`). An unknown name
 /// is a compile error that says how to get the icon.
 ///
@@ -98,7 +98,7 @@
 #let icon(
   /// Name of the icon. -> str
   name,
-  /// Fill color (multicolour logos keep their colours). With `auto` it follows the context like bold text: white inside
+  /// Fill color (multicolor logos keep their colors). With `auto` it follows the context like bold text: white inside
   /// a pill (a `===` subtitle, an exercise header, the title of an @emph-box), the box or title color inside @emph-box
   /// and `==`, black elsewhere. -> auto | color
   color: auto,
@@ -207,7 +207,7 @@
 ///   - Fast and *simple*
 ///   - Works with ==highlights==
 /// ]
-/// #emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[
+/// #emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[
 ///   An icon before the title.
 /// ]
 /// ```
@@ -320,7 +320,7 @@
 ) = block(stroke: (left: .25em + color), inset: (left: 1em, y: .6em), width: 100%, body)
 
 // ---------- callouts ----------
-/// The kinds of @callout: the colour (a key of `colors`) and the icon (a role of `icon`). The colours follow the
+/// The kinds of @callout: the color (a key of `colors`) and the icon (a role of `icon`). The colors follow the
 /// convention of the theme: red for problems, green for advantages, blue for what is recalled, gray for what is
 /// secondary.
 ///
@@ -333,11 +333,11 @@
   note: (color: "neutral-dark", icon: "note"),
 )
 
-/// The style `"bar"` of @callout, the box of a printed handout: a 3pt bar on the left, the fill in the colour lightened
+/// The style `"bar"` of @callout, the box of a printed handout: a 3pt bar on the left, the fill in the color lightened
 /// 92%, the icon beside the text, which starts with the label in bold.
 /// -> content
 #let _callout-bar(
-  /// Colour of the kind. -> color
+  /// Color of the kind. -> color
   c,
   /// Icon: a name of `icon`, content or `none`. -> none | str | content
   ic,
@@ -358,7 +358,7 @@
         let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
         let size = 0.9em.to-absolute()
         move(dy: -(size - cap) / 2, if type(ic) == str { icon(ic, color: c, size: size, baseline: 0pt) } else {
-          // content that takes the colour of the text (an icon of the iconify package): the callout's
+          // content that takes the color of the text (an icon of the iconify package): the callout's
           text(fill: c, box(height: size, ic))
         })
       } },
@@ -366,11 +366,11 @@
     ))
   })
 
-/// Callout: a box with the colour, the icon and the title of its kind, the title in the language of the deck. The
+/// Callout: a box with the color, the icon and the title of its kind, the title in the language of the deck. The
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
 /// bold opening the text ("*Tip.* …", "*Caution!* …"); `"badge"` is an @emph-box with the title on a badge over the
-/// border. Inside it, as in a box, the bold text, the markers and the arrows take its colour; a code block keeps its
-/// own look. Each kind has a shorthand, with the same options: @caution, @tip, @remark and @note.
+/// border. Inside it, as in a box, the bold text, the markers and the arrows take its color; a code block keeps its
+/// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark and @note.
 ///
 /// ```example
 /// #callout("caution")[`x*y` with two vectors is an error.]
@@ -388,7 +388,7 @@
   /// The title; `auto` is the name of the kind in the language of the deck ("Caution" / "Atenção"; in the style `"bar"`
   /// with its punctuation, "Caution!", "¡Precaución!", "Tip."); `none` leaves the icon alone. -> auto | none | content
   title: auto,
-  /// The colour; `auto` is the one of the kind. -> auto | color
+  /// The color; `auto` is the one of the kind. -> auto | color
   color: auto,
   /// The icon: a name of `icon`, content or `none`; `auto` is the one of the kind. -> auto | none | str | content
   icon: auto,
@@ -456,35 +456,35 @@
 ) = callout("note", ..args)
 
 // ---------- tag ----------
-/// Relative luminance of a colour (WCAG 2), to choose the colour of the text of a @tag by the contrast.
+/// Relative luminance of a color (WCAG 2), to choose the color of the text of a @tag by the contrast.
 ///
 /// #test(`calc.abs(_luminance(white) - 1) < 0.001`, `_luminance(black) == 0`)
 /// -> float
 #let _luminance(
-  /// Any colour. -> color
+  /// Any color. -> color
   c,
 ) = {
   let lin(x) = if x <= 0.04045 { x / 12.92 } else { calc.pow((x + 0.055) / 1.055, 2.4) }
   let (r, g, b, ..) = rgb(c).components().map(x => x / 100%)
   0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
 }
-/// Contrast ratio between two colours (WCAG 2), from 1 to 21.
+/// Contrast ratio between two colors (WCAG 2), from 1 to 21.
 ///
 /// #test(`calc.abs(_contrast(white, black) - 21) < 0.01`)
 /// -> float
 #let _contrast(
-  /// A colour. -> color
+  /// A color. -> color
   a,
-  /// Another colour. -> color
+  /// Another color. -> color
   b,
 ) = {
   let (x, y) = (_luminance(a), _luminance(b))
   (calc.max(x, y) + 0.05) / (calc.min(x, y) + 0.05)
 }
 
-/// Tag: capitals, spaced and bold, on a colour, with rounded corners; by default UFAC yellow with the text in dark blue,
+/// Tag: capitals, spaced and bold, on a color, with rounded corners; by default UFAC yellow with the text in dark blue,
 /// as on the cover ("EXTENSION COURSE") and on the section slides ("PART 2"). The text is dark blue or white,
-/// whichever contrasts more with the colour. The vertical padding is an `outset`, as in @eq-box: in a line of text the
+/// whichever contrasts more with the color. The vertical padding is an `outset`, as in @eq-box: in a line of text the
 /// tag does not change the height of the line.
 ///
 /// ```example
@@ -494,7 +494,7 @@
 /// ```
 /// -> content
 #let tag(
-  /// The colour of the tag. -> color
+  /// The color of the tag. -> color
   color: colors.secondary,
   /// The size of the text, relative to the text around it. -> length
   size: 0.6em,
@@ -608,7 +608,7 @@
     }
   }
   if cur != () { items.push(cur) }
-  // `auto`: the colour of the box around it, or white inside a pill (white text on a colour), like bold text
+  // `auto`: the color of the box around it, or white inside a pill (white text on a color), like bold text
   let marker = if color == auto {
     context text(fill: if _in-pill() { white } else { _current-box-color(colors.primary) }, sym.arrow.r)
   } else { text(fill: color, sym.arrow.r) }

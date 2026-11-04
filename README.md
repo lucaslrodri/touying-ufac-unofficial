@@ -207,11 +207,12 @@ with 2 lines"
 ]
 
 == Callouts
-// a caution, a tip, a remark or a note: the color, the icon and the title in the language of the deck;
+// a caution (a mistake to avoid), a tip (a shortcut), a remark (to recall what was seen) or a note (something
+// secondary): the color, the icon and the title in the language of the deck;
 // `style: "badge"` gives the look of the boxes above
 #caution[A caution: `x * y` with two lists is an error.]
 #tip[A tip: the up arrow recalls the last command.]
-#remark[A remark: a *function* is a named block of code.]
+#remark[As seen before: a *function* is a named block of code.]
 #note[A note: something secondary.]
 
 == An exercise <exercise-a>
@@ -243,7 +244,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 
 | Markup                          | Effect                                                                                       |
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
-| `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, at the page margin from the edge; an image fits whole in a frame of 12em × 66% (a limit: never cropped nor stretched) |
+| `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, at the page margin from the edge; an image fits whole in a frame of 12em × 66% (a limit: neither cropped nor stretched) |
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
@@ -253,7 +254,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 | `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header, same box, same number); a long content also goes on by itself |
 | `==` (without text)            | A slide without a title, with the footer |
 
-Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`. Code blocks never split across pages.
+Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`.
 
 ### Inline formatting
 
@@ -285,7 +286,7 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
 #emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
-#caution[...]                                         // #tip, #remark, #note: #callout(kind)[...]; style: "badge" for the emph-box look
+#caution[...]                                         // a mistake to avoid; #tip (a shortcut), #remark (to recall what was seen), #note (something secondary); all #callout(kind)[...]; style: "badge" for the emph-box look
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
 ```
@@ -335,7 +336,7 @@ The theme draws its own code box and does not need [codly](https://typst.app/uni
 
 ### Icons
 
-`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the colour of where it is: black in the text, the colour of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"shell"`, `"typst"`; the Octicons it ships also answer to their own names (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
+`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the color of where it is: black in the text, the color of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"shell"`, `"typst"`; the Octicons it ships also answer to their own names (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the color of where it is.
 
 ```typst
 == Field trip
@@ -381,8 +382,8 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 
 Breaking changes, and how to move a 0.2.0 deck:
 
-- The information of the deck is Touying's `config-info`: `subject` → `title` (or keep `subject`, now an alias), `subject-code` → `short-title`, the old `title` → `subtitle`, the old `subtitle` → `short-subtitle`; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
-- The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide` are gone (a slide without a title is a `==` without text; Touying's own `#empty-slide`, without header nor footer, is still there for a deck that imports Touying).
+- The information of the deck is Touying's `config-info`: keep `subject` and `subject-code`, now aliases of `title` and `short-title`; rename the old `title` to `unit-title` (or `subtitle`) and the old `subtitle` to `unit` (or `short-subtitle`), since `subject` and `title` together are an error; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
+- The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide` are gone (a slide without a title is a `==` without text; Touying's own `#empty-slide`, without header or footer, is still there for a deck that imports Touying).
 - The theme no longer depends on codly nor on linguify: `local`, `codly-range` and `no-codly` are gone; with codly 2, `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
@@ -395,7 +396,7 @@ New:
 - Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
 - Callouts (`#caution`, `#tip`, `#remark`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
-- The figure of a section fits whole in a frame of 12em × 66%, never cropped nor stretched.
+- The figure of a section fits whole in a frame of 12em × 66%, neither cropped nor stretched.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
 ### 0.2.0

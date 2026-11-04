@@ -2,12 +2,12 @@
 // the theme (a light fill with a bar on the left, square corners), with the line numbers from Typst's `raw.line`, the
 // language in a pill with its logo and the output of a program (`text`) in gray. With codly 2, which the deck imports
 // and passes to the theme (`ufac-theme(codly: codly)`), the same look is applied through codly's own theme
-// (`codly-ufac-theme`, plain data) and rules. Inside a coloured box (an exercise, an `emph-box`) a block keeps its look.
+// (`codly-ufac-theme`, plain data) and rules. Inside a colored box (an exercise, an `emph-box`) a block keeps its look.
 #import "constants.typ": colors
 #import "utils.typ": _tr, _words
 #import "components.typ": icon
 
-/// The syntax colours of the code blocks: a tmTheme with the palette of the theme and general scopes (comments in
+/// The syntax colors of the code blocks: a tmTheme with the palette of the theme and general scopes (comments in
 /// green, strings in red, keywords in blue, numbers in ochre), which suits any language.
 /// -> bytes
 #let ufac-syntax = read("../assets/ufac.tmTheme", encoding: none)
@@ -16,8 +16,8 @@
 /// -> array
 #let _output-langs = ("text", "txt", "output")
 
-/// Colours of the box of a block: the bar, the fill and the thin border; blue for code, gray for an output. The same
-/// everywhere: inside a coloured box a block keeps its own look.
+/// Colors of the box of a block: the bar, the fill and the thin border; blue for code, gray for an output. The same
+/// everywhere: inside a colored box a block keeps its own look.
 ///
 /// #test(`_box-colors("python").bar == colors.primary`, `_box-colors("text").bar == colors.neutral-dark`)
 /// -> dictionary
@@ -31,8 +31,8 @@
 }
 
 /// The languages the theme knows: the name in the pill of a block and its icon (a name of `icon`, content or `none`).
-/// The languages with a logo show it; the shell (`bash`, `sh`) shows a coloured terminal. `ufac-theme(code-languages:)`
-/// adds languages or replaces these, in the same format. The output (`text`, `txt`, `output`) is "Saída" / "Output" /
+/// The languages with a logo show it; the shell (`bash`, `sh`) shows a colored terminal. `ufac-theme(code-languages:)`
+/// adds languages or replaces these but the output, in the same format. The output (`text`, `txt`, `output`) is "Saída" / "Output" /
 /// "Salida" in the language of the deck (`name: auto`).
 ///
 /// #test(`code-languages.python.name == "Python"`, `code-languages.text.name == auto`,
@@ -64,20 +64,20 @@
   box(baseline: (s - cap) / 2, make(s))
 }
 
-/// Icon of a language, in `c` (the logos keep their colours), centered on the capitals of the name: the name of an
+/// Icon of a language, in `c` (the logos keep their colors), centered on the capitals of the name: the name of an
 /// `icon` or content (the icon of the codly-languages package).
 /// -> content | none
 #let _lang-icon(
   /// Icon of the language. -> none | str | content
   ic,
-  /// Colour of a one-colour icon. -> color
+  /// Color of a one-color icon. -> color
   c,
 ) = if ic == none { none } else if type(ic) == str {
   _centered(s => icon(ic, color: c, size: s, baseline: 0pt), 1em)
 } else { _centered(s => box(height: s, ic), 1em) }
 
 /// Pill of the language of a block: white, with the border and the text in `c`, the icon and the name. The border is the
-/// colour lightened 55%: a darker one weighed on the slide, mostly on a reduced one, where the PDF viewer draws the thin
+/// color lightened 55%: a darker one weighed on the slide, mostly on a reduced one, where the PDF viewer draws the thin
 /// stroke with a whole pixel.
 /// -> content | none
 #let _label(
@@ -85,7 +85,7 @@
   langs,
   /// Language of the block. -> str | none
   lang,
-  /// Colour of the pill. -> color
+  /// Color of the pill. -> color
   c,
 ) = {
   let l = if type(lang) == str { langs.at(lang, default: none) }
@@ -102,7 +102,7 @@
 /// The UFAC theme for codly 2, a dictionary in the format of its themes, for `codly.theme(..)`: the theme exports only
 /// data and codly applies it. The blue box (the bar on the left is drawn by a rule of the theme, since codly's border is
 /// the same on the four sides), the line numbers in light blue, the file name on a light blue band, the highlights in the
-/// colours of the theme and the syntax colours of `ufac-syntax`. `ufac-theme(codly: codly)` applies it; it is exported
+/// colors of the theme and the syntax colors of `ufac-syntax`. `ufac-theme(codly: codly)` applies it; it is exported
 /// for a document that applies codly by itself.
 /// -> dictionary
 #let codly-ufac-theme = {
@@ -156,7 +156,7 @@
   assert("new" in names and "theme" in names, message: "ufac-theme: codly is the module of codly 2 "
     + "(#import \"@preview/codly:2.0.0\" as codly); codly 1 is not supported")
   show: codly.theme(codly-ufac-theme)
-  // the languages in codly's format, the icon already as content in the colour of its box
+  // the languages in codly's format, the icon already as content in the color of its box
   let languages = langs.pairs().map(((k, l)) => {
     let c = _box-colors(k).bar
     let name = l.at("name", default: k)
@@ -188,8 +188,8 @@
     })
   } else { b => b }
   show: with-bar
-  // the syntax colours on the plain blocks too: the `syntax` of codly's theme only reaches a `codly.new(..)` written in
-  // the deck, and a plain block reaches the rule below with Typst's default colours already set
+  // the syntax colors on the plain blocks too: the `syntax` of codly's theme only reaches a `codly.new(..)` written in
+  // the deck, and a plain block reaches the rule below with Typst's default colors already set
   show raw.where(block: true): set raw(theme: ufac-syntax)
   show raw.where(block: true): it => if it.lang in _output-langs {
     show: codly.theme(_codly-output-theme)
@@ -202,8 +202,8 @@
 }
 
 /// Code blocks without codly: the box of the theme around the block (the bar, the fill and the thin border, in the
-/// colour of code or output), the language pill at the top right, the line numbers from `raw.line` (not in an output)
-/// and the syntax colours of `ufac-syntax`.
+/// color of code or output), the language pill at the top right, the line numbers from `raw.line` (not in an output)
+/// and the syntax colors of `ufac-syntax`.
 /// -> content
 #let _native(
   /// The languages, see `code-languages`. -> dictionary

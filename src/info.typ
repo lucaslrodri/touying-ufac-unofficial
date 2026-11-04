@@ -150,7 +150,11 @@
     let names = (field,) + _aliases.keys().filter(k => _aliases.at(k) == field)
     let used = names.filter(k => k in info)
     if used.len() > 1 {
-      panic("config-info: " + used.join(" and ") + " are the same field (" + field + "); give only one of them")
+      // the config of a deck of 0.2.0, where `title` was the topic and `subject` the name of the course
+      let hint = if field == "title" and "subject" in used {
+        ("; in a deck of 0.2.0, keep subject and rename title to unit-title and subtitle to unit")
+      } else { "" }
+      panic("config-info: " + used.join(" and ") + " are the same field (" + field + "); give only one of them" + hint)
     }
   }
   for (alias, field) in _aliases {
@@ -173,7 +177,7 @@
 #let _kinds = (
   // a lecture of a course: one teacher and the date on one line; the tag is the code of the course
   lecture: (style: "line"),
-  // an extension course or a short course: several instructors at the top, the title in the centre
+  // an extension course or a short course: several instructors at the top, the title in the center
   course: (style: "top", author-label: "instructors"),
   // a paper for a course: the students and the teacher in groups, at the bottom
   coursework: (style: "stack"),
@@ -278,9 +282,10 @@
   "contact") + _aliases.keys()
 
 /// A field of the deck, ready to show, anywhere in a slide (inside boxes and tables too):
-/// `#info("author")` gives "A, B and C", `#info("date")` the date in full, `#info("logo", height: 2em)`
-/// the logos. The aliases are keys too: `#info("subject")` is the `title`. With a function, it receives the
-/// dictionary of all the information: `#info(i => [#i.short-title: #i.title])`.
+/// `#info("author")` gives the authors as written, or "A, B and C" for an array; `#info("date")` the date in full;
+/// `#info("logo", height: 2em)` the logos. The aliases are keys too: `#info("subject")` is the `title`. With a
+/// function, it receives the dictionary of all the information, with the keys above plus `authors` and `institutions`
+/// (arrays): `#info(i => [#i.short-title: #i.title])`.
 ///
 /// ```typ
 /// The course #info("title"), taught by #info("author").

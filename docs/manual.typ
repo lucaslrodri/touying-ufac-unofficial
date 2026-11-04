@@ -94,9 +94,9 @@ reads these fields:
   [`short-subtitle`], [`none`], [the lecture or the unit ("Lecture 1", "Unit II"): on the cover, in yellow],
   [`author`], [`none`], [one, an array or free content: on the cover and on the right of the footer],
   [`date`], [`none`], [`auto` (today), a `datetime` (written in full in the language of the deck) or a text],
-  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; shown with `#info`],
+  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; shown with `#info` (@info)],
   [`logo`], [`auto`], [the logos of the footer and of the cover (@logos)],
-  [`contact`], [`none`], [one or an array (an e-mail, a page); shown with `#info`],
+  [`contact`], [`none`], [one or an array (an e-mail, a page); shown with `#info` (@info)],
   [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N"; `none` gives "Exercise N"],
 )
 
@@ -139,9 +139,9 @@ teacher stack at the bottom left, each group under its label, and the top right 
 A final paper takes `kind: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
 advisors at the top right. `"dissertation"` and `"thesis"` do the same with their own tag.
 
-#slide-example("cover-tcc", columns: (1fr, 1fr))
-
 #see("ufac", "ufac-theme()")
+
+#slide-example("cover-tcc", columns: (1fr, 1fr))
 
 = The cover and the closing slide <cover>
 
@@ -151,9 +151,10 @@ advisors at the top right. `"dissertation"` and `"thesis"` do the same with thei
 and the date. The `style` decides where the authors and the date go: `"line"` (the default) puts them on one line at
 the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
 `"top"` puts them at the top right and the date in the center of the bottom. Each of the six positions can be changed
-on its own, with content, `none` or a function of `self`.
+on its own, with content, `none` or a function of `self`, the dictionary Touying keeps of the deck
+(`self => self.info.title`).
 
-#slide-example("cover-styles", pages: (1, 2, 3, 4))
+#slide-example("cover-styles", pages: (1, 2, 3, 4), columns: (1fr, 1fr))
 
 The background of the cover and of the closing slide is an option of the theme: `"circles"` (the default),
 `"gradient"` or `"plain"`; here, on the cover of a master's dissertation.
@@ -162,9 +163,9 @@ The background of the cover and of the closing slide is an option of the theme: 
 
 Content given to the cover goes below the titles, in white: a message, where to find the slides, a contact.
 
-#slide-example("cover-body")
-
 #see("ufac", "title-slide()")
+
+#slide-example("cover-body", columns: (1fr, 1fr))
 
 == The closing slide
 
@@ -172,9 +173,9 @@ Content given to the cover goes below the titles, in white: a message, where to 
 and a free body, with the footer of the slides in white. Without a title it says "Thank you!" in the language of the
 deck. The contact of the deck goes in the body, with `#info("contact")` (@info).
 
-#slide-example("ending-slide", pages: (1, 2, 3), columns: (1fr, 1fr))
-
 #see("ufac", "ending-slide()")
+
+#slide-example("ending-slide", pages: (1, 2, 3), columns: (1fr, 1fr))
 
 = Building the deck <deck>
 
@@ -198,21 +199,21 @@ Every `=` heading opens a section slide: "PART N" in the yellow tag, the title i
 right after the `=`, typically an image, sits on the right, at the page margin from the edge. The image fits in a frame
 of 12em × 66% of the height, which is a limit and not a size: an image without a size fits whole in it, with its
 proportions; an image with only its height or only its width keeps its proportions and shrinks whole if the other side
-passes the frame. It is never cropped nor stretched.
-
-#slide-example("section")
+passes the frame. It is neither cropped nor stretched, also inside a figure, an `align` or a link; an icon keeps its
+size.
 
 #see("ufac", "new-section-slide()")
 
+#slide-example("section")
+
 == The outline
 
-`#outline()` lists the parts of the deck, the `=` headings, with their numbers in small pills, the titles in bold blue
-and the number of the slide where each one starts; every line is a link to that slide. It usually takes a slide of its
-own, right after the cover. In a deck it stands for Typst's `outline`, which is still there as `std.outline`.
-
-#slide-example("outline")
+`#outline()` lists the parts of the deck, each line a link to the slide where the part starts. It usually takes a slide
+of its own, right after the cover.
 
 #see("components", "outline()")
+
+#slide-example("outline")
 
 == Slides and continuations
 
@@ -237,17 +238,20 @@ The `===` subtitle is repeated on the pages that continue the slide, unless the 
 `#slide` is the slide that every `==` opens; calling it gives Touying's arguments, such as `composer`, which lays out the
 bodies of a slide in columns. A `==` heading without text gives a slide without a title.
 
-#slide-example("slides", pages: (1, 2))
-
 #see("ufac", "slide()")
+
+#slide-example("slides", pages: (1, 2))
 
 = Exercises and examples <items>
 
 A label on the `==` heading turns the slide into the box of an exercise (red) or an example (green), as in a printed
 handout. The box fills the slide; the title goes on a badge over its top border, with the icon of the kind (a pencil, a
-beaker), the name, the number and the title; the footer of the slide closes the box. Exercises and examples are numbered
-on their own. A suffix makes the label unique, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N",
-linked to the slide.
+beaker), the name, the number and the title; the footer of the slide closes the box. A suffix makes the label unique,
+as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", linked to the slide.
+
+Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
+gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
+"Exercise 1".
 
 Inside the box, what has no style of its own takes the color of the item: the bold text, the markers, the arrows, the
 numbers of the lists, the inline code, the links and the `===` pills. A code block, a callout and an `emph-box` keep
@@ -256,16 +260,16 @@ their own look.
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
 line and "Solution." or "Answer." in bold at the start of the next paragraph; after a blank line, the word stays alone
 and the solution starts a new paragraph. With a `#pause` right before or after the marker, the solution appears on the
-next subslide. The word ends with a period; `#answer(sep: ":")` ends it with a colon, and `#solution(sep: [:\ ])` with
+next step of the slide (@touying). The word ends with a period; `#answer(sep: ":")` ends it with a colon, and `#solution(sep: [:\ ])` with
 a colon and a line break, so that the solution starts on the next line.
 
 An exercise or example goes on until a slide of another kind: a long content continues on the next page in the same
 box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. `#exercise-slide` and
 `#example-slide` are the function forms, with a color and an icon of their own; they cannot be cited.
 
-#slide-example("exercise", pages: (1, 2, 3, 4, 5, 6))
-
 #see("ufac", "exercise-slide()", "example-slide()", "solution()", "answer()")
+
+#slide-example("exercise", pages: (1, 2, 3, 4, 5, 6))
 
 = Writing on a slide <writing>
 
@@ -303,7 +307,9 @@ space; `#highlight` has no such limits and takes another fill, such as a `-light
 
 ````example
 A ==highlighted== word and a
-#highlight(fill: colors.quaternary-lighter)[green one].
+#highlight(
+  fill: colors.quaternary-lighter,
+)[green one].
 
 A ~strong underline~ and
 #underline[the function form]; `Fig.~1` keeps
@@ -328,7 +334,8 @@ Call `fit(x, y)` first.
 == Colors by context
 
 Bold text, alerts, highlights, underlines, arrows, chips, links, icons and the `===` pills read the color of what
-contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table; white
+contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
+(@elements); white
 or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
 block, and a box inside another box, which brings its own color.
 
@@ -429,9 +436,11 @@ $ #eq-box[$E = m c^2$] $
 
 == Callouts
 
-A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. The
-default style is the box of a printed handout, with a bar on the left and the title opening the text; `style: "badge"`
-gives an emphasis box with the title on a badge. Each kind has a shorthand.
+A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. Each
+kind has a role and a function of its own: `#caution`, a mistake to avoid; `#tip`, a shortcut; `#remark`
+("Relembrando"), to recall what was seen before; `#note`, something secondary. The default style is the box of a
+printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an emphasis box with
+the title on a badge.
 
 ```example
 #caution[`x*y` with two lists is an error.]
@@ -446,7 +455,8 @@ gives an emphasis box with the title on a badge. Each kind has a shorthand.
 == Tags and quotations
 
 `#tag` is the yellow tag of the cover and of the section slides, for the text, the titles and the tables: a short label
-in spaced capitals, on any color. A paragraph made only of quoted lines becomes one quotation per line.
+in spaced capitals, on any color. A paragraph made only of quoted lines becomes one quotation per line, a
+`#quote-box`; Typst's `#quote`, with an attribution, keeps its own form.
 
 ```example
 #tag[Optional] #tag(color: colors.tertiary)[Hard]
@@ -474,7 +484,8 @@ with a dark tone is like a pill, with white text.
   columns: 3,
   table.header([Fish], [Depth (m)], [$T$ (°C)]),
   [Cod], [200], [4],
-  [Tuna], [50], [18],
+  [Tuna], [50], table.cell(
+    fill: colors.secondary-lighter)[*18*],
 )
 ```
 
@@ -485,8 +496,9 @@ closer to the text than Typst's default.
 
 ```example
 #figure(
-  rect(width: 60%, height: 3em, fill: colors.primary-lightest),
-  caption: [The caption, without a number.],
+  rect(width: 60%, height: 3em,
+    fill: colors.primary-lightest),
+  caption: [The caption, no number.],
 )
 
 The speed of a wave in deep water is
@@ -499,12 +511,12 @@ A code block goes in the box of the theme: a light blue fill with a bar on the l
 wraps and continues under the code), the language in a pill at the top right and the syntax colors of the theme. The
 output of a program, a block in `text` (or `txt`, `output`), goes in a gray box without numbers. A block never splits
 across pages, and inside a colored box it keeps its look. The languages with a pill are `python` (`py`), `typst`
-(`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others. For a file name, highlights or ranges,
+(`typ`), `matlab`, `bash` and `sh`, and the output has its own ("Output"); `ufac-theme(code-languages:)` adds others. For a file name, highlights or ranges,
 see codly in @integrations.
 
-#slide-example("code")
-
 #see("code", "code-languages", "ufac-syntax")
+
+#slide-example("code")
 
 = Customization <customization>
 
@@ -549,14 +561,15 @@ and #text(fill: colors.primary-dark)[dark blue text].
 The footer and the cover show the UFAC logo. `config-info(logo:)` is the list of the logos shown there, separated by
 dots: `(auto, x)` keeps the UFAC logo and adds `x` after it, `(x,)` replaces it and `none` removes them. A logo is
 content, or a function of the color of the footer (blue on the slides, white on the cover), so that one drawing serves
-both; about `0.64em` high, it matches the UFAC logo.
+both; about `0.64em` high, it matches the UFAC logo. In a slide, `#info("logo")` shows them (@info); outside a deck,
+as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 
 #slide-example("logos", pages: (1, 2))
 
 == The footer and the badges
 
-The footer shows the short title and the title on the left and the authors on the right; `ufac-theme(footer-left:,
-footer-right:)` replaces either with content or a function of `self`. The badge of the exercises and examples takes
+The footer shows the short title and the title on the left and the authors on the right;
+`ufac-theme(footer-left:, footer-right:)` replaces either with content or a function of `self`. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`).
 
@@ -574,12 +587,11 @@ slides another word (`part-name`).
 
 `#info` shows any field of the deck, or any alias, anywhere in a slide, inside boxes and tables too: the author as
 written, the date in full, the contact, and with `"logo"` the logos of the footer, with a height and in white for a dark
-background. With a function, it receives every field at once. Outside a deck, as in a handout that goes with the
-slides, `image(bytes(ufac-logo))` draws the UFAC logo.
-
-#slide-example("info", pages: (1, 2), columns: (1fr, 1fr))
+background. With a function, it receives every field at once.
 
 #see("info", "info()")
+
+#slide-example("info", pages: (1, 2), columns: (1fr, 1fr))
 
 = Integrations <integrations>
 
@@ -612,8 +624,8 @@ The packages Touying integrates work as in any Touying theme:
 #link("https://touying-typ.github.io/docs/integration/cetz")[CeTZ] and Fletcher, whose diagrams reveal their parts with
 `#pause` through `touying-reduce`; #link("https://touying-typ.github.io/docs/integration/pinit")[pinit], for pointing
 at parts of a slide; and #link("https://touying-typ.github.io/docs/integration/mitex")[MiTeX], for LaTeX formulas.
-Their pages in the documentation of Touying show how. The slides of other Touying themes that this one does not have
-are a slide with `#outline()` for `outline-slide`, and `focus-slide` and `matrix-slide`.
+Their pages in the documentation of Touying show how. Instead of the `outline-slide` of other Touying themes, write a
+slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart here.
 
 == Code blocks with codly
 
@@ -622,14 +634,14 @@ ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-them
 through codly with the same look, and codly's functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2
 requires Typst 0.15. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
 
-#slide-example("code-codly")
-
 #see("code", "codly-ufac-theme")
+
+#slide-example("code-codly", columns: (1fr, 1fr))
 
 == Icons <icons>
 
 `#icon` draws an icon on the line of text, in the color of its surroundings: black in the text, the color of the box
-inside a box, white in a pill. The theme ships the icons it uses, each with a role that is also its name for `#icon`;
+inside a box, white in a pill. The theme ships a set of icons, each with a role that is also its name for `#icon`;
 the colored ones keep their colors.
 
 ```example
@@ -682,17 +694,16 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
 #table(
   columns: (1fr, 1.3fr),
   table.header([In 0.2.0], [In 0.3.0]),
-  [`config-info` with the fields of the theme: `subject`, `subject-code`, `title`, `subtitle`],
-  [Touying's fields: `title`, `short-title`, `subtitle`, `short-subtitle`; `subject` and `subject-code` still work as
-    aliases (@information)],
+  [`config-info` with the fields of the theme: `subject`, `subject-code`, `title` (the topic), `subtitle` (the unit)],
+  [keep `subject` and `subject-code`, now aliases of Touying's `title` and `short-title`; rename the old `title` to
+    `unit-title` and the old `subtitle` to `unit` (@information). `subject` and `title` together are an error],
   [`ufac-theme(logos: ..)`], [`config-info(logo: ..)` (@logos)],
   [`ufac-theme(section-margin: ..)`; the figure of a section flush with the edge],
   [the figure keeps the page margin; for the old look,
     `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`],
-  [the figure of a section filled 12em × 66%, cropped], [it fits whole in that frame, never cropped],
   [`<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide`],
   [`#ending-slide[..]` to close the deck; a `==` without text for a slide without a title. Touying's own
-    `#empty-slide`, without header nor footer, is still there for a deck that imports Touying],
+    `#empty-slide`, without header or footer, is still there for a deck that imports Touying],
   [`local`, `codly-range`, `no-codly`; codly imported by the theme],
   [the theme has its own code box; for codly, `#import "@preview/codly:2.0.0" as codly` and
     `ufac-theme(codly: codly)`],
@@ -701,6 +712,9 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
   [`ufac-logo-image(..)`], [`#info("logo", height: 2em)`, with `white: true` on a dark background; outside a deck,
     `image(bytes(ufac-logo))`],
 )
+
+The figure of a section, which 0.2.0 cropped to fill 12em × 66% of the slide, now fits whole in that frame; a deck
+needs no change for it.
 
 = Reference <reference>
 
@@ -719,7 +733,11 @@ chapters above show how to use them.
 == Boxes and emphases
 
 #reference("components", "emph-box", "eq-box", "callout", "caution", "tip", "remark", "note", "tag", "quote-box",
-  "arrows", "cols", "outline", "primary", "secondary", "tertiary", "quaternary")
+  "primary", "secondary", "tertiary", "quaternary")
+
+== Lists, columns and the outline
+
+#reference("components", "arrows", "cols", "outline")
 
 == Code
 

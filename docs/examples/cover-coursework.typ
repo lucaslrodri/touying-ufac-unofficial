@@ -1,14 +1,23 @@
 #import "@preview/touying:0.7.4": *
 #import "../../src/lib.typ": *
 // --- example ---
-#show: ufac-theme.with(lang: "en", config-info(
-  kind: "coursework",
-  subject: [Introduction to Economics],
-  subject-code: [ECO101],
-  unit-title: [The price of a cup of coffee in four cities],
-  author: [_Students_ \ First Student, Second Student \ _Teacher_ \ Prof. Dr. Teacher Name],
-  semester: [2026.1],
-))
+#show: ufac-theme.with(
+  lang: "en",
+  config-info(
+    kind: "coursework",
+    subject: [Introduction to Economics],
+    subject-code: [ECO101],
+    unit-title: [The price of a cup of
+      coffee in four cities],
+    author: [
+      _Students_ \
+      First Student, Second Student \
+      _Teacher_ \
+      Prof. Dr. Teacher Name
+    ],
+    semester: [2026.1],
+  ),
+)
 
 #title-slide()
 

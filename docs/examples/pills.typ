@@ -12,6 +12,8 @@
 
 === Pill: *bold*, ~~alert~~, `raw`, #icon("tip")
 
-#emph-box(title: [Title: *bold*, ~~alert~~ and `raw`])[
+#emph-box(
+  title: [*bold*, ~~alert~~, `raw`],
+)[
   In the body: *bold*, `raw` and #icon("tip").
 ]

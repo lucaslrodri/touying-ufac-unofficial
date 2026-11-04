@@ -125,6 +125,8 @@
 #assert.eq(free.info.author, ("First", "Second"))
 #assert.eq(utils.markup-text(_join-names("en", free.info.author)), "First and Second")
 #assert.eq(utils.markup-text(_join-names("pt", ([A], [B], [C]))), "A, B e C")
+// the config of a deck of 0.2.0 (`subject` with the old `title`) gets a hint on what to rename
+#assert(catch(() => _resolve-aliases(config-info(subject: [S], title: [T]))).contains("rename title to unit-title"))
 
 
 // cover: an unknown style or background fails with the names that exist

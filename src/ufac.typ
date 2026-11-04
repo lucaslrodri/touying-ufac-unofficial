@@ -87,7 +87,7 @@
     }
   }
 }
-// ---------- light colours ----------
+// ---------- light colors ----------
 /// True for a light background (a luma of 70% or more: `secondary`, `secondary-light`, `quaternary-light` and the
 /// `-lighter` and `-lightest` tones), where the text stays dark and the footer blue; on a darker one (`primary`,
 /// `tertiary`, `quaternary`, `neutral`, the other `-light` tones and the `-dark` ones) they turn white, as in the pills.
@@ -136,7 +136,7 @@
 ) { (c.text, ".") }
 
 /// The opening of a solution: a thin dashed line almost from border to border of the box and the word ("Solução.",
-/// "Resposta.") in bold, in the colour of the box darkened. The word is in the same paragraph as what follows the
+/// "Resposta.") in bold, in the color of the box darkened. The word is in the same paragraph as what follows the
 /// marker; before a block (a code block), it is alone on its line. At the top of a slide (a continuation after `---`)
 /// there is nothing to separate, and the line is left out.
 /// -> content
@@ -223,9 +223,9 @@
   )
 }
 
-/// The box of an exercise or example, as in a printed handout, drawn on the page: the fill in the colour
+/// The box of an exercise or example, as in a printed handout, drawn on the page: the fill in the color
 /// lightened 95%, the badge with the title over the top border and the footer of the slide over the bottom one, in the
-/// colour of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
+/// color of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
 /// them). It is the background of every page of the slide, so a content longer than one page goes on to the next one,
 /// in the same box; the content itself flows in the body of the page, inside the box. The geometry is in absolute
 /// lengths: the text of the slides is 22pt and the one of the footer 20pt.
@@ -233,7 +233,7 @@
 #let _item-page(
   /// Touying's `self`. -> dictionary
   self,
-  /// Colour of the item. -> color
+  /// Color of the item. -> color
   c,
   /// The content of the badge. -> content
   badge,
@@ -256,7 +256,7 @@
       text(size: em, fill: white, weight: "bold", _in-box(c, utils.fit-to-width(grow: false, bw - 3.2 * em,
         _pill-line(badge)), kind: "pill"))))
   }
-  // the footer centred on the bottom border, between the curves of the corners: its lines close the box. It is the
+  // the footer centered on the bottom border, between the curves of the corners: its lines close the box. It is the
   // footer of the page, not part of the background, which is laid out before the slide counter steps. Touying lays
   // the footer out across the whole width of the page, down to its bottom
   let footer = context place(bottom + left, dx: mx + r, dy: -below, block(width: page.width - 2 * (mx + r),
@@ -266,12 +266,12 @@
     margin: (top: badge-top + badge-h + 0.75 * em, bottom: below + foot-h + 0.6 * em, x: mx + em))
 }
 
-/// Inside the box of an item only what has no style of its own takes its colour (bold text, markers, arrows,
+/// Inside the box of an item only what has no style of its own takes its color (bold text, markers, arrows,
 /// highlights, inline code, links), as in an `emph-box`, plus the numbers of the lists, always blue elsewhere; a code
 /// block, a callout and an `emph-box` keep theirs.
 /// -> content
 #let _in-item(
-  /// Colour of the item. -> color
+  /// Color of the item. -> color
   c,
   /// The body. -> content
   body,
@@ -342,7 +342,7 @@
 }
 
 /// The slide of an exercise or example: the box of the item on the page, without the header (the badge carries the
-/// title) and without the footer of the page (it goes into the box, in the colour of the item). The veil of `#pause`
+/// title) and without the footer of the page (it goes into the box, in the color of the item). The veil of `#pause`
 /// takes the fill of the box.
 /// -> content
 #let _item-slide(
@@ -365,7 +365,7 @@
     if sup.value.icon != auto { ic = sup.value.icon }
   }
   let badge = context [#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ — #h.body]]
-  // the veil of `#pause` in the fill of the box: the one of the theme takes the colour of the page (white), which would
+  // the veil of `#pause` in the fill of the box: the one of the theme takes the color of the page (white), which would
   // show as a patch on the box
   let fill = color.lighten(95%)
   let cover(self: none, ..args, body) = {
@@ -384,11 +384,8 @@
 /// Default slide of the theme, with header and footer. Every `==` heading opens one, so it is rarely called by
 /// hand; the explicit form gives access to Touying's arguments.
 ///
-/// A top-level `===` subtitle is repeated at the top of every continuation page of the slide, whether the page comes
-/// from `---`, from `#pagebreak()` or from content that overflows by itself, unless the continuation starts with
-/// another `===`. A subtitle nested in `#[ ]`, a column or a box is not repeated.
-///
-/// A slide without a title is a `==` heading without text: it keeps the footer. The closing slide is @ending-slide.
+/// A top-level `===` subtitle is repeated on the continuation pages of the slide. A slide without a title is a `==`
+/// heading without text.
 ///
 /// ```typ
 /// #slide(composer: (1fr, 2fr))[Left][Right]
@@ -606,7 +603,7 @@
   let a = _given(_authors(self))
   let logos = _logos-white(self)
   (
-    // the authors at the top right, in front of the logos; at the bottom, only the date, in the centre
+    // the authors at the top right, in front of the logos; at the bottom, only the date, in the center
     top: (header-left: logos, header-right: if a { _authors-block(self, label, align: right) }, footer-center: d),
     // the logos at the top left, as in the other styles; one line at the bottom: the authors on the left, the white
     // line and the date
@@ -617,7 +614,7 @@
 }
 
 /// A band of the cover (the top or the bottom) without the line: the left and right positions with half the width each,
-/// or, with something in the centre, the centre at its width and the sides with the rest, equally.
+/// or, with something in the center, the center at its width and the sides with the rest, equally.
 /// -> content | none
 #let _row(
   /// The positions `left`, `center` and `right`. -> dictionary
@@ -634,7 +631,7 @@
   }
 }
 
-/// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top left; in the centre, the tag
+/// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top left; in the center, the tag
 /// (`short-title`), the `title`, the yellow rule, the `short-subtitle` in yellow, the `subtitle` and the content given
 /// to it, centered both ways in the room between the top and the bottom; the authors and the date where the `style`
 /// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does
@@ -652,7 +649,7 @@
 #let title-slide(
   /// The logos are at the top left in every style. `"line"`: the authors on one line at the bottom left, the white
   /// line and the date on the right. `"stack"`: the authors on several lines at the bottom left and the date on the right,
-  /// without the line. `"top"`: the authors at the top right and the date in the centre of the bottom, without the
+  /// without the line. `"top"`: the authors at the top right and the date in the center of the bottom, without the
   /// line. `auto` is the one of the `kind` of the deck, or `"line"`. -> auto | str
   style: auto,
   /// Label over the authors ("Instructors"); before them in `"line"`. `auto` is the one of the `kind`, or none.
@@ -660,20 +657,20 @@
   author-label: auto,
   /// What goes at the top left. -> auto | none | content | function
   header-left: auto,
-  /// What goes at the top centre. -> auto | none | content | function
+  /// What goes at the top center. -> auto | none | content | function
   header-center: auto,
   /// What goes at the top right. -> auto | none | content | function
   header-right: auto,
   /// What goes at the bottom left. -> auto | none | content | function
   footer-left: auto,
-  /// What goes at the bottom centre. -> auto | none | content | function
+  /// What goes at the bottom center. -> auto | none | content | function
   footer-center: auto,
   /// What goes at the bottom right. -> auto | none | content | function
   footer-right: auto,
   /// The white line at the bottom, like the one of the footer of the slides: from edge to edge, passing between what
   /// is at the bottom, at the height of the line of the footer. `auto` is the one of the style. -> auto | bool
   footer-line: auto,
-  /// Content in the centre, below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
+  /// Content in the center, below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
   ..body,
 ) = {
   assert(body.named().len() == 0, message: "title-slide: unknown argument " + repr(body.named().keys().at(0, default: "")))
@@ -701,7 +698,7 @@
       right: slot("footer-right", footer-right))
     touying-slide(self: self, _on-blue(self, {
       set par(leading: 0.4em, spacing: 0pt, justify: false)
-      // the centre: a stack from top to bottom, the tag (`short-title`), the `title`, the rule, the `short-subtitle` and
+      // the center: a stack from top to bottom, the tag (`short-title`), the `title`, the rule, the `short-subtitle` and
       // the `subtitle` (together, on two lines) and, last, the body
       let lines = (
         if _given(i.at("short-subtitle", default: none)) { text(size: 1.2em, fill: self.colors.secondary, i.short-subtitle) },
@@ -723,7 +720,7 @@
         // at the bottom the text sits on its baseline: what is side by side lines up by its last line
         set text(bottom-edge: "baseline")
         if with-line {
-          // the line of the footer of the slides, from edge to edge, passing between what is at the bottom and centred
+          // the line of the footer of the slides, from edge to edge, passing between what is at the bottom and centered
           // on the capitals of its last line; the baseline is 0.55em from the edge, at the height of the footer
           let gap = 0.45em
           let edge = 1.8em - gap
@@ -740,7 +737,7 @@
           }
         } else { _row(footer, bottom) }
       }
-      // three bands: the top, the centre and the bottom. The titles and the body stay in the middle of the centre, both
+      // three bands: the top, the center and the bottom. The titles and the body stay in the middle of the center, both
       // ways: in the middle of the page when the top and the bottom have similar heights, and in the middle of the free
       // room when the authors take many lines (at the top or at the bottom), without touching them
       block(width: 100%, height: 100%, grid(columns: 100%, rows: (auto, 1fr, auto), row-gutter: 0.6em,
@@ -773,9 +770,8 @@
 
 /// Closing slide: the blue page of the cover, with a large title with the yellow
 /// rule under it, a subtitle in yellow and a free body, centered; and the footer of the slides in white (the logos, the
-/// title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the language of the
-/// deck; `title: none` removes the title and the rule. The contact of `config-info` goes in the body, if wanted:
-/// `#info("contact")`.
+/// title, the authors and the slide number). Without a title it says "Thank you!" in the language of the
+/// deck; `title: none` removes the title and the rule.
 ///
 /// Two forms: up to three contents in order, `[title][subtitle][body]`, or the named `title:` and `subtitle:` with
 /// the content as the body.
@@ -994,8 +990,8 @@
   show regex("\u{a0}\u{a0}([^\u{a0}]+?)\u{a0}\u{a0}"): it => (self.methods.alert)(self: self, it.text.trim("\u{a0}"))
   show par: _rewrite-par
   show quote: it => quote-box[#it.body #if it.attribution != none { linebreak(); std.align(right, text(size: .85em)[— #it.attribution]) }]
-  // links and references inside a coloured box (an `emph-box`, a callout, an exercise) in the colour of the box,
-  // darkened 25%; elsewhere the theme does not colour them
+  // links and references inside a colored box (an `emph-box`, a callout, an exercise) in the color of the box,
+  // darkened 25%; elsewhere the theme does not color them
   let in-box-color(it) = context {
     let s = _box-color.get()
     if s.len() == 0 or s.last().kind != "box" { it } else { show text: set text(fill: s.last().color.darken(25%)); it }
@@ -1091,7 +1087,7 @@
 ///   config-info(
 ///     subject: [Ocean Science], subject-code: [OCE110],
 ///     unit-title: [Tides and waves], unit: [Unit III],
-///     author: [Prof. Name], counter-prefix: [1.],
+///     author: [Prof. Author Name], counter-prefix: [1.],
 ///   ),
 /// )
 /// ```
@@ -1134,7 +1130,8 @@
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
   /// codly. -> none | module
   codly: none,
-  /// Languages added to those of the theme (`code-languages`) or replacing them, as `(name:, icon:)`. -> dictionary
+  /// Languages added to those of the theme (`code-languages`) or replacing them, but the output, as `(name:, icon:)`.
+  /// -> dictionary
   code-languages: (:),
   /// Touying configs, typically `config-info(..)`; also `config-common(..)`, `config-page(..)`. -> dictionary
   ..args,
@@ -1170,10 +1167,10 @@
           datetime-format: self.at("datetime-format", default: auto)))
         _slide-rules(self, _rules(self, body))
       },
-      // in the colour of the box around it, like bold text (blue elsewhere); yellow in a pill
+      // in the color of the box around it, like bold text (blue elsewhere); yellow in a pill
       alert: (self: none, it) => context text(weight: "bold",
         fill: if _in-pill() { colors.secondary } else { _current-box-color(self.colors.primary) }, it),
-      cover: _cover,   // veil in the page colour at 85% over the laid-out content (see `_cover` in utils.typ)
+      cover: _cover,   // veil in the page color at 85% over the laid-out content (see `_cover` in utils.typ)
     ),
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,

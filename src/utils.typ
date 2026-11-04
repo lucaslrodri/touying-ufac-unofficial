@@ -338,10 +338,10 @@
   ((_is-text(first) and first.text.starts-with(">")) or (_is-dq(first) and _is-dq(ch.last()))
     or (_is-text(first) and first.text == "-" and ch.len() > 1 and _is-text(ch.at(1)) and ch.at(1).text.starts-with(">")))
 }
-/// Covered content stays faintly visible under a veil in the page colour at 85% opacity, as in 0.0.1. Touying's own
+/// Covered content stays faintly visible under a veil in the page color at 85% opacity, as in 0.0.1. Touying's own
 /// covers cannot do that for this theme (checked with 0.7.4 and 0.8.0, 2026-09-18): `alpha-changing-cover` (0.8) fades `fill`/`stroke` fields
 /// by rebuilding the content tree before layout and `cover-with-rect` splits the content into leaves (a thick `strike`
-/// over text runs), while the theme colours almost everything later, in show rules and element layout (bold, chips,
+/// over text runs), while the theme colors almost everything later, in show rules and element layout (bold, chips,
 /// `===` pills, `> ` boxes, list markers, icons), so those stayed fully visible and a lone shorthand paragraph (`-> item`,
 /// `> box`, `"quote"`) was left as literal text.
 ///
@@ -466,10 +466,10 @@
 }
 
 /// The logos of the footer and of the cover (`config-info(logo:)`), in a row separated by a dot. `auto` is the UFAC
-/// logo, blue on the slides and white with its yellow shield on the cover; a function receives the colour of the
-/// footer (the primary colour, or white on the cover); content goes as it is. A single logo is the same box as the
+/// logo, blue on the slides and white with its yellow shield on the cover; a function receives the color of the
+/// footer (the primary color, or white on the cover); content goes as it is. A single logo is the same box as the
 /// UFAC logo alone had before the option (0.1.0), so the default footer did not change (2026-10-16). The dot has the
-/// size of `_sep-dot` in the 0.4em text (radius 0.18 × 0.4em) and sits in its own cell, centred on the logos.
+/// size of `_sep-dot` in the 0.4em text (radius 0.18 × 0.4em) and sits in its own cell, centered on the logos.
 /// `logo: none` gives no logos.
 /// -> content | none
 #let _logos(
@@ -479,8 +479,8 @@
   white: false,
   /// The logos; `auto` takes those of `config-info(logo:)` (the UFAC logo by default). -> auto | array
   logos: auto,
-  /// Colour of the logos and the dot, for the footer of an exercise or example: the UFAC logo all in this colour, its
-  /// shield too. `auto` is the primary colour, or white with `white: true`. -> auto | color
+  /// Color of the logos and the dot, for the footer of an exercise or example: the UFAC logo all in this color, its
+  /// shield too. `auto` is the primary color, or white with `white: true`. -> auto | color
   color: auto,
 ) = {
   let logos = if logos == auto { _list(self.info.at("logo", default: auto)) } else { logos }
@@ -488,7 +488,7 @@
   let mono = color != auto
   let color = if color != auto { color } else if white { self.colors.neutral-lightest } else { self.colors.primary }
   // the UFAC logo keeps its blue on the slides and takes the white of the cover, the shield yellow on both; in one
-  // colour (`color:`), letters and shield
+  // color (`color:`), letters and shield
   let one(logo) = if logo == auto {
     if mono { _ufac-logo-image(color: color, shield: color) } else {
       _ufac-logo-image(color: if white { color } else { auto })
@@ -505,15 +505,15 @@
 /// last slide number. The two texts take their natural width and the `1fr` rule between them the rest: when each
 /// text carried its own `1fr` rule, both cells claimed the whole width and got half of it each, so a long left text
 /// broke into two lines with room to spare on the right (2026-10-16). `white: true` draws it in white, with the white
-/// logos of the cover, for the closing slide (`#ending-slide`); `color:` draws it in another colour, with the UFAC logo
-/// in that colour too, for the box of an exercise or example.
+/// logos of the cover, for the closing slide (`#ending-slide`); `color:` draws it in another color, with the UFAC logo
+/// in that color too, for the box of an exercise or example.
 /// -> content
 #let _footer(
   /// Touying's `self`. -> dictionary
   self,
   /// White text, rules and logos. -> bool
   white: false,
-  /// Colour of the text, the rules and the logos, instead of the primary colour. -> auto | color
+  /// Color of the text, the rules and the logos, instead of the primary color. -> auto | color
   color: auto,
   /// Lift the footer by 0.05em, as on the page. The box of an exercise has its border at the exact middle of the
   /// footer, so its footer is not lifted. -> bool

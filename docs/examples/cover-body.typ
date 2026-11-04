@@ -13,6 +13,8 @@
 )
 // --- example ---
 #title-slide[
-  Slides and exercises: #link("https://example.com/ocean")[`example.com/ocean`] \
+  Slides and exercises:
+  #link("https://example.com/ocean")[
+    `example.com/ocean`] \
   Questions: *`author@example.com`*
 ]

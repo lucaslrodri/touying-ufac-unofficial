@@ -6,9 +6,13 @@
   background: "gradient",
   config-info(
     kind: "dissertation",
-    title: [Rainfall and river levels in the western Amazon],
+    title: [Rainfall and river levels in
+      the western Amazon],
     course: [Graduate Program in Geography],
-    author: [_Student_ \ Student Name \ _Advisor_ \ Prof. Dr. Advisor Name],
+    author: [
+      _Student_ \ Student Name \
+      _Advisor_ \ Prof. Dr. Advisor Name
+    ],
     year: 2026,
   ),
 )

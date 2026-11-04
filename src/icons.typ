@@ -9,9 +9,9 @@
 /// -> dictionary
 #let _shipped = ("octicon", "ph", "devicon", "simple-icons", "material-icon-theme", "vscode-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
 
-/// The icon of each role of the theme, as `"collection:name"`: the Octicons of 0.2.0 (size 16) for the callouts, the
+/// The icon of each role of the theme, as `"collection:name"`: Octicons (size 16) for the callouts, the
 /// exercise and example pills, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
-/// for code; coloured icons for the pills of the code blocks: the logos of Devicon (Typst from Simple Icons), the
+/// for code; colored icons for the pills of the code blocks: the logos of Devicon (Typst from Simple Icons), the
 /// terminal of Material Icon Theme for the shell and the log of VSCode Icons for the output of a program. A role is
 /// also a valid name for `icon`: `#icon("warning")`.
 ///
@@ -70,7 +70,7 @@
 }
 
 /// SVG source of an icon of a collection in the JSON format of Iconify, with `currentColor` replaced by `fill` (the
-/// multicolour logos keep their colours). An alias is followed to its parent icon. The `viewBox` is built here rather
+/// multicolor logos keep their colors). An alias is followed to its parent icon. The `viewBox` is built here rather
 /// than by the iconify package, which swaps its width and height (a wide logo came out small).
 ///
 /// #test(
@@ -83,7 +83,7 @@
   data,
   /// Name of the icon in it. -> str
   name,
-  /// Colour of the icon. -> color
+  /// Color of the icon. -> color
   fill,
 ) = {
   let ic = data.icons.at(name, default: none)
@@ -103,7 +103,7 @@
 #let _icon-svg(
   /// Source of the icon, see @_icon-source. -> array | str
   source,
-  /// Colour of the icon. -> color
+  /// Color of the icon. -> color
   fill,
 ) = {
   if type(source) == array { return _data-svg(_shipped.at(source.first()), source.last(), fill) }
@@ -118,9 +118,7 @@
 }
 
 /// Gives the deck more icons: one or more collections in the JSON format of Iconify (`json("mdi.json")`), whose icons
-/// are then written `#icon("mdi:home")`. A collection can be downloaded whole from the site of the iconify package, or
-/// only the chosen icons from the Iconify API: `https://api.iconify.design/octicon.json?icons=rocket-16,tools-16`. It is
-/// the `provide-icons` of the iconify package, re-exported.
+/// are then written `#icon("mdi:home")`. It is the `provide-icons` of the iconify package, re-exported.
 ///
 /// ```typ
 /// #provide-icons(json("octicon.json"))
