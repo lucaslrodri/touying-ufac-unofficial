@@ -166,13 +166,14 @@
   show: codly.lang-set_(languages: languages)
   // the language pill drawn by `_label`, as without codly: the key of the language comes in the `body` of codly's
   // element, read through the elembic module codly exposes (`codly.e`); without it, codly's own pill (the theme above)
-  show: if "e" in names {
+  let pill = if "e" in names {
     codly.lang-show_(it => {
       let lang = codly.e.fields(it).at("body", default: none)
       let label = _label(langs, lang, _box-colors(lang).bar)
       if label == none { it } else { label }
     })
   } else { b => b }
+  show: pill
   // the file name with the file icon before it
   show: codly.file-show_(it => [#_centered(s => icon("file", size: s, color: colors.primary, baseline: 0pt), 1em) #it])
   // the bar on the left, by a rule on codly's element (also for a `codly.new(..)` written in the deck). codly's `diff`
@@ -192,6 +193,8 @@
   show raw.where(block: true): set raw(theme: ufac-syntax)
   show raw.where(block: true): it => if it.lang in _output-langs {
     show: codly.theme(_codly-output-theme)
+    // the theme of the output brings codly's own pill back: the pill of the theme again, as on the other blocks
+    show: pill
     show: codly.set_(number-enabled: false)
     codly.new(it)
   } else { codly.new(it) }
