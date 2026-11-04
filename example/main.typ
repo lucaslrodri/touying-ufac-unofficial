@@ -7,10 +7,10 @@
   lang: "en",                         // "pt-br" (default), "en" or "es": text language and pill/section names
   // exercise-name: [Exercise], example-name: [Example], part-name: [Part],   // override the localized names
   config-info(
-    title: [Subject name],
-    short-title: [CODE or Department],
-    subtitle: [Title of the teaching unit],
-    short-subtitle: [Teaching unit I],
+    subject: [Subject name],
+    subject-code: [CODE or Department],
+    unit-title: [Title of the teaching unit],
+    unit: [Teaching unit I],
     author: [Prof. Dr. Your Name],
     counter-prefix: [1.],
   ),
@@ -19,7 +19,7 @@
 #title-slide()
 
 = Name of the first section
-// Content right after `=` goes to the right of the section slide, flush with the page edge (usually an image):
+// Content right after `=` goes to the right of the section slide, at the page margin from the edge (usually an image):
 // #image("figure.png")
 
 == Slide title
@@ -76,11 +76,11 @@ with 2 lines"
 
 == Boxes with an icon
 
-#emph-box(color: colors.quaternary, icon: "light-bulb", title: [Tip])[
-  An icon before the title: any `#icon` of the set (`"light-bulb"`, `"alert"`, …) or any content.
+#emph-box(color: colors.quaternary, icon: "tip", title: [Tip])[
+  An icon before the title: the name of any `#icon` (`"tip"`, `"warning"`, …) or any content.
 ]
 
-#emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[
+#emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[
   The icon is centered on the capitals of the title, and the badge keeps the same height.
 ]
 

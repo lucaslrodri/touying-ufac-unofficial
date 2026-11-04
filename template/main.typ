@@ -6,10 +6,10 @@
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    title: [Subject name],                    // or `subject:`
-    short-title: [CODE or Department],        // or `subject-code:`
-    subtitle: [Title of the teaching unit],
-    short-subtitle: [Teaching unit I],
+    subject: [Subject name],                  // or Touying's `title:`
+    subject-code: [CODE or Department],       // or `short-title:`
+    unit-title: [Title of the teaching unit], // or `subtitle:`
+    unit: [Teaching unit I],                  // or `short-subtitle:`
     author: [Prof. Dr. Your Name],
     counter-prefix: [1.],   // "Exercise 1.N"; none gives "Exercise N"
   ),

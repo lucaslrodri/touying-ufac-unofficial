@@ -30,10 +30,10 @@ creates a deck from [template/main.typ](template/main.typ), the cover and one sl
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    title: [Subject name],                    // or `subject:`
-    short-title: [CODE or Department],        // or `subject-code:`
-    subtitle: [Title of the teaching unit],
-    short-subtitle: [Teaching unit I],
+    subject: [Subject name],                  // or Touying's `title:`
+    subject-code: [CODE or Department],       // or `short-title:`
+    unit-title: [Title of the teaching unit], // or `subtitle:`
+    unit: [Teaching unit I],                  // or `short-subtitle:`
     author: [Prof. Dr. Your Name],
     counter-prefix: [1.],   // "Exercise 1.N"; none gives "Exercise N"
   ),
@@ -60,14 +60,14 @@ Text.
 | `short-subtitle` | the lecture or the unit: on the cover, in yellow |
 | `author` | one, an array or free content (`[_Advisor_ \ Name]`: lines and labels in emphasis): on the cover; footer, on the right (the first group) |
 | `date` | `none`, `auto` (today), a `datetime` (in full, in the language of the deck) or a text |
-| `institution` | `auto` (the Federal University of Acre) or an array; only for `#info` |
+| `institution` | `auto` (the Universidade Federal do Acre) or an array; only for `#info` |
 | `logo` | the logos of the footer and of the cover: `auto` is the UFAC logo; an array, in order, separated by dots; each one content, `color => ...` or `auto` |
 | `contact` | one or an array (an e-mail, a page); only for `#info`, such as in the body of `#ending-slide` |
 | `counter-prefix` | "Exercise 1.N" / "Example 1.N"; `none` gives "Exercise N" |
 
 ### The kind of work and the aliases
 
-In the words of a course, the fields have aliases: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`; `course` is the program, in a final paper), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` tells what the presentation is and brings the recommended cover; what the deck writes wins:
+In a course, the fields have aliases: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`; `course` is the program, in a final paper), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` tells what the presentation is and brings the recommended cover; what the deck writes wins:
 
 | `kind` | Recommends |
 | ------ | ---------- |
@@ -129,10 +129,10 @@ config-info(
   lang: "en",                         // "pt-br" (default), "en" or "es": text language and pill/section names
   // exercise-name: [Exercise], example-name: [Example], part-name: [Part],   // override the localized names
   config-info(
-    title: [Subject name],
-    short-title: [CODE or Department],
-    subtitle: [Title of the teaching unit],
-    short-subtitle: [Teaching unit I],
+    subject: [Subject name],
+    subject-code: [CODE or Department],
+    unit-title: [Title of the teaching unit],
+    unit: [Teaching unit I],
     author: [Prof. Dr. Your Name],
     counter-prefix: [1.],
   ),
@@ -141,7 +141,7 @@ config-info(
 #title-slide()
 
 = Name of the first section
-// Content right after `=` goes to the right of the section slide, flush with the page edge (usually an image):
+// Content right after `=` goes to the right of the section slide, at the page margin from the edge (usually an image):
 // #image("figure.png")
 
 == Slide title
@@ -198,11 +198,11 @@ with 2 lines"
 
 == Boxes with an icon
 
-#emph-box(color: colors.quaternary, icon: "light-bulb", title: [Tip])[
-  An icon before the title: any `#icon` of the set (`"light-bulb"`, `"alert"`, …) or any content.
+#emph-box(color: colors.quaternary, icon: "tip", title: [Tip])[
+  An icon before the title: the name of any `#icon` (`"tip"`, `"warning"`, …) or any content.
 ]
 
-#emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[
+#emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[
   The icon is centered on the capitals of the title, and the badge keeps the same height.
 ]
 
@@ -230,7 +230,7 @@ Citing the @exercise-a.
 ![The 11 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)
 <!-- example:end -->
 
-The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/main.pdf). More example decks, one for each kind of presentation, with the PDF of each one:
+The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/main.pdf). More example decks, for other kinds of presentation, with the PDF of each one:
 
 - [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ) ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/lecture.pdf)): a lecture of a course, with the aliases of a course, an outline, exercises and examples with their solutions, code and callouts.
 - [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ) ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/course.pdf)): an extension course, with several instructors, the `"gradient"` background and code through codly 2.
@@ -283,7 +283,7 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 ```typst
 #emph-box[...]                                        // thin blue border; `color:` for another family
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
-#emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[...]   // icon before the title (name or content)
+#emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
 #warning[...]                                         // #tip, #remark, #note: #callout(kind)[...]; style: "badge" for the emph-box look
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
@@ -335,7 +335,7 @@ The theme draws its own code box and does not need [codly](https://typst.app/uni
 
 ### Icons
 
-`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the colour of where it is: black in the text, the colour of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"typst"`. Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
+`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the colour of where it is: black in the text, the colour of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"shell"`, `"typst"`; the Octicons it ships also answer to their own names (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
 
 ```typst
 == Field trip
@@ -382,7 +382,7 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 Breaking changes, and how to move a 0.2.0 deck:
 
 - The information of the deck is Touying's `config-info`: `subject` → `title` (or keep `subject`, now an alias), `subject-code` → `short-title`, the old `title` → `subtitle`, the old `subtitle` → `short-subtitle`; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
-- The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and `#empty-slide` are gone (a slide without a title is a `==` without text).
+- The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide` are gone (a slide without a title is a `==` without text; Touying's own `#empty-slide`, without header nor footer, is still there for a deck that imports Touying).
 - The theme no longer depends on codly nor on linguify: `local`, `codly-range` and `no-codly` are gone; with codly 2, `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
@@ -395,6 +395,7 @@ New:
 - Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
 - Callouts (`#warning`, `#tip`, `#remark`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
+- The figure of a section fits whole in a frame of 12em × 66%, never cropped nor stretched.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
 ### 0.2.0
