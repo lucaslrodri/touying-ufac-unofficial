@@ -74,6 +74,14 @@
 ) = box(fill: color, radius: 5pt, inset: (x: .7em), outset: (y: .4em),
   text(fill: white, weight: "bold", _in-box(color, body, kind: "pill")))
 
+/// Pill of a subtitle (`===`, `====`): in the colour of the box around it, the colour of the item inside an exercise
+/// (red) or an example (green), and blue elsewhere.
+/// -> content
+#let _subtitle-pill(
+  /// Text of the subtitle. -> content
+  body,
+) = context _pill(color: _current-box-color(colors.primary), body)
+
 // ---------- icons ----------
 /// An icon, already wrapped in a `box` for inline use: a role of the theme (`"warning"`, `"tip"`, `"info"`, `"note"`,
 /// `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the

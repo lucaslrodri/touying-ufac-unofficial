@@ -59,7 +59,7 @@
 ) = {
   metadata(_seg-mark)
   grid(columns: 1fr, inset: 0pt, stroke: none,
-    grid.header(repeat: true, context { if _is-continuation() { let t = title(); if t != none { pad(bottom: 1em, _pill(t)) } } }),
+    grid.header(repeat: true, context { if _is-continuation() { let t = title(); if t != none { pad(bottom: 1em, _subtitle-pill(t)) } } }),
     { metadata(_seg-body-mark); body })
 }
 /// Splits the slide body at its top-level `===` headings and wraps every segment in a @_subtitle-grid.
@@ -79,7 +79,7 @@
     if seg.head == none {
       if _trim(seg.items).len() > 0 {
         let current() = { let h = _current-subtitle(skip: own); if h != none { h.body } }
-        _subtitle-grid(current, { context { let h = _current-subtitle(skip: own); if h != none { block(below: 1em, _pill(h.body)) } }; items })
+        _subtitle-grid(current, { context { let h = _current-subtitle(skip: own); if h != none { block(below: 1em, _subtitle-pill(h.body)) } }; items })
       }
     } else {
       v(1.44em, weak: true)
@@ -880,8 +880,8 @@
   show heading.where(level: 2): set text(fill: self.colors.primary, weight: "bold")
   // `===` and `====` are pills that do not create a slide; a top-level `===` is repeated on every continuation
   // and overflow page by `slide` (grid header), this rule renders the nested ones
-  show heading.where(level: 3): it => block(below: 1em, _pill(it.body))
-  show heading.where(level: 4): it => block(below: 1em, _pill(it.body))
+  show heading.where(level: 3): it => block(below: 1em, _subtitle-pill(it.body))
+  show heading.where(level: 4): it => block(below: 1em, _subtitle-pill(it.body))
   body
 }
 

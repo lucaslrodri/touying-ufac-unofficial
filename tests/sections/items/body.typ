@@ -48,6 +48,7 @@ The same, with `#solution` right before `#pause`.
 The opening appears with the solution, on the next subslide.
 
 == Everything without a style of its own <exercise>
+==== A subtitle in the colour of the item
 Write a program that shows the *amount* of an investment month by month, as in the #link("https://www.ufac.br")[handout]:
 
 + Read the capital and the rate ==per month==

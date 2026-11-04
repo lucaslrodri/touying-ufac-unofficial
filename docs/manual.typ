@@ -214,7 +214,7 @@ to the slide. `#exercise-slide` and `#example-slide` are the function forms, wit
 cannot be cited.
 
 Inside the box, only what has no style of its own takes the colour of the item: the bold text, the markers, the arrows,
-the highlights, the numbers of the lists, the inline code and the links. A code block, a callout and an `emph-box`
+the highlights, the numbers of the lists, the inline code, the links and the pills of the `===` and `====` subtitles. A code block, a callout and an `emph-box`
 keep their own look.
 
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
