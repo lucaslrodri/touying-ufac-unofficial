@@ -27,3 +27,9 @@ Text below the new subtitle.
 
 == Slide without subtitle
 Nothing is repeated here.
+
+== A note in the subtitle
+=== A subtitle with a note#footnote[The note of the subtitle, only on the first page.]
+Text with a note#footnote[The note of the text.]: the note of the subtitle is 1 and the one of the text 2, each once; the pill repeated on the next page has no note.
+
+#for i in range(1, 15) [- Item #i of the list]

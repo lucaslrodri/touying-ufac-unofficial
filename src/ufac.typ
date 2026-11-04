@@ -50,6 +50,19 @@
   let inner = query(metadata.where(value: _seg-body-mark).after(outer.last().location()))
   inner.len() > 0 and inner.first().location().page() < here().page()
 }
+/// The content without its footnotes, also inside bold, emphasis and the other styles of text.
+/// -> content
+#let _without-notes(
+  /// The content. -> content
+  it,
+) = if type(it) != content { it } else if it.func() == footnote { [] } else if it.has("children") {
+  it.children.map(_without-notes).join()
+} else if it.func() in (strong, emph, underline, overline, strike, highlight, smallcaps) {
+  let f = it.fields()
+  let body = f.remove("body")
+  (it.func())(..f, _without-notes(body))
+} else { it }
+
 /// One segment of the slide body: a one-column grid whose repeated header re-shows the subtitle pill on the
 /// continuation pages.
 /// -> content
@@ -60,11 +73,14 @@
   body,
 ) = {
   metadata(_seg-mark)
-  let pill(t) = pad(bottom: 1em, _subtitle-pill(t))
+  // a footnote of the subtitle belongs to its first page: the repeated pill shows the subtitle without it (Typst
+  // places the note of a grid header even under `show footnote: none`, so the note is taken out of the content)
+  let pill(t) = pad(bottom: 1em, _subtitle-pill(_without-notes(t)))
   grid(columns: 1fr, inset: 0pt, stroke: none,
+    // on the first page only the height of the pill, empty: a hidden pill would still place its footnotes
     grid.header(repeat: true, context {
       let t = title()
-      if t != none { if _is-continuation() { pill(t) } else { hide(pill(t)) } }
+      if t != none { if _is-continuation() { pill(t) } else { block(height: measure(pill(t)).height) } }
     }),
     { metadata(_seg-body-mark); context { let t = title(); if t != none { v(-measure(pill(t)).height) } }; body })
 }
