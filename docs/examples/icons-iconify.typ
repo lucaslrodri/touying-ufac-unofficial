@@ -1,7 +1,5 @@
 #import "@preview/touying:0.7.4": *
 #import "../../src/lib.typ": *
-// --- example ---
-#import "@preview/iconify:0.5.3"
 #show: ufac-theme.with(lang: "en", config-info(
   subject: [Ocean Science],
   subject-code: [OCE110],
@@ -9,16 +7,15 @@
   unit: [Unit III],
   author: [Prof. Author Name],
 ))
-#let ic = iconify.icon.with(height: 1em)
-
+// --- example ---
 == Field trip
 // https://api.iconify.design/ph.json?icons=boat-bold,sun-bold,waves-bold
-#iconify.provide-icons(json("ph.json"))
-#emph-box(icon: ic("ph:boat-bold"), title: [On the boat])[
-  Bring a hat #ic("ph:sun-bold", y: -0.2em) and water.
+#provide-icons(json("ph.json"))
+#emph-box(icon: "ph:boat-bold", title: [On the boat])[
+  Bring a hat #icon("ph:sun-bold") and water.
 ]
-#tip(icon: ic("ph:waves-bold"))[The tide turns at 14:20.]
+#tip(icon: "ph:waves-bold")[The tide turns at 14:20.]
 
-#exercise-slide(title: [Wave height], icon: ic("ph:waves-bold"))[
+#exercise-slide(title: [Wave height], icon: "ph:waves-bold")[
   Measure the height of ten waves.
 ]

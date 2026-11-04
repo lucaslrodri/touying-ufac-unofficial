@@ -32,8 +32,8 @@
 
 /// The languages the theme knows: the name in the pill of a block and its icon (a name of `icon`, content or `none`).
 /// The languages with a logo show it; the shell (`bash`, `sh`) shows the terminal icon. `ufac-theme(code-languages:)`
-/// adds languages or replaces these, in the same format; the dictionary of the codly-languages package works too. The
-/// output (`text`, `txt`, `output`) is "Saída" / "Output" / "Salida" in the language of the deck (`name: auto`).
+/// adds languages or replaces these, in the same format. The output (`text`, `txt`, `output`) is "Saída" / "Output" /
+/// "Salida" in the language of the deck (`name: auto`).
 ///
 /// #test(`code-languages.python.name == "Python"`, `code-languages.text.name == auto`,
 ///   `code-languages.bash.icon == "terminal"`)

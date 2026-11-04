@@ -4,7 +4,7 @@
 #show: ufac-theme.with(
   exercise-name: [Task],
   example-name: [Ex.],
-  exercise-icon: iconify.icon("octicon:tools-16", height: 1em),
+  exercise-icon: "octicon:tools-16",
   example-icon: none,
   part-name: [Chapter],
   footer-left: self => [Custom left footer],
@@ -25,8 +25,8 @@
 #placeholder()
 
 == Task from the book <exercise>
-#iconify.provide-icons(octicons)
-Pill with the tools icon (an Octicon of the iconify package), "Task 2.1" and the title; footer with the custom texts.
+#provide-icons(octicons)
+Pill with the tools icon (an Octicon given with `provide-icons`), "Task 2.1" and the title; footer with the custom texts.
 
 == Example <example>
 Pill "Ex. 2.1" and the title, without icon (`example-icon: none`).

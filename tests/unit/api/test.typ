@@ -3,7 +3,7 @@
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
-  primary, secondary, tertiary, quaternary, icon, eq-box, outline, callout, warning, tip, info, note, tag,
+  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, warning, tip, info, note, tag,
   deck-info) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
@@ -33,18 +33,15 @@
 #assert.eq(_label-kind(<exercises>), none)
 #assert.eq(_label-kind(<eq-y>), none)
 
-// icons: an icon the theme does not ship fails at the call, with a message that tells how to get it from iconify; a
-// role, a shipped Octicon by its 0.2.0 name and a shipped "collection:name" return content
+// icons: an unknown bare name fails at the call, with a clear message that tells how to get it; a role, a shipped
+// Octicon by its 0.2.0 name and a "collection:name" (checked later, in context) return content
 #assert-panic(() => icon("does-not-exist"))
 #assert(catch(() => icon("does-not-exist")).contains("unknown icon"))
-#assert(catch(() => icon("rocket")).contains("iconify.icon(\"octicon:rocket-16\""))
-#assert(catch(() => icon("mdi:home")).contains("@preview/iconify"))
-// the theme no longer re-exports the `provide-icons` of iconify: a deck imports iconify itself
-#import "@preview/touying-ufac-unofficial:0.3.0" as pkg
-#assert("provide-icons" not in dictionary(pkg))
+#assert(catch(() => icon("rocket")).contains("octicon:rocket-16"))
 #assert.eq(type(icon("warning")), content)
 #assert.eq(type(icon("alert")), content)
 #assert.eq(type(icon("devicon:python")), content)
+#assert.eq(type(icon("mdi:home")), content)
 #assert.eq(theme-icons.tip, "octicon:light-bulb-16")
 
 // code: the languages of the theme and codly's theme as plain data

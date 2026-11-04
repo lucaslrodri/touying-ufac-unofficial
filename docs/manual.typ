@@ -147,7 +147,7 @@ the text language and those three names, and each name can still be overridden.
 
 == Dependencies <dependencies>
 
-// every `@preview/name:version` in the sources (the import of touying, and the hints that name codly and iconify) and
+// every `@preview/name:version` in the sources (the imports of touying and iconify, and the hint that names codly) and
 // in the examples of the integrations; touying, the only one the theme imports, first
 #let found = {
   let files = ("lib.typ", "ufac.typ", "components.typ", "utils.typ", "icons.typ", "code.typ", "info.typ")
@@ -158,13 +158,13 @@ the text language and those three names, and each name can still be overridden.
 #let roles = (
   touying: [the slide engine; the deck imports it too, with the same version],
   codly: [optional: the code blocks through codly (requires Typst 0.15)],
-  iconify: [optional: icons beyond those of the theme],
+  iconify: [the icons of a collection the deck gives to `provide-icons`; the theme's own icons are shipped with it],
 )
 
 The versions below are read from the sources of the package and from the examples of @integrations, so this table
 cannot go stale. Typst fetches them by itself. touying 0.8 requires Typst 0.15; this version stays on 0.7.4, which
-also works with Typst 0.14. The theme imports only touying; codly and iconify are optional, imported by a deck that
-wants them (@integrations).
+also works with Typst 0.14. The theme imports touying and iconify; codly is optional, imported by a deck that wants
+it (@integrations).
 
 #table(
   columns: (auto, auto, 1fr),
@@ -590,7 +590,7 @@ $ c = sqrt((g lambda) / (2 pi)) $
 
 == Code <code>
 
-Inline `raw` is the chip of @inline. The theme does not depend on codly: a code block goes in the box of the theme, a
+Inline `raw` is the chip of @inline. A code block goes in the box of the theme, a
 light blue fill with a bar on the left and square corners, at 0.75em, with the line numbers on the left (a long line
 wraps and continues under the code), the language in a white pill with its logo at the top right and the syntax colours
 of the theme (`ufac-syntax`). The output of a program, a block in `text`, goes in a gray box without numbers. A block
@@ -599,8 +599,6 @@ pill are `python`, `typst`, `matlab`, `bash` and `sh` (these two with the termin
 `ufac-theme(code-languages:)` adds languages.
 
 #slide-example("code")
-
-For a file name, highlights or ranges, codly 2 gives every block the same look (@integrations).
 
 #reference("code", "code-languages", "ufac-syntax")
 
@@ -629,15 +627,19 @@ one has a role in the theme, which is also its name for `#icon`:
 }
 
 The Octicons of the theme keep their 0.2.0 names (`"alert"`, `"light-bulb"`, `"info"`, `"note"`, `"pencil"`, `"beaker"`,
-`"file-code"`, `"terminal"`, `"mail"`). Any other icon, such as an Octicon of 0.2.0 that the theme no longer ships
-(`#icon("rocket")`), comes from the iconify package, which the deck uses directly (@integrations).
+`"file-code"`, `"terminal"`, `"mail"`).
 
 #reference("icons", "theme-icons")
 
-= Touying features <touying>
+= Integrations <integrations>
 
-The theme sits on Touying and leaves its features alone. Animations work on every element of the theme: covered
-content stays faintly visible under a veil in the page color.
+The theme sits on Touying and works with the packages a deck usually takes along: codly for the code blocks, and the
+collections of Iconify for more icons.
+
+== Touying <touying>
+
+The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
+faintly visible under a veil in the page color.
 
 #slide-example("pause", pages: (1, 2, 3))
 
@@ -659,33 +661,33 @@ Available without any wrapper from the theme:
 )
 
 Slides of other Touying themes that this one does not have: `outline-slide` (here, a slide with `#outline()`, see
-@slides), `focus-slide`, `ending-slide` and `matrix-slide`.
+@slides), `focus-slide` and `matrix-slide`.
 
-= Integrations <integrations>
-
-The theme depends only on Touying. Other packages work with it in a deck that imports them: codly for the code blocks,
-iconify for more icons, and the packages Touying itself integrates.
+The packages Touying integrates work as in any Touying theme: #link("https://touying-typ.github.io/docs/integration/cetz")[CeTZ]
+and Fletcher, whose diagrams reveal their parts with `#pause` through `touying-reduce`;
+#link("https://touying-typ.github.io/docs/integration/pinit")[pinit], for pointing at parts of a slide; and
+#link("https://touying-typ.github.io/docs/integration/mitex")[MiTeX], for LaTeX formulas. Their pages in the documentation
+of Touying show how.
 
 == Code blocks with codly
 
 The theme draws its own code box (@code) and does not need codly. For codly's features (a file name, highlights,
 ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
 through codly with the same look, and codly's functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2
-requires Typst 0.15.
+requires Typst 0.15. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
 
 #slide-example("code-codly")
 
 #reference("code", "codly-ufac-theme")
 
-== Icons with iconify
+== More icons: the collections of Iconify
 
-The theme ships only its own icons (@icons). Any other icon comes from the
-#link("https://typst.app/universe/package/iconify")[iconify package], used directly: the deck imports it, gives it
-one or more collections in the JSON format of #link("https://iconify.design/")[Iconify] with `provide-icons`, and writes
-`iconify.icon("collection:name")`. An icon of iconify is content, so it goes wherever the theme takes an icon: the badge
-of an `emph-box`, a callout, the pill of an exercise or example (`icon:`, or `ufac-theme(exercise-icon:)`). It takes the
-colour of the text there: white on a badge or a pill, the colour of the callout. A height of `1em` matches the text;
-`y: -0.2em` lowers it on a line of text.
+The theme ships only the icons it uses (@icons). Any other icon comes from a collection in the JSON format of
+#link("https://iconify.design/")[Iconify], read by the #link("https://typst.app/universe/package/iconify")[iconify]
+package, which the theme imports: the deck gives the collection to `provide-icons` and writes the icon as
+`"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of
+an exercise or example). It is then an icon like those of the theme, with the same size, the same place on the line
+and the colour of where it is.
 
 #slide-example("icons-iconify", pages: (1, 2), columns: (1fr, 1fr))
 
@@ -699,13 +701,10 @@ each collection has its license.
 - *The whole collection*: download its JSON from the site of the iconify package (some are several megabytes).
 ]
 
-== Touying's integrations
+An Octicon of 0.2.0 that the theme no longer ships, such as `#icon("rocket")`, is written `#icon("octicon:rocket-16")`
+with the collection of the Octicons given to `provide-icons`.
 
-The packages Touying integrates work as in any Touying theme: #link("https://touying-typ.github.io/docs/integration/cetz")[CeTZ]
-and Fletcher, whose diagrams reveal their parts with `#pause` through `touying-reduce`;
-#link("https://touying-typ.github.io/docs/integration/pinit")[pinit], for pointing at parts of a slide; and
-#link("https://touying-typ.github.io/docs/integration/mitex")[MiTeX], for LaTeX formulas. Their pages in the documentation
-of Touying show how.
+#reference("icons", "provide-icons")
 
 = Index of definitions <index>
 

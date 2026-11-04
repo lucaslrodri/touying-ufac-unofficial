@@ -9,8 +9,8 @@
 #image("../../logo.svg")
 
 = Section with an icon (no background)
-#iconify.provide-icons(octicons)
-#text(fill: colors.primary-lighter, iconify.icon("octicon:gear-16", height: 7em))
+#provide-icons(octicons)
+#icon("octicon:gear-16", size: 7em, color: colors.primary-lighter)
 
 = Section without image
 

@@ -1096,8 +1096,7 @@
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
   /// codly. -> none | module
   codly: none,
-  /// Languages added to those of the theme (`code-languages`) or replacing them, as `(name:, icon:)`; the dictionary of
-  /// the codly-languages package works too. -> dictionary
+  /// Languages added to those of the theme (`code-languages`) or replacing them, as `(name:, icon:)`. -> dictionary
   code-languages: (:),
   /// Touying configs, typically `config-info(..)`; also `config-common(..)`, `config-page(..)`. -> dictionary
   ..args,

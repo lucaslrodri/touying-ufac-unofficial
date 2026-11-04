@@ -1,7 +1,7 @@
 // touying-ufac-unofficial — the icons: the ones the theme ships (assets/icons/*.json, in the JSON format of Iconify, only
-// the icons the theme uses; scripts/icons.sh downloads them) and the role of each one. The theme builds their SVG
-// itself and does not depend on the iconify package: a deck that wants other icons imports iconify and passes its
-// icons as content (the manual, Integrations).
+// the icons the theme uses; scripts/icons.sh downloads them) and the role of each one, plus the bridge to the iconify
+// package for the icons a deck provides itself (`provide-icons`).
+#import "@preview/iconify:0.5.3" as _iconify
 
 /// The collections shipped by the theme, by prefix: Octicons (the roles of the theme), Phosphor (output and code),
 /// Devicon (the logos of the languages) and Simple Icons (the Typst logo).
@@ -35,30 +35,19 @@
   typst: "simple-icons:typst",
 )
 
-/// The message of an icon the theme does not ship: it names the icons of the theme and tells how to get the others,
-/// from the iconify package used directly.
-/// -> str
-#let _not-shipped(
-  /// Name given to `icon`. -> str
-  name,
-  /// The same icon as `"collection:name"` in iconify. -> str
-  full,
-) = ("unknown icon: \"" + name + "\". The theme ships only its own icons (" + theme-icons.keys().join(", ")
-  + "); another one comes from the iconify package, imported by the deck: #import \"@preview/iconify:0.5.3\", "
-  + "#iconify.provide-icons(json(..)) with its collection and iconify.icon(\"" + full + "\", height: 1em), which "
-  + "emph-box, callout and the pills take as content (see the manual, Integrations)")
-
-/// Where an icon of the theme comes from, decided at the call: `(collection, name)` of a shipped icon. A bare name is a
-/// role of the theme (`"warning"`) or the name of a shipped Octicon without its size, as in 0.2.0 (`"alert"`,
-/// `"pencil"`, `"beaker"`); a full name is a shipped icon (`"devicon:python"`). Any other name is an error that tells
-/// how to get the icon from the iconify package.
+/// Where an icon comes from, decided at the call: `(collection, name)` of a shipped icon, or the full `"collection:name"`
+/// of an icon the deck provides (looked up later, in the iconify store). A bare name is a role of the theme
+/// (`"warning"`) or the name of a shipped Octicon without its size, as in 0.2.0 (`"alert"`, `"pencil"`, `"beaker"`); any
+/// other bare name is an error that tells how to use the Octicons the theme does not ship.
 ///
 /// #test(
 ///   `_icon-source("warning") == ("octicon", "alert-16")`,
 ///   `_icon-source("pencil") == ("octicon", "pencil-16")`,
 ///   `_icon-source("devicon:python") == ("devicon", "python")`,
+///   `_icon-source("mdi:home") == "mdi:home"`,
+///   `_icon-source("octicon:rocket-16") == "octicon:rocket-16"`,
 /// )
-/// -> array
+/// -> array | str
 #let _icon-source(
   /// Name of the icon. -> str
   name,
@@ -67,12 +56,13 @@
   let full = theme-icons.at(name, default: name)
   if not full.contains(":") {
     let n = full + "-16"
-    assert(n in _shipped.octicon.icons, message: _not-shipped(name, "octicon:" + n))
+    assert(n in _shipped.octicon.icons, message: "unknown icon: \"" + name + "\". The theme ships only its own icons (" +
+      theme-icons.keys().join(", ") + "); for another one, give its collection with `#provide-icons(json(..))` and "
+      + "write it as \"collection:name\", such as #icon(\"octicon:" + name + "-16\") (see the manual)")
     return ("octicon", n)
   }
   let (col, n) = (full.split(":").first(), full.split(":").slice(1).join(":"))
-  assert(col in _shipped and n in _shipped.at(col).icons, message: _not-shipped(name, full))
-  (col, n)
+  if col in _shipped and n in _shipped.at(col).icons { (col, n) } else { full }
 }
 
 /// SVG source of an icon of a collection in the JSON format of Iconify, with `currentColor` replaced by `fill` (the
@@ -103,11 +93,34 @@
     + "\">" + ic.body.replace("currentColor", fill.to-hex()) + "</svg>")
 }
 
-/// SVG source of a shipped icon.
+/// SVG source of any icon: a shipped one, or (in `context`) one of a collection the deck gave to `provide-icons`. A
+/// missing collection or icon is an error that names it.
 /// -> str
 #let _icon-svg(
-  /// Source of the icon, see @_icon-source. -> array
+  /// Source of the icon, see @_icon-source. -> array | str
   source,
   /// Colour of the icon. -> color
   fill,
-) = _data-svg(_shipped.at(source.first()), source.last(), fill)
+) = {
+  if type(source) == array { return _data-svg(_shipped.at(source.first()), source.last(), fill) }
+  let (col, n) = (source.split(":").first(), source.split(":").slice(1).join(":"))
+  let store = _iconify.icons-store.final()
+  assert(col in store, message: "icon \"" + source + "\": no collection \"" + col + "\" was given; add "
+    + "`#provide-icons(json(\"" + col + ".json\"))` to the deck (see the manual)")
+  let data = store.at(col)
+  assert(n in data.icons or n in data.at("aliases", default: (:)), message: "icon \"" + source + "\": the collection \""
+    + col + "\" given to provide-icons has no icon \"" + n + "\"")
+  _data-svg(data, n, fill)
+}
+
+/// Gives the deck more icons: one or more collections in the JSON format of Iconify (`json("mdi.json")`), whose icons
+/// are then written `#icon("mdi:home")`. A collection can be downloaded whole from the site of the iconify package, or
+/// only the chosen icons from the Iconify API: `https://api.iconify.design/octicon.json?icons=rocket-16,tools-16`. It is
+/// the `provide-icons` of the iconify package, re-exported.
+///
+/// ```typ
+/// #provide-icons(json("octicon.json"))
+/// #icon("octicon:rocket-16")
+/// ```
+/// -> content
+#let provide-icons = _iconify.provide-icons

@@ -34,17 +34,17 @@ An unknown name is a compile error that says how to get the icon (checked in `te
 ]
 The logos of `python` and `matlab` keep their colours; the other icons, the Typst logo included, take the colour of the context.
 
-== Icons of the iconify package, used directly
-#iconify.provide-icons(octicons)
+== Icons of a collection the deck provides (`provide-icons`)
+#provide-icons(octicons)
 #[
 #set text(size: .8em)
 #demo[
 ```typst
-#let ic = iconify.icon.with(height: 1em)
-#ic("octicon:rocket-16") It takes the colour of the text:
-#text(fill: colors.secondary, ic("octicon:star-16"))
-#text(fill: colors.quaternary, ic("octicon:zap-16"))
-#ic("octicon:mark-github-16", height: 1.5em)
+#icon("octicon:rocket-16") A collection given with
+`provide-icons`, by `"collection:name"`:
+#icon("octicon:star-16", color: colors.secondary)
+#icon("octicon:check-circle-16", color: colors.quaternary)
+#icon("octicon:mark-github-16", size: 1.5em)
 ```
 ]
 ]
@@ -57,19 +57,19 @@ The logos of `python` and `matlab` keep their colours; the other icons, the Typs
   "globe", "search", "comment", "people", "megaphone", "download", "play", "sync",
 )
 #grid(columns: (1fr,) * 8, row-gutter: .7em, align: center + top,
-  ..names.map(n => [#iconify.icon("octicon:" + n + "-16", height: 1.4em)\ #text(size: .55em, fill: colors.neutral-dark, n)]))
+  ..names.map(n => [#icon("octicon:" + n + "-16", size: 1.4em)\ #text(size: .55em, fill: colors.neutral-dark, n)]))
 ]
 
-== Icons of iconify in the boxes and callouts
+== Icons of a collection in the boxes and callouts
 #cols[
-  #emph-box(icon: iconify.icon("octicon:rocket-16", height: 1em), title: [Launch])[
-    `emph-box(icon: iconify.icon(..))`: white on the badge.
+  #emph-box(icon: "octicon:rocket-16", title: [Launch])[
+    `emph-box(icon: "octicon:rocket-16")`: white on the badge.
   ]
-  #callout("note", style: "badge", icon: iconify.icon("octicon:book-16", height: 1em))[The badge style.]
+  #callout("note", style: "badge", icon: "octicon:book-16")[The badge style.]
 ][
-  #callout("tip", icon: iconify.icon("octicon:rocket-16", height: 1em))[In a callout, the icon takes its colour.]
-  #warning(icon: iconify.icon("octicon:flame-16", height: 1em))[The shorthands take it too.]
+  #callout("tip", icon: "octicon:rocket-16")[In a callout, the icon takes its colour.]
+  #warning(icon: "octicon:flame-16")[The shorthands take it too.]
 ]
 
-== Icon in the `==` title #icon("tip") and in a box header
-#emph-box(title: [#icon("warning") Warning])[#icon("info") Blue icon in the body, white in the title; in the slide header, blue.]
+== Icon in the `==` title #icon("octicon:star-16") and in a box header
+#emph-box(title: [#icon("warning") Warning])[#icon("octicon:zap-16") Blue icon in the body, white in the title; in the slide header, blue.]

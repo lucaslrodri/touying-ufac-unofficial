@@ -7,6 +7,6 @@ The slide counter skips the cover (`freeze-slide-counter`): this is slide 1.
 
 #title-slide[
   #image("../../logo.svg", height: 1.7em)
-  #iconify.provide-icons(octicons)
-  Content below the titles: *bold* and #iconify.icon("octicon:rocket-16", height: 1em) white, #alert[alert] yellow
+  #provide-icons(octicons)
+  Content below the titles: *bold* and #icon("octicon:rocket-16") white, #alert[alert] yellow
 ]

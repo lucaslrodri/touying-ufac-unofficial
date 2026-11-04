@@ -26,9 +26,9 @@
 = Both sizes (10em × 10em): contained, not stretched
 #sized(300, 100, width: 10em, height: 10em)
 
-= An icon of iconify, with only its height
-#iconify.provide-icons(octicons)
-#text(fill: colors.primary-lighter, iconify.icon("octicon:rocket-16", height: 7em))
+= An icon of a collection, with only its size
+#provide-icons(octicons)
+#icon("octicon:rocket-16", size: 7em, color: colors.primary-lighter)
 
 = An icon in the title #icon("tip") stays inline
 #shape(200, 100)

@@ -1,4 +1,4 @@
-/// Synopsis: `#icon`: the roles and the shipped Octicons, color, size, `color: auto` in box/pill/title, every icon of the theme and the icons of the iconify package used directly, inline and as the icon of `emph-box` and of the callouts.
+/// Synopsis: `#icon`: the roles and the shipped Octicons, color, size, `color: auto` in box/pill/title, every icon of the theme and the icons of a collection given with `provide-icons`, inline and as the icon of `emph-box` and of the callouts.
 #import "../../common.typ": *
 #show: setup
 #include "body.typ"
