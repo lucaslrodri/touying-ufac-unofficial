@@ -15,7 +15,7 @@ get() {
 print('$1:', len(d['icons']), 'icons' + (', missing: ' + ', '.join(m) if m else '')); sys.exit(1 if m else 0)"
 }
 
-get octicon "alert-16,light-bulb-16,info-16,note-16,pencil-16,beaker-16,file-code-16,terminal-16,mail-16"
+get octicon "alert-16,light-bulb-16,info-16,note-16,history-16,pencil-16,beaker-16,file-code-16,terminal-16,mail-16"
 get ph "article-bold,code-bold"
 get devicon "python,matlab"
 get simple-icons "typst"

@@ -89,7 +89,7 @@ with 2 lines"
 // `style: "badge"` gives the look of the boxes above
 #warning[A warning: `x * y` with two lists is an error.]
 #tip[A tip: the up arrow recalls the last command.]
-#info[A remark: a *function* is a named block of code.]
+#remark[A remark: a *function* is a named block of code.]
 #note[A note: something secondary.]
 
 == An exercise <exercise-a>

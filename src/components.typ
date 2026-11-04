@@ -318,14 +318,15 @@
 
 // ---------- callouts ----------
 /// The kinds of @callout: the colour (a key of `colors`) and the icon (a role of `icon`). The colours follow the
-/// convention of the theme: red for problems, green for advantages, blue for definitions, gray for what is secondary.
+/// convention of the theme: red for problems, green for advantages, dark blue for what is recalled, gray for what is
+/// secondary.
 ///
-/// #test(`_callout-kinds.warning.color == "tertiary"`, `_callout-kinds.keys() == ("warning", "tip", "info", "note")`)
+/// #test(`_callout-kinds.warning.color == "tertiary"`, `_callout-kinds.keys() == ("warning", "tip", "remark", "note")`)
 /// -> dictionary
 #let _callout-kinds = (
   warning: (color: "tertiary", icon: "warning"),
   tip: (color: "quaternary", icon: "tip"),
-  info: (color: "primary", icon: "info"),
+  remark: (color: "primary-dark", icon: "remark"),
   note: (color: "neutral-dark", icon: "note"),
 )
 
@@ -364,16 +365,16 @@
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
 /// bold opening the text ("*Tip.* …", "*Warning!* …"); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its colour; a code block keeps its
-/// own look. Each kind has a shorthand, with the same options: @warning, @tip, @info and @note.
+/// own look. Each kind has a shorthand, with the same options: @warning, @tip, @remark and @note.
 ///
 /// ```example
 /// #callout("warning")[`x*y` with two vectors is an error.]
 /// #callout("tip", style: "badge")[The style with the badge.]
-/// #callout("info", title: [Definition.])[Another title.]
+/// #callout("remark", title: [Definition.])[Another title.]
 /// ```
 /// -> content
 #let callout(
-  /// `"warning"` (red), `"tip"` (green), `"info"` (blue) or `"note"` (gray). -> str
+  /// `"warning"` (red), `"tip"` (green), `"remark"` (dark blue, "Relembrando" / "Remark") or `"note"` (gray). -> str
   kind,
   /// `"bar"` (a bar on the left and the title opening the text) or `"badge"` (the title on a badge over the border).
   /// -> str
@@ -425,16 +426,17 @@
   ..args,
 ) = callout("tip", ..args)
 
-/// A remark, blue: `#info[..]` is `#callout("info")[..]`, with the same options.
+/// A remark that recalls what was seen before ("Relembrando" / "Remark" / "Recordando"), dark blue:
+/// `#remark[..]` is `#callout("remark")[..]`, with the same options.
 ///
 /// ```example
-/// #info[A *function* is a named block of code.]
+/// #remark[A *function* is a named block of code.]
 /// ```
 /// -> content
-#let info(
+#let remark(
   /// The options of @callout and the text. -> arguments
   ..args,
-) = callout("info", ..args)
+) = callout("remark", ..args)
 
 /// A note, gray, for what is secondary: `#note[..]` is `#callout("note")[..]`, with the same options.
 ///

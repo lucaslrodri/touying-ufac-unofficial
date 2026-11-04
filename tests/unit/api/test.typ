@@ -3,7 +3,7 @@
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
-  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, warning, tip, info, note, tag,
+  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, warning, tip, remark, note, tag,
   deck-info) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }

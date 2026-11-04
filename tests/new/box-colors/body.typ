@@ -23,7 +23,7 @@
   #callout("tip")[=== Subtitle
     *Bold* and `code` in green.]
 ][
-  #callout("info")[=== Subtitle
+  #callout("remark")[=== Subtitle
     *Bold* and `code` in blue.]
   #callout("note", style: "badge")[=== Subtitle
     *Bold* and `code` in gray.]
@@ -46,7 +46,7 @@
 === The subtitle of the exercise, in red
 #emph-box(color: colors.quaternary)[
   ==== In green, inside a green box
-  #callout("info")[==== In blue, inside a callout inside the box]
+  #callout("remark")[==== In dark blue, inside a callout inside the box]
 ]
 
 == Light cells of a table

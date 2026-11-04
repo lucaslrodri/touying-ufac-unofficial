@@ -211,7 +211,7 @@ with 2 lines"
 // `style: "badge"` gives the look of the boxes above
 #warning[A warning: `x * y` with two lists is an error.]
 #tip[A tip: the up arrow recalls the last command.]
-#info[A remark: a *function* is a named block of code.]
+#remark[A remark: a *function* is a named block of code.]
 #note[A note: something secondary.]
 
 == An exercise <exercise-a>
@@ -285,7 +285,7 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
 #emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
-#warning[...]                                         // #tip, #info, #note: #callout(kind)[...]; style: "badge" for the emph-box look
+#warning[...]                                         // #tip, #remark, #note: #callout(kind)[...]; style: "badge" for the emph-box look
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
 ```
@@ -335,7 +335,7 @@ The theme draws its own code box and does not need [codly](https://typst.app/uni
 
 ### Icons
 
-`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the colour of where it is: black in the text, the colour of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"typst"`. Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
+`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the colour of where it is: black in the text, the colour of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"typst"`. Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
 
 ```typst
 == Field trip
@@ -393,7 +393,7 @@ New:
 - A new cover, with three styles (`"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three backgrounds (`background:`); the section slide follows it.
 - Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#deck-info`.
 - Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
-- Callouts (`#warning`, `#tip`, `#info`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo.
+- Callouts (`#warning`, `#tip`, `#remark`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 

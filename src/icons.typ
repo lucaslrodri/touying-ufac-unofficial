@@ -23,6 +23,7 @@
   tip: "octicon:light-bulb-16",
   info: "octicon:info-16",
   note: "octicon:note-16",
+  remark: "octicon:history-16",
   exercise: "octicon:pencil-16",
   example: "octicon:beaker-16",
   file: "octicon:file-code-16",

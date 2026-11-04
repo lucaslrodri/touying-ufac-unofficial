@@ -44,7 +44,7 @@
   [Test], [300], [0.86],
 )
 
-#info[The accuracy is the share of recordings named right, from 0 to 1.]
+#remark[The accuracy is the share of recordings named right, from 0 to 1.]
 
 = Conclusion
 
