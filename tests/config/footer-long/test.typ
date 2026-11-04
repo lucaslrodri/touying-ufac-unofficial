@@ -1,4 +1,4 @@
-/// Synopsis: a footer with long texts (a long `short-title` and `title`, four authors): each text stays on one line, cut with "…" when the two do not fit, on a slide, in the box of an exercise and, in white, on the closing slide; a short left text leaves the room to the authors.
+/// Synopsis: a footer with two long texts (the tag of the work and a long `title`, four authors in one content): each stays on one line, cut with "…" at the end of a word, the authors keeping a third of the room, on a slide, in the box of an exercise and, in white, on the closing slide. A short left text is in `config/footer-long-authors`.
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
   kind: "tcc",

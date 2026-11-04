@@ -407,15 +407,35 @@
   self,
 ) = line(stroke: .1em + self.colors.neutral-lightest, length: 100%)
 
-/// The pieces of a text that a cut can keep or drop: its characters and spaces, and any other element whole (the dot
-/// that separates the parts of the footer).
+/// The pieces of a text that a cut can keep or drop: its characters and spaces, the characters of bold, emphasis, a
+/// link and the other styles of text each in its style, and any other element whole (the dot that separates the parts
+/// of the footer).
+///
+/// #test(
+///   `_atoms("ab c") == ("a", "b", " ", "c")`,
+///   `_atoms([*ab*]) == (strong[a], strong[b])`,
+///   `_atoms([a #box[x] b]).len() == 5`,
+/// )
 /// -> array
 #let _atoms(
   /// The text. -> content | str
   it,
-) = if type(it) == str { it.clusters() } else if it.func() == text { it.text.clusters() } else if (
-  it.func() == [ ].func()
-) { (" ",) } else if it.has("children") { it.children.map(_atoms).flatten() } else { (it,) }
+) = {
+  if type(it) == str { return it.clusters() }
+  if it.func() == text { return it.text.clusters() }
+  if it.func() == [ ].func() { return (" ",) }
+  if it.has("children") { return it.children.map(_atoms).flatten() }
+  let restyle(make) = _atoms(it.body).map(a => if a == " " { a } else { make(a) })
+  if it.func() in (strong, emph, underline, overline, strike, highlight, smallcaps) {
+    let f = it.fields()
+    let _ = f.remove("body")
+    return restyle(a => (it.func())(..f, a))
+  }
+  if it.func() == link { return restyle(a => link(it.dest, a)) }
+  // a styled piece (`#text(fill: ..)[..]`) is cut as its text, without the style
+  if it.has("child") { return _atoms(it.child) }
+  (it,)
+}
 
 /// The text of a footer cell on one line: `h(0.4em) + upper(it) + h(0.4em)`, and when that passes `max`, the longest
 /// start of the text that fits with "…" after it, cut between its characters (@_atoms). In `context`, with the size of
@@ -430,9 +450,11 @@
   let shown(t) = h(0.4em) + box(upper(t)) + h(0.4em)
   if max == none or measure(shown(it)).width <= max { return shown(it) }
   let cs = _atoms(it)
+  // what is left before the "…": no space, punctuation or separator (a typed "•" or the dot of the theme) at the end
+  let loose(a) = a in (" ", ",", ";", ":", "•", "·", "—", "–", "-") or (type(a) == content and a.func() == box)
   let cut(n) = {
     let kept = cs.slice(0, n)
-    while kept.len() > 0 and kept.last() == " " { kept = kept.slice(0, -1) }
+    while kept.len() > 0 and loose(kept.last()) { kept = kept.slice(0, -1) }
     kept.join(default: "") + "…"
   }
   // a binary search on the number of characters kept
@@ -440,6 +462,11 @@
   while lo < hi {
     let mid = calc.ceil((lo + hi) / 2)
     if measure(shown(cut(mid))).width <= max { lo = mid } else { hi = mid - 1 }
+  }
+  // a cut inside a word goes back to the end of the word before, when there is one
+  if lo < cs.len() and cs.at(lo) != " " {
+    let spaces = range(1, lo).filter(i => cs.at(i) == " ")
+    if spaces.len() > 0 { lo = spaces.last() }
   }
   shown(cut(lo))
 }
