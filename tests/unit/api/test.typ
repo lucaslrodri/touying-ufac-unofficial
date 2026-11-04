@@ -116,6 +116,9 @@
 #assert.eq(_prepare-configs("en", (config-info(kind: "tcc"),)).before.first().info.short-title, "Undergraduate Thesis")
 #assert.eq(_prepare-configs("pt", (config-info(kind: "course"),)).after.first().store,
   (cover-style: "top", author-label: "Ministrantes"))
+// the kinds that are not part of a course number the exercises without a prefix, before the configs of the deck
+#assert.eq(_prepare-configs("en", (config-info(kind: "coursework"),)).before.map(c => c.info), ((counter-prefix: none),))
+#assert.eq(_prepare-configs("en", (config-info(kind: "lecture"),)).before, ())
 #assert(catch(() => info("nope")).contains("unknown key"))
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form

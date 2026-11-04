@@ -1,12 +1,16 @@
-/// Synopsis: `kind: "thesis"` in English: the tag "Doctoral Thesis" and the style `"top"`; then `title-slide(style: "line")`, an argument of the slide, wins over the style of the kind.
+/// Synopsis: `kind: "thesis"` in English: the tag "Doctoral Thesis" and the style `"top"`; then `title-slide(style: "line")`, an argument of the slide, wins over the style of the kind, and `counter-prefix: [2.]`, given by the deck, wins over the `none` of the kind ("Exercise 2.1").
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
   kind: "thesis",
   title: [Learning from tree rings],
   author: [_Candidate_ \ First Author \ _Advisor_ \ Prof. Dr. Advisor Name],
   year: 2027,
+  counter-prefix: [2.],
 ))
 
 #title-slide()
 
 #title-slide(style: "line")
+
+== A question for the committee <exercise>
+"Exercise 2.1": the prefix of the deck wins over the `none` of the kind.

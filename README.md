@@ -66,7 +66,7 @@ Text.
 | `institution` | | `auto` (the Universidade Federal do Acre) or an array; only for `#info` |
 | `logo` | | the logos of the footer and of the cover, separated by dots: `auto` is the UFAC logo, `(auto, x)` adds `x` after it; a logo is content or `color => ...` (the color of the footer) |
 | `contact` | | one or an array (an e-mail, a page); only for `#info`, such as in the body of `#ending-slide` |
-| `counter-prefix` | | "Exercise 1.N" / "Example 1.N"; `[3.]` gives "Exercise 3.N", `none` gives "Exercise N" |
+| `counter-prefix` | | "Exercise 1.N" / "Example 1.N"; `[3.]` gives "Exercise 3.N", `none` gives "Exercise N" (the default of every `kind` but `"lecture"` and `"course"`) |
 
 ### The kind of work and the aliases
 
@@ -74,10 +74,10 @@ A deck of a course uses the aliases of the table above; two names of one field a
 
 | `kind` | Recommends |
 | ------ | ---------- |
-| `"lecture"`, `"talk"` | the style `"line"`: the authors and the date on one line at the bottom |
+| `"lecture"`, `"talk"` | the style `"line"`: the authors and the date on one line at the bottom; a talk numbers the exercises without a prefix |
 | `"course"` (an extension course) | the style `"top"` and the label "Instructors" over the authors |
-| `"coursework"` | the style `"stack"`: the authors in groups at the bottom left |
-| `"tcc"`, `"dissertation"`, `"thesis"` | the style `"top"` and the tag of the work ("Undergraduate Thesis", …) |
+| `"coursework"` | the style `"stack"`: the authors in groups at the bottom left; exercises without a prefix ("Exercise 1") |
+| `"tcc"`, `"dissertation"`, `"thesis"` | the style `"top"` and the tag of the work ("Undergraduate Thesis", …); exercises without a prefix |
 
 ```typst
 // the work of students for a course

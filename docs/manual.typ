@@ -97,7 +97,7 @@ reads these fields:
   [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; shown with `#info` (@info)],
   [`logo`], [`auto`], [the logos of the footer and of the cover (@logos)],
   [`contact`], [`none`], [one or an array (an e-mail, a page); shown with `#info` (@info)],
-  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N"; `none` gives "Exercise N"],
+  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N"; `none` gives "Exercise N", the default of a work (@kinds)],
 )
 
 An author written as free content keeps its lines (broken with `\`), and a line only in emphasis is a label over a
@@ -108,7 +108,7 @@ present.
 config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Prof. Dr. Advisor Name])
 ```
 
-== The kind of work and the aliases
+== The kind of work and the aliases <kinds>
 
 In a course, the fields have names of their own, which are aliases of the fields above; two names of one field are an
 error. A date given as `semester` or `year` is short, and also goes to the footer, after the title.
@@ -120,7 +120,9 @@ error. A date given as `semester` or `year` is short, and also goes to the foote
   [`course` (the program, in a final paper)], [`short-subtitle`], [`semester`, `year`], [`date`],
 )
 
-`kind` tells what the presentation is, and brings the recommended cover; anything the deck writes wins over it.
+`kind` tells what the presentation is, and brings the recommended cover; anything the deck writes wins over it. A
+lecture and a course keep the prefix of the unit in the numbers of exercises and examples ("Exercise 1.1"); the other
+kinds are not part of a course and number them without a prefix ("Exercise 1").
 
 #table(
   columns: (auto, 1fr),
@@ -251,7 +253,7 @@ as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "
 
 Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
 gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
-"Exercise 1".
+"Exercise 1", the default of a coursework, a talk and a final paper (@kinds).
 
 ```typ
 #show: ufac-theme.with(config-info(

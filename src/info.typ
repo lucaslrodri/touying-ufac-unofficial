@@ -169,24 +169,26 @@
 }
 
 /// The kinds of presentation (`config-info(kind:)`) and what each one recommends: the style of the cover, the label of
-/// the authors and the tag of the cover (the `short-title`), these two by their key in `lang.toml`. The deck can
-/// always change any of them.
+/// the authors, the tag of the cover (the `short-title`), these two by their key in `lang.toml`, and, for the kinds
+/// that are not part of a course, numbers of exercises and examples without a prefix (`counter-prefix: none`, "Exercise
+/// 1"): the prefix stands for the unit of a course. The deck can always change any of them.
 ///
-/// #test(`_kinds.lecture.style == "line"`, `_kinds.tcc.short-title == "tcc"`)
+/// #test(`_kinds.lecture.style == "line"`, `_kinds.tcc.short-title == "tcc"`, `"counter-prefix" not in _kinds.course`,
+///   `_kinds.coursework.counter-prefix == none`)
 /// -> dictionary
 #let _kinds = (
   // a lecture of a course: one teacher and the date on one line; the tag is the code of the course
   lecture: (style: "line"),
   // an extension course or a short course: several instructors at the top, the title in the center
   course: (style: "top", author-label: "instructors"),
-  // a paper for a course: the students and the teacher in groups, at the bottom
-  coursework: (style: "stack"),
-  // a talk or a seminar: as a lecture
-  talk: (style: "line"),
+  // a paper for a course: the students and the teacher in groups, at the bottom; no unit, so no prefix
+  coursework: (style: "stack", counter-prefix: none),
+  // a talk or a seminar: as a lecture, without the prefix of a unit
+  talk: (style: "line", counter-prefix: none),
   // final papers: the student, the advisor and the co-advisor at the top; the tag says what the work is
-  tcc: (style: "top", short-title: "tcc"),
-  dissertation: (style: "top", short-title: "dissertation"),
-  thesis: (style: "top", short-title: "thesis"),
+  tcc: (style: "top", short-title: "tcc", counter-prefix: none),
+  dissertation: (style: "top", short-title: "dissertation", counter-prefix: none),
+  thesis: (style: "top", short-title: "thesis", counter-prefix: none),
 )
 
 /// An author written as free content (lines broken with `\`, a line only in emphasis is a label, `_Advisor_`) is kept
@@ -222,9 +224,9 @@
 
 /// The configs of a deck ready for Touying: the aliases replaced, the authors fixed and, for a `kind`, its
 /// recommendations. The priority, from the highest: what the deck writes (the arguments of `title-slide` and the
-/// fields of `config-info`, by Touying's name or by an alias), then the `kind`, then the theme. The tag of the kind goes
-/// in a `config-info` before those of the deck, which replace it; the style and the label go in the store, where
-/// `title-slide` reads them only for `auto`.
+/// fields of `config-info`, by Touying's name or by an alias), then the `kind`, then the theme. The tag and the prefix
+/// of the kind go in a `config-info` before those of the deck, which replace them; the style and the label go in the
+/// store, where `title-slide` reads them only for `auto`.
 /// -> dictionary
 #let _prepare-configs(
   /// Language code of the deck. -> str
@@ -242,6 +244,7 @@
     let k = _kinds.at(kind)
     let w = _words(lang)
     if "short-title" in k { before.push(config-info(short-title: w.at(k.short-title))) }
+    if "counter-prefix" in k { before.push(config-info(counter-prefix: k.counter-prefix)) }
     after.push(config-store(cover-style: k.style, ..if "author-label" in k { (author-label: w.at(k.author-label)) }))
   }
   (before: before, configs: configs, after: after)

@@ -1098,7 +1098,8 @@
 /// or a shorter name: the tag of the cover), `subtitle` (the topic), `short-subtitle` (the lecture or the unit), `author`
 /// (one, an array or free content), `date`, `institution`, `logo` and `contact`; the aliases of a course (`subject`,
 /// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `kind` of presentation; and
-/// `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives "Exercise N").
+/// `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives "Exercise N", the
+/// default of the kinds that are not part of a course: `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`).
 /// -> content
 #let ufac-theme(
   /// Any ratio accepted by Touying's `utils.page-args-from-aspect-ratio`: `"16-9"`, `"4-3"`, … -> str

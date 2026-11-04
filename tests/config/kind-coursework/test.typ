@@ -1,4 +1,4 @@
-/// Synopsis: `config-info(kind: "coursework")`: the style `"stack"` of the cover (the students and the teacher in groups at the bottom left), with the aliases of a course and a `semester`, which the footer shows after the title.
+/// Synopsis: `config-info(kind: "coursework")`: the style `"stack"` of the cover (the students and the teacher in groups at the bottom left), with the aliases of a course and a `semester`, which the footer shows after the title; the exercises numbered without a prefix ("Exercise 1").
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
   kind: "coursework",
@@ -13,3 +13,6 @@
 
 == The footer
 On the left, the subject code, the subject and the semester; on the right, the students (the first group of the authors).
+
+== The question of the group <exercise>
+"Exercise 1": a coursework has no unit, so its exercises have no prefix.
