@@ -5,26 +5,27 @@
 #import "@preview/codly:2.0.0" as codly
 
 #show: ufac-theme.with(
+  lang: "en",
   background: "gradient",
   codly: codly,
   config-info(
     kind: "course",
-    title: [MATLAB para Engenharia],
-    short-title: [Curso de extensão],
-    short-subtitle: [Módulo 1],
-    subtitle: [Vetores, gráficos e scripts],
-    author: ([Ana Souza], [Bruno Lima], [Carla Dias]),
+    title: [MATLAB for Engineering],
+    short-title: [Extension course],
+    short-subtitle: [Module 1],
+    subtitle: [Vectors, plots and scripts],
+    author: ([First Instructor], [Second Instructor], [Third Instructor]),
     date: datetime(year: 2026, month: 3, day: 9),
-    contact: [`matlab@ufac.br`],
+    contact: [`course@example.com`],
   ),
 )
 
 #title-slide()
 
-= Primeiros passos
+= First steps
 
-== A Janela de Comandos
-O MATLAB responde a cada comando:
+== The Command Window
+MATLAB answers every command:
 
 ```matlab
 x = linspace(0, 2*pi, 100);
@@ -32,20 +33,20 @@ y = sin(x);
 plot(x, y)
 ```
 
-#callout("note")[O ponto e vírgula no fim da linha esconde o resultado.]
+#callout("note")[A semicolon at the end of the line hides the result.]
 
-== Vetores elemento a elemento <example>
-Calcule $y = x^2$ para $x = 1, 2, 3$.
+== Element by element <example>
+Compute $y = x^2$ for $x = 1, 2, 3$.
 
 #solution
-O operador `.^` eleva cada elemento:
+The operator `.^` raises each element:
 
 #codly.new(
   ```matlab
   x = [1 2 3];
   y = x.^2
   ```,
-  file: "quadrados.m",
+  file: "squares.m",
 )
 
 ```text
@@ -53,9 +54,9 @@ y =
      1     4     9
 ```
 
-== Um script <exercise>
-Escreva um script que mostre a tabuada de `n`.
+== A script <exercise>
+Write a script that shows the multiplication table of `n`.
 
-#callout("tip")[Use um laço `for` de 1 a 10.]
+#callout("tip")[Use a `for` loop from 1 to 10.]
 
 #ending-slide()

@@ -4,11 +4,11 @@
   kind: "tcc",
   title: [Detecção de implantes dentários em radiografias panorâmicas],
   course: [Bacharelado em Engenharia Elétrica],
-  author: [_Discente_ \ Ana Souza \ _Orientador_ \ Prof. Dr. Carlos Melo \ _Coorientadora_ \ Profa. Dra. Dora Lima],
+  author: [_Discente_ \ Nome do Discente \ _Orientador_ \ Prof. Dr. Nome do Orientador \ _Coorientadora_ \ Profa. Dra. Nome da Coorientadora],
   date: [Dezembro de 2026],
 ))
 
 #title-slide()
 
 == O rodapé
-O rodapé tem só a discente, o primeiro grupo do autor.
+O rodapé tem só o discente, o primeiro grupo do autor.

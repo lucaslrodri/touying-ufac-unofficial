@@ -80,7 +80,7 @@ An author can be written as free content: the lines broken with `\`, and a line 
 cover shows it as written; the footer and the metadata of the PDF get the names of the first group, those who present.
 
 ```typ
-config-info(author: [_Students_ \ Ana Souza \ Bruno Lima \ _Advisor_ \ Prof. Dr. Carlos Melo])
+config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Prof. Dr. Advisor Name])
 ```
 
 #reference("info", "info")

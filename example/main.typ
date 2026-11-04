@@ -94,4 +94,4 @@ Citing the @exercise-a.
 
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!", and
 // the contact of `config-info(contact:)` goes right below the text
-#ending-slide[Thank you!][Questions and suggestions][`your.name@ufac.br`]
+#ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]

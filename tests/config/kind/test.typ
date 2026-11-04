@@ -3,7 +3,7 @@
 #show: ufac-theme.with(config-info(
   kind: "tcc",
   title: [Detecção de implantes em radiografias],
-  author: [Ana Souza],
+  author: [Nome do Autor],
   year: 2026,
 ))
 

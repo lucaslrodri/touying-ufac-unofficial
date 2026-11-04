@@ -8,7 +8,7 @@
     kind: "tcc",
     title: [Implant detection in radiographs],
     course: [Electrical Engineering],
-    author: [_Student_ \ Ana Souza \ _Advisor_ \ Prof. Dr. Carlos Melo],
+    author: [_Student_ \ First Author \ _Advisor_ \ Prof. Dr. Advisor Name],
     year: 2026,
   ),
 )

@@ -4,52 +4,53 @@
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
 #show: ufac-theme.with(
+  lang: "en",
   background: "plain",
   config-info(
     kind: "tcc",
-    title: [Detecção de implantes dentários em radiografias panorâmicas],
-    course: [Bacharelado em Engenharia Elétrica],
-    author: [_Discente_ \ Ana Souza \ _Orientador_ \ Prof. Dr. Carlos Melo \ _Coorientadora_ \ Profa. Dra. Dora Lima],
-    date: [Dezembro de 2026],
-    contact: [`ana.souza@sou.ufac.br`],
+    title: [Detecting dental implants in panoramic radiographs],
+    course: [Bachelor's in Electrical Engineering],
+    author: [_Student_ \ Student Name \ _Advisor_ \ Prof. Dr. Advisor Name \ _Co-advisor_ \ Prof. Dr. Co-advisor Name],
+    date: [December 2026],
+    contact: [`student.name@example.com`],
   ),
 )
 
 #title-slide()
 
-= Introdução
+= Introduction
 
-== O problema
--> Uma radiografia panorâmica mostra a arcada inteira
--> Encontrar os implantes à mão é demorado
--> Uma rede neural pode marcá-los com caixas orientadas
+== The problem
+-> A panoramic radiograph shows the whole dental arch
+-> Finding the implants by hand is slow
+-> A neural network can mark them with oriented boxes
 
 #cols(divider: true)[
-  #tag[objetivo]
+  #tag[goal]
 
-  Detectar e contar os implantes.
+  Detect and count the implants.
 ][
-  #tag(color: colors.quaternary)[resultado]
+  #tag(color: colors.quaternary)[result]
 
-  Um detector avaliado em 120 imagens, apresentado por #info("author").
+  A detector evaluated on 120 images.
 ]
 
-= Método
+= Method
 
-== A rede
-#table(columns: 3, table.header([Etapa], [Imagens], [mAP]),
-  [Treino], [480], [--],
-  [Validação], [120], [0,91],
-  [Teste], [120], [0,89],
+== The network
+#table(columns: 3, table.header([Stage], [Images], [mAP]),
+  [Training], [480], [--],
+  [Validation], [120], [0.91],
+  [Test], [120], [0.89],
 )
 
-#callout("info")[O mAP mede a qualidade das caixas, de 0 a 1.]
+#callout("info")[The mAP measures the quality of the boxes, from 0 to 1.]
 
-= Conclusão
+= Conclusion
 
-== Contribuições
-- Um conjunto de 720 radiografias anotadas
-- Um detector com mAP de 0,89 no teste
-- O código, aberto
+== Contributions
+- A set of 720 annotated radiographs
+- A detector with a mAP of 0.89 on the test set
+- The code, open
 
-#ending-slide[Obrigada!][Perguntas?]
+#ending-slide[Thank you!][Questions?]

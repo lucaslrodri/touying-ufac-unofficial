@@ -120,10 +120,10 @@ API test done.
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form
 // for the cover and gives the names of its first group
-#assert.eq(_fix-author(config-info(author: ([Ana], [Bruno]))).info.author, ("Ana", "Bruno"))
-#let free = _fix-author(config-info(author: [_Students_ \ Ana \ Bruno \ _Advisor_ \ Carlos]))
-#assert.eq(free.info.author, ("Ana", "Bruno"))
-#assert.eq(utils.markup-text(_join-names("en", free.info.author)), "Ana and Bruno")
+#assert.eq(_fix-author(config-info(author: ([First], [Second]))).info.author, ("First", "Second"))
+#let free = _fix-author(config-info(author: [_Students_ \ First \ Second \ _Advisor_ \ Third]))
+#assert.eq(free.info.author, ("First", "Second"))
+#assert.eq(utils.markup-text(_join-names("en", free.info.author)), "First and Second")
 #assert.eq(utils.markup-text(_join-names("pt", ([A], [B], [C]))), "A, B e C")
 
 

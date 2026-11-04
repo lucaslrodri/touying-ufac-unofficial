@@ -278,7 +278,7 @@
   "contact") + _aliases.keys()
 
 /// An information of the deck, ready to show, anywhere in a slide (inside boxes and tables too): `#info("author")` gives
-/// "Ana, Bia e Caio", `#info("date")` the date in full, `#info("logo", height: 2em)` the logos. The aliases are keys
+/// "A, B e C", `#info("date")` the date in full, `#info("logo", height: 2em)` the logos. The aliases are keys
 /// too: `#info("subject")` is the `title`. With a function, it receives the dictionary of all the information:
 /// `#info(i => [#i.short-title: #i.title])`.
 ///

@@ -1,7 +1,7 @@
 /// Synopsis: the three styles of the cover (`"line"`, the default, `"stack"` and `"top"`) with three authors, a label over them and a date; then the positions changed one by one (`none`, content, a function of `self`, `#info`) and the white line switched on and off.
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", test-info, config-info(
-  author: ([Ana Souza], [Bruno Lima], [Carla Dias]),
+  author: ([First Author], [Second Author], [Third Author]),
   date: datetime(year: 2026, month: 3, day: 9),
 ))
 

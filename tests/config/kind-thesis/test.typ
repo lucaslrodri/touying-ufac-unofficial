@@ -3,7 +3,7 @@
 #show: ufac-theme.with(lang: "en", config-info(
   kind: "thesis",
   title: [Learning from radiographs],
-  author: [_Candidate_ \ Ana Souza \ _Advisor_ \ Prof. Dr. Carlos Melo],
+  author: [_Candidate_ \ First Author \ _Advisor_ \ Prof. Dr. Advisor Name],
   year: 2027,
 ))
 

@@ -6,7 +6,7 @@
   short-title: [Extension course],
   short-subtitle: [Module 1],
   subtitle: [Vectors, plots and scripts],
-  author: ([Ana Souza], [Bruno Lima], [Carla Dias]),
+  author: ([First Author], [Second Author], [Third Author]),
   date: [March 2026],
   institution: (auto, [PEI]),
 ))

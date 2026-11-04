@@ -4,8 +4,8 @@
   kind: "course",
   title: [MATLAB para Engenharia],
   short-title: [Curso de extensão],
-  author: ([Ana Souza], [Bruno Lima]),
-  contact: ([`ana@ufac.br`], [`bruno@ufac.br`]),
+  author: ([Nome do Primeiro Autor], [Nome do Segundo Autor]),
+  contact: ([`primeiro.autor@example.com`], [`segundo.autor@example.com`]),
 ))
 
 #title-slide()

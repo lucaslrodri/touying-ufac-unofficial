@@ -4,7 +4,7 @@
   kind: "dissertation",
   title: [Control predictivo de un microrred],
   course: [Programa de Posgrado en Ingeniería Eléctrica],
-  author: [_Estudiante_ \ Ana Souza \ _Director_ \ Prof. Dr. Carlos Melo],
+  author: [_Estudiante_ \ Nombre del Estudiante \ _Director_ \ Prof. Dr. Nombre del Director],
   date: datetime(year: 2026, month: 6, day: 15),
 ))
 

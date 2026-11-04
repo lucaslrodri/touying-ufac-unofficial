@@ -3,7 +3,7 @@
 #show: ufac-theme.with(lang: "en", test-info, config-info(
   date: datetime(year: 2026, month: 3, day: 9),
   institution: (auto, [PPGEE]),
-  contact: ([`author@ufac.br`], [`ufac.br/author`]),
+  contact: ([`author@example.com`], [`example.com/author`]),
 ))
 
 == `#info` in the text

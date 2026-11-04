@@ -10,7 +10,7 @@
     subject: [Power Electronics],
     subject-code: [CCET310],
     unit-title: [A buck converter for a solar charger],
-    author: [_Students_ \ Ana Souza, Bruno Lima \ _Teacher_ \ Prof. Dr. Carlos Melo],
+    author: [_Students_ \ First Student, Second Student \ _Teacher_ \ Prof. Dr. Teacher Name],
     year: 2026,
   ),
 )

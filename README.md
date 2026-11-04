@@ -171,7 +171,7 @@ Citing the @exercise-a.
 
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!", and
 // the contact of `config-info(contact:)` goes right below the text
-#ending-slide[Thank you!][Questions and suggestions][`your.name@ufac.br`]
+#ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]
 ```
 
 ![The 10 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)

@@ -6,7 +6,7 @@
   subtitle: [Training and evaluation],
   short-subtitle: [Units III and IV],
   author: [Prof. Author Name],
-  contact: [`author@ufac.br`],
+  contact: [`author@example.com`],
 ))
 // --- example ---
 #ending-slide()

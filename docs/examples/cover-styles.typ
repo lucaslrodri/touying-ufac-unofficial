@@ -5,7 +5,7 @@
   short-title: [PPGEE016],
   subtitle: [Training and evaluation],
   short-subtitle: [Units III and IV],
-  author: ([Ana Souza], [Bruno Lima]),
+  author: ([First Author], [Second Author]),
   date: datetime(year: 2026, month: 3, day: 9),
 ))
 // --- example ---
