@@ -32,7 +32,7 @@ An unknown name is a compile error that says how to get the icon (checked in `te
 #grid(columns: (1fr,) * 8, row-gutter: .7em, align: center + top,
   ..theme-icons.keys().map(n => [#icon(n, size: 1.4em)\ #text(size: .55em, fill: colors.neutral-dark, n)]))
 ]
-The logos of `python`, `bash` and `matlab` keep their colours; the other icons, the Typst logo included, take the colour of the context.
+The logos of `python` and `matlab` keep their colours; the other icons, the Typst logo included, take the colour of the context.
 
 == Icons of a collection the deck provides (`provide-icons`)
 #provide-icons(octicons)

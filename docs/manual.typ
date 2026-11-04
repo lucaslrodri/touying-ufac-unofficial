@@ -561,7 +561,7 @@ light blue fill with a bar on the left and square corners, at 0.75em, with the l
 wraps and continues under the code), the language in a white pill with its logo at the top right and the syntax colours
 of the theme (`ufac-syntax`). The output of a program, a block in `text`, goes in a gray box without numbers. A block
 never splits across pages, and inside a coloured box (an `emph-box`, an exercise) it keeps its look. The languages with a
-pill are `python`, `typst`, `matlab`, `bash` and `text`; a block in another language has no pill, and
+pill are `python`, `typst`, `matlab`, `bash` and `sh` (these two with the terminal icon) and `text`; a block in another language has no pill, and
 `ufac-theme(code-languages:)` adds languages.
 
 #slide-example("code")

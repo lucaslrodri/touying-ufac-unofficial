@@ -9,9 +9,9 @@
 #let _shipped = ("octicon", "ph", "devicon", "simple-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
 
 /// The icon of each role of the theme, as `"collection:name"`: the Octicons of 0.2.0 (size 16) for the callouts, the
-/// exercise and example pills, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
-/// for the output of a program and for code; the logos of Devicon (Typst from Simple Icons) for the languages. A role
-/// is also a valid name for `icon`: `#icon("warning")`.
+/// exercise and example pills, the file name of a code block, the terminal (also the pill of the shell) and the
+/// contact; Phosphor in the bold weight for the output of a program and for code; the logos of Devicon (Typst from
+/// Simple Icons) for the languages. A role is also a valid name for `icon`: `#icon("warning")`.
 ///
 /// #test(
 ///   `theme-icons.warning == "octicon:alert-16"`,
@@ -31,7 +31,6 @@
   output: "ph:article-bold",
   code: "ph:code-bold",
   python: "devicon:python",
-  bash: "devicon:bash",
   matlab: "devicon:matlab",
   typst: "simple-icons:typst",
 )
