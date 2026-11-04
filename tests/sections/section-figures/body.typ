@@ -32,3 +32,10 @@
 
 = An icon in the title #icon("tip") stays inline
 #shape(200, 100)
+
+= The icons of the content keep their size
+#block(width: 11em)[
+  A line with #icon("warning") an icon.
+  #tip[A callout keeps its icon.]
+  #emph-box(icon: "info", title: [Box])[A badge with an icon.]
+]
