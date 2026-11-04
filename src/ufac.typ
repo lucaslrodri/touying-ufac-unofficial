@@ -989,7 +989,8 @@
     if s.len() == 0 or s.last().kind != "box" { it } else { show text: set text(fill: s.last().color.darken(25%)); it }
   }
   show link: in-box-color
-  // @exercise-id / @example-id → "Exercício 1.N" / "Exemplo 1.N", bold in the kind's color, linked to the slide.
+  // @exercise-id / @example-id → "Exercício 1.N" / "Exemplo 1.N", bold in the kind's color (also inside a box), linked
+  // to the slide.
   // `self.headings` cannot be used: Touying resets it after every `---` (`call-slide-fn-and-reset`).
   show ref: it => {
     let kind = _label-kind(it.target)
@@ -997,7 +998,11 @@
       let hs = query(it.target)
       if hs.len() == 0 { it } else {
         let h = hs.first(); let (name, color) = _kind-style(self, kind)
-        link(h.location(), text(fill: color, weight: "bold")[#name #self.info.counter-prefix#_kind-index(kind, h.location().page())])
+        // the color is a `show text` inside the link, inner to the one of `show link` (the color of a box), so it wins
+        link(h.location(), {
+          show text: set text(fill: color, weight: "bold")
+          [#name #self.info.counter-prefix#_kind-index(kind, h.location().page())]
+        })
       }
     } }
   }
