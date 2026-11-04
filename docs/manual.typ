@@ -89,9 +89,9 @@ config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Pro
 
 #reference("ufac", "ufac-theme", "title-slide")
 
-The cover has three bands: the logos at the top, the titles in the centre and the authors and the date at the bottom.
+The cover has three bands: the logos at the top left, the titles in the centre and the authors and the date at the bottom.
 The `style` decides where the authors and the date go: `"line"` (the default) puts them on one line at the bottom,
-with the white line of the footer passing between them and the logos in the centre of the top; `"stack"` puts the
+with the white line of the footer passing between them; `"stack"` puts the
 authors on several lines at the bottom left; `"top"` puts them at the top right and the date in the centre of the
 bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#info`.
 

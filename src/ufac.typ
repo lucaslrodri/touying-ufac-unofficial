@@ -577,8 +577,9 @@
   (
     // the authors at the top right, in front of the logos; at the bottom, only the date, in the centre
     top: (header-left: logos, header-right: if a { _authors-block(self, label, align: right) }, footer-center: d),
-    // the logos in the centre of the top; one line at the bottom: the authors on the left, the white line and the date
-    line: (header-center: logos, footer-left: if a { _authors-line(self, label) }, footer-right: d),
+    // the logos at the top left, as in the other styles; one line at the bottom: the authors on the left, the white
+    // line and the date
+    line: (header-left: logos, footer-left: if a { _authors-line(self, label) }, footer-right: d),
     // the authors on several lines at the bottom left and the date on the right, without the line
     stack: (header-left: logos, footer-left: if a { _authors-block(self, label) }, footer-right: d),
   )
@@ -602,7 +603,7 @@
   }
 }
 
-/// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top; in the centre, the tag
+/// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top left; in the centre, the tag
 /// (`short-title`), the `title`, the yellow rule, the `short-subtitle` in yellow, the `subtitle` and the content given
 /// to it, centered both ways in the room between the top and the bottom; the authors and the date where the `style`
 /// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does not
@@ -618,8 +619,8 @@
 /// ```
 /// -> content
 #let title-slide(
-  /// `"line"`: the authors on one line at the bottom left, the white line and the date on the right, with the logos
-  /// in the centre of the top. `"stack"`: the authors on several lines at the bottom left and the date on the right,
+  /// The logos are at the top left in every style. `"line"`: the authors on one line at the bottom left, the white
+  /// line and the date on the right. `"stack"`: the authors on several lines at the bottom left and the date on the right,
   /// without the line. `"top"`: the authors at the top right and the date in the centre of the bottom, without the
   /// line. `auto` is the one of the `kind` of the deck, or `"line"`. -> auto | str
   style: auto,
