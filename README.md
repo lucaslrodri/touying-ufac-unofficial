@@ -50,18 +50,24 @@ Text.
 ![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/template.png)
 <!-- template:end -->
 
-`config-info` fills the cover and the footer (on the cover, the footer texts go to the line at the top):
+`config-info` (Touying's) fills the cover and the footer:
 
-| Field | Where it goes |
-| ----- | ------------- |
-| `subject` | 1st line of the cover; footer, on the left, after the code ("CODE • SUBJECT") |
-| `subtitle` | 2nd line of the cover (yellow) |
-| `title` | 3rd line of the cover (white) |
-| `author` | footer, on the right |
-| `subject-code` | footer, on the left |
+| Field | What it is and where it goes |
+| ----- | ---------------------------- |
+| `title` | the course or the work: large on the cover; footer, on the left ("CODE • TITLE") |
+| `short-title` | its code or a shorter name: the yellow tag of the cover; footer, before the title |
+| `subtitle` | the topic: on the cover |
+| `short-subtitle` | the lecture or the unit: on the cover, in yellow |
+| `author` | one, an array or free content (`[_Advisor_ \ Name]`: lines and labels in emphasis): on the cover; footer, on the right (the first group) |
+| `date` | `none`, `auto` (today), a `datetime` (in full, in the language of the deck) or a text |
+| `institution` | `auto` (the Federal University of Acre) or an array; only for `#info` |
+| `logo` | the logos of the footer and of the cover: `auto` is the UFAC logo; an array, in order, separated by dots; each one content, `color => ...` or `auto` |
+| `contact` | on the closing slide |
 | `counter-prefix` | "Exercise 1.N" / "Example 1.N"; `none` gives "Exercise N" |
 
-Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon in the pill of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `logos` (an array: the logos of the footer and of the cover, in order and separated by dots; each one is content, `color => ...` or `auto` for the UFAC logo, which is the default alone: `(auto, x)` keeps it and adds `x`, `(x,)` replaces it), `section-margin` (`true` keeps the page margin to the right of the content of the section slides, for images without a background; a length sets the distance; `false`, the default, puts it flush with the edge).
+Aliases in the words of a course: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` (`"lecture"`, `"course"`, `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`) brings the recommended style of the cover, label of the authors and tag; what the deck writes wins. `#info("title")` (any field or alias, or `#info(i => ..)`) shows them anywhere.
+
+Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `section-margin` (`true`, the default, keeps the page margin to the right of the content of the section slides; `false` puts it flush with the edge, for a photo; a length sets the distance), `codly` (the module of codly 2, when the deck imports it) and `code-languages` (more languages for the code blocks).
 
 ## Example
 
@@ -179,26 +185,28 @@ Citing the @exercise-a.
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
 | `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, flush with the page edge (`section-margin: true` in `ufac-theme`, or `#pad(right: 1.8em)[...]` on one slide, keeps the margin) |
 | `== Title`                      | New slide with a blue header                                                                 |
-| `== Title <exercise>`           | Exercise slide: red pill with a pencil, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`), numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
-| `== Title <example>`            | Example slide: green pill with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
-| `=== Subtitle`                  | Blue pill, no new slide; repeated at the top of every `---` continuation                     |
+| `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
+| `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
+| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise: a dashed line and "Solution." / "Answer."; with a `#pause` before or after, it appears on the next subslide |
+| `=== Subtitle`                  | Pill in the color of the box around it (blue on a slide), no new slide; repeated at the top of every continuation and overflow page |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
-| `---` (alone on a line)         | Next page of the same slide (same header, same pill, same number)                            |
+| `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header, same box, same number); a long content also goes on by itself |
 | `==` (without text)            | A slide without a title, with the footer |
 
-Functions: `#title-slide()` (`#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual. Code blocks never split across pages; with codly 2 (`ufac-theme(codly: codly)`) codly's own options apply.
+Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a logo, a program), `#outline()` (the parts of the deck, numbered, with their slides), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`, `#ufac-logo-image(height:, color:, shield:)` (the UFAC logo in the colours of the theme, for a handout that goes with the slides). Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual. Code blocks never split across pages; with codly 2 (`ufac-theme(codly: codly)`) codly's own options apply.
 
 ### Inline formatting
 
 | Markup                     | Result                                                                                   |
 | -------------------------- | ---------------------------------------------------------------------------------------- |
 | `*text*` / `_text_`        | black bold / black italic (bold takes the box color inside `emph-box`, white inside pills) |
-| `#alert[text]`, `~~text~~` | blue bold (UFAC yellow inside pills)                                                     |
+| `#alert[text]`, `~~text~~` | blue bold (the box color inside a box, UFAC yellow inside pills)                         |
 | `==text==`, `#highlight[...]` | light-yellow background (`#highlight(fill: colors.quaternary-lighter)` for other tones) |
 | `~text~`, `#underline[...]` | strong yellow underline (box color inside `emph-box`)                                   |
 | `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green                       |
 | `` `code` ``               | gray chip; inside titles, boxes, pills and table cells it follows the container color (inverted in the blue header and in cells of a dark palette tone, light tones in cells of a light one) |
-| `#icon("name", color: auto, size: 1em)` | one of 320 Octicons, colored by context                                    |
+| `#icon("name", color: auto, size: 1em)` | an icon of the theme (`"warning"`, `"tip"`, `"python"`, …) or of a collection given with `#provide-icons(json(..))`, as `"collection:name"`; colored by context |
+| `#tag[text]`               | the yellow tag of the cover, for the text, the titles and the tables; `color:` for another one |
 
 Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand is applied inside `raw`.
 
@@ -218,6 +226,7 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
 #emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
+#callout("warning")[...]                              // "tip", "info", "note"; style: "badge" for the emph-box look
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
 ```
@@ -249,21 +258,39 @@ A full set of documentation in PDF can be found in the [repository](https://gith
 | ---------- | ------- | ---- |
 | [Typst](https://typst.app/) | ≥ 0.14 | compiler |
 | [touying](https://typst.app/universe/package/touying) | 0.7.4 | slide engine (the deck imports it too) |
-| [codly](https://typst.app/universe/package/codly) | 1.3.0 | code blocks, re-exported by the theme |
-| [linguify](https://typst.app/universe/package/linguify) | 0.5.0 | localized names |
+| [iconify](https://typst.app/universe/package/iconify) | 0.5.3 | the icons of a collection the deck provides (`provide-icons`); the theme's own icons are shipped with it |
 | *New Computer Modern Sans* | | font, installed on the system (not bundled with Typst, unlike *New Computer Modern Math*, used for the equations) |
 
-The packages are fetched automatically. The font is not: *New Computer Modern Sans* belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family (download the archive from CTAN; the fonts are the `NewCMSans10-*.otf` files of its `otf` folder). Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
+The packages are fetched automatically. [codly](https://typst.app/universe/package/codly) is optional: a deck that wants it imports codly 2 itself (Typst ≥ 0.15) and passes it to the theme, `ufac-theme(codly: codly)`. The font is not: *New Computer Modern Sans* belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family (download the archive from CTAN; the fonts are the `NewCMSans10-*.otf` files of its `otf` folder). Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
 ## License
 
 The theme is licensed under the [MIT License](LICENSE). The contents of [template/](template/) are licensed under [MIT No Attribution](LICENSE-MIT-0) (MIT-0), so a deck created from the template can be used and shared without restriction, with no attribution required.
 
-Third-party components: the icons in [src/icons.typ](src/icons.typ) are [Octicons](https://primer.style/octicons/), © GitHub Inc., licensed under the MIT License.
+Third-party components: the icons in [assets/icons/](assets/icons/) come from [Octicons](https://primer.style/octicons/) (© GitHub Inc., MIT License), [Phosphor](https://phosphoricons.com/) (MIT License), [Devicon](https://devicon.dev/) (MIT License) and [Simple Icons](https://simpleicons.org/) (CC0), in the format of [Iconify](https://iconify.design/).
 
 The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of the [Federal University of Acre](https://www.ufac.br/), and the theme is used for academic purposes. This theme is unofficial: it is not affiliated with or endorsed by the university.
 
 ## Changelog
+
+### 0.3.0
+
+Breaking changes, and how to move a 0.2.0 deck:
+
+- The information of the deck is Touying's `config-info`: `subject` → `title` (or keep `subject`, now an alias), `subject-code` → `short-title`, the old `title` → `subtitle`, the old `subtitle` → `short-subtitle`; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
+- The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and `#empty-slide` are gone (a slide without a title is a `==` without text).
+- The theme no longer depends on codly nor on linguify: `local`, `codly-range` and `no-codly` are gone; with codly 2, `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
+- The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
+- The content of the section slides keeps the page margin by default (`section-margin: false` for the old look).
+
+New:
+
+- A new cover, with three styles (`"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three backgrounds (`background:`); the section slide follows it.
+- Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#info`.
+- Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
+- `#callout`, `#tag` and the code blocks in a box of their own, with the language and its logo.
+- Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
+- Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
 ### 0.2.0
 
