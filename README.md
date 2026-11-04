@@ -161,6 +161,14 @@ with 2 lines"
   The icon is centered on the capitals of the title, and the badge keeps the same height.
 ]
 
+== Callouts
+// a warning, a tip, a remark or a note: the colour, the icon and the title in the language of the deck;
+// `style: "badge"` gives the look of the boxes above
+#callout("warning")[A warning: `x * y` with two lists is an error.]
+#callout("tip")[A tip: the up arrow recalls the last command.]
+#callout("info")[A remark: a *function* is a named block of code.]
+#callout("note")[A note: something secondary.]
+
 == An exercise <exercise-a>
 
 Statement. (Also `#exercise-slide(title: [Title])[...]`.)
@@ -174,7 +182,7 @@ Citing the @exercise-a.
 #ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]
 ```
 
-![The 10 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)
+![The 11 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)
 <!-- example:end -->
 
 ## Syntax
