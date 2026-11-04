@@ -292,41 +292,6 @@
   body,
 ) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <example> #body]
 
-/// Section slide, created by every `= Title`: "Part N: Title" in blue on the left and the content right after the
-/// `=` (typically an `#image`) on the right, flush with the page edge. `ufac-theme(section-margin: true)` keeps the
-/// page margin on every section slide, for images without a background; `#pad(right: 1.8em)[#image(..)]` does the
-/// same on a single one. Not meant to be called by hand.
-/// -> content
-#let new-section-slide(
-  /// Slide configuration, see @slide.config. -> dictionary
-  config: (:),
-  /// Heading level, passed by Touying. -> int
-  level: 1,
-  /// Passed by Touying; the part is always numbered. -> bool
-  numbered: true,
-  /// Content that follows the `=` heading. -> content
-  body,
-) = touying-slide-wrapper(self => {
-  // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the
-  // grid still reserves its width and the title never runs under it; `section-margin` pads it on the right inside
-  // the move (as `#pad(right:)` in the deck does), so it stops that far from the edge
-  let slide-body = {
-    set std.align(left + horizon)
-    set image(width: 12em, height: 66%)
-    let margin = self.page.at("margin", default: (:))
-    let dx = if type(margin) == dictionary { margin.at("x", default: 1.8em) } else { margin }
-    let gap = self.store.at("section-margin", default: false)
-    let gap = if gap == true { dx } else if gap == false { 0pt } else { gap }
-    let body = if body in (none, []) or gap == 0pt { body } else { pad(right: gap, body) }
-    grid(columns: (1fr, auto), {
-      set text(size: 2em, fill: self.colors.primary, weight: "bold")
-      _in-box(self.colors.primary, context [#_name(self, "part") #utils.display-current-heading-number(level: 1, numbering: "1"): \ #utils.display-current-heading(level: 1, numbered: false)], kind: "title")
-    }, move(dx: dx, body))
-  }
-  let self = utils.merge-dicts(self, config-page(footer: _footer), config)
-  touying-slide(self: self, slide-body)
-})
-
 // ---------- cover ----------
 /// The backgrounds of the cover and of the closing slide (`ufac-theme(background:)`): the fill of the page and whether
 /// it has the circles. `"circles"`, the default, is the solid UFAC blue with two translucent white circles leaving the
@@ -603,6 +568,49 @@
     }))
   })
 }
+
+// ---------- section ----------
+/// Section slide, created by every `= Title`: on the left, "PART N" in the yellow tag, the title in blue and the yellow
+/// rule, as on the cover; on the right, the content right after the `=` (typically an `#image`), flush with the page
+/// edge. `ufac-theme(section-margin: true)` keeps the
+/// page margin on every section slide, for images without a background; `#pad(right: 1.8em)[#image(..)]` does the
+/// same on a single one. Not meant to be called by hand.
+/// -> content
+#let new-section-slide(
+  /// Slide configuration, see @slide.config. -> dictionary
+  config: (:),
+  /// Heading level, passed by Touying. -> int
+  level: 1,
+  /// Passed by Touying; the part is always numbered. -> bool
+  numbered: true,
+  /// Content that follows the `=` heading. -> content
+  body,
+) = touying-slide-wrapper(self => {
+  // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the
+  // grid still reserves its width and the title never runs under it; `section-margin` pads it on the right inside
+  // the move (as `#pad(right:)` in the deck does), so it stops that far from the edge
+  let slide-body = {
+    set std.align(left + horizon)
+    set image(width: 12em, height: 66%)
+    let margin = self.page.at("margin", default: (:))
+    let dx = if type(margin) == dictionary { margin.at("x", default: 1.8em) } else { margin }
+    let gap = self.store.at("section-margin", default: false)
+    let gap = if gap == true { dx } else if gap == false { 0pt } else { gap }
+    let body = if body in (none, []) or gap == 0pt { body } else { pad(right: gap, body) }
+    grid(columns: (1fr, auto), column-gutter: 1em, {
+      set par(leading: 0.4em, spacing: 0pt, justify: false)
+      // "PART N" in the yellow tag, the title in blue and the yellow rule, as on the cover
+      tag(size: 0.7em, context [#_name(self, "part") #utils.display-current-heading-number(level: 1, numbering: "1")])
+      v(0.7em)
+      _in-box(self.colors.primary, text(size: 2em, fill: self.colors.primary, weight: "bold",
+        utils.display-current-heading(level: 1, numbered: false)), kind: "title")
+      v(0.75em)
+      _rule(self, length: 3.2cm)
+    }, move(dx: dx, body))
+  }
+  let self = utils.merge-dicts(self, config-page(footer: _footer), config)
+  touying-slide(self: self, slide-body)
+})
 
 // ---------- rules ----------
 // The `init` method of the theme is `_slide-rules` around `_rules`, in that order (the slide rules stay the outermost

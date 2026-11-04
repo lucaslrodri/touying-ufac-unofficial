@@ -171,8 +171,9 @@ Headings drive the deck: no function call is needed for the ordinary slides.
 
 == Sections
 
-The content right after a `=` heading, typically an image, sits on the right, flush with the page edge, which suits
-a photo or a figure with a background.
+Every `=` heading opens a section slide, as the cover in white: "PART N" in the yellow tag (the name follows the
+language of the deck, or `ufac-theme(part-name:)`), the title in blue and the yellow rule. The content right after the
+`=`, typically an image, sits on the right, flush with the page edge, which suits a photo or a figure with a background.
 
 #slide-example("section")
 
