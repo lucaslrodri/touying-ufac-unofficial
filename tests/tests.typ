@@ -50,6 +50,7 @@
 #include "./sections/subtitles/body.typ"
 #include "./sections/overflow/body.typ"
 #include "./sections/titles/body.typ"
+#include "./sections/lone-shorthands/body.typ"
 #include "./sections/exercises/body.typ"
 #include "./sections/items/body.typ"
 #include "./sections/animations/body.typ"

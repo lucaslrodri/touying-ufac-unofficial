@@ -363,7 +363,9 @@
     + "> was removed in 0.3.0: use #ending-slide[..] for the closing slide, or a `==` heading without text for a slide"
     + " without a title")
   let self = utils.merge-dicts(self, config-page(header: _header, footer: _footer), config)
-  let bodies = bodies.pos()
+  // every body goes through `_flow`: since Typst 0.12 a lone text in a container is not a paragraph, so a slide whose
+  // content is only a shorthand (`-> item`, `> box`, `"quote"`) never reached the `show par` of the theme
+  let bodies = bodies.pos().map(_flow)
   if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
   touying-slide(self: self, repeat: repeat, setting: setting, composer: composer, ..bodies)
 })
