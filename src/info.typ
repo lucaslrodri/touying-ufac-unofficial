@@ -306,7 +306,12 @@
     let key = _aliases.at(key, default: key)
     if key == "logo" {
       let logos = _logos(self, white: white)
-      return if height == auto or logos == none { logos } else { text(size: height / 0.64, logos) }
+      if logos == none { return none }
+      let logos = if height == auto { logos } else { text(size: height / 0.64, logos) }
+      // centered on the capitals of the line, as the icons: the logos come in a box with an inset, which in a line of
+      // text would lift them above the baseline
+      let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
+      return box(baseline: (measure(logos).height - cap) / 2, logos)
     }
     _normalized(self).at(key)
   }
