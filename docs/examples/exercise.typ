@@ -12,7 +12,7 @@
 
 High tide was at 6:10. When is the next one?
 
-#answer
+#answer(sep: ":")
 
 The next one comes about 12 h 25 min later:
 
