@@ -8,7 +8,7 @@
 
 // ---------- emphasis ----------
 /// Bold text in UFAC blue: the same as `#alert` (Touying's method) and as the `~~text~~` shorthand. Inside a pill
-/// (a `===` subtitle, an exercise header, the title of an @emph-box) it turns UFAC yellow, where blue would vanish.
+/// (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow, where blue would vanish.
 ///
 /// ```example
 /// A #primary[definition], the same as ~~this shorthand~~.
@@ -22,7 +22,7 @@
 /// Bold text in UFAC yellow. It is weak on white: meant for short labels and dark backgrounds.
 ///
 /// ```example
-/// A #secondary[remark] in yellow.
+/// A #secondary[side note] in yellow.
 /// ```
 /// -> content
 #let secondary(
@@ -99,7 +99,7 @@
   /// Name of the icon. -> str
   name,
   /// Fill color (multicolor logos keep their colors). With `auto` it follows the context like bold text: white inside
-  /// a pill (a `===` subtitle, an exercise header, the title of an @emph-box), the box or title color inside @emph-box
+  /// a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box), the box or title color inside @emph-box
   /// and `==`, black elsewhere. -> auto | color
   color: auto,
   /// Height of the icon; the width follows its proportions (square for the icons of the theme). -> length
@@ -200,14 +200,15 @@
 /// Emphasis box. Without a title it has a thin border; with a title, a badge sits over the top border. Inside the
 /// box the `-` markers, the `->` arrow, `*bold*`, `==highlight==` and `#underline` take the box color; an explicit
 /// `#arrows(color:)`, `#highlight(fill:)` or `#underline(stroke:)` wins. Colors by convention: primary for
-/// definitions, quaternary for advantages, tertiary for problems, secondary for remarks.
+/// definitions and what is recalled, quaternary for advantages, tertiary for problems, secondary for side notes.
 ///
 /// ```example
 /// #emph-box(color: colors.quaternary, title: [Pros])[
 ///   - Fast and *simple*
 ///   - Works with ==highlights==
 /// ]
-/// #emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[
+/// #emph-box(color: colors.tertiary,
+///   icon: "exercise", title: [Homework])[
 ///   An icon before the title.
 /// ]
 /// ```
@@ -221,7 +222,7 @@
   /// Badge over the top border; `none` gives the thin-border box (unless there is an `icon`). -> none | content
   title: none,
   /// Icon at the start of the badge, before the title: the name of an @icon, any content (an image, a symbol) or
-  /// `none`. It is centered on the capitals of the title, as in the exercise and example pills; without a title it
+  /// `none`. It is centered on the capitals of the title, as in the badges of exercises and examples; without a title it
   /// is the whole badge. The badge has the same height with or without an icon. -> none | str | content
   icon: none,
   /// Content of the box. -> content
@@ -327,7 +328,7 @@
 /// #test(`_callout-kinds.caution.color == "tertiary"`, `_callout-kinds.keys() == ("caution", "tip", "remark", "note")`)
 /// -> dictionary
 #let _callout-kinds = (
-  caution: (color: "tertiary", icon: "warning"),
+  caution: (color: "tertiary", icon: "caution"),
   tip: (color: "quaternary", icon: "tip"),
   remark: (color: "primary", icon: "remark"),
   note: (color: "neutral-dark", icon: "note"),
@@ -375,7 +376,9 @@
 /// ```example
 /// #callout("caution")[`x*y` with two vectors is an error.]
 /// #callout("tip", style: "badge")[The style with the badge.]
-/// #callout("remark", title: [Definition.])[Another title.]
+/// #callout("note", title: [Aside.])[
+///   Another title.
+/// ]
 /// ```
 /// -> content
 #let callout(
@@ -490,7 +493,9 @@
 /// ```example
 /// -> `plot3` #tag[new]
 /// -> #tag(color: colors.tertiary)[exam] on Friday
-/// -> #tag(color: colors.quaternary-light)[optional]
+/// -> #tag(
+///   color: colors.quaternary-light,
+/// )[optional]
 /// ```
 /// -> content
 #let tag(

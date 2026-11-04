@@ -1116,7 +1116,7 @@
   exercise-icon: "pencil",
   /// Icon before the name on the badge of example slides, like `exercise-icon`. -> none | str | content | symbol
   example-icon: "beaker",
-  /// Prefix of the section slide ("Part N:"); `auto` is Parte / Part / Parte. -> auto | content
+  /// The word of the tag of the section slides ("PART N"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
   /// Left text of the footer; a function receives `self`. `auto` is the `short-title` and the `title` separated by a
   /// dot and, when the date is a `semester` or a `year`, the date too ("AST101 • Astronomy • 2026.2").
@@ -1132,7 +1132,8 @@
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
   /// codly. -> none | module
   codly: none,
-  /// Languages added to those of the theme (`code-languages`) or replacing them, but the output, as `(name:, icon:)`.
+  /// Languages added to those of the theme (`code-languages`) or replacing any of them except the output, as
+  /// `(name:, icon:)`.
   /// -> dictionary
   code-languages: (:),
   /// Touying configs, typically `config-info(..)`; also `config-common(..)`, `config-page(..)`. -> dictionary

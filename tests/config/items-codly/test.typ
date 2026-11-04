@@ -1,4 +1,4 @@
-/// Synopsis: an example and an exercise with codly 2 (`ufac-theme(codly: codly)`): the code block, the output and a file name keep their look inside the box of the item, as without codly; with a note, a warning and a tip.
+/// Synopsis: an example and an exercise with codly 2 (`ufac-theme(codly: codly)`): the code block, the output and a file name keep their look inside the box of the item, as without codly; with a note, a caution and a tip.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "@preview/codly:2.0.0" as codly

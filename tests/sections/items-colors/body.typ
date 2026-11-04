@@ -2,7 +2,7 @@
 #import "../../common.typ": *
 
 == Everything without a style of its own <exercise>
-==== A subtitle in the colour of the item
+==== A subtitle in the color of the item
 Write a program that shows the *amount* of an investment month by month, as in the #link("https://www.ufac.br")[handout]:
 
 + Read the capital and the rate ==per month==
@@ -11,7 +11,7 @@ Write a program that shows the *amount* of an investment month by month, as in t
 
 == What keeps its own style <example>
 #cols[
-  #callout("caution")[A callout keeps its colour.]
+  #callout("caution")[A callout keeps its color.]
   #emph-box(title: [Definition])[An `emph-box` keeps its blue.]
 ][
   ```python

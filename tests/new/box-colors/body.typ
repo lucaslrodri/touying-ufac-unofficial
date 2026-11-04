@@ -1,7 +1,7 @@
 // Body of the `new/box-colors` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 #import "../../common.typ": *
 
-== The colour of the box: `emph-box`
+== The color of the box: `emph-box`
 #let sample = [
   === Subtitle
   *Bold*, ==highlight==, `code` and #link("https://www.ufac.br")[a link] #icon("tip")
@@ -16,7 +16,7 @@
   #emph-box(color: colors.quaternary, title: [With a title], sample)
 ]
 
-== The colour of the box: callouts
+== The color of the box: callouts
 #cols[
   #callout("caution")[=== Subtitle
     *Bold* and `code` in red.]
@@ -31,7 +31,7 @@
 
 == Boxes inside boxes <example>
 === The subtitle of the example, in green
-*Bold* in green. Each box inside it keeps its colour, and its subtitles follow it:
+*Bold* in green. Each box inside it keeps its color, and its subtitles follow it:
 #cols[
   #emph-box(title: [Definition])[
     ==== In blue

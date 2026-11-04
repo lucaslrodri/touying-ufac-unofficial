@@ -4,7 +4,7 @@
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
   primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, caution, tip, remark, note, tag,
-  info) {
+  info, solution, answer) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
@@ -78,7 +78,7 @@
 #assert-panic(() => _lang-parse(none))
 
 // the UFAC logo: the SVG (blue `#0c4da2` lettering, yellow `#fdb813` shield) and the internal `_ufac-logo-image`,
-// which replaces each colour only when it is given
+// which replaces each color only when it is given
 #assert.eq(type(ufac-logo), str)
 #let logo-svg(..args) = str(_ufac-logo-image(..args).source)
 #assert.eq(_ufac-logo-image().func(), image)

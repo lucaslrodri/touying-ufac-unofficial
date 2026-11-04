@@ -10,7 +10,7 @@
 #let _shipped = ("octicon", "ph", "devicon", "simple-icons", "material-icon-theme", "vscode-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
 
 /// The icon of each role of the theme, as `"collection:name"`: Octicons (size 16) for the callouts, the
-/// exercise and example pills, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
+/// badges of exercises and examples, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
 /// for code; colored icons for the pills of the code blocks: the logos of Devicon (Typst from Simple Icons), the
 /// terminal of Material Icon Theme for the shell and the log of VSCode Icons for the output of a program. A role is
 /// also a valid name for `icon`: `#icon("warning")`.
@@ -22,6 +22,7 @@
 /// -> dictionary
 #let theme-icons = (
   warning: "octicon:alert-16",
+  caution: "octicon:alert-16",
   tip: "octicon:light-bulb-16",
   info: "octicon:info-16",
   note: "octicon:note-16",
@@ -118,11 +119,14 @@
 }
 
 /// Gives the deck more icons: one or more collections in the JSON format of Iconify (`json("mdi.json")`), whose icons
-/// are then written `#icon("mdi:home")`. It is the `provide-icons` of the iconify package, re-exported.
+/// are then written `#icon("mdi:home")`. It is the `provide-icons` of the iconify package.
 ///
 /// ```typ
 /// #provide-icons(json("octicon.json"))
 /// #icon("octicon:rocket-16")
 /// ```
 /// -> content
-#let provide-icons = _iconify.provide-icons
+#let provide-icons(
+  /// The collections, each a dictionary read from a JSON file of Iconify. -> dictionary
+  ..collections,
+) = _iconify.provide-icons(..collections)

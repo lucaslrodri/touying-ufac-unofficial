@@ -7,7 +7,7 @@
 #demo[
 ```typst
 #icon("tip") A role, #icon("warning", color: colors.tertiary)
-a coloured one and the 0.2.0 names of the shipped Octicons:
+a colored one and names of the shipped Octicons:
 #icon("alert") #icon("light-bulb") #icon("pencil") #icon("beaker").
 
 Size (`size:`): #icon("info", size: .8em) #icon("info")
@@ -32,7 +32,7 @@ An unknown name is a compile error that says how to get the icon (checked in `te
 #grid(columns: (1fr,) * 8, row-gutter: .7em, align: center + top,
   ..theme-icons.keys().map(n => [#icon(n, size: 1.4em)\ #text(size: .55em, fill: colors.neutral-dark, n)]))
 ]
-The coloured icons (`python`, `matlab`, `shell`, `output`) keep their colours; the other icons, the Typst logo included, take the colour of the context.
+The colored icons (`python`, `matlab`, `shell`, `output`) keep their colors; the other icons, the Typst logo included, take the color of the context.
 
 == Icons of a collection the deck provides (`provide-icons`)
 #provide-icons(octicons)
@@ -67,8 +67,8 @@ The coloured icons (`python`, `matlab`, `shell`, `output`) keep their colours; t
   ]
   #callout("note", style: "badge", icon: "octicon:book-16")[The badge style.]
 ][
-  #callout("tip", icon: "octicon:rocket-16")[In a callout, the icon takes its colour.]
-  #caution(icon: "octicon:flame-16")[The shorthands take it too.]
+  #callout("tip", icon: "octicon:rocket-16")[In a callout, the icon takes its color.]
+  #caution(icon: "octicon:flame-16")[The functions of each kind take it too.]
 ]
 
 == Icon in the `==` title #icon("octicon:star-16") and in a box header

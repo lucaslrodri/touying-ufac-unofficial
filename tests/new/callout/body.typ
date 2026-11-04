@@ -5,9 +5,9 @@
 #callout("caution")[`x*y` with two vectors is an error: use `x.*y`.]
 #callout("tip")[The up arrow recalls the last command.]
 #callout("remark")[A *function* is a named block of code.]
-#callout("note")[two versions of a program differ here.]
+#callout("note")[Two versions of a program differ here.]
 
-== The shorthands (`#caution`, `#tip`, `#remark`, `#note`)
+== The functions of each kind (`#caution`, `#tip`, `#remark`, `#note`)
 #caution[`#caution[..]` is `#callout("caution")[..]`.]
 #tip[`#tip[..]`, the tip.]
 #cols[
@@ -44,7 +44,7 @@
 
 == Inside a callout
 #callout("remark")[
-  The markers, the *bold* and the arrows take its colour:
+  The markers, the *bold* and the arrows take its color:
   - a list item
   -> an arrow item
 ]
