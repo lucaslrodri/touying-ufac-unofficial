@@ -221,7 +221,7 @@ with the same header and number; a long content goes on by itself.
 
 #slide-example("heading", pages: (1, 2))
 
-#emph-box(color: colors.tertiary, title: [Caution])[
+#caution[
   Touying breaks the page at _any_ top-level em dash, so an em dash next to inline markup, as in
   `Text — *bold*`, also starts a new page. Use an en dash or wrap the paragraph in `#[ ]`.
 ]
@@ -433,14 +433,14 @@ default style is the box of a printed handout, with a bar on the left and the ti
 gives an emphasis box with the title on a badge. Each kind has a shorthand.
 
 ```example
-#warning[`x*y` with two lists is an error.]
+#caution[`x*y` with two lists is an error.]
 #tip[The up arrow recalls a command.]
 #remark[A *function* is a named block of code.]
 #note[Two versions of the program differ here.]
 #callout("tip", style: "badge")[The badge style.]
 ```
 
-#see("components", "callout()", "warning()", "tip()", "remark()", "note()")
+#see("components", "callout()", "caution()", "tip()", "remark()", "note()")
 
 == Tags and quotations
 
@@ -717,7 +717,7 @@ chapters above show how to use them.
 
 == Boxes and emphases
 
-#reference("components", "emph-box", "eq-box", "callout", "warning", "tip", "remark", "note", "tag", "quote-box",
+#reference("components", "emph-box", "eq-box", "callout", "caution", "tip", "remark", "note", "tag", "quote-box",
   "arrows", "cols", "outline", "primary", "secondary", "tertiary", "quaternary")
 
 == Code

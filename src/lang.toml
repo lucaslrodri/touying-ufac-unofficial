@@ -2,7 +2,7 @@
 # falls back to Portuguese. Read by `_words` and `_tr` (src/utils.typ).
 #   exercise, example, part     the pill of the exercise and example slides, the label of the section slides
 #   solution, answer            the words that open `#solution` and `#answer`
-#   warning, tip, remark, note  the titles of `callout` in the style "badge"; [lang.xx.bar], the same in the style "bar",
+#   caution, tip, remark, note  the titles of `callout` in the style "badge"; [lang.xx.bar], the same in the style "bar",
 #                               which open the text (with the punctuation of the language)
 #   output                      the label of the output of a program in a code block
 #   thanks                      the title of `#ending-slide` without a title
@@ -17,7 +17,7 @@ example = "Exemplo"
 part = "Parte"
 solution = "Solução."
 answer = "Resposta."
-warning = "Atenção"
+caution = "Atenção"
 tip = "Dica"
 remark = "Relembrando"
 note = "Nota"
@@ -32,7 +32,7 @@ dissertation = "Dissertação de Mestrado"
 thesis = "Tese de Doutorado"
 
 [lang.pt.bar]
-warning = "Atenção!"
+caution = "Atenção!"
 tip = "Dica."
 remark = "Relembrando."
 note = "Nota."
@@ -43,7 +43,7 @@ example = "Example"
 part = "Part"
 solution = "Solution."
 answer = "Answer."
-warning = "Warning"
+caution = "Caution"
 tip = "Tip"
 remark = "Remark"
 note = "Note"
@@ -58,7 +58,7 @@ dissertation = "Master's Dissertation"
 thesis = "Doctoral Thesis"
 
 [lang.en.bar]
-warning = "Warning!"
+caution = "Caution!"
 tip = "Tip."
 remark = "Remark."
 note = "Note."
@@ -69,7 +69,7 @@ example = "Ejemplo"
 part = "Parte"
 solution = "Solución."
 answer = "Respuesta."
-warning = "Atención"
+caution = "Precaución"
 tip = "Consejo"
 remark = "Recordando"
 note = "Nota"
@@ -84,7 +84,7 @@ dissertation = "Tesis de Maestría"
 thesis = "Tesis Doctoral"
 
 [lang.es.bar]
-warning = "¡Atención!"
+caution = "¡Precaución!"
 tip = "Consejo."
 remark = "Recordando."
 note = "Nota."

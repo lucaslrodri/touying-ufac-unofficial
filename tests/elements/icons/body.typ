@@ -68,7 +68,7 @@ The coloured icons (`python`, `matlab`, `shell`, `output`) keep their colours; t
   #callout("note", style: "badge", icon: "octicon:book-16")[The badge style.]
 ][
   #callout("tip", icon: "octicon:rocket-16")[In a callout, the icon takes its colour.]
-  #warning(icon: "octicon:flame-16")[The shorthands take it too.]
+  #caution(icon: "octicon:flame-16")[The shorthands take it too.]
 ]
 
 == Icon in the `==` title #icon("octicon:star-16") and in a box header

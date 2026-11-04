@@ -18,7 +18,7 @@
 
 == The colour of the box: callouts
 #cols[
-  #callout("warning")[=== Subtitle
+  #callout("caution")[=== Subtitle
     *Bold* and `code` in red.]
   #callout("tip")[=== Subtitle
     *Bold* and `code` in green.]
@@ -38,7 +38,7 @@
     *Bold* in blue.
   ]
 ][
-  #callout("warning")[==== In red
+  #callout("caution")[==== In red
     *Bold* in red.]
 ]
 
@@ -46,7 +46,7 @@
 === The subtitle of the exercise, in red
 #emph-box(color: colors.quaternary)[
   ==== In green, inside a green box
-  #callout("remark")[==== In dark blue, inside a callout inside the box]
+  #callout("remark")[==== In blue, inside a callout inside the box]
 ]
 
 == Light cells of a table

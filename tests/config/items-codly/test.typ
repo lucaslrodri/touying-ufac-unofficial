@@ -35,5 +35,5 @@ Complete the program to show the table of `n`:
   file: "table.py",
 )
 
-#callout("warning")[`range(1, 11)` stops before 11.]
+#callout("caution")[`range(1, 11)` stops before 11.]
 #callout("tip")[An *f-string* builds the line: `f"{n} x {i}"`.]

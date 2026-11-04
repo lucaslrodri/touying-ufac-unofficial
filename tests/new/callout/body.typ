@@ -2,13 +2,13 @@
 #import "../../common.typ": *
 
 == Callouts (`#callout`)
-#callout("warning")[`x*y` with two vectors is an error: use `x.*y`.]
+#callout("caution")[`x*y` with two vectors is an error: use `x.*y`.]
 #callout("tip")[The up arrow recalls the last command.]
 #callout("remark")[A *function* is a named block of code.]
 #callout("note")[two versions of a program differ here.]
 
-== The shorthands (`#warning`, `#tip`, `#remark`, `#note`)
-#warning[`#warning[..]` is `#callout("warning")[..]`.]
+== The shorthands (`#caution`, `#tip`, `#remark`, `#note`)
+#caution[`#caution[..]` is `#callout("caution")[..]`.]
 #tip[`#tip[..]`, the tip.]
 #cols[
   #remark(style: "badge")[`#remark(style: "badge")`: the options go through.]
@@ -25,7 +25,7 @@
 
 == The `"badge"` style and the options
 #cols[
-  #callout("warning", style: "badge")[The `emph-box` with the title on a badge.]
+  #callout("caution", style: "badge")[The `emph-box` with the title on a badge.]
   #callout("tip", style: "badge", title: none)[`title: none`: only the icon.]
 ][
   #callout("remark", title: [Definition.])[`title:` another title.]
@@ -39,7 +39,7 @@
   - a list item
   -> an arrow item
 ]
-#callout("warning")[
+#callout("caution")[
   A code block keeps its own look:
   ```python
   y = x * 2

@@ -318,15 +318,15 @@
 
 // ---------- callouts ----------
 /// The kinds of @callout: the colour (a key of `colors`) and the icon (a role of `icon`). The colours follow the
-/// convention of the theme: red for problems, green for advantages, dark blue for what is recalled, gray for what is
+/// convention of the theme: red for problems, green for advantages, blue for what is recalled, gray for what is
 /// secondary.
 ///
-/// #test(`_callout-kinds.warning.color == "tertiary"`, `_callout-kinds.keys() == ("warning", "tip", "remark", "note")`)
+/// #test(`_callout-kinds.caution.color == "tertiary"`, `_callout-kinds.keys() == ("caution", "tip", "remark", "note")`)
 /// -> dictionary
 #let _callout-kinds = (
-  warning: (color: "tertiary", icon: "warning"),
+  caution: (color: "tertiary", icon: "warning"),
   tip: (color: "quaternary", icon: "tip"),
-  remark: (color: "primary-dark", icon: "remark"),
+  remark: (color: "primary", icon: "remark"),
   note: (color: "neutral-dark", icon: "note"),
 )
 
@@ -363,24 +363,25 @@
 
 /// Callout: a box with the colour, the icon and the title of its kind, the title in the language of the deck. The
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
-/// bold opening the text ("*Tip.* …", "*Warning!* …"); `"badge"` is an @emph-box with the title on a badge over the
+/// bold opening the text ("*Tip.* …", "*Caution!* …"); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its colour; a code block keeps its
-/// own look. Each kind has a shorthand, with the same options: @warning, @tip, @remark and @note.
+/// own look. Each kind has a shorthand, with the same options: @caution, @tip, @remark and @note.
 ///
 /// ```example
-/// #callout("warning")[`x*y` with two vectors is an error.]
+/// #callout("caution")[`x*y` with two vectors is an error.]
 /// #callout("tip", style: "badge")[The style with the badge.]
 /// #callout("remark", title: [Definition.])[Another title.]
 /// ```
 /// -> content
 #let callout(
-  /// `"warning"` (red), `"tip"` (green), `"remark"` (dark blue, "Relembrando" / "Remark") or `"note"` (gray). -> str
+  /// `"caution"` (red, a mistake to avoid), `"tip"` (green, a shortcut), `"remark"` (blue, to recall what was seen:
+  /// "Relembrando" / "Remark" / "Recordando") or `"note"` (gray, something secondary). -> str
   kind,
   /// `"bar"` (a bar on the left and the title opening the text) or `"badge"` (the title on a badge over the border).
   /// -> str
   style: "bar",
-  /// The title; `auto` is the name of the kind in the language of the deck ("Warning" / "Atenção"; in the style `"bar"`
-  /// with its punctuation, "Warning!", "¡Atención!", "Tip."); `none` leaves the icon alone. -> auto | none | content
+  /// The title; `auto` is the name of the kind in the language of the deck ("Caution" / "Atenção"; in the style `"bar"`
+  /// with its punctuation, "Caution!", "¡Precaución!", "Tip."); `none` leaves the icon alone. -> auto | none | content
   title: auto,
   /// The colour; `auto` is the one of the kind. -> auto | color
   color: auto,
@@ -403,17 +404,17 @@
   }
 }
 
-/// A warning, red: `#warning[..]` is `#callout("warning")[..]`, with the same options (`style`, `title`, `color`,
-/// `icon`).
+/// A caution, red, for a mistake to avoid: `#caution[..]` is `#callout("caution")[..]`, with the same options
+/// (`style`, `title`, `color`, `icon`).
 ///
 /// ```example
-/// #warning[`x*y` with two vectors is an error.]
+/// #caution[`x*y` with two vectors is an error.]
 /// ```
 /// -> content
-#let warning(
+#let caution(
   /// The options of @callout and the text. -> arguments
   ..args,
-) = callout("warning", ..args)
+) = callout("caution", ..args)
 
 /// A tip, green: `#tip[..]` is `#callout("tip")[..]`, with the same options.
 ///
@@ -426,7 +427,7 @@
   ..args,
 ) = callout("tip", ..args)
 
-/// A remark that recalls what was seen before ("Relembrando" / "Remark" / "Recordando"), dark blue:
+/// A remark that recalls what was seen before ("Relembrando" / "Remark" / "Recordando"), blue:
 /// `#remark[..]` is `#callout("remark")[..]`, with the same options.
 ///
 /// ```example

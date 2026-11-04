@@ -57,7 +57,7 @@ Write a program that shows the *amount* of an investment month by month, as in t
 
 == What keeps its own style <example>
 #cols[
-  #callout("warning")[A callout keeps its colour.]
+  #callout("caution")[A callout keeps its colour.]
   #emph-box(title: [Definition])[An `emph-box` keeps its blue.]
 ][
   ```python

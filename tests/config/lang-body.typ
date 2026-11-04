@@ -10,7 +10,7 @@
 == Language of the deck
 #context [`text.lang` = #text.lang, `text.region` = #repr(text.region)]. Smart quotes of the language around "quoted text".
 
-#callout("warning")[The title of the callouts]
+#callout("caution")[The title of the callouts]
 #callout("tip", style: "badge")[in the language of the deck.]
 
 == Exercise title <exercise-a>

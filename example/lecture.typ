@@ -69,6 +69,6 @@ Earth 1.0
 Mars 1.87
 ```
 
-#warning[`a ** 1.5` is the same as `sqrt(a ** 3)`.]
+#caution[`a ** 1.5` is the same as `sqrt(a ** 3)`.]
 
 #ending-slide[Thank you!][Next lecture: the Moon][Read chapter 3 of the book.]
