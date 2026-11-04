@@ -173,13 +173,12 @@ Headings drive the deck: no function call is needed for the ordinary slides.
 
 Every `=` heading opens a section slide, as the cover in white: "PART N" in the yellow tag (the name follows the
 language of the deck, or `ufac-theme(part-name:)`), the title in blue and the yellow rule. The content right after the
-`=`, typically an image, sits on the right, flush with the page edge, which suits a photo or a figure with a background.
+`=`, typically an image, sits on the right, at the page margin from the edge.
 
 #slide-example("section")
 
-An image without a background or an icon looks better away from the edge: `section-margin: true` in `ufac-theme`
-keeps the page margin on every section slide, and a length sets another distance. On a single slide,
-`#pad(right: 1.8em)[#image(..)]` does the same.
+A photo or a figure with a background looks better flush with the edge: `section-margin: false` in `ufac-theme` puts
+it there on every section slide, and a length sets another distance.
 
 #slide-example("section-margin")
 

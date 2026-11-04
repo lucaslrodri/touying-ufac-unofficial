@@ -3,7 +3,7 @@
 // --- example ---
 #show: ufac-theme.with(
   lang: "en",
-  section-margin: true,
+  section-margin: false,   // flush with the edge
   config-info(
     title: [Networks],
     author: [Author Name],

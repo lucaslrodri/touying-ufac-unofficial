@@ -575,10 +575,9 @@
 
 // ---------- section ----------
 /// Section slide, created by every `= Title`: on the left, "PART N" in the yellow tag, the title in blue and the yellow
-/// rule, as on the cover; on the right, the content right after the `=` (typically an `#image`), flush with the page
-/// edge. `ufac-theme(section-margin: true)` keeps the
-/// page margin on every section slide, for images without a background; `#pad(right: 1.8em)[#image(..)]` does the
-/// same on a single one. Not meant to be called by hand.
+/// rule, as on the cover; on the right, the content right after the `=` (typically an `#image`), at the page margin
+/// from the edge. `ufac-theme(section-margin: false)` puts it flush with the edge on every section slide, for photos and
+/// figures with a background. Not meant to be called by hand.
 /// -> content
 #let new-section-slide(
   /// Slide configuration, see @slide.config. -> dictionary
@@ -598,7 +597,7 @@
     set image(width: 12em, height: 66%)
     let margin = self.page.at("margin", default: (:))
     let dx = if type(margin) == dictionary { margin.at("x", default: 1.8em) } else { margin }
-    let gap = self.store.at("section-margin", default: false)
+    let gap = self.store.at("section-margin", default: true)
     let gap = if gap == true { dx } else if gap == false { 0pt } else { gap }
     let body = if body in (none, []) or gap == 0pt { body } else { pad(right: gap, body) }
     grid(columns: (1fr, auto), column-gutter: 1em, {
@@ -836,10 +835,9 @@
   /// author written as free content, the names of its first group. -> auto | content | function
   footer-right: auto,
   /// Distance between the content of the section slides (what follows `=`, on the right) and the right edge of the
-  /// page. `false` puts it flush with the edge, which suits a photo or a figure with a background; `true` keeps the
-  /// page margin (`1.8em`, the same as the text), for an image without a background or an icon; a length sets the
-  /// distance. -> bool | length
-  section-margin: false,
+  /// page. `true` keeps the page margin (`1.8em`, the same as the text); `false` puts it flush with the edge, which
+  /// suits a photo or a figure with a background; a length sets the distance. -> bool | length
+  section-margin: true,
   /// Background of the cover and of the closing slide: `"circles"` (the solid UFAC blue with two translucent circles),
   /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone, the cover of 0.2.0). -> str
   background: "circles",
