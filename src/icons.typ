@@ -3,19 +3,21 @@
 // package for the icons a deck provides itself (`provide-icons`).
 #import "@preview/iconify:0.5.3" as _iconify
 
-/// The collections shipped by the theme, by prefix: Octicons (the roles of the theme), Phosphor (output and code),
-/// Devicon (the logos of the languages) and Simple Icons (the Typst logo).
+/// The collections shipped by the theme, by prefix: Octicons (the roles of the theme), Phosphor (code), Devicon (the
+/// logos of the languages), Simple Icons (the Typst logo), Material Icon Theme (the terminal of the shell) and VSCode
+/// Icons (the output of a program).
 /// -> dictionary
-#let _shipped = ("octicon", "ph", "devicon", "simple-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
+#let _shipped = ("octicon", "ph", "devicon", "simple-icons", "material-icon-theme", "vscode-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
 
 /// The icon of each role of the theme, as `"collection:name"`: the Octicons of 0.2.0 (size 16) for the callouts, the
-/// exercise and example pills, the file name of a code block, the terminal (also the pill of the shell) and the
-/// contact; Phosphor in the bold weight for the output of a program and for code; the logos of Devicon (Typst from
-/// Simple Icons) for the languages. A role is also a valid name for `icon`: `#icon("warning")`.
+/// exercise and example pills, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
+/// for code; coloured icons for the pills of the code blocks: the logos of Devicon (Typst from Simple Icons), the
+/// terminal of Material Icon Theme for the shell and the log of VSCode Icons for the output of a program. A role is
+/// also a valid name for `icon`: `#icon("warning")`.
 ///
 /// #test(
 ///   `theme-icons.warning == "octicon:alert-16"`,
-///   `theme-icons.output == "ph:article-bold"`,
+///   `theme-icons.output == "vscode-icons:file-type-log"`,
 /// )
 /// -> dictionary
 #let theme-icons = (
@@ -29,10 +31,11 @@
   file: "octicon:file-code-16",
   terminal: "octicon:terminal-16",
   contact: "octicon:mail-16",
-  output: "ph:article-bold",
+  output: "vscode-icons:file-type-log",
   code: "ph:code-bold",
   python: "devicon:python",
   matlab: "devicon:matlab",
+  shell: "material-icon-theme:console",
   typst: "simple-icons:typst",
 )
 

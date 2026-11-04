@@ -662,8 +662,10 @@ requires Typst 0.15. The languages of the codly-languages package can be given t
 ```
 
 The theme ships only the icons it uses, from #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT
-license), #link("https://phosphoricons.com/")[Phosphor] (MIT license),
-#link("https://devicon.dev/")[Devicon] (MIT license) and #link("https://simpleicons.org/")[Simple Icons] (CC0); each
+license), #link("https://phosphoricons.com/")[Phosphor] (MIT license), #link("https://devicon.dev/")[Devicon] (MIT
+license), #link("https://simpleicons.org/")[Simple Icons] (CC0),
+#link("https://github.com/material-extensions/vscode-material-icon-theme")[Material Icon Theme] (MIT license) and
+#link("https://github.com/vscode-icons/vscode-icons")[VSCode Icons] (MIT license); each
 one has a role in the theme, which is also its name for `#icon`:
 
 #{

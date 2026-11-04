@@ -31,12 +31,12 @@
 }
 
 /// The languages the theme knows: the name in the pill of a block and its icon (a name of `icon`, content or `none`).
-/// The languages with a logo show it; the shell (`bash`, `sh`) shows the terminal icon. `ufac-theme(code-languages:)`
+/// The languages with a logo show it; the shell (`bash`, `sh`) shows a coloured terminal. `ufac-theme(code-languages:)`
 /// adds languages or replaces these, in the same format. The output (`text`, `txt`, `output`) is "Saída" / "Output" /
 /// "Salida" in the language of the deck (`name: auto`).
 ///
 /// #test(`code-languages.python.name == "Python"`, `code-languages.text.name == auto`,
-///   `code-languages.bash.icon == "terminal"`)
+///   `code-languages.bash.icon == "shell"`)
 /// -> dictionary
 #let code-languages = (
   python: (name: "Python", icon: "python"),
@@ -44,8 +44,8 @@
   typst: (name: "Typst", icon: "typst"),
   typ: (name: "Typst", icon: "typst"),
   matlab: (name: "MATLAB", icon: "matlab"),
-  bash: (name: "Bash", icon: "terminal"),
-  sh: (name: "Shell", icon: "terminal"),
+  bash: (name: "Bash", icon: "shell"),
+  sh: (name: "Shell", icon: "shell"),
   text: (name: auto, icon: "output"),
   txt: (name: auto, icon: "output"),
   output: (name: auto, icon: "output"),
