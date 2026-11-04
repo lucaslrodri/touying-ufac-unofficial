@@ -1,4 +1,5 @@
-// Starting deck for the touying-ufac-unofficial theme. Syntax: package README; every element: example/main.typ.
+// Starting deck for the touying-ufac-unofficial theme. Syntax: package README; the elements at a glance:
+// example/main.typ; a whole lecture: example/lecture.typ (both in the repository of the theme).
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 

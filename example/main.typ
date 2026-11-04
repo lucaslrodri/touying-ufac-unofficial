@@ -80,7 +80,7 @@ with 2 lines"
   An icon before the title: the name of any `#icon` (`"tip"`, `"warning"`, …) or any content.
 ]
 
-#emph-box(color: colors.tertiary, icon: "warning", title: [Caution])[
+#emph-box(color: colors.tertiary, icon: "exercise", title: [Homework])[
   The icon is centered on the capitals of the title, and the badge keeps the same height.
 ]
 
@@ -88,18 +88,44 @@ with 2 lines"
 // a caution (a mistake to avoid), a tip (a shortcut), a remark (to recall what was seen) or a note (something
 // secondary): the color, the icon and the title in the language of the deck;
 // `style: "badge"` gives the look of the boxes above
-#caution[A caution: `x * y` with two lists is an error.]
-#tip[A tip: the up arrow recalls the last command.]
-#remark[As seen before: a *function* is a named block of code.]
-#note[A note: something secondary.]
+#caution[`x * y` with two lists is an error.]
+#tip[The up arrow recalls the last command.]
+#remark[A *function* is a named block of code.]
+#note[Two versions of the program differ here.]
+
+== Code and its output
+// the language in a pill at the top right; `text` (or `txt`, `output`) is the output of a program, in a gray box
+
+```python
+def scale(grams, people, n=4):
+    return grams * people / n
+```
+
+```text
+375.0
+```
+
+== A table
+// the header row in blue; a cell filled with a light tone colors its bold text and chips like a box of that family
+
+#table(
+  columns: 3,
+  table.header([Fish], [Depth (m)], [$T$ (°C)]),
+  [Cod], [200], [4],
+  [Tuna], [50], table.cell(fill: colors.secondary-lighter)[*18*],
+)
 
 == An exercise <exercise-a>
 
 Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 
+// alone on a line, `#answer` opens the answer with "Answer."; `#solution` in an example
+#answer
+The answer.
+
 == An example <example>
 
-Citing the @exercise-a.
+See @exercise-a.
 
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!"; the
 // contact of `config-info(contact:)`, when there is one, goes in the body: `#info("contact")`
