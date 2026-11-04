@@ -10,4 +10,4 @@
 #title-slide()
 
 == The tag of the kind
-`#info("short-title")`: #info("short-title"). The year (`year: 2026`) is a short date: the footer gets it too.
+`#deck-info("short-title")`: #deck-info("short-title"). The year (`year: 2026`) is a short date: the footer gets it too.

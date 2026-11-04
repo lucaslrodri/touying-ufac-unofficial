@@ -106,8 +106,8 @@
 
 API test done.
 
-// config-info: the aliases are their fields; two names of one field, an unknown kind, an unknown key of `#info` and the
-// `logos:` of 0.2.0 fail with a message that names the problem
+// config-info: the aliases are their fields; two names of one field, an unknown kind, an unknown key of `#deck-info` and
+// the `logos:` of 0.2.0 fail with a message that names the problem
 #assert.eq(_resolve-aliases(config-info(subject: [S], subject-code: [C], unit: [U], unit-title: [T])).info,
   (title: [S], short-title: [C], short-subtitle: [U], subtitle: [T]))
 #assert.eq(_resolve-aliases(config-info(semester: [2026.2])).info, (date: [2026.2], date-short: true))
@@ -116,7 +116,7 @@ API test done.
 #assert.eq(_prepare-configs("en", (config-info(kind: "tcc"),)).before.first().info.short-title, "Undergraduate Thesis")
 #assert.eq(_prepare-configs("pt", (config-info(kind: "course"),)).after.first().store,
   (cover-style: "top", author-label: "Ministrantes"))
-#assert(catch(() => info("nope")).contains("unknown key"))
+#assert(catch(() => deck-info("nope")).contains("unknown key"))
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form
 // for the cover and gives the names of its first group

@@ -1,5 +1,5 @@
 // Example deck of the touying-ufac-unofficial theme: a paper for a course (`kind: "coursework"`), with the students and
-// the teacher in groups on the cover (the style "stack") and `#info` inside the slides.
+// the teacher in groups on the cover (the style "stack") and `#deck-info` inside the slides.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -26,7 +26,7 @@
   The mean is #eq-box[$overline(x) = 1/n sum_i x_i$].
 ][
   #emph-box(title: [Course])[
-    #info("subject") (#info("subject-code")), #info("year").
+    #deck-info("subject") (#deck-info("subject-code")), #deck-info("year").
   ]
 ]
 

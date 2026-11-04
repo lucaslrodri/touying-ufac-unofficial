@@ -48,7 +48,7 @@ alone, laid out by the same rules as in a deck.
   [`short-subtitle`], [`none`], [the lecture or the unit ("Lecture 1", "Unit II"): on the cover, in yellow],
   [`author`], [`none`], [one, an array or free content (below): on the cover and on the right of the footer],
   [`date`], [`none`], [`auto` (today), a `datetime` (written in full in the language of the deck) or a text],
-  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; only for `#info`],
+  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; only for `#deck-info`],
   [`logo`], [`auto`], [one or an array, in the footer and on the cover (see Logos below)],
   [`contact`], [`none`], [one or an array (an e-mail, a page)],
   [`counter-prefix`], [`[1.]`], [prefix of the exercise and example numbers: `[1.]` gives "Exercise 1.N", `none` gives "Exercise N"],
@@ -83,7 +83,7 @@ cover shows it as written; the footer and the metadata of the PDF get the names 
 config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Prof. Dr. Advisor Name])
 ```
 
-#reference("info", "info")
+#reference("info", "deck-info")
 
 == The theme and the cover
 
@@ -93,7 +93,7 @@ The cover has three bands: the logos at the top left, the titles in the centre a
 The `style` decides where the authors and the date go: `"line"` (the default) puts them on one line at the bottom,
 with the white line of the footer passing between them; `"stack"` puts the
 authors on several lines at the bottom left; `"top"` puts them at the top right and the date in the centre of the
-bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#info`.
+bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#deck-info`.
 
 #slide-example("cover-styles", pages: (1, 2, 3, 4))
 

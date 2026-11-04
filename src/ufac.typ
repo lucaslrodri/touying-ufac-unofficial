@@ -610,15 +610,15 @@
 /// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top left; in the centre, the tag
 /// (`short-title`), the `title`, the yellow rule, the `short-subtitle` in yellow, the `subtitle` and the content given
 /// to it, centered both ways in the room between the top and the bottom; the authors and the date where the `style`
-/// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does not
-/// count.
+/// puts them. The institution does not appear (it is for `#deck-info`). The slide counter is frozen, so the cover does
+/// not count.
 ///
-/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#info("date")`) or a
-/// function of `self`, like `footer-left` of the theme. The text of the positions is 0.7 of the size of the slide.
+/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#deck-info("date")`) or
+/// a function of `self`, like `footer-left` of the theme. The text of the positions is 0.7 of the size of the slide.
 ///
 /// ```typ
 /// #title-slide()
-/// #title-slide(style: "top", footer-center: none, footer-right: info("date"))
+/// #title-slide(style: "top", footer-center: none, footer-right: deck-info("date"))
 /// #title-slide[Slides at #link("https://example.com/slides")[example.com/slides]]
 /// ```
 /// -> content
@@ -1112,7 +1112,7 @@
     config-common(slide-fn: slide, new-section-slide-fn: new-section-slide, receive-body-for-new-section-slide-fn: true, show-strong-with-alert: false),
     config-methods(
       init: (self: none, body) => {
-        // the information of the deck, for `#info` (which reads it in `context`, anywhere)
+        // the information of the deck, for `#deck-info` (which reads it in `context`, anywhere)
         _deck.update((info: self.info, store: self.store, colors: self.colors,
           datetime-format: self.at("datetime-format", default: auto)))
         _slide-rules(self, _rules(self, body))

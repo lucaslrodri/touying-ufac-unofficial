@@ -60,12 +60,12 @@ Text.
 | `short-subtitle` | the lecture or the unit: on the cover, in yellow |
 | `author` | one, an array or free content (`[_Advisor_ \ Name]`: lines and labels in emphasis): on the cover; footer, on the right (the first group) |
 | `date` | `none`, `auto` (today), a `datetime` (in full, in the language of the deck) or a text |
-| `institution` | `auto` (the Federal University of Acre) or an array; only for `#info` |
+| `institution` | `auto` (the Federal University of Acre) or an array; only for `#deck-info` |
 | `logo` | the logos of the footer and of the cover: `auto` is the UFAC logo; an array, in order, separated by dots; each one content, `color => ...` or `auto` |
 | `contact` | on the closing slide |
 | `counter-prefix` | "Exercise 1.N" / "Example 1.N"; `none` gives "Exercise N" |
 
-Aliases in the words of a course: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` (`"lecture"`, `"course"`, `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`) brings the recommended style of the cover, label of the authors and tag; what the deck writes wins. `#info("title")` (any field or alias, or `#info(i => ..)`) shows them anywhere.
+Aliases in the words of a course: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` (`"lecture"`, `"course"`, `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`) brings the recommended style of the cover, label of the authors and tag; what the deck writes wins. `#deck-info("title")` (any field or alias, or `#deck-info(i => ..)`) shows them anywhere.
 
 Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `codly` (the module of codly 2, when the deck imports it) and `code-languages` (more languages for the code blocks).
 
@@ -301,7 +301,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 New:
 
 - A new cover, with three styles (`"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three backgrounds (`background:`); the section slide follows it.
-- Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#info`.
+- Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#deck-info`.
 - Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
 - `#callout`, `#tag` and the code blocks in a box of their own, with the language and its logo.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
