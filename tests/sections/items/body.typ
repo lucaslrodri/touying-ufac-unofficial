@@ -68,6 +68,23 @@ Write a program that shows the *amount* of an investment month by month, as in t
   ```
 ]
 
+== The answer in a paragraph of its own <exercise>
+A blank line after `#answer`: "Answer." stays alone on its line.
+
+#answer
+
+The next high tide comes about 12 h 25 min after the last one:
+
+$ 6"h"10 + 12"h"25 = 18"h"35 $
+
+== The solution in a paragraph of its own <example>
+The same with `#pause` and `#solution`, and a blank line after the marker.
+
+#pause
+#solution
+
+The solution starts in a new paragraph, below the word.
+
 == A table <tabuada-exercise>
 Not an exercise: a `<tabuada-exercise>` label is not an exercise label.
 

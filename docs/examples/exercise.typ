@@ -13,7 +13,10 @@
 High tide was at 6:10. When is the next one?
 
 #answer
-About 12 h 25 min later, at 18:35.
+
+The next one comes about 12 h 25 min later:
+
+$ 6"h"10 + 12"h"25 = 18"h"35 $
 
 == Wave speed <example>
 

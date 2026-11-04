@@ -218,8 +218,9 @@ the highlights, the numbers of the lists, the inline code, the links and the pil
 keep their own look.
 
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
-line and "Solution." / "Answer." in bold. With a `#pause` right before or after the marker, the solution appears on
-the next subslide. An exercise or example can take several pages: a content longer than one page goes on to the next
+line and "Solution." / "Answer." in bold, at the start of the paragraph that follows; after a blank line, the word stays
+alone on its line and the solution starts in a new paragraph. With a `#pause` right before or after the marker, the
+solution appears on the next subslide. An exercise or example can take several pages: a content longer than one page goes on to the next
 one by itself, in the same box, with the same number and the `===` subtitle; a `---` or a `#pagebreak()` breaks the page
 by hand. The item goes on until a slide of another kind.
 

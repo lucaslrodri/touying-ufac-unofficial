@@ -139,8 +139,9 @@
 }
 
 /// The body of an exercise or example with the solution opened at its marker (`#solution`, `#answer`): the opening
-/// takes the place of the marker. A `#pause` right after the marker goes before the opening, which then appears with
-/// the solution. Done before Touying handles the `#pause`.
+/// takes the place of the marker. The word opens the paragraph that follows the marker; after a blank line, it stays
+/// alone on its line and the solution starts in a new paragraph. A `#pause` right after the marker goes before the
+/// opening, which then appears with the solution. Done before Touying handles the `#pause`.
 /// -> any
 #let _split-solution(
   /// A body of the slide. -> any
@@ -153,15 +154,18 @@
   let head = ch.slice(0, i)
   let rest = ch.slice(i + 1)
   // the spaces and the paragraph breaks after the marker, and a `#pause` among them, which goes before the opening;
-  // the word opens the next paragraph
+  // a blank line among them (a paragraph break) keeps the solution in a paragraph of its own
+  let blank = false
   while rest.len() > 0 and (rest.first().func() in ([ ].func(), parbreak)
     or _is-meta(rest.first(), "touying-jump/pause/meanwhile")) {
     if rest.first().func() == metadata { head.push(rest.first()) }
+    if rest.first().func() == parbreak { blank = true }
     rest = rest.slice(1)
   }
   // nothing before the marker but spaces and markers (a continuation after `---`): no line to separate
   let alone = head.all(c => c.func() in ([ ].func(), parbreak, metadata))
-  (head + (_solution-head(ch.at(i).value.word, line: not alone),) + rest).join()
+  let opening = (_solution-head(ch.at(i).value.word, line: not alone),) + if blank { (parbreak(),) } else { () }
+  (head + opening + rest).join()
 }
 
 /// The outline of the box of an exercise, open at the bottom: the sides go down, turn a quarter of a circle and end

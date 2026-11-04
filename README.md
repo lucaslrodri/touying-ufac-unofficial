@@ -202,7 +202,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
-| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise: a dashed line and "Solution." / "Answer."; with a `#pause` before or after, it appears on the next subslide |
+| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise: a dashed line and "Solution." / "Answer." opening the next paragraph (after a blank line, alone on its line); with a `#pause` before or after, it appears on the next subslide |
 | `=== Subtitle`                  | Pill in the color of the box around it (blue on a slide), no new slide; repeated at the top of every continuation and overflow page |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header, same box, same number); a long content also goes on by itself |
