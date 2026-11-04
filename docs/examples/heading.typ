@@ -10,9 +10,11 @@
 // --- example ---
 == Tides
 
-The sea rises and falls about twice a day,
-pulled by the Moon and the Sun.
+The sea rises and falls about
+twice a day, pulled by the Moon
+and the Sun.
 
 ---
 
-The same slide goes on: same header, same number.
+The same slide goes on: same
+header, same number.

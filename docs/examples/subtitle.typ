@@ -12,7 +12,8 @@
 
 === Octopus
 
-Eight arms, three hearts and blue blood.
+Eight arms, three hearts and
+blue blood.
 
 ==== Camouflage
 

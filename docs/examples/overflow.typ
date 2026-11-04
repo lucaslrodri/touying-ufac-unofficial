@@ -24,6 +24,6 @@
 + Measure the water temperature
 + Photograph the waves
 + Collect any litter
-+ Leave the animals where they were
++ Leave the animals in place
 + Walk back before high tide
 + Write the report at home

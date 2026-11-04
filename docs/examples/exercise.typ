@@ -10,39 +10,47 @@
 // --- example ---
 == Tide table <exercise-tides>
 
-High tide was at 6:10. When is the next one?
+High tide was at 6:10. When is
+the next one?
 
 #answer(sep: ":")
 
-The next one comes about 12 h 25 min later:
+The next one comes about
+12 h 25 min later:
 
 $ 6"h"10 + 12"h"25 = 18"h"35 $
 
 == Wave speed <example>
 
-Is a long wave faster than a short one in deep water?
+Is a long wave faster than a
+short one in deep water?
 
 #pause
 #solution
-Yes: the speed grows with the square root of the wavelength.
+Yes: the speed grows with the
+square root of the wavelength.
 
 #exercise-slide(
   title: [Field trip],
   color: colors.primary,
   icon: "terminal",
 )[
-  The function form, with another color and icon: how long between two high tides?
+  The function form, with another
+  color and icon: how long
+  between two high tides?
 
   #answer
   About 12 h 25 min.
 ]
 
 #example-slide(
-  title: [Lighthouse], icon: none,
+  title: [Lighthouse],
+  icon: none,
 )[
   Without icon: `icon: none`.
 ]
 
 == Review
 
-Solve @exercise-tides before the next class.
+Solve @exercise-tides before
+the next class.

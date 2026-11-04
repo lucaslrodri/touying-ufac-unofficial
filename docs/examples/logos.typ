@@ -5,11 +5,11 @@
   lang: "en",
   config-info(
     logo: (auto, color => text(
-      size: 0.5em, weight: "bold",
-      fill: color)[LAB]),
+      size: .5em, fill: color,
+      weight: "bold")[LAB]),
     subject: [Ocean Science],
     subject-code: [OCE110],
-    unit-title: [Tides and waves],
+    unit-title: [Waves],
     author: [Prof. Author Name],
   ),
 )
@@ -17,5 +17,5 @@
 #title-slide()
 
 == Results
-The logos are in the footer, after
-the UFAC one.
+The logos are in the footer,
+after the UFAC one.

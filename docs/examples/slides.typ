@@ -15,4 +15,6 @@
 ]
 
 ==
-A `==` heading without text: a slide without a title, with the footer.
+A `==` heading without text: a
+slide without a title, with the
+footer.

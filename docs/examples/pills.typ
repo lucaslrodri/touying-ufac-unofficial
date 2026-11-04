@@ -10,10 +10,11 @@
 // --- example ---
 == Header with `raw` and *bold*
 
-=== Pill: *bold*, ~~alert~~, `raw`, #icon("tip")
+=== *bold*, ~~alert~~, `raw`, #icon("tip")
 
 #emph-box(
   title: [*bold*, ~~alert~~, `raw`],
 )[
-  In the body: *bold*, `raw` and #icon("tip").
+  In the body: *bold*, `raw`
+  and #icon("tip").
 ]

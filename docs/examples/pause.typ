@@ -14,7 +14,8 @@ First this.
 
 #pause
 
-> Then a box, *veiled* until the next step.
+> Then a box, *veiled*
+> until the next step.
 
 #pause
 

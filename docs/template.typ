@@ -127,9 +127,14 @@
 
 /// Every public definition with the page of its reference, in alphabetical order. A definition that the reference
 /// chapter does not show has no label, so forgetting one is a compile error.
-#let index() = grid(columns: (1fr,) * 3, row-gutter: .65em, .._definitions.map(((name, shown, target)) => {
-  link(target, text(font: mantys-like.mono, size: .85em, shown)) + context [ #h(.3em) #text(fill: luma(110), size: .85em)[p. #locate(target).page()]]
-}))
+#let index() = {
+  let entry(((name, shown, target))) = block(below: .65em, link(target, text(font: mantys-like.mono, size: .85em,
+    shown)) + context [ #h(.3em) #text(fill: luma(110), size: .85em)[p. #locate(target).page()]])
+  // read down each column, then across: the alphabetical order goes from top to bottom
+  let n = calc.ceil(_definitions.len() / 3)
+  grid(columns: (1fr,) * 3, ..range(3).map(i => _definitions.slice(calc.min(i * n, _definitions.len()),
+    calc.min((i + 1) * n, _definitions.len())).map(entry).join()))
+}
 
 /// Inline code that starts with the name of a public definition (`#title-slide()`, `emph-box`, `colors.primary`,
 /// `#info("logo")`) is a link to its reference. The name is the identifier at the start of the code, after an

@@ -5,7 +5,7 @@
   lang: "es",
   part-name: [Unidad],
   config-info(
-    title: [Oceanografía],
+    subject: [Oceanografía],
     author: [Autor],
   ),
 )
@@ -14,4 +14,5 @@
 
 == Tabla de mareas <exercise>
 
-¿A qué hora es la próxima marea alta?
+¿A qué hora es la próxima
+marea alta?

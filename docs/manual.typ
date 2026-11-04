@@ -41,7 +41,7 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 ```
 
-#slide-example("cover")
+#slide-example("cover", columns: (1fr, 1fr))
 
 From here on, every example shows the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
@@ -76,7 +76,7 @@ The theme needs *Typst #package.compiler or later*. Typst fetches the packages b
 )
 
 touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.4, which also works with Typst 0.14.
-codly is imported by the deck that wants it (@integrations).
+codly is imported by the deck that wants it (@codly).
 
 = The information of the deck <information>
 
@@ -184,7 +184,7 @@ Headings build the deck: no function call is needed for the ordinary slides.
 #table(
   columns: (auto, 1fr),
   table.header([Markup], [Effect]),
-  [`= Title`], [section slide "Part N: Title"; what follows the heading goes to the right],
+  [`= Title`], [section slide: the title under the yellow tag "PART N"; what follows the heading goes to the right],
   [`== Title`], [new slide with a blue header, fitted to the width],
   [`==`], [a slide without a title, with the footer],
   [`== Title <exercise>`, `<example>`], [exercise or example: a box filling the slide, numbered (@items)],
@@ -199,8 +199,8 @@ Every `=` heading opens a section slide: "PART N" in the yellow tag, the title i
 right after the `=`, typically an image, sits on the right, at the page margin from the edge. The image fits in a frame
 of 12em × 66% of the height, which is a limit and not a size: an image without a size fits whole in it, with its
 proportions; an image with only its height or only its width keeps its proportions and shrinks whole if the other side
-passes the frame. It is neither cropped nor stretched, also inside a figure, an `align` or a link; an icon keeps its
-size.
+passes the frame. It is neither cropped nor stretched, also inside a figure, an `align` or a link; an `#icon`
+there keeps its size.
 
 #see("ufac", "new-section-slide()")
 
@@ -236,7 +236,7 @@ The `===` subtitle is repeated on the pages that continue the slide, unless the 
 #slide-example("overflow", pages: (1, 2))
 
 `#slide` is the slide that every `==` opens; calling it gives Touying's arguments, such as `composer`, which lays out the
-bodies of a slide in columns. A `==` heading without text gives a slide without a title.
+bodies of a slide in columns.
 
 #see("ufac", "slide()")
 
@@ -267,8 +267,8 @@ their own look.
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
 line and "Solution." or "Answer." in bold at the start of the next paragraph; after a blank line, the word stays alone
 and the solution starts a new paragraph. With a `#pause` right before or after the marker, the solution appears on the
-next step of the slide (@touying). The word ends with a period; `#answer(sep: ":")` ends it with a colon, and `#solution(sep: [:\ ])` with
-a colon and a line break, so that the solution starts on the next line.
+next step of the slide (@touying). The word ends with a period; `#answer(sep: ":")` ends it with a colon, and
+`#solution(sep: [:\ ])` with a colon and a line break, so that the solution starts on the next line.
 
 An exercise or example goes on until a slide of another kind: a long content continues on the next page in the same
 box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. `#exercise-slide` and
@@ -319,8 +319,7 @@ A ==highlighted== word and a
 )[green one].
 
 A ~strong underline~ and
-#underline[the function form]; `Fig.~1` keeps
-its non-breaking space.
+#underline[the function form].
 ````
 
 #see("components", "primary()", "secondary()", "tertiary()", "quaternary()")
@@ -342,11 +341,10 @@ Call `fit(x, y)` first.
 
 Bold text, alerts, highlights, underlines, arrows, chips, links, icons and the `===` pills read the color of what
 contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
-(@elements); white
-or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
+(@elements); white or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
 block, and a box inside another box, which brings its own color.
 
-#slide-example("pills")
+#slide-example("pills", columns: (1fr, 1fr))
 
 == Lists and terms
 
@@ -373,8 +371,8 @@ at `a)`; Typst only knows `+` and `1.` as markers, so `a)` at the start of a lin
 
 == Columns
 
-`#cols` puts its bodies side by side, with an optional divider. Touying's `side-by-side` is still there, and
-`#slide(composer: (1fr, 2fr))[..][..]` lays out the bodies of a whole slide.
+`#cols` puts its bodies side by side anywhere in a slide, with an optional divider; `#slide(composer:)` lays out a
+whole slide (@deck).
 
 ```example
 #cols[Left][Middle][Right]
@@ -445,7 +443,7 @@ $ #eq-box[$E = m c^2$] $
 
 A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. Each
 kind has a role and a function of its own: `#caution`, a mistake to avoid; `#tip`, a shortcut; `#remark`
-("Relembrando"), to recall what was seen before; `#note`, something secondary. The default style is the box of a
+("Relembrando" in Portuguese), to recall what was seen before; `#note`, something secondary. The default style is the box of a
 printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an emphasis box with
 the title on a badge.
 
@@ -463,7 +461,7 @@ the title on a badge.
 
 `#tag` is the yellow tag of the cover and of the section slides, for the text, the titles and the tables: a short label
 in spaced capitals, on any color. A paragraph made only of quoted lines becomes one quotation per line, a
-`#quote-box`; Typst's `#quote`, with an attribution, keeps its own form.
+`#quote-box`; Typst's `#quote(attribution:)` is a `#quote-box` too, with the attribution on the right.
 
 ```example
 #tag[Optional] #tag(color: colors.tertiary)[Hard]
@@ -518,8 +516,8 @@ A code block goes in the box of the theme: a light blue fill with a bar on the l
 wraps and continues under the code), the language in a pill at the top right and the syntax colors of the theme. The
 output of a program, a block in `text` (or `txt`, `output`), goes in a gray box without numbers. A block never splits
 across pages, and inside a colored box it keeps its look. The languages with a pill are `python` (`py`), `typst`
-(`typ`), `matlab`, `bash` and `sh`, and the output has its own ("Output"); `ufac-theme(code-languages:)` adds others. For a file name, highlights or ranges,
-see codly in @integrations.
+(`typ`), `matlab`, `bash` and `sh`, and the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
+For a file name, highlights, ranges or a long listing that goes on to the next page, the deck takes codly (@codly).
 
 #see("code", "code-languages", "ufac-syntax")
 
@@ -557,8 +555,11 @@ dark ones as text on white; the tones are derived from the base color, and the n
 )
 
 ```example
-#highlight(fill: colors.tertiary-lighter)[red fill]
-and #text(fill: colors.primary-dark)[dark blue text].
+A #highlight(
+  fill: colors.tertiary-lighter,
+)[red fill] and
+#text(fill: colors.primary-dark)[dark
+blue text]
 ```
 
 #see("constants", "colors")
@@ -612,7 +613,7 @@ faintly visible under a veil in the color of the page.
 
 #slide-example("pause", pages: (1, 2, 3))
 
-#emph-box(color: colors.secondary)[
+#caution[
   Keep `#pause` and `#uncover`/`#only` in separate paragraphs: within one paragraph Touying reorders the covered
   part on the first subslide.
 ]
@@ -634,10 +635,10 @@ at parts of a slide; and #link("https://touying-typ.github.io/docs/integration/m
 Their pages in the documentation of Touying show how. Instead of the `outline-slide` of other Touying themes, write a
 slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart here.
 
-== Code blocks with codly
+== Code blocks with codly <codly>
 
 The theme draws its own code box (@code) and does not need codly. For codly's features (a file name, highlights,
-ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
+ranges, `diff`, a block that splits across pages), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
 through codly with the same look, and codly's functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2
 requires Typst 0.15. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
 
@@ -653,7 +654,8 @@ the colored ones keep their colors.
 
 ```example
 #emph-box(color: colors.tertiary)[
-  #icon("warning") takes the color of the box.
+  #icon("caution") takes the
+  color of the box.
 ]
 ```
 
@@ -661,7 +663,7 @@ the colored ones keep their colors.
   set text(size: 6.5pt)
   set par(justify: false)
   grid(
-    columns: (1fr,) * 5, row-gutter: .75em, column-gutter: .5em,
+    columns: (1fr,) * 4, row-gutter: .75em, column-gutter: .5em,
     ..theme-icons.pairs().map(((name, full)) => [#icon(name, size: 1.5em) #h(.3em) #name #text(fill: luma(120))[(#full)]]),
   )
 }
@@ -711,8 +713,9 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
   [`<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide`],
   [`#ending-slide[..]` to close the deck; a `==` without text for a slide without a title. Touying's own
     `#empty-slide`, without header or footer, is still there for a deck that imports Touying],
-  [`local`, `codly-range`, `no-codly`; codly imported by the theme],
-  [the theme has its own code box; for codly, `#import "@preview/codly:2.0.0" as codly` and
+  [`local`, `codly-range`, `no-codly`; codly imported by the theme; `#local(breakable: true)` for a block that
+    splits],
+  [the theme has its own code box, which never splits; for codly (and its blocks that split), `#import "@preview/codly:2.0.0" as codly` and
     `ufac-theme(codly: codly)`],
   [`#icon("rocket")` and the other Octicons], [only the icons of the theme; another one comes from its collection:
     `#provide-icons(json("octicon.json"))` and `#icon("octicon:rocket-16")` (@icons)],

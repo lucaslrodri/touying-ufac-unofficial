@@ -11,8 +11,8 @@
 == Code blocks
 
 ```python
-def scale(grams, people, serves=4):
-    return grams * people / serves
+def scale(grams, people, n=4):
+    return grams * people / n
 ```
 
 ```text
