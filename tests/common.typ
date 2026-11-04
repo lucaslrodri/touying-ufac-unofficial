@@ -12,16 +12,17 @@
   short-subtitle: [Unit X or subtitle],
   author: [Author Name],
 )
+// the suite is in English; the default language (pt-br) is covered by config/lang-default
 #let setup = ufac-theme.with(lang: "en", test-info)
 // Octicons the theme does not ship (it ships only its own icons), for the tests that use other icons: a test gives
 // them with `#provide-icons(octicons)` inside a slide and writes them as `"octicon:name-16"`
-#let octicons = json("octicon.json")   // the suite is in English; the default language (pt-br) is covered by config/lang-default
+#let octicons = json("octicon.json")
 
 // `eval` does not see the file scope, hence the dictionary with everything the snippets use (`alert` is the plain
 // version, the same as `#primary`: Touying's wrapper does not work inside function arguments).
 #let _demo-scope = (
   emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, cols: cols, colors: colors, icon: icon,
-  _ufac-logo-image: _ufac-logo-image,
+  ufac-logo: ufac-logo,
   primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: primary,
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,

@@ -10,7 +10,7 @@
 #placeholder()
 
 = Section with \ `#pad(right:)`
-#pad(right: 1.8em)[#placeholder(width: 10em)]   // right margin: wrap the image in pad(right:)
+#pad(right: 1.8em)[#placeholder(width: 10em)]   // a pad adds to the margin of the page
 
 = Section with a real image
 #image("../../logo.svg")

@@ -6,3 +6,9 @@ Title shrunk with `utils.fit-to-width(grow: false)`.
 == Title with $f(x) = a x^2 + b x + c$, `raw`, *bold* and #underline[underline]
 === Pill with #underline[yellow underline], *white bold* and `code`
 Math, chip, bold and underline in the header (bold is blue, like the rest of the title; the underline is yellow in title and pill).
+
+==
+A slide without a title, a `==` without text: no header, the footer stays.
+=== A subtitle on it
+---
+The next page of the same slide, with the subtitle repeated.

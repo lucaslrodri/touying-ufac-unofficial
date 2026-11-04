@@ -13,7 +13,7 @@
   lbl[pill], [#_pill[Subtitle `===` / `====`] #_pill(color: colors.tertiary)[#_pill-icon("pencil")Exercise 1.1 — Title] #_pill(color: colors.quaternary)[#_pill-icon("beaker")Example 1.1]],
   lbl[math], [$f(x) = a x^2 + b x + c, quad integral_0^1 f(x) dif x = a/3 + b/2 + c$ in New Computer Modern Math],
   lbl[term], [/ Term: description in `terms` (term in black bold)],
-  lbl[raw], [Inline code `x = 1` in a gray chip (0.85em); 0.75em block with codly (line numbers, gray fill, thin border).],
+  lbl[raw], [Inline code `x = 1` in a gray chip (0.85em); 0.75em block in the box of the theme (line numbers, light blue fill, bar on the left).],
   lbl[footer], text(size: .4em, fill: colors.primary, upper[Code - course · author · slide no. (0.6em)]),
 )
 ]

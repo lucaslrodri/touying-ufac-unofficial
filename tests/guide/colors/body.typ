@@ -27,8 +27,8 @@ Derived in RGB: `darken(75% / 55% / 30%)` and `lighten(30% / 60% / 85%)`; `neutr
 #table(columns: (auto, auto, 1fr), [Family], [Base], [Where it appears],
   [`primary`], [#sw(colors.primary) `#0C4DA2`], [`=`/`==` titles, `===`/`====` pills, `->` arrows, `#alert`, enum numbers, tables, `>` box and 2nd quote],
   [`secondary`], [#sw(colors.secondary) `#FFBF14`], [`-` markers, `#secondary`, `==x==` highlight (`-lighter`), 1st `"quote"`],
-  [`tertiary`], [#sw(colors.tertiary) `#BE1E2D`], [`#tertiary`, exercise pill, problem boxes, 4th `"quote"`],
-  [`quaternary`], [#sw(colors.quaternary) `#09B081`], [`#quaternary`, example pill, advantage boxes, 3rd `"quote"`],
-  [`neutral`], [#sw(colors.neutral) `#808080`], [`-darkest` = bold, italic and terms; `-lightest` = background; `-dark` = captions and secondary labels],
+  [`tertiary`], [#sw(colors.tertiary) `#BE1E2D`], [`#tertiary`, exercises, problem boxes, `#warning`, 4th `"quote"`],
+  [`quaternary`], [#sw(colors.quaternary) `#09B081`], [`#quaternary`, examples, advantage boxes, `#tip`, 3rd `"quote"`],
+  [`neutral`], [#sw(colors.neutral) `#808080`], [`-darkest` = bold, italic and terms; `-lightest` = background; `-dark` = captions, secondary labels, `#note` and the output of a program],
 )
 ]

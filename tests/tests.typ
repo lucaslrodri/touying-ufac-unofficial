@@ -63,6 +63,6 @@
 #include "./sections/edge-cases/body.typ"
 
 // =====================================================================================================================
-// Variants of the section slide, one after the other; the last one ("without image") closes the catalogue.
+// Variants of the section slide and of its figure, one after the other, close the catalogue.
 #include "./sections/section/body.typ"
 #include "./sections/section-figures/body.typ"

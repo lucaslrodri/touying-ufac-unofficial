@@ -1,4 +1,4 @@
-/// Synopsis: the internal `_ufac-logo-image` (in a deck, `#info("logo")`, see `config/info`): the UFAC logo blue with the yellow shield (the footer), with white lettering (the cover) and all white.
+/// Synopsis: the UFAC logo as a deck shows it, `#info("logo")` (blue with the yellow shield, as in the footer; white lettering on blue with a height, as on the cover), and outside a deck, `image(bytes(ufac-logo))`.
 #import "../../common.typ": *
 #show: setup
 #include "body.typ"

@@ -105,7 +105,6 @@
 #assert(catch(() => ufac-theme(section-margin: 2em)[]).contains("new-section-slide(margin:)"))
 #assert.eq(type(ufac-theme(config-common(new-section-slide-fn: new-section-slide.with(margin: 2em)))[= Part]), content)
 
-API test done.
 
 // config-info: the aliases are their fields; two names of one field, an unknown kind, an unknown key of `#info` and
 // the `logos:` of 0.2.0 fail with a message that names the problem
@@ -144,3 +143,16 @@ API test done.
 // exercises and examples: the markers of the solution are content (metadata), alone on a line like `#pause`
 #assert.eq(solution.func(), metadata)
 #assert.eq(answer.value.word, "answer")
+
+// the callouts, the icons and the closing slide refuse what they do not know, with a message that says so
+#assert(catch(() => callout("x")[a]).contains("unknown kind"))
+#assert(catch(() => callout("tip", style: "x")[a]).contains("style"))
+#assert(catch(() => icon(5)).contains("string"))
+#assert(catch(() => ending-slide(contact: [x])).contains("unknown argument"))
+// every language has every word of Portuguese, the titles of the bar callouts included
+#for (lang, words) in _lang-db {
+  assert.eq(words.keys().sorted(), _lang-db.pt.keys().sorted(), message: lang)
+  assert.eq(words.bar.keys().sorted(), _lang-db.pt.bar.keys().sorted(), message: lang)
+}
+
+API test done.

@@ -16,6 +16,13 @@
   #note(title: [Aside.], icon: none)[No icon, another title.]
 ]
 
+== An icon given as content
+#cols[
+  #tip(icon: text(weight: "bold")[Σ])[Content as the icon takes the color of the callout.]
+][
+  #tip(style: "badge", icon: text(weight: "bold")[Σ])[White on the badge.]
+]
+
 == The `"badge"` style and the options
 #cols[
   #callout("warning", style: "badge")[The `emph-box` with the title on a badge.]
