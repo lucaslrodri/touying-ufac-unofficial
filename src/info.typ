@@ -1,5 +1,5 @@
 // touying-ufac-unofficial — the information of the deck: the fields of Touying's `config-info` that the theme reads, their
-// aliases in the words of a course (`subject`, `semester`, …), the kinds of presentation (`kind`) and `#deck-info`,
+// aliases in the words of a course (`subject`, `semester`, …), the kinds of presentation (`kind`) and `#info`,
 // which shows any of them anywhere in a slide.
 #import "@preview/touying:0.7.4": utils, config-info, config-store
 #import "utils.typ": _words, _children, _is-space, _given, _list, _logos
@@ -243,13 +243,13 @@
   (before: before, configs: configs, after: after)
 }
 
-// ---------- #deck-info ----------
+// ---------- #info ----------
 /// The information of the deck (`info`, `store`, `colors`, `datetime-format`), saved by the `init` of the theme for
-/// `#deck-info` to read in `context` anywhere.
+/// `#info` to read in `context` anywhere.
 /// -> state
 #let _deck = state("ufac-deck-info", none)
 
-/// Every information of the deck, ready to show, in a dictionary: what `#deck-info(i => ..)` receives. The aliases are
+/// Every information of the deck, ready to show, in a dictionary: what `#info(i => ..)` receives. The aliases are
 /// keys too (`i.subject` is `i.title`).
 /// -> dictionary
 #let _normalized(
@@ -272,21 +272,21 @@
   i + _aliases.pairs().map(((a, f)) => (a, i.at(f))).to-dict()
 }
 
-/// The keys of @deck-info.
+/// The keys of @info.
 /// -> array
 #let _info-keys = ("title", "short-title", "subtitle", "short-subtitle", "author", "date", "institution", "logo",
   "contact") + _aliases.keys()
 
 /// An information of the deck, ready to show, anywhere in a slide (inside boxes and tables too):
-/// `#deck-info("author")` gives "A, B e C", `#deck-info("date")` the date in full, `#deck-info("logo", height: 2em)`
-/// the logos. The aliases are keys too: `#deck-info("subject")` is the `title`. With a function, it receives the
-/// dictionary of all the information: `#deck-info(i => [#i.short-title: #i.title])`.
+/// `#info("author")` gives "A, B e C", `#info("date")` the date in full, `#info("logo", height: 2em)`
+/// the logos. The aliases are keys too: `#info("subject")` is the `title`. With a function, it receives the
+/// dictionary of all the information: `#info(i => [#i.short-title: #i.title])`.
 ///
 /// ```typ
-/// The course #deck-info("title"), taught by #deck-info("author").
+/// The course #info("title"), taught by #info("author").
 /// ```
 /// -> content
-#let deck-info(
+#let info(
   /// `"title"`, `"short-title"`, `"subtitle"`, `"short-subtitle"`, `"author"`, `"date"`, `"institution"`, `"logo"`,
   /// `"contact"` or an alias (`"subject"`, `"semester"`, …); or a function of the dictionary. -> str | function
   key,
@@ -295,13 +295,13 @@
   /// Only for `"logo"`: white logos, as on the cover. -> bool
   white: false,
 ) = {
-  assert(type(key) == function or key in _info-keys, message: "deck-info: unknown key " + repr(key) + "; use "
+  assert(type(key) == function or key in _info-keys, message: "info: unknown key " + repr(key) + "; use "
     + _info-keys.map(k => "\"" + k + "\"").join(", ") + " or a function of the dictionary")
   // a `context` on the state and not a `touying-fn-wrapper`: Touying's mark does not go through `context` nor `layout`,
   // which the boxes and the tables use
   context {
     let self = _deck.get()
-    assert(self != none, message: "deck-info: only inside a deck of the theme")
+    assert(self != none, message: "info: only inside a deck of the theme")
     if type(key) == function { return key(_normalized(self)) }
     let key = _aliases.at(key, default: key)
     if key == "logo" {

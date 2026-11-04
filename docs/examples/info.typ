@@ -12,16 +12,16 @@
 ))
 
 == About this course
-#emph-box(title: deck-info("subject-code"))[
-  #deck-info("subject"), #deck-info("semester"),
-  taught by #deck-info("author").
+#emph-box(title: info("subject-code"))[
+  #info("subject"), #info("semester"),
+  taught by #info("author").
 ]
-#deck-info(i => [*#i.unit*: #i.unit-title.])
-Questions? #deck-info("contact")
+#info(i => [*#i.unit*: #i.unit-title.])
+Questions? #info("contact")
 
 #box(fill: colors.primary, inset: 0.4em,
-  deck-info("logo", height: 2em, white: true))
+  info("logo", height: 2em, white: true))
 
 #ending-slide(subtitle: [Questions?])[
-  #deck-info("contact")
+  #info("contact")
 ]

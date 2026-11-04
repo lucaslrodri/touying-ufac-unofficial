@@ -2,7 +2,7 @@
 // shadow earlier ones: the palette (`colors`), the UFAC logo (`ufac-logo`), the icons (`theme-icons`,
 // `provide-icons`), the components (`emph-box`, `eq-box`, `quote-box`, `cols`, `arrows`, `icon`,
 // `primary`/`secondary`/`tertiary`/`quaternary`, `callout` and its shorthands `warning`/`tip`/`remark`/`note`, `tag`, `outline` — the deck's, which shadows Typst's),
-// the code (`code-languages`, `codly-ufac-theme`, `ufac-syntax`), the information of the deck (`deck-info`) and the
+// the code (`code-languages`, `codly-ufac-theme`, `ufac-syntax`), the information of the deck (`info`) and the
 // slide functions (`ufac-theme`, `title-slide`, `slide`, `new-section-slide`, `exercise-slide`, `example-slide`).
 // Names starting with `_` are internal. Decks should also import `@preview/touying:0.7.4` themselves, as in the template.
 #import "constants.typ": *

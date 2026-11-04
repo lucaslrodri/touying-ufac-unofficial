@@ -4,7 +4,7 @@
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
   primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, warning, tip, remark, note, tag,
-  deck-info) {
+  info) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
@@ -107,7 +107,7 @@
 
 API test done.
 
-// config-info: the aliases are their fields; two names of one field, an unknown kind, an unknown key of `#deck-info` and
+// config-info: the aliases are their fields; two names of one field, an unknown kind, an unknown key of `#info` and
 // the `logos:` of 0.2.0 fail with a message that names the problem
 #assert.eq(_resolve-aliases(config-info(subject: [S], subject-code: [C], unit: [U], unit-title: [T])).info,
   (title: [S], short-title: [C], short-subtitle: [U], subtitle: [T]))
@@ -117,7 +117,7 @@ API test done.
 #assert.eq(_prepare-configs("en", (config-info(kind: "tcc"),)).before.first().info.short-title, "Undergraduate Thesis")
 #assert.eq(_prepare-configs("pt", (config-info(kind: "course"),)).after.first().store,
   (cover-style: "top", author-label: "Ministrantes"))
-#assert(catch(() => deck-info("nope")).contains("unknown key"))
+#assert(catch(() => info("nope")).contains("unknown key"))
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form
 // for the cover and gives the names of its first group

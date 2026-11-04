@@ -12,7 +12,7 @@
 #ending-slide()
 
 #ending-slide[Questions?][Next: ocean currents][
-  #deck-info("contact")
+  #info("contact")
 ]
 
 #ending-slide(title: none)[

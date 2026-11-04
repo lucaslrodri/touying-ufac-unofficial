@@ -101,5 +101,5 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 Citing the @exercise-a.
 
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!"; the
-// contact of `config-info(contact:)`, when there is one, goes in the body: `#deck-info("contact")`
+// contact of `config-info(contact:)`, when there is one, goes in the body: `#info("contact")`
 #ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]

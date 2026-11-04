@@ -71,7 +71,7 @@
 
 // The logo lives in its own file, assets/ufac-logo.svg: it is copyrighted by the Universidade Federal do Acre (UFAC) and
 // is not covered by the license of this package (see the License section of the README).
-/// Official UFAC logo as an SVG string (yellow shield and blue lettering). In a deck, `#deck-info("logo")` shows it in
+/// Official UFAC logo as an SVG string (yellow shield and blue lettering). In a deck, `#info("logo")` shows it in
 /// the colours of the theme (`height:`, and `white: true` on a dark background); outside one, as in a handout that goes
 /// with the slides, `image(bytes(ufac-logo))` draws it.
 ///
@@ -86,7 +86,7 @@
 /// The UFAC logo as an image, in the colours the theme uses: blue lettering with the yellow shield, as in the footer
 /// of the slides; the lettering in another colour, as on the cover (`color: white`, the shield still yellow); or all
 /// in one colour (`color: c, shield: c`), as in the footer of an exercise or example. The deck shows it through
-/// `#deck-info("logo")`.
+/// `#info("logo")`.
 ///
 /// ```example
 /// #_ufac-logo-image(height: 2em)

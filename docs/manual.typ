@@ -48,9 +48,9 @@ alone, laid out by the same rules as in a deck.
   [`short-subtitle`], [`none`], [the lecture or the unit ("Lecture 1", "Unit II"): on the cover, in yellow],
   [`author`], [`none`], [one, an array or free content (below): on the cover and on the right of the footer],
   [`date`], [`none`], [`auto` (today), a `datetime` (written in full in the language of the deck) or a text],
-  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; only for `#deck-info`],
+  [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; only for `#info`],
   [`logo`], [`auto`], [one or an array, in the footer and on the cover (see Logos below)],
-  [`contact`], [`none`], [one or an array (an e-mail, a page); only for `#deck-info`],
+  [`contact`], [`none`], [one or an array (an e-mail, a page); only for `#info`],
   [`counter-prefix`], [`[1.]`], [prefix of the exercise and example numbers: `[1.]` gives "Exercise 1.N", `none` gives "Exercise N"],
 )
 
@@ -95,16 +95,16 @@ advisors at the top right. `"dissertation"` and `"thesis"` do the same with thei
 
 #slide-example("cover-tcc", columns: (1fr, 1fr))
 
-== Showing the information: `#deck-info`
+== Showing the information: `#info`
 
-The information of the deck is not only for the cover and the footer: `#deck-info` shows any field, or any alias,
+The information of the deck is not only for the cover and the footer: `#info` shows any field, or any alias,
 anywhere in a slide, inside boxes and tables too. The author comes as written, the date in full, the contact as on the
 closing slide, and `"logo"` the logos of the footer, with a height and in white for a dark background. With a function,
 it receives every field at once.
 
-#slide-example("deck-info", pages: (1, 2), columns: (1fr, 1fr))
+#slide-example("info", pages: (1, 2), columns: (1fr, 1fr))
 
-#reference("info", "deck-info")
+#reference("info", "info")
 
 == The theme and the cover
 
@@ -114,7 +114,7 @@ The cover has three bands: the logos at the top left, the titles in the centre a
 The `style` decides where the authors and the date go: `"line"` (the default) puts them on one line at the bottom,
 with the white line of the footer passing between them; `"stack"` puts the
 authors on several lines at the bottom left; `"top"` puts them at the top right and the date in the centre of the
-bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#deck-info`.
+bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#info`.
 
 #slide-example("cover-styles", pages: (1, 2, 3, 4))
 
@@ -134,7 +134,7 @@ The footer and the cover show the UFAC logo. `config-info(logo:)` is the list of
 keeps the UFAC logo and adds `x` after it, `(x,)` replaces it and `none` removes them. A logo is content, or a
 function that receives the colour of the footer (blue on the slides, white on the cover), so that one drawing serves
 both; `auto` stands for the UFAC logo. A logo about `0.64em` high matches the UFAC one. Anywhere in a slide,
-`#deck-info("logo")` shows them, with `height:` and `white: true` on a dark background.
+`#info("logo")` shows them, with `height:` and `white: true` on a dark background.
 
 #slide-example("logos", pages: (1, 2))
 
@@ -281,7 +281,7 @@ Only a top-level `===` is repeated; inside `#[ ]`, a column or a box the pill st
 
 `#ending-slide` closes the deck on the blue page of the cover: a large title with the yellow rule, a subtitle in
 yellow and a free body, and the footer of the slides in white, with the logos. The contact of `config-info` goes in
-the body, with `#deck-info("contact")`. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
+the body, with `#info("contact")`. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
 `<empty-slide>` and `<empty-slide-primary>` of 0.2.0 are gone; Touying's own `#empty-slide` (no header nor footer) is
 still there for whoever imports Touying.
 
@@ -549,7 +549,7 @@ and #text(fill: colors.primary-dark)[dark blue text].
 
 == The UFAC logo
 
-The UFAC logo comes with the theme as its SVG (`ufac-logo`): in a deck, `#deck-info("logo")` shows it in the colours
+The UFAC logo comes with the theme as its SVG (`ufac-logo`): in a deck, `#info("logo")` shows it in the colours
 of the theme; outside one, as in a handout that goes with the slides, `image(bytes(ufac-logo))` draws it.
 
 #reference("constants", "ufac-logo")

@@ -610,15 +610,15 @@
 /// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top left; in the centre, the tag
 /// (`short-title`), the `title`, the yellow rule, the `short-subtitle` in yellow, the `subtitle` and the content given
 /// to it, centered both ways in the room between the top and the bottom; the authors and the date where the `style`
-/// puts them. The institution does not appear (it is for `#deck-info`). The slide counter is frozen, so the cover does
+/// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does
 /// not count.
 ///
-/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#deck-info("date")`) or
+/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#info("date")`) or
 /// a function of `self`, like `footer-left` of the theme. The text of the positions is 0.7 of the size of the slide.
 ///
 /// ```typ
 /// #title-slide()
-/// #title-slide(style: "top", footer-center: none, footer-right: deck-info("date"))
+/// #title-slide(style: "top", footer-center: none, footer-right: info("date"))
 /// #title-slide[Slides at #link("https://example.com/slides")[example.com/slides]]
 /// ```
 /// -> content
@@ -748,7 +748,7 @@
 /// rule under it, a subtitle in yellow and a free body, centered; and the footer of the slides in white (the logos, the
 /// title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the language of the
 /// deck; `title: none` removes the title and the rule. The contact of `config-info` goes in the body, if wanted:
-/// `#deck-info("contact")`.
+/// `#info("contact")`.
 ///
 /// Two forms: up to three contents in order, `[title][subtitle][body]`, or the named `title:` and `subtitle:` with
 /// the content as the body.
@@ -757,7 +757,7 @@
 /// #ending-slide()
 /// #ending-slide[Good work!][Next lecture: functions][Read chapter 3.]
 /// #ending-slide(title: [Questions?], subtitle: [Lab 4 on Friday])[*See you!*]
-/// #ending-slide(subtitle: [Questions?])[#deck-info("contact")]
+/// #ending-slide(subtitle: [Questions?])[#info("contact")]
 /// ```
 /// -> content
 #let ending-slide(
@@ -1127,7 +1127,7 @@
     config-common(slide-fn: slide, new-section-slide-fn: new-section-slide, receive-body-for-new-section-slide-fn: true, show-strong-with-alert: false),
     config-methods(
       init: (self: none, body) => {
-        // the information of the deck, for `#deck-info` (which reads it in `context`, anywhere)
+        // the information of the deck, for `#info` (which reads it in `context`, anywhere)
         _deck.update((info: self.info, store: self.store, colors: self.colors,
           datetime-format: self.at("datetime-format", default: auto)))
         _slide-rules(self, _rules(self, body))

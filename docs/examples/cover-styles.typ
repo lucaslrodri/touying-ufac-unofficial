@@ -15,4 +15,4 @@
 
 #title-slide(style: "top", author-label: [Instructors])
 
-#title-slide(footer-right: none, header-right: deck-info("date"))
+#title-slide(footer-right: none, header-right: info("date"))

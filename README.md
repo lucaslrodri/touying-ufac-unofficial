@@ -60,9 +60,9 @@ Text.
 | `short-subtitle` | the lecture or the unit: on the cover, in yellow |
 | `author` | one, an array or free content (`[_Advisor_ \ Name]`: lines and labels in emphasis): on the cover; footer, on the right (the first group) |
 | `date` | `none`, `auto` (today), a `datetime` (in full, in the language of the deck) or a text |
-| `institution` | `auto` (the Federal University of Acre) or an array; only for `#deck-info` |
+| `institution` | `auto` (the Federal University of Acre) or an array; only for `#info` |
 | `logo` | the logos of the footer and of the cover: `auto` is the UFAC logo; an array, in order, separated by dots; each one content, `color => ...` or `auto` |
-| `contact` | one or an array (an e-mail, a page); only for `#deck-info`, such as in the body of `#ending-slide` |
+| `contact` | one or an array (an e-mail, a page); only for `#info`, such as in the body of `#ending-slide` |
 | `counter-prefix` | "Exercise 1.N" / "Example 1.N"; `none` gives "Exercise N" |
 
 ### The kind of work and the aliases
@@ -97,17 +97,17 @@ config-info(
 )
 ```
 
-### Showing the information: `#deck-info`
+### Showing the information: `#info`
 
-`#deck-info` shows any field or alias anywhere in a slide, inside boxes and tables too: `#deck-info("subject")`, `#deck-info("author")` (as written), `#deck-info("date")` (in full), `#deck-info("logo", height: 2em, white: true)`. With a function, it receives every field at once.
+`#info` shows any field or alias anywhere in a slide, inside boxes and tables too: `#info("subject")`, `#info("author")` (as written), `#info("date")` (in full), `#info("logo", height: 2em, white: true)`. With a function, it receives every field at once.
 
 ```typst
-#emph-box(title: deck-info("subject-code"))[
-  #deck-info("subject"), #deck-info("semester"), taught by #deck-info("author").
+#emph-box(title: info("subject-code"))[
+  #info("subject"), #info("semester"), taught by #info("author").
 ]
-#deck-info(i => [*#i.unit*: #i.unit-title.])
+#info(i => [*#i.unit*: #i.unit-title.])
 
-#ending-slide(subtitle: [Questions?])[#deck-info("contact")]
+#ending-slide(subtitle: [Questions?])[#info("contact")]
 ```
 
 ### Options of the theme
@@ -223,7 +223,7 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 Citing the @exercise-a.
 
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!"; the
-// contact of `config-info(contact:)`, when there is one, goes in the body: `#deck-info("contact")`
+// contact of `config-info(contact:)`, when there is one, goes in the body: `#info("contact")`
 #ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]
 ```
 
@@ -386,12 +386,12 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The theme no longer depends on codly nor on linguify: `local`, `codly-range` and `no-codly` are gone; with codly 2, `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
-- `ufac-logo-image` is gone: in a slide, `#deck-info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
+- `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
 
 New:
 
 - A new cover, with three styles (`"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three backgrounds (`background:`); the section slide follows it.
-- Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#deck-info`.
+- Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#info`.
 - Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
 - Callouts (`#warning`, `#tip`, `#remark`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
