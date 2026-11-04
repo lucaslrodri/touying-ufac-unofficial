@@ -407,6 +407,43 @@
   self,
 ) = line(stroke: .1em + self.colors.neutral-lightest, length: 100%)
 
+/// The pieces of a text that a cut can keep or drop: its characters and spaces, and any other element whole (the dot
+/// that separates the parts of the footer).
+/// -> array
+#let _atoms(
+  /// The text. -> content | str
+  it,
+) = if type(it) == str { it.clusters() } else if it.func() == text { it.text.clusters() } else if (
+  it.func() == [ ].func()
+) { (" ",) } else if it.has("children") { it.children.map(_atoms).flatten() } else { (it,) }
+
+/// The text of a footer cell on one line: `h(0.4em) + upper(it) + h(0.4em)`, and when that passes `max`, the longest
+/// start of the text that fits with "…" after it, cut between its characters (@_atoms). In `context`, with the size of
+/// the cell set.
+/// -> content
+#let _one-line(
+  /// Text of the cell. -> content | str
+  it,
+  /// The widest the text can be, or `none` for any width. -> none | length
+  max,
+) = {
+  let shown(t) = h(0.4em) + box(upper(t)) + h(0.4em)
+  if max == none or measure(shown(it)).width <= max { return shown(it) }
+  let cs = _atoms(it)
+  let cut(n) = {
+    let kept = cs.slice(0, n)
+    while kept.len() > 0 and kept.last() == " " { kept = kept.slice(0, -1) }
+    kept.join(default: "") + "…"
+  }
+  // a binary search on the number of characters kept
+  let (lo, hi) = (0, cs.len())
+  while lo < hi {
+    let mid = calc.ceil((lo + hi) / 2)
+    if measure(shown(cut(mid))).width <= max { lo = mid } else { hi = mid - 1 }
+  }
+  shown(cut(lo))
+}
+
 /// One footer/header cell: small upper-case text (0.4em) between rule lines.
 /// -> content
 #let _cell(
@@ -425,6 +462,8 @@
   /// A `1fr` rule on the free side of a `"left"`/`"right"` cell, so that the cell fills its column. `false` gives the
   /// text and its fixed rule only, at its natural width, for a grid that puts the `1fr` rule between the cells. -> bool
   grow: true,
+  /// The widest the text of the cell can be, its inset included: a longer text is cut with "…" (`_one-line`). -> none | length
+  max: none,
   /// Text of the cell. -> content | str
   it,
 ) = {
@@ -432,12 +471,12 @@
     set text(size: 0.4em, ..args)
     context {
       let get-content(it) = {
+        // the inset of the block below, 1mm on each side, is part of `max`
+        let room = if max == none { none } else { max - 2mm }
         if type(it) == str {
-          if it.trim() != "" { return h(0.4em) + upper(it) + h(0.4em) }
+          if it.trim() != "" { return _one-line(it, room) }
         } else if type(it) == content {
-          if measure(it).width > 0pt {
-            return h(0.4em) + box(upper(it)) + h(0.4em)
-          }
+          if measure(it).width > 0pt { return _one-line(it, room) }
         } else {
           return none
         }
@@ -504,7 +543,9 @@
 /// "CODE • TITLE", rule 1fr, author, rule 2em, slide number (0.6em), rule 1em. The last column is as wide as the
 /// last slide number. The two texts take their natural width and the `1fr` rule between them the rest: when each
 /// text carried its own `1fr` rule, both cells claimed the whole width and got half of it each, so a long left text
-/// broke into two lines with room to spare on the right (2026-10-16). `white: true` draws it in white, with the white
+/// broke into two lines with room to spare on the right (2026-10-16). Each text stays on one line: when the two do not
+/// fit in the room left by the rules, the logos and the number, the right one gets what the left one leaves (at least a
+/// third of the room) and the left one the rest, and a longer text is cut with "…". `white: true` draws it in white, with the white
 /// logos of the cover, for the closing slide (`#ending-slide`); `color:` draws it in another color, with the UFAC logo
 /// in that color too, for the box of an exercise or example.
 /// -> content
@@ -525,19 +566,31 @@
   set text(if white { self.colors.neutral-lightest } else { self.colors.primary })
   set std.align(bottom)
   let rule = if white { _line-white(self) } else { _line(self) }
-  context {
+  context layout(size => {
     let last-column-size = measure(box(text(utils.last-slide-number, size: 0.6em), inset: 0.4em)).width
+    let logos = _logos(self, white: white, color: mono)
+    let (left, right) = (utils.call-or-display(self, self.store.footer-left), utils.call-or-display(self,
+      self.store.footer-right))
+    // the room of the two texts: the width less the rules (1em, 1.25em, at least 2em between the texts, 2em, 1em),
+    // the logos and the number. When both texts do not fit, the right one gets what the left one leaves, at least a
+    // third of the room, and the left one the rest
+    let room = size.width - measure(logos).width - last-column-size - (7.25em).to-absolute()
+    let natural(cell, pad) = measure(cell).width - pad.to-absolute()
+    let left-width = natural(_cell(self, pad-left: 1.25em, pos: "left", grow: false, white: white, left), 1.25em)
+    let right-max = calc.max(room - left-width, room / 3)
+    let right-cell = _cell(self, pad-right: 2em, pos: "right", grow: false, white: white, max: right-max, right)
+    let left-max = room - natural(right-cell, 2em)
     move(grid(
       columns: (1em, auto, auto, 1fr, auto, last-column-size, 1em),
       rows: 1.5em,
       align: horizon,
       rule,
-      _logos(self, white: white, color: mono),
-      _cell(self, pad-left: 1.25em, pos: "left", grow: false, white: white, utils.call-or-display(self, self.store.footer-left)),
+      logos,
+      _cell(self, pad-left: 1.25em, pos: "left", grow: false, white: white, max: left-max, left),
       rule,
-      _cell(self, pad-right: 2em, pos: "right", grow: false, white: white, utils.call-or-display(self, self.store.footer-right)),
+      right-cell,
       _cell(self, pos: "center", size: 0.6em, white: white, utils.slide-counter.display()),
       rule,
     ), dy: if lift { -0.05em } else { 0pt })
-  }
+  })
 }
