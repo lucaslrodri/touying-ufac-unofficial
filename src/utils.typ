@@ -2,7 +2,7 @@
 // escapes, exercise/example labels, the localized words, the current-subtitle query and the footer pieces.
 // Names starting with `_` are not part of the public API (Typst has no private bindings, so they stay reachable).
 #import "@preview/touying:0.7.4": *
-#import "constants.typ": colors, ufac-logo-image
+#import "constants.typ": colors, _ufac-logo-image
 
 // ---------- content inspection ----------
 #let _seq = [].func()
@@ -489,7 +489,9 @@
   // the UFAC logo keeps its blue on the slides and takes the white of the cover, the shield yellow on both; in one
   // colour (`color:`), letters and shield
   let one(logo) = if logo == auto {
-    if mono { ufac-logo-image(color: color, shield: color) } else { ufac-logo-image(color: if white { color } else { auto }) }
+    if mono { _ufac-logo-image(color: color, shield: color) } else {
+      _ufac-logo-image(color: if white { color } else { auto })
+    }
   } else if type(logo) == function { logo(color) } else { logo }
   if logos.len() == 1 { return box(one(logos.first()), inset: 0.2em) }
   let dot = circle(radius: 0.072em, fill: color)

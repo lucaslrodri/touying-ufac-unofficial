@@ -21,7 +21,7 @@
 // version, the same as `#primary`: Touying's wrapper does not work inside function arguments).
 #let _demo-scope = (
   emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, cols: cols, colors: colors, icon: icon,
-  ufac-logo-image: ufac-logo-image,
+  _ufac-logo-image: _ufac-logo-image,
   primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: primary,
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,

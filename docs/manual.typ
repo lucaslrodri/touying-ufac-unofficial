@@ -113,8 +113,8 @@ contact, a partner's logo.
 The footer and the cover show the UFAC logo. `config-info(logo:)` is the list of logos shown there, separated by dots: `(auto, x)`
 keeps the UFAC logo and adds `x` after it, `(x,)` replaces it and `none` removes them. A logo is content, or a
 function that receives the colour of the footer (blue on the slides, white on the cover), so that one drawing serves
-both; `auto` stands for the UFAC logo. A logo about `0.64em` high matches the UFAC one. Outside the footer, as in a
-handout that goes with the slides, `ufac-logo-image` draws the UFAC logo in the same colours (@colors).
+both; `auto` stands for the UFAC logo. A logo about `0.64em` high matches the UFAC one. Anywhere in a slide,
+`#deck-info("logo")` shows them, with `height:` and `white: true` on a dark background.
 
 #slide-example("logos", pages: (1, 2))
 
@@ -515,12 +515,10 @@ and #text(fill: colors.primary-dark)[dark blue text].
 
 #reference("constants", "colors")
 
-The UFAC logo comes with the theme, as its SVG (`ufac-logo`) and as an image in the colours the theme uses
-(`ufac-logo-image`): blue lettering with the yellow shield in the footer, white lettering on the cover, and all white
-on a background where the yellow would not stand out, such as the cover of a handout that goes with the slides.
+The UFAC logo comes with the theme as its SVG (`ufac-logo`): in a deck, `#deck-info("logo")` shows it in the colours
+of the theme; outside one, as in a handout that goes with the slides, `image(bytes(ufac-logo))` draws it.
 
 #reference("constants", "ufac-logo")
-#reference("constants", "ufac-logo-image")
 
 = Tables, figures, math, code and icons <elements>
 

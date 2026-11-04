@@ -3,7 +3,8 @@
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
-  primary, secondary, tertiary, quaternary, icon, eq-box, ufac-logo-image, outline, provide-icons) {
+  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, warning, tip, info, note, tag,
+  deck-info) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
@@ -76,16 +77,16 @@
 #assert(catch(() => _lang-parse("de")).contains("unknown lang"))
 #assert-panic(() => _lang-parse(none))
 
-// the UFAC logo: the SVG (blue `#0c4da2` lettering, yellow `#fdb813` shield) and `ufac-logo-image`, which replaces
-// each colour only when it is given
+// the UFAC logo: the SVG (blue `#0c4da2` lettering, yellow `#fdb813` shield) and the internal `_ufac-logo-image`,
+// which replaces each colour only when it is given
 #assert.eq(type(ufac-logo), str)
-#let logo-svg(..args) = str(ufac-logo-image(..args).source)
-#assert.eq(ufac-logo-image().func(), image)
+#let logo-svg(..args) = str(_ufac-logo-image(..args).source)
+#assert.eq(_ufac-logo-image().func(), image)
 #assert(logo-svg().contains("#0c4da2") and logo-svg().contains("#fdb813"))
 #assert(not logo-svg(color: white).contains("#0c4da2") and logo-svg(color: white).contains("#fdb813"))
 #assert(not logo-svg(color: white, shield: white).contains("#fdb813"))
-#assert.eq(ufac-logo-image().height, 0.64em)
-#assert.eq(ufac-logo-image(height: 2em).height, 2em)
+#assert.eq(_ufac-logo-image().height, 0.64em)
+#assert.eq(_ufac-logo-image(height: 2em).height, 2em)
 
 // outline: content (the parts of the deck, read where it stands); Typst's own is still there as `std.outline`
 #assert.eq(type(outline()), content)
