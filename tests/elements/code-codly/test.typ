@@ -6,7 +6,7 @@
 #show: ufac-theme.with(lang: "en", codly: codly, code-languages: (rust: (name: "Rust", icon: none)), test-info)
 
 == Code through codly 2
-The same look as without codly: the box, the numbers, the language pill and the output in green.
+The same look as without codly: the box, the numbers, the language pill and the output in gray.
 ```python
 def mean(values):
     return sum(values) / len(values)

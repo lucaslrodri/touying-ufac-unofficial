@@ -12,7 +12,7 @@ def mean(values, digits=2):
     return round(total / len(values), digits)
 ```
 #cols[
-  The output of a program (`text`): the green box, without numbers:
+  The output of a program (`text`): the gray box, without numbers:
   ```text
   item 1: value 0.693
   item 2: value 0.512 ==no highlight==

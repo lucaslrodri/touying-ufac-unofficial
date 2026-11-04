@@ -1,6 +1,6 @@
 // touying-ufac-unofficial — code blocks. The theme does not depend on codly: without it, every block goes in the box of
 // the theme (a light fill with a bar on the left, square corners), with the line numbers from Typst's `raw.line`, the
-// language in a pill with its logo and the output of a program (`text`) in green. With codly 2, which the deck imports
+// language in a pill with its logo and the output of a program (`text`) in gray. With codly 2, which the deck imports
 // and passes to the theme (`ufac-theme(codly: codly)`), the same look is applied through codly's own theme
 // (`codly-ufac-theme`, plain data) and rules. Inside a coloured box (an exercise, an `emph-box`) a block keeps its look.
 #import "constants.typ": colors
@@ -12,20 +12,20 @@
 /// -> bytes
 #let ufac-syntax = read("../assets/ufac.tmTheme", encoding: none)
 
-/// Languages whose block is the output of a program: the green box, without line numbers.
+/// Languages whose block is the output of a program: the gray box, without line numbers.
 /// -> array
 #let _output-langs = ("text", "txt", "output")
 
-/// Colours of the box of a block: the bar, the fill and the thin border; blue for code, green for an output. The same
+/// Colours of the box of a block: the bar, the fill and the thin border; blue for code, gray for an output. The same
 /// everywhere: inside a coloured box a block keeps its own look.
 ///
-/// #test(`_box-colors("python").bar == colors.primary`, `_box-colors("text").bar == colors.quaternary-dark`)
+/// #test(`_box-colors("python").bar == colors.primary`, `_box-colors("text").bar == colors.neutral-dark`)
 /// -> dictionary
 #let _box-colors(
   /// Language of the block. -> str | none
   lang,
 ) = if lang in _output-langs {
-  (bar: colors.quaternary-dark, fill: colors.quaternary.lighten(94%), edge: colors.quaternary-lighter)
+  (bar: colors.neutral-dark, fill: colors.neutral.lighten(94%), edge: colors.neutral-lighter)
 } else {
   (bar: colors.primary, fill: colors.primary.lighten(96%), edge: colors.primary.lighten(60%))
 }
@@ -128,15 +128,15 @@
   )
 }
 
-/// `codly-ufac-theme` in the green box of the output of a program.
+/// `codly-ufac-theme` in the gray box of the output of a program.
 /// -> dictionary
 #let _codly-output-theme = codly-ufac-theme + (
-  fill: colors.quaternary.lighten(94%),
-  stroke: 0.5pt + colors.quaternary-lighter,
-  muted: colors.quaternary-dark,
-  accent: colors.quaternary-dark,
-  lang: codly-ufac-theme.lang + (stroke: _ => 0.6pt + colors.quaternary-dark.lighten(55%),
-    text: (size: 0.72em, weight: "bold", fill: colors.quaternary-dark)),
+  fill: colors.neutral.lighten(94%),
+  stroke: 0.5pt + colors.neutral-lighter,
+  muted: colors.neutral-dark,
+  accent: colors.neutral-dark,
+  lang: codly-ufac-theme.lang + (stroke: _ => 0.6pt + colors.neutral-dark.lighten(55%),
+    text: (size: 0.72em, weight: "bold", fill: colors.neutral-dark)),
 )
 
 /// Code blocks through codly 2: the two themes (code and output), the language pills of the theme, the file icon

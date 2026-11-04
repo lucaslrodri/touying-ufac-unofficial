@@ -560,7 +560,7 @@ $ c = sqrt((g lambda) / (2 pi)) $
 Inline `raw` is the chip of @inline. The theme does not depend on codly: a code block goes in the box of the theme, a
 light blue fill with a bar on the left and square corners, at 0.75em, with the line numbers on the left (a long line
 wraps and continues under the code), the language in a white pill with its logo at the top right and the syntax colours
-of the theme (`ufac-syntax`). The output of a program, a block in `text`, goes in a green box without numbers. A block
+of the theme (`ufac-syntax`). The output of a program, a block in `text`, goes in a gray box without numbers. A block
 never splits across pages, and inside a coloured box (an `emph-box`, an exercise) it keeps its look. The languages with a
 pill are `python`, `typst`, `matlab`, `bash` and `text`; a block in another language has no pill, and
 `ufac-theme(code-languages:)` adds languages.
