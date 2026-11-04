@@ -25,7 +25,7 @@ The command creates a deck from [template/main.typ](template/main.typ): the cove
 The theme uses the font *New Computer Modern Sans*, which Typst does not bundle: without it, the slides fall back to another font. It belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family: download the archive from CTAN and take the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
 <!-- template:begin (generated from template/main.typ by scripts/readme.sh: do not edit by hand) -->
-```typst
+````typst
 // Starting deck for the touying-ufac-unofficial theme. Syntax: package README; the elements at a glance:
 // example/main.typ; a whole lecture: example/lecture.typ, both at
 // https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example
@@ -51,7 +51,7 @@ The theme uses the font *New Computer Modern Sans*, which Typst does not bundle:
 === Subtitle
 
 Text.
-```
+````
 
 ![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/template.png)
 <!-- template:end -->
@@ -128,7 +128,7 @@ config-info(
 [example/main.typ](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/main.typ) shows the elements of the [syntax](#syntax) in a short deck:
 
 <!-- example:begin (generated from example/main.typ by scripts/readme.sh: do not edit by hand) -->
-```typst
+````typst
 // Example deck of the touying-ufac-unofficial theme: the elements of the syntax at a glance (details: package README).
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
@@ -265,7 +265,7 @@ The solution.
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!"; the
 // contact of `config-info(contact:)`, when there is one, goes in the body: `#info("contact")`
 #ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]
-```
+````
 
 ![The 13 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)
 <!-- example:end -->

@@ -48,9 +48,12 @@ for deck in $decks; do
     "$out/sheet.typ" "$tmp/$deck.png"
 
   {
-    echo '```typst'
+    # the fence has four backticks: a deck may hold a code block of three (example/main.typ does), which would close a
+    # fence of three and turn the rest of the README into code
+    grep -q '^````' "$deck/main.typ" && fail "$deck/main.typ has a line starting with four backticks, the fence of README.md"
+    echo '````typst'
     awk 1 "$deck/main.typ"
-    echo '```'
+    echo '````'
     echo
     echo "![The $pages pages of $deck/main.typ]($url/$deck.png)"
   } > "$tmp/$deck.md"
