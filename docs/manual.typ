@@ -89,6 +89,20 @@ config-info(author: [_Students_ \ Ana Souza \ Bruno Lima \ _Advisor_ \ Prof. Dr.
 
 #reference("ufac", "ufac-theme", "title-slide")
 
+The cover has three bands: the logos at the top, the titles in the centre and the authors and the date at the bottom.
+The `style` decides where the authors and the date go: `"line"` (the default) puts them on one line at the bottom,
+with the white line of the footer passing between them and the logos in the centre of the top; `"stack"` puts the
+authors on several lines at the bottom left; `"top"` puts them at the top right and the date in the centre of the
+bottom. Each of the six positions can be changed on its own, with content, `none`, a function of `self` or `#info`.
+
+#slide-example("cover-styles", pages: (1, 2, 3, 4))
+
+The background of the cover and of the closing slide is a parameter of the theme: `"circles"` (the default),
+`"gradient"` or `"plain"`. A `kind` brings the recommended style, label and tag; an author written as free content
+keeps its lines and labels on the cover.
+
+#slide-example("cover-background")
+
 Content given to the cover goes below the titles, in white, as in a pill: a partner's logo, the name of a lab or
 of a program.
 

@@ -126,3 +126,7 @@ API test done.
 #assert.eq(utils.markup-text(_join-names("en", free.info.author)), "Ana and Bruno")
 #assert.eq(utils.markup-text(_join-names("pt", ([A], [B], [C]))), "A, B e C")
 
+
+// cover: an unknown style or background fails with the names that exist
+#assert(catch(() => title-slide(style: "left")).contains("\"stack\""))
+#assert(catch(() => ufac-theme(background: "dark")[x]).contains("\"gradient\""))

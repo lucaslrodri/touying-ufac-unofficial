@@ -5,7 +5,7 @@
 #import "utils.typ": *
 #import "components.typ": *
 #import "code.typ": _code-rules
-#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names
+#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors
 
 // ---------- header ----------
 /// Header of a content slide: the current `==` in blue (fit to width), or, when the heading carries an
@@ -327,61 +327,280 @@
   touying-slide(self: self, slide-body)
 })
 
-/// Cover: blue page with the title (large, white), the short subtitle (yellow) and the subtitle (white) of `config-info`
-/// centered, `footer-left`/`footer-right` in white at the top and the logos (`config-info(logo:)`) in white at the
-/// bottom. The slide counter is frozen, so the cover does not count.
+// ---------- cover ----------
+/// The backgrounds of the cover and of the closing slide (`ufac-theme(background:)`): the fill of the page and whether
+/// it has the circles. `"circles"`, the default, is the solid UFAC blue with two translucent white circles leaving the
+/// corners; `"gradient"`, the gradient of the MATLAB course (the blue darkened 35% to the blue, at 60°), with the
+/// circles; `"plain"`, the blue alone, the cover of 0.2.0.
 ///
-/// Content given to it, such as a partner's logo or the name of a program, goes below the titles, centered at the
-/// bottom of the cover, in white (`*bold*` and `#icon` too, as in a pill). It is placed, so the titles stay where they
-/// are without it; the space under them takes about a logo and two lines, and a taller content reaches them.
+/// #test(`_backgrounds.keys() == ("circles", "gradient", "plain")`, `not _backgrounds.plain.circles`)
+/// -> dictionary
+#let _backgrounds = (
+  circles: (fill: colors.primary, circles: true),
+  gradient: (fill: gradient.linear(colors.primary.darken(35%), colors.primary, angle: 60deg), circles: true),
+  plain: (fill: colors.primary, circles: false),
+)
+
+/// The translucent white circles of the background: a large one leaving the top right corner and a smaller one the
+/// bottom left; for the `background` of the page, which has its size.
+/// -> content
+#let _circles() = {
+  place(top + right, dx: 3cm, dy: -4.2cm, circle(radius: 8.5cm, fill: white.transparentize(94%)))
+  place(bottom + left, dx: -2.6cm, dy: 2.8cm, circle(radius: 5.5cm, fill: white.transparentize(95%)))
+}
+
+/// The blue page of the cover and of the closing slide, with the background of the theme, without header nor footer.
+/// -> dictionary
+#let _blue-page(
+  /// Touying's `self`. -> dictionary
+  self,
+) = config-page(fill: self.store.at("cover-fill", default: self.colors.primary), header: none, footer: none,
+  margin: (x: 1.8em, top: 1.2em, bottom: 1.1em),
+  background: if self.store.at("cover-circles", default: true) { _circles() })
+
+/// White content on the blue page, with the convention of the pills (`*bold*`, code and icons readable).
+/// -> content
+#let _on-blue(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// The content. -> content
+  body,
+) = {
+  set text(fill: self.colors.neutral-lightest)
+  _in-box(self.colors.primary, body, kind: "pill")
+}
+
+/// A small label in spaced bold capitals, in yellow ("INSTRUCTORS", "ADVISOR").
+/// -> content
+#let _kicker(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// The label. -> content
+  body,
+  /// Size of the text. -> length
+  size: 0.5em,
+) = text(size: size, weight: "bold", fill: self.colors.secondary, tracking: 0.12em, upper(body))
+
+/// The yellow rule under the title of the cover, of the closing slide and of the section slides.
+/// -> content
+#let _rule(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Length of the rule. -> length
+  length: 2.6cm,
+) = line(length: length, stroke: 2.5pt + self.colors.secondary)
+
+/// The logos of the deck in white, at a given height (the logos are sized in `em`, 0.64em high in the footer).
+/// -> content | none
+#let _logos-white(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Height of the logos. -> length
+  height: 0.9cm,
+) = { let l = _logos(self, white: true); if l != none { text(size: height / 0.64, l) } }
+
+/// The style of the cover (`"line"`, `"stack"`, `"top"`), kept by `title-slide` for `#ending-slide` to put the logos
+/// in the same place.
+/// -> state
+#let _cover-style = state("ufac-cover-style", none)
+
+/// The size of the text in the positions of the top and of the bottom of the cover, relative to the slide.
+#let _slot-size = 0.7em
+
+/// The authors on several lines: the label (`author-label`) and the authors as written, with the `\` breaks and the
+/// labels in emphasis (`_Advisor_` becomes "ADVISOR" in yellow, with some room above it).
+/// -> content
+#let _authors-block(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Label over the authors, or `none`. -> none | content
+  label,
+  /// Alignment of the lines. -> alignment
+  align: left,
+) = block(std.align(align, {
+  if label != none { _kicker(self, label); v(0.35em) }
+  show emph: it => box(inset: (top: 0.55em), text(size: 0.5em / 0.7, weight: "bold",
+    fill: self.colors.secondary, tracking: 0.12em, style: "normal", upper(it.body)))
+  text(size: _slot-size, _authors(self))
+}))
+
+/// The authors on one line: the label and the names in running text ("A, B and C"); of an author written as free
+/// content, the names of its first group, as in the footer of the slides.
+/// -> content
+#let _authors-line(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Label before the authors, or `none`. -> none | content
+  label,
+) = {
+  if label != none {
+    // the label is smaller than the names: on the same baseline, its middle would be below the middle of the capitals
+    // of the names, where the white line passes; it goes up half the difference of the heights of the capitals
+    context {
+      let cap(size) = measure(text(size: size, weight: "bold", top-edge: "cap-height", bottom-edge: "baseline")[X]).height
+      text(baseline: -(cap(_slot-size) - cap(0.5em)) / 2, _kicker(self, label))
+    }
+    h(0.6em)
+  }
+  text(size: _slot-size, _author-names(self))
+}
+
+/// Whether each style of the cover has the white line at the bottom.
+#let _preset-lines = (stack: false, line: true, top: false)
+
+/// What each style puts in each position of the cover.
+/// -> dictionary
+#let _presets(
+  /// Touying's `self`. -> dictionary
+  self,
+  /// Label of the authors, or `none`. -> none | content
+  label,
+) = {
+  let d = _date(self)
+  let d = if _given(d) { text(size: _slot-size, fill: white.transparentize(12%), d) }
+  let a = _given(_authors(self))
+  let logos = _logos-white(self)
+  (
+    // the authors at the top right, in front of the logos; at the bottom, only the date, in the centre
+    top: (header-left: logos, header-right: if a { _authors-block(self, label, align: right) }, footer-center: d),
+    // the logos in the centre of the top; one line at the bottom: the authors on the left, the white line and the date
+    line: (header-center: logos, footer-left: if a { _authors-line(self, label) }, footer-right: d),
+    // the authors on several lines at the bottom left and the date on the right, without the line
+    stack: (header-left: logos, footer-left: if a { _authors-block(self, label) }, footer-right: d),
+  )
+}
+
+/// A band of the cover (the top or the bottom) without the line: the left and right positions with half the width each,
+/// or, with something in the centre, the centre at its width and the sides with the rest, equally.
+/// -> content | none
+#let _row(
+  /// The positions `left`, `center` and `right`. -> dictionary
+  slots,
+  /// Vertical alignment of the band. -> alignment
+  valign,
+) = {
+  if slots.values().all(c => c == none) { return none }
+  if slots.center == none {
+    grid(columns: (1fr, 1fr), column-gutter: 1em, align: (left + valign, right + valign), slots.left, slots.right)
+  } else {
+    grid(columns: (1fr, auto, 1fr), column-gutter: 1em, align: (left + valign, center + valign, right + valign),
+      slots.left, slots.center, slots.right)
+  }
+}
+
+/// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top; in the centre, the tag
+/// (`short-title`), the `title`, the yellow rule, the `short-subtitle` in yellow, the `subtitle` and the content given
+/// to it, centered both ways in the room between the top and the bottom; the authors and the date where the `style`
+/// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does not
+/// count.
+///
+/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#info("date")`) or a
+/// function of `self`, like `footer-left` of the theme. The text of the positions is 0.7 of the size of the slide.
 ///
 /// ```typ
+/// #title-slide()
+/// #title-slide(style: "top", footer-center: none, footer-right: info("date"))
 /// #title-slide[#image("lab-white.svg", height: 1.7em)]
 /// ```
 /// -> content
 #let title-slide(
-  /// Content below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
+  /// `"line"`: the authors on one line at the bottom left, the white line and the date on the right, with the logos
+  /// in the centre of the top. `"stack"`: the authors on several lines at the bottom left and the date on the right,
+  /// without the line. `"top"`: the authors at the top right and the date in the centre of the bottom, without the
+  /// line. `auto` is the one of the `kind` of the deck, or `"line"`. -> auto | str
+  style: auto,
+  /// Label over the authors ("Instructors"); before them in `"line"`. `auto` is the one of the `kind`, or none.
+  /// -> auto | none | content
+  author-label: auto,
+  /// What goes at the top left. -> auto | none | content | function
+  header-left: auto,
+  /// What goes at the top centre. -> auto | none | content | function
+  header-center: auto,
+  /// What goes at the top right. -> auto | none | content | function
+  header-right: auto,
+  /// What goes at the bottom left. -> auto | none | content | function
+  footer-left: auto,
+  /// What goes at the bottom centre. -> auto | none | content | function
+  footer-center: auto,
+  /// What goes at the bottom right. -> auto | none | content | function
+  footer-right: auto,
+  /// The white line at the bottom, like the one of the footer of the slides: from edge to edge, passing between what
+  /// is at the bottom, at the height of the line of the footer. `auto` is the one of the style. -> auto | bool
+  footer-line: auto,
+  /// Content in the centre, below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
   ..body,
 ) = {
-  assert(body.named().len() == 0 and body.pos().len() <= 1,
-    message: "title-slide: takes one optional content, `#title-slide[..]`, and no named argument")
+  assert(body.named().len() == 0, message: "title-slide: unknown argument " + repr(body.named().keys().at(0, default: "")))
+  assert(body.pos().len() <= 1, message: "title-slide: takes one optional content, `#title-slide[..]`")
+  assert(style == auto or style in _preset-lines, message: "title-slide: style is auto (\"line\"), \"line\", \"stack\" or \"top\"")
   let body = body.pos().at(0, default: none)
   touying-slide-wrapper(self => {
-    let footer(self) = {
-      set std.align(bottom)
-      move(grid(columns: (1em, auto, 1fr), rows: 1.5em, align: horizon,
-        _line-white(self),
-        _logos(self, white: true),
-        _line-white(self)), dy: -0.05em)
+    // `auto`: what the `kind` of the deck recommends (in the store), else the default of the theme ("line", no label)
+    let style = if style == auto { self.store.at("cover-style", default: "line") } else { style }
+    let author-label = if author-label == auto { self.store.at("author-label", default: none) } else { author-label }
+    let self = utils.merge-dicts(self, _blue-page(self), config-common(freeze-slide-counter: true))
+    let i = self.info
+    let with-line = if footer-line == auto { _preset-lines.at(style) } else { footer-line }
+    let preset = _presets(self, author-label).at(style)
+    // the value of a position: the one of the style, nothing, or the given content (or function of `self`) at the
+    // size of the positions
+    let slot(name, value) = {
+      if value == auto { return preset.at(name, default: none) }
+      if value == none { return none }
+      text(size: _slot-size, if type(value) == function { value(self) } else { value })
     }
-    let header(self) = {
-      set text(self.colors.neutral-lightest)
-      set std.align(center + top)
-      show: block.with(width: 100%, height: 1.3em)
-      grid(columns: (auto, auto), rows: 1.5em, align: horizon,
-        _cell(self, pad-left: 1em, pos: "left", white: true, utils.call-or-display(self, self.store.footer-left)),
-        _cell(self, pad-right: 1em, pos: "right", white: true, utils.call-or-display(self, self.store.footer-right)))
-    }
-    let self = utils.merge-dicts(self, config-page(fill: self.colors.primary, header: header, footer: footer), config-common(freeze-slide-counter: true))
-    touying-slide(self: self, {
-      std.align(center + horizon, {
-        let i = self.info
-        if _given(i.title) { text(size: 2em, fill: white, weight: "bold", i.title) }
-        parbreak()
-        if _given(i.short-subtitle) { text(size: 1.2em, fill: self.colors.secondary, i.short-subtitle) }
-        linebreak()
-        if _given(i.subtitle) { text(size: 1.2em, fill: white, i.subtitle) }
+    let header = (left: slot("header-left", header-left), center: slot("header-center", header-center),
+      right: slot("header-right", header-right))
+    let footer = (left: slot("footer-left", footer-left), center: slot("footer-center", footer-center),
+      right: slot("footer-right", footer-right))
+    touying-slide(self: self, _on-blue(self, {
+      _cover-style.update(style)   // for `#ending-slide` to put the logos in the same place
+      set par(leading: 0.4em, spacing: 0pt, justify: false)
+      // the centre: a stack from top to bottom, the tag (`short-title`), the `title`, the rule, the `short-subtitle` and
+      // the `subtitle` (together, on two lines) and, last, the body
+      let lines = (
+        if _given(i.at("short-subtitle", default: none)) { text(size: 1.2em, fill: self.colors.secondary, i.short-subtitle) },
+        if _given(i.subtitle) { text(size: 1.2em, i.subtitle) },
+      ).filter(x => x != none)
+      let items = (
+        if _given(i.at("short-title", default: none)) { tag(i.short-title) },
+        if _given(i.title) { text(size: 2em, weight: "bold", i.title) },
+        // the rule goes with the title: without one, nothing in the middle of the page
+        if _given(i.title) { _rule(self) },
+        if lines.len() > 0 { lines.join(linebreak()) },
+        body,
+      ).filter(x => x != none)
+      let titles = block(width: 90%, {
+        set std.align(center)
+        stack(dir: ttb, spacing: 0.75em, ..items)
       })
-      // white on blue, as in a pill (`kind: "pill"`), 0.5em above the bottom of the page body. Placed, not measured:
-      // inside `layout`/`context` Touying's marks (`#alert`, `#pause`) are out of its reach and panic
-      if body != none {
-        place(bottom + center, dy: -0.5em, {
-          set text(fill: self.colors.neutral-lightest)
-          set std.align(center)
-          _in-box(self.colors.primary, body, kind: "pill")
-        })
+      let foot = {
+        // at the bottom the text sits on its baseline: what is side by side lines up by its last line
+        set text(bottom-edge: "baseline")
+        if with-line {
+          // the line of the footer of the slides, from edge to edge, passing between what is at the bottom and centred
+          // on the capitals of its last line; the baseline is 0.55em from the edge, at the height of the footer
+          let gap = 0.45em
+          let edge = 1.8em - gap
+          context {
+            let cap = measure(text(size: _slot-size, top-edge: "cap-height", bottom-edge: "baseline")[X]).height
+            let line-cell = box(width: 100%, height: cap, std.align(horizon, _line-white(self)))
+            let (columns, cells) = ((), ())
+            if footer.left != none { columns += (edge, auto); cells += (line-cell, footer.left) }
+            if footer.center != none { columns += (1fr, auto, 1fr); cells += (line-cell, footer.center, line-cell) }
+            else { columns.push(1fr); cells.push(line-cell) }
+            if footer.right != none { columns += (auto, edge); cells += (footer.right, line-cell) }
+            move(dx: -1.8em, dy: 0.55em, block(width: 100% + 3.6em,
+              grid(columns: columns, column-gutter: gap, align: bottom, ..cells)))
+          }
+        } else { _row(footer, bottom) }
       }
-    })
+      // three bands: the top, the centre and the bottom. The titles and the body stay in the middle of the centre, both
+      // ways: in the middle of the page when the top and the bottom have similar heights, and in the middle of the free
+      // room when the authors take many lines (at the top or at the bottom), without touching them
+      block(width: 100%, height: 100%, grid(columns: 100%, rows: (auto, 1fr, auto), row-gutter: 0.6em,
+        _row(header, top), std.align(center + horizon, titles), foot))
+    }))
   })
 }
 
@@ -609,6 +828,9 @@
   /// page margin (`1.8em`, the same as the text), for an image without a background or an icon; a length sets the
   /// distance. -> bool | length
   section-margin: false,
+  /// Background of the cover and of the closing slide: `"circles"` (the solid UFAC blue with two translucent circles),
+  /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone, the cover of 0.2.0). -> str
+  background: "circles",
   /// The codly 2 module, when the deck imports it (`#import "@preview/codly:2.0.0" as codly`): the code blocks then go
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
   /// codly. -> none | module
@@ -630,6 +852,9 @@
   } }
   let footer-right = if footer-right != auto { footer-right } else { self => _author-names(self) }
   let configs = _prepare-configs(l.lang, args.pos())
+  assert(background in _backgrounds, message: "ufac-theme: background is "
+    + _backgrounds.keys().map(k => "\"" + k + "\"").join(", "))
+  let bg = _backgrounds.at(background)
   assert(type(section-margin) in (bool, length),
     message: "ufac-theme: section-margin is true (the page margin), false (flush with the edge) or a length")
   for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
@@ -655,7 +880,8 @@
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
       exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
-      footer-right: footer-right, section-margin: section-margin, codly: codly, code-languages: code-languages),
+      footer-right: footer-right, section-margin: section-margin, codly: codly, code-languages: code-languages,
+      cover-fill: bg.fill, cover-circles: bg.circles),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile
     _info-defaults,
