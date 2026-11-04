@@ -349,7 +349,7 @@ Markdown-like short forms (inline content only, always primary):
 
 ### Code
 
-A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A block never splits across pages: one taller than the slide is cut at the bottom, without a warning (about 20 lines fit on a 16:9 slide with a title). Split a long listing by hand, or use [codly](#code-blocks-with-codly), whose blocks go on to the next page.
+A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A long block goes on to the next page of the slide, as any long content. For a file name, highlights or ranges, use [codly](#code-blocks-with-codly).
 
 ````typst
 #show: ufac-theme.with(
@@ -376,7 +376,7 @@ Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#sli
 
 ### Code blocks with codly
 
-The theme draws its own code box and does not need [codly](https://typst.app/universe/package/codly). For codly's features (a file name, highlights, ranges, `diff`, a long block that splits across pages), import codly 2 (Typst ≥ 0.15) and pass it to the theme: every block goes through codly with the same look. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
+The theme draws its own code box and does not need [codly](https://typst.app/universe/package/codly). For codly's features (a file name, highlights, ranges, `diff`), import codly 2 (Typst ≥ 0.15) and pass it to the theme: every block goes through codly with the same look. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
 
 ````typst
 #import "@preview/codly:2.0.0" as codly
@@ -442,7 +442,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 
 - The information of the deck is Touying's `config-info`: keep `subject` and `subject-code`, now aliases of `title` and `short-title`; rename the old `title` to `unit-title` (or `subtitle`) and the old `subtitle` to `unit` (or `short-subtitle`), since `subject` and `title` together are an error; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
 - `<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide` are removed: the theme has no empty slide of its own. A label `<empty-slide…>` is now an ordinary label, so the slide becomes an ordinary one, with its header: look for these labels in the deck. Use Touying's `#empty-slide[...]`, without header or footer (the deck imports Touying), which takes no `color:` nor `title:`; for a colored page, `#empty-slide(config: config-page(fill: colors.tertiary))[...]`. A `==` without text gives a slide without a title, with the footer, and the new `#ending-slide[...]` closes the deck.
-- The theme no longer depends on codly or linguify: the functions of codly 1 it exported (`codly`, `local`, `codly-range`, `no-codly`, …) are gone. The theme's own code box never splits across pages, so a long block (`#local(breakable: true)` in 0.2.0) needs codly 2 (Typst ≥ 0.15): `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
+- The theme no longer depends on codly or linguify: the functions of codly 1 it exported (`codly`, `local`, `codly-range`, `no-codly`, …) are gone. The theme's own code box goes on to the next page by itself, so `#local(breakable: true)` is not needed; for codly, codly 2 (Typst ≥ 0.15): `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
 - `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.

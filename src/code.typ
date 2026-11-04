@@ -215,7 +215,7 @@
   show raw.where(block: true): it => {
     let k = _box-colors(it.lang)
     block(width: 100%, fill: k.fill, stroke: (left: 2.5pt + k.bar, top: 0.5pt + k.edge, right: 0.5pt + k.edge,
-      bottom: 0.5pt + k.edge), inset: (left: 0.6em, right: 0.4em, y: 0.45em), breakable: false, {
+      bottom: 0.5pt + k.edge), inset: (left: 0.6em, right: 0.4em, y: 0.45em), breakable: true, {
         let label = _label(langs, it.lang, k.bar)
         if label != none { place(top + right, label) }
         if it.lang in _output-langs { it } else {

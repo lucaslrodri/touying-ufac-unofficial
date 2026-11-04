@@ -542,9 +542,8 @@ output of a program, a block in `text` (or `txt`, `output`), goes in a gray box 
 a block keeps its look. The languages with a pill are `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`, and
 the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
 
-A block never splits across pages: one taller than the slide is cut at the bottom, without a warning, and about 20
-lines fit on a 16:9 slide with a title. Split a long listing by hand, or take codly (@codly), whose blocks go on to the
-next page; codly also gives a file name, highlights and ranges.
+A long block goes on to the next page of the slide, as any long content, with the `===` pill repeated at the top; the
+language pill stays on its first part. For a file name, highlights or ranges, the deck takes codly (@codly).
 
 #see("code", "code-languages", "ufac-syntax")
 
@@ -665,7 +664,7 @@ slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart he
 == Code blocks with codly <codly>
 
 The theme draws its own code box (@code) and does not need codly. For codly's features (a file name, highlights,
-ranges, `diff`, a block that splits across pages), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
+ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
 through codly with the same look, and codly's functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2
 requires Typst 0.15. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
 
@@ -747,8 +746,8 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
     slide without a title, with the footer, and `#ending-slide[..]` closes the deck (@cover)],
   [`local`, `codly-range`, `no-codly`; codly imported by the theme; `#local(breakable: true)` for a block that
     splits],
-  [the theme has its own code box, which never splits; for codly (and its blocks that split), `#import "@preview/codly:2.0.0" as codly` and
-    `ufac-theme(codly: codly)`],
+  [the theme has its own code box, which goes on to the next page by itself (no `breakable:` needed); for codly,
+    `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`],
   [`#icon("rocket")` and the other Octicons], [only the icons of the theme; another one comes from its collection:
     `#provide-icons(json("octicon.json"))` and `#icon("octicon:rocket-16")` (@icons)],
   [`ufac-logo-image(..)`], [`#info("logo", height: 2em)`, with `white: true` on a dark background; outside a deck,

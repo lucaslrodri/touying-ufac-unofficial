@@ -27,17 +27,19 @@
 // The first body is split at its top-level `===` headings and every segment goes into a one-column `grid` whose
 // `grid.header(repeat: true)` re-shows the subtitle pill: Typst repeats that header at the top of every page the
 // grid spans, which is the only in-flow mechanism for a running subtitle when the content overflows by itself (a
-// page header cannot push the body down). The first page must stay pixel-identical to a plain flow, so the heading
-// itself is rendered inside the body cell (the theme's `show heading` rule, with the heading's own spacing) and the
-// header row is empty there: in `context` it checks whether it sits on a later page than the start of its own body
+// page header cannot push the body down). The first page must look like a plain flow, so the heading itself is
+// rendered inside the body cell (the theme's `show heading` rule, with the heading's own spacing) and the pill of the
+// header row is hidden there: in `context` it checks whether it sits on a later page than the start of its own body
 // cell, using two `metadata` markers (`_seg-mark` right before the grid, `_seg-body-mark` first in the cell; the
 // header of grid k is preceded by marker k and by no later one). A heading inside the repeated header would be
 // introspected once per page, hence the markers. A leading segment without `===` (a `---`/`#pagebreak()`
 // continuation) shows the current subtitle from `_current-subtitle()` in the cell, as before, and repeats it the
 // same way. The gap under a repeated pill is a `pad`, not `block(below:)`: weak spacing is trimmed at the end of
 // the header cell. Between segments a weak `v(1.44em)` restores the heading's default `above` (Typst, levels ≥ 2),
-// which is trimmed at the start of the cell. Only top-level `===` are handled: a subtitle nested in `#[ ]`, a
-// column or a box still renders in flow, without repetition.
+// which is trimmed at the start of the cell. The header keeps the height of the pill on every page, hidden on the
+// first one, where the body cell is pulled up by that height: the grid reserves the room of the header from its first
+// page, so a header empty there let the continuation pages run into the footer. Only top-level `===` are handled: a
+// subtitle nested in `#[ ]`, a column or a box still renders in flow, without repetition.
 #let _seg-mark = "ufac-subtitle-segment"
 #let _seg-body-mark = "ufac-subtitle-segment-body"
 /// True when the header of a subtitle grid is laid out on a later page than the start of its own body cell.
@@ -58,9 +60,13 @@
   body,
 ) = {
   metadata(_seg-mark)
+  let pill(t) = pad(bottom: 1em, _subtitle-pill(t))
   grid(columns: 1fr, inset: 0pt, stroke: none,
-    grid.header(repeat: true, context { if _is-continuation() { let t = title(); if t != none { pad(bottom: 1em, _subtitle-pill(t)) } } }),
-    { metadata(_seg-body-mark); body })
+    grid.header(repeat: true, context {
+      let t = title()
+      if t != none { if _is-continuation() { pill(t) } else { hide(pill(t)) } }
+    }),
+    { metadata(_seg-body-mark); context { let t = title(); if t != none { v(-measure(pill(t)).height) } }; body })
 }
 /// Splits the slide body at its top-level `===` headings and wraps every segment in a @_subtitle-grid.
 /// -> content
