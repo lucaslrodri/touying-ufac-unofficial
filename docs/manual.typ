@@ -97,11 +97,20 @@ bottom. Each of the six positions can be changed on its own, with content, `none
 
 #slide-example("cover-styles", pages: (1, 2, 3, 4))
 
-The background of the cover and of the closing slide is a parameter of the theme: `"circles"` (the default),
-`"gradient"` or `"plain"`. A `kind` brings the recommended style, label and tag; an author written as free content
-keeps its lines and labels on the cover.
+The work of students for a course keeps the words of the course and takes `kind: "coursework"`: the students and the
+teacher stack at the bottom left, each group under its label, and the top right is free, for the name of the group.
 
-#slide-example("cover-background")
+#slide-example("cover-coursework", pages: (1, 2), columns: (1fr, 1fr))
+
+A final paper takes `kind: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
+advisors at the top right. `"dissertation"` and `"thesis"` do the same with their own tag.
+
+#slide-example("cover-tcc", columns: (1fr, 1fr))
+
+The background of the cover and of the closing slide is a parameter of the theme: `"circles"` (the default),
+`"gradient"` or `"plain"`; here, on the cover of a master's dissertation.
+
+#slide-example("cover-background", columns: (1fr, 1fr))
 
 Content given to the cover goes below the titles, in white, as in a pill: a message, where to find the slides, a
 contact, a partner's logo.
