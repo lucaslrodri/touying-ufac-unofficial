@@ -454,7 +454,7 @@
 /// The backgrounds of the cover and of the closing slide (`ufac-theme(background:)`): the fill of the page and whether
 /// it has the circles. `"circles"`, the default, is the solid UFAC blue with two translucent white circles leaving the
 /// corners; `"gradient"`, a blue gradient (the blue darkened 35% to the blue, at 60°), with the
-/// circles; `"plain"`, the blue alone, the cover of 0.2.0.
+/// circles; `"plain"`, the blue alone.
 ///
 /// #test(`_backgrounds.keys() == ("circles", "gradient", "plain")`, `not _backgrounds.plain.circles`)
 /// -> dictionary
@@ -744,7 +744,7 @@
   }
 }
 
-/// Closing slide (the name of the templates of Tylina): the blue page of the cover, with a large title with the yellow
+/// Closing slide: the blue page of the cover, with a large title with the yellow
 /// rule under it, a subtitle in yellow and a free body, centered; and the footer of the slides in white (the logos, the
 /// title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the language of the
 /// deck; `title: none` removes the title and the rule. The contact of `config-info` goes in the body, if wanted:
@@ -761,7 +761,7 @@
 /// ```
 /// -> content
 #let ending-slide(
-  /// The title; `auto` is "Obrigado!" in the language of the deck, `none` removes it. -> auto | none | content
+  /// The title; `auto` is "Thank you!" in the language of the deck, `none` removes it. -> auto | none | content
   title: auto,
   /// The subtitle, in yellow; `auto` and `none` give none. -> auto | none | content
   subtitle: auto,
@@ -1097,7 +1097,7 @@
   /// author written as free content, the names of its first group. -> auto | content | function
   footer-right: auto,
   /// Background of the cover and of the closing slide: `"circles"` (the solid UFAC blue with two translucent circles),
-  /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone, the cover of 0.2.0). -> str
+  /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone). -> str
   background: "circles",
   /// The codly 2 module, when the deck imports it (`#import "@preview/codly:2.0.0" as codly`): the code blocks then go
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without

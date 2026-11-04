@@ -91,8 +91,8 @@
   (name, tidy.parse-module(read("../src/" + name + ".typ"), name: name, scope: example-scope))).to-dict()
 #let api-style = mantys-like.style + (show-example: show-example)
 
-/// Reference of the given definitions of a module, in the given order, shown where the chapter introduces them (as
-/// in the Typst documentation): signature with the type of every parameter, description, examples, parameters.
+/// Reference of the given definitions of a module, in the given order, in the reference chapter at the end: signature
+/// with the type of every parameter, description, examples, parameters.
 #let reference(module, ..names) = {
   let names = names.pos()
   let docs = modules.at(module)
@@ -105,6 +105,13 @@
   tidy.show-module(docs, style: api-style, first-heading-level: 2, show-module-name: false, show-outline: false,
     sort-functions: none, omit-private-parameters: true)
 }
+
+/// The line at the end of a section of the guide that points to the reference of the definitions it uses, each name a
+/// link with the page: `see("ufac", "title-slide()")`.
+#let see(module, ..names) = block(above: 1em, text(size: .9em, [*Reference:* ] + names.pos().map(n => {
+  let target = label(module + "-" + n)
+  link(target, text(font: mantys-like.mono, size: .95em, n)) + context [ #text(fill: luma(110))[p. #locate(target).page()]]
+}).join([, ])))
 
 /// Every public definition with the page of its reference. A definition that no chapter documents has no label,
 /// so forgetting one is a compile error.

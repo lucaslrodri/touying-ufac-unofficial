@@ -232,7 +232,7 @@
   }
   _in-box(color, if badge == none { _note-box(color, body) } else { _fancy-box(color, badge, body) })
 }
-/// Equation box: a light frame around a key equation (the `key-eq` helper of the lecture decks). It goes *inside*
+/// Equation box: a light frame around a key equation. It goes *inside*
 /// the equation, like the `boxeq` of the bookly package, so the equation keeps its centering, spacing and numbering,
 /// and a part of an equation can be framed too. The body is written as math, between dollar signs; it is set in
 /// display style whatever the spacing around it. A box around the whole equation is padded generously, a box around
@@ -477,7 +477,7 @@
 }
 
 /// Tag: capitals, spaced and bold, on a colour, with rounded corners; by default UFAC yellow with the text in dark blue,
-/// as on the cover ("CURSO DE EXTENSÃO") and on the section slides ("PARTE 2"). The text is dark blue or white,
+/// as on the cover ("EXTENSION COURSE") and on the section slides ("PART 2"). The text is dark blue or white,
 /// whichever contrasts more with the colour. The vertical padding is an `outset`, as in @eq-box: in a line of text the
 /// tag does not change the height of the line.
 ///
