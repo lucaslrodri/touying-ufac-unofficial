@@ -322,8 +322,10 @@ Call `fit(x, y)` first.
 
 == Colors by context
 
-Bold text, alerts, highlights, underlines, arrows, chips and icons read the color of what contains them: the box
-color inside an `emph-box`, white or yellow inside a pill, where the pill color would hide them.
+Bold text, alerts, highlights, underlines, arrows, chips, links, icons and the pills of the `===` and `====`
+subtitles read the color of what contains them: the box color inside an `emph-box`, a callout, an exercise or an
+example and a light cell of a table; white or yellow inside a pill, where the pill color would hide them. What has a
+style of its own keeps it: a code block, and a box inside another box, which brings its own color.
 
 #slide-example("pills")
 
