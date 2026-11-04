@@ -29,8 +29,16 @@
 = An image inside a figure, with a caption: in the frame
 #figure(shape(300, 100), caption: [A caption under the figure.])
 
+= A tall image inside a figure: the caption under it
+#figure(shape(100, 220), caption: [The caption, under the image.])
+
 = An image inside `align` and `link`: in the frame
 #align(center, link("https://example.com", shape(100, 200)))
+
+= A width relative to the room (`100%`, `50%`): against the frame
+#sized(300, 100, width: 100%)
+
+#sized(300, 100, width: 50%)
 
 = An icon in the title #icon("tip") stays inline
 #shape(200, 100)

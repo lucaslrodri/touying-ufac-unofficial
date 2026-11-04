@@ -253,6 +253,13 @@ Exercises and examples are numbered on their own, after a prefix, `config-info(c
 gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
 "Exercise 1".
 
+```typ
+#show: ufac-theme.with(config-info(
+  subject: [Ocean Science],
+  counter-prefix: [3.],   // "Exercise 3.1"; none gives "Exercise 1"
+))
+```
+
 Inside the box, what has no style of its own takes the color of the item: the bold text, the markers, the arrows, the
 numbers of the lists, the inline code, the links and the `===` pills. A code block, a callout and an `emph-box` keep
 their own look.

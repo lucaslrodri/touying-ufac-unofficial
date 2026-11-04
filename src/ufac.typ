@@ -856,21 +856,19 @@
   let limit(it) = {
     let (w, h) = (it.at("width", default: auto), it.at("height", default: auto))
     if w != auto and h != auto { return it }
-    if w == auto and h == auto {
-      return box(width: 12em, height: 66%, layout(room => {
-        let n = measure(it)
-        std.align(right + horizon, scaled(it, calc.min(room.width / n.width, room.height / n.height)))
-      }))
-    }
+    // a size relative to the room (`width: 100%`, `50%`) is taken against the 12em of the frame, at its right
+    if type(w) in (ratio, relative) { return box(width: 12em, std.align(right, it)) }
+    if type(h) in (ratio, relative) { return it }
     context {
       let n = measure(it)
-      // the room of the frame: 12em wide, and 66% of the height of the page between its margins (about)
-      let frame-h = (page.height - 5em.to-absolute()) * 66%
-      if w == auto and n.width > 12em.to-absolute() {
-        box(width: 12em, layout(room => std.align(right, scaled(it, room.width / n.width))))
-      } else if h == auto and n.height > frame-h {
-        box(height: 66%, layout(room => std.align(horizon, scaled(it, calc.min(1, room.height / n.height)))))
-      } else { it }
+      // the frame: 12em wide, and 66% of the height of the page between its margins (about)
+      let (fw, fh) = (12em.to-absolute(), (page.height - 5em.to-absolute()) * 66%)
+      // the scale that brings the image to the frame: without a size up or down until a side meets it; with one
+      // size only down, when the other side passes it. The scale goes on the image itself, so a caption sits under it
+      let f = if w == auto and h == auto { calc.min(fw / n.width, fh / n.height) } else if w == auto {
+        calc.min(1, fw / n.width)
+      } else { calc.min(1, fh / n.height) }
+      if f == 1 { it } else { scaled(it, f) }
     }
   }
   let body = if body in (none, []) { body } else {
@@ -1031,6 +1029,10 @@
     let w = if it.text.contains(" ") { auto } else { measure(body).width + .6em }
     box(width: w, fill: bg, stroke: .5pt + line, radius: 3pt, inset: (x: .3em), outset: (y: .2em), baseline: -.07em, body)
   }
+  // a bare `#solution` / `#answer` (Typst writes the name of the function, as code) outside the top of an exercise or
+  // example, where nothing opens it, is left out, as the marker with a separator (a metadata) is; after the rule of
+  // the chip, so that no empty chip is left
+  show raw.where(block: false, lang: "typc"): it => if it.text in ("solution", "answer") { none } else { it }
   show raw.where(block: true): set text(size: .75em)
   // code blocks: the box of the theme, or codly 2 when the deck passed it (code.typ)
   show: body => if code { _code-rules(self, body) } else { body }

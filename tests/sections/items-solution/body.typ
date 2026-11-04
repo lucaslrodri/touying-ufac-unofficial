@@ -1,4 +1,4 @@
-// Body of the `sections/items` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
+// Body of the `sections/items-solution` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 #import "../../common.typ": *
 
 == The state of water <example>
@@ -47,27 +47,6 @@ The same, with `#solution` right before `#pause`.
 #pause
 The opening appears with the solution, on the next subslide.
 
-== Everything without a style of its own <exercise>
-==== A subtitle in the colour of the item
-Write a program that shows the *amount* of an investment month by month, as in the #link("https://www.ufac.br")[handout]:
-
-+ Read the capital and the rate ==per month==
-- Use a ~loop~ `for` from 1 to 12
--> Show the result with ~~two~~ decimals #icon("tip")
-
-== What keeps its own style <example>
-#cols[
-  #callout("caution")[A callout keeps its colour.]
-  #emph-box(title: [Definition])[An `emph-box` keeps its blue.]
-][
-  ```python
-  print("a code block too")
-  ```
-  ```text
-  a code block too
-  ```
-]
-
 == The answer in a paragraph of its own <exercise>
 A blank line after `#answer`: "Answer." stays alone on its line.
 
@@ -85,28 +64,6 @@ The same with `#pause` and `#solution`, and a blank line after the marker.
 
 The solution starts in a new paragraph, below the word.
 
-== A table <tabuada-exercise>
-Not an exercise: a `<tabuada-exercise>` label is not an exercise label.
-
-== Multiplication table <exercise>
-Write a program that shows the multiplication table of `n`.
-
----
-
-#answer
-A `for` loop over `range(1, 11)`:
-
-```python
-for i in range(1, 11):
-    print(n, "x", i, "=", n * i)
-```
-
-== Next topic
-The exercise ends with a slide of another kind; the next one is Exercise 1.4.
-
-== Another one <exercise>
-Exercise 1.4.
-
 == Another separator <exercise>
 `#answer(sep: ":")` ends the word with a colon.
 
@@ -118,3 +75,9 @@ The next high tide is at 18:35.
 
 #solution(sep: [:\ ])
 The solution starts on the next line, without an indent.
+
+== A marker outside an exercise or example
+A bare `#solution` on a slide of another kind opens nothing and shows nothing:
+
+#solution
+The text goes on, without a line nor a word.
