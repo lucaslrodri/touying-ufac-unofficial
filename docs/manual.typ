@@ -61,7 +61,7 @@ students for a course (`example/`).
 }
 #let roles = (
   touying: [the slide engine; the deck imports it too, with the same version],
-  iconify: [the icons of a collection the deck gives to `provide-icons`; the theme's own icons come with it],
+  iconify: [the icons of a collection the deck gives to `provide-icons`; the theme's own icons ship with the theme],
   codly: [optional: the code blocks through codly (requires Typst 0.15)],
 )
 
@@ -196,7 +196,7 @@ Headings build the deck: no function call is needed for the ordinary slides.
   [`== Title <exercise>`, `<example>`], [exercise or example: a box filling the slide, numbered (@items)],
   [`=== Subtitle`], [a pill; no new slide; repeated at the top of every continuation page],
   [`==== Subtitle`], [the same pill, not repeated],
-  [`---`, `#pagebreak()`], [next page of the same slide (same header, same number)],
+  [`---`, `#pagebreak()`], [next page of the same slide (same header; in an exercise or example, the same box and number)],
 )
 
 == Sections and their figure
@@ -221,10 +221,10 @@ of its own, right after the cover.
 
 #slide-example("outline")
 
-== Slides and continuations
+== Slides and continuations <slides>
 
 A `===` subtitle opens a pill without a new slide. A `---` alone on a line goes on to the next page of the same slide,
-with the same header and number; a long content goes on by itself.
+with the same header (the number in the footer counts the pages); a long content goes on by itself.
 
 #slide-example("heading", pages: (1, 2))
 
@@ -345,9 +345,9 @@ Call `fit(x, y)` first.
 
 == Colors by context
 
-Bold text, alerts, highlights, underlines, arrows, chips, links, icons and the `===` pills read the color of what
+Bold text, alerts, highlights, underlines, arrows, chips, links, icons (@icons) and the `===` pills read the color of what
 contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
-(@elements); white or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
+(@tables); white or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
 block, and a box inside another box, which brings its own color.
 
 #slide-example("pills", columns: (1fr, 1fr))
@@ -378,7 +378,7 @@ at `a)`; Typst only knows `+` and `1.` as markers, so `a)` at the start of a lin
 == Columns
 
 `#cols` puts its bodies side by side anywhere in a slide, with an optional divider; `#slide(composer:)` lays out a
-whole slide (@deck).
+whole slide (@slides).
 
 ```example
 #cols[Left][Middle][Right]
@@ -499,7 +499,7 @@ in spaced capitals, on any color. A paragraph made only of quoted lines becomes 
 
 = Tables, figures, math and code <elements>
 
-== Tables
+== Tables <tables>
 
 The header row is blue with white text. A cell filled with a light tone of the palette
 (`table.cell(fill: colors.secondary-lighter)`) colors its chips and bold text like a box of that family; a cell filled
@@ -538,10 +538,13 @@ $ c = sqrt((g lambda) / (2 pi)) $
 
 A code block goes in the box of the theme: a light blue fill with a bar on the left, the line numbers (a long line
 wraps and continues under the code), the language in a pill at the top right and the syntax colors of the theme. The
-output of a program, a block in `text` (or `txt`, `output`), goes in a gray box without numbers. A block never splits
-across pages, and inside a colored box it keeps its look. The languages with a pill are `python` (`py`), `typst`
-(`typ`), `matlab`, `bash` and `sh`, and the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
-For a file name, highlights, ranges or a long listing that goes on to the next page, the deck takes codly (@codly).
+output of a program, a block in `text` (or `txt`, `output`), goes in a gray box without numbers. Inside a colored box
+a block keeps its look. The languages with a pill are `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`, and
+the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
+
+A block never splits across pages: one taller than the slide is cut at the bottom, without a warning, and about 20
+lines fit on a 16:9 slide with a title. Split a long listing by hand, or take codly (@codly), whose blocks go on to the
+next page; codly also gives a file name, highlights and ranges.
 
 #see("code", "code-languages", "ufac-syntax")
 
@@ -609,7 +612,7 @@ slides another word (`part-name`).
 #show: ufac-theme.with(
   footer-left: [Introductory Astronomy],
   exercise-name: [Task], exercise-icon: "terminal",
-  config-info(..),
+  config-info(subject: [Astronomy]),
 )
 ```
 
@@ -676,6 +679,8 @@ requires Typst 0.15. The languages of the codly-languages package can be given t
 inside a box, white in a pill. The theme ships a set of icons, each with a role that is also its name for `#icon`;
 the colored ones keep their colors.
 
+#see("components", "icon()")
+
 ```example
 #emph-box(color: colors.tertiary)[
   #icon("caution") takes the
@@ -692,7 +697,8 @@ the colored ones keep their colors.
   )
 }
 
-The Octicons the theme ships also answer to their own names: `"alert"`, `"light-bulb"`, `"info"`, `"note"`,
+`"warning"` and `"caution"` are the same icon, under the name of 0.2.0 and the one of the callout. The Octicons the
+theme ships also answer to their own names: `"alert"`, `"light-bulb"`, `"info"`, `"note"`,
 `"history"`, `"pencil"`, `"beaker"`, `"file-code"`, `"terminal"` and `"mail"`. The icons come from
 #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT license),
 #link("https://phosphoricons.com/")[Phosphor] (MIT license), #link("https://devicon.dev/")[Devicon] (MIT license),
@@ -718,7 +724,6 @@ and each collection has its own license.
 - *The whole collection*: download its JSON from the site of the iconify package (some are several megabytes).
 ]
 
-#see("components", "icon()")
 
 = Moving from 0.2.0 <migration>
 
@@ -735,9 +740,11 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
   [the figure keeps the page margin; for the old look,
     `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`],
   [`<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide`],
-  [removed: the theme has no empty slide of its own. Use Touying's `#empty-slide[..]`, without header or footer (the
-    deck imports Touying), or a `==` without text for a slide without a title, with the footer; the deck closes with
-    `#ending-slide[..]` (@cover)],
+  [removed: the theme has no empty slide of its own. A label `<empty-slide…>` is now an ordinary label, so the
+    slide becomes an ordinary one, with its header: look for these labels in the deck. Use Touying's
+    `#empty-slide[..]`, without header or footer (the deck imports Touying), which takes no `color:` nor `title:`;
+    for a colored page, `#empty-slide(config: config-page(fill: colors.tertiary))[..]`. A `==` without text gives a
+    slide without a title, with the footer, and `#ending-slide[..]` closes the deck (@cover)],
   [`local`, `codly-range`, `no-codly`; codly imported by the theme; `#local(breakable: true)` for a block that
     splits],
   [the theme has its own code box, which never splits; for codly (and its blocks that split), `#import "@preview/codly:2.0.0" as codly` and

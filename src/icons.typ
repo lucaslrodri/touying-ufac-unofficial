@@ -13,7 +13,8 @@
 /// badges of exercises and examples, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
 /// for code; colored icons for the pills of the code blocks: the logos of Devicon (Typst from Simple Icons), the
 /// terminal of Material Icon Theme for the shell and the log of VSCode Icons for the output of a program. A role is
-/// also a valid name for `icon`: `#icon("warning")`.
+/// also a valid name for `icon`: `#icon("caution")`. `warning` and `caution` are the same icon, under the name of
+/// 0.2.0 and the one of the callout.
 ///
 /// #test(
 ///   `theme-icons.warning == "octicon:alert-16"`,

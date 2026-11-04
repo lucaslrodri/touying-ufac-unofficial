@@ -127,6 +127,10 @@ The answer.
 
 See @exercise-a.
 
+// `sep:` gives another separator after the word: "Solution:"
+#solution(sep: ":")
+The solution.
+
 // closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!"; the
 // contact of `config-info(contact:)`, when there is one, goes in the body: `#info("contact")`
 #ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]

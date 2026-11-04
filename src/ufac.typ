@@ -98,8 +98,8 @@
 ) = luma(c).components().first() >= 70%
 // ---------- exercises and examples ----------
 /// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
-/// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." in
-/// bold. With a `#pause` right before or right after it, the solution appears on the next subslide, opening included.
+/// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." /
+/// "Solución." in bold. With a `#pause` right before or right after it, the solution appears on the next subslide, opening included.
 /// Written alone, `#solution`, the word ends with a period; `#solution(sep: ":")` ends it with another separator.
 ///
 /// ```typ
@@ -115,8 +115,8 @@
   sep: ".",
 ) = metadata((kind: "ufac-solution", word: "solution", sep: sep))
 
-/// The marker of the start of the answer of an exercise: the same as @solution, opened by "Resposta." / "Answer.",
-/// with the same separator.
+/// The marker of the start of the answer of an exercise: the same as @solution, opened by "Resposta." / "Answer." /
+/// "Respuesta.", with the same separator.
 /// -> content
 #let answer(
   /// What follows the word, in bold: `"."`, `":"`, `[:\ ]` or any content. -> str | content
