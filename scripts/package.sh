@@ -95,13 +95,16 @@ if $check; then
     fail "$name:$version is already on Typst Universe"
   fi
 
-  # the checker of the pull requests of typst/packages, offline, from the package cache the compilation above filled
-  if docker info > /dev/null 2>&1; then
+  # the checker of the pull requests of typst/packages, offline, from the package cache the compilation above filled.
+  # Not under act: its container sees the Docker of the machine, which cannot mount the folders of the container
+  if [ -n "${ACT:-}" ]; then
+    echo "note: under act, the checker of typst/packages was skipped" >&2
+  elif docker info > /dev/null 2>&1; then
     case $out in /*) data=$out ;; *) data=$PWD/$out ;; esac
     cache=$(typst info -f yaml | sed -n 's/^ *package-cache-path: *//p')
     docker run --rm -v "$data:/data" -v "$cache:/.cache/typst/packages:ro" ghcr.io/typst/package-check check ||
       fail "the checker of typst/packages refused the package"
-  elif [ -n "${CI:-}" ] && [ -z "${ACT:-}" ]; then
+  elif [ -n "${CI:-}" ]; then
     fail "the CI needs Docker for the checker of typst/packages"
   else
     echo "note: Docker is not running; the checker of typst/packages was skipped" >&2
