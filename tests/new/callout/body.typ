@@ -16,6 +16,15 @@
   #note(title: [Aside.], icon: none)[No icon, another title.]
 ]
 
+== The text on the same line and on the next
+#cols[
+  #remark[The same text.]
+][
+  #remark[
+    The same text.
+  ]
+]
+
 == An icon given as content
 #cols[
   #tip(icon: text(weight: "bold")[Σ])[Content as the icon takes the color of the callout.]

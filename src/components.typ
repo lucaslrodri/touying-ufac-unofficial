@@ -344,6 +344,8 @@
   body,
 ) = block(width: 100%, fill: c.lighten(92%), stroke: (left: 3pt + c), radius: (left: 0pt, right: 4pt),
   inset: (left: 0.8em, right: 1em, y: 0.65em), breakable: false, {
+    // a body that starts on a new line (`#tip[\n  text]`) starts with a space, which would add to the one after the label
+    let body = _trim(_children(body)).join()
     set list(marker: _markers(c))
     set text(fill: colors.neutral-darkest)
     _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em },
