@@ -4,7 +4,7 @@
 // and passes to the theme (`ufac-theme(codly: codly)`), the same look is applied through codly's own theme
 // (`codly-ufac-theme`, plain data) and rules. Inside a coloured box (an exercise, an `emph-box`) a block keeps its look.
 #import "constants.typ": colors
-#import "utils.typ": _tr
+#import "utils.typ": _tr, _words
 #import "components.typ": icon
 
 /// The syntax colours of the code blocks: a tmTheme with the palette of the theme and general scopes (comments in
@@ -245,8 +245,10 @@
   let extra = self.store.at("code-languages", default: (:))
   let langs = code-languages + extra.pairs().map(((k, l)) => (k, (name: l.at("name", default: k),
     icon: l.at("icon", default: none)))).to-dict()
-  // the output keeps the name and the icon of the theme, even when the deck's dictionary has a `text`
-  let langs = langs + _output-langs.map(k => (k, code-languages.at(k))).to-dict()
+  // the output keeps the name and the icon of the theme, even when the deck's dictionary has a `text`; its name is the
+  // word of the language of the deck, read here: inside a code block `text.lang` is not the deck's
+  let out = _words(self.store.at("lang", default: "pt")).output
+  let langs = langs + _output-langs.map(k => (k, code-languages.at(k) + (name: out))).to-dict()
   let codly = self.store.at("codly", default: none)
   if codly == none { _native(langs, body) } else { _with-codly(codly, langs, body) }
 }
