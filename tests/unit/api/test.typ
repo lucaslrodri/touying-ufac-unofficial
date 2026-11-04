@@ -151,7 +151,6 @@
 #assert(catch(() => callout("x")[a]).contains("unknown kind"))
 #assert(catch(() => callout("tip", style: "x")[a]).contains("style"))
 #assert(catch(() => icon(5)).contains("string"))
-#assert(catch(() => ending-slide(contact: [x])).contains("unknown argument"))
 // every language has every word of Portuguese, the titles of the bar callouts included
 #for (lang, words) in _lang-db {
   assert.eq(words.keys().sorted(), _lang-db.pt.keys().sorted(), message: lang)

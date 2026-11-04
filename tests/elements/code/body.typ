@@ -42,7 +42,7 @@ In the `==` header (next slide) and in the `=` title the chip uses the `primary`
     y = x + 1
     ```
   ]
-  The shell, in `bash` or `sh` ("Shell"), has the terminal icon:
+  The shell, in `bash` or `sh` ("Shell"), has a coloured terminal:
   ```sh
   ls *.typ
   ```

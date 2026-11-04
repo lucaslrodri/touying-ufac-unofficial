@@ -1,4 +1,4 @@
-/// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer, columns, the box of an exercise and the closing slide on 4:3 paper).
+/// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer, columns, the box of an exercise and the closing slide on 4:3 paper), in the default language (Portuguese) with English text.
 #import "../../common.typ": *
 #show: ufac-theme.with(aspect-ratio: "4-3", test-info)
 

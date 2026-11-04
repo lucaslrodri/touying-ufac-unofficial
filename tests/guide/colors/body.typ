@@ -25,7 +25,7 @@ Derived in RGB: `darken(75% / 55% / 30%)` and `lighten(30% / 60% / 85%)`; `neutr
 #set text(size: .8em)
 #let sw(c) = box(fill: c, width: 1.4em, height: .9em, radius: 2pt, baseline: .1em)
 #table(columns: (auto, auto, 1fr), [Family], [Base], [Where it appears],
-  [`primary`], [#sw(colors.primary) `#0C4DA2`], [`=`/`==` titles, `===`/`====` pills, `->` arrows, `#alert`, enum numbers, tables, `>` box and 2nd quote],
+  [`primary`], [#sw(colors.primary) `#0C4DA2`], [`=`/`==` titles, `===`/`====` pills, `->` arrows, `#alert`, enum numbers, tables, `>` box, `#remark` and 2nd quote],
   [`secondary`], [#sw(colors.secondary) `#FFBF14`], [`-` markers, `#secondary`, `==x==` highlight (`-lighter`), 1st `"quote"`],
   [`tertiary`], [#sw(colors.tertiary) `#BE1E2D`], [`#tertiary`, exercises, problem boxes, `#caution`, 4th `"quote"`],
   [`quaternary`], [#sw(colors.quaternary) `#09B081`], [`#quaternary`, examples, advantage boxes, `#tip`, 3rd `"quote"`],
