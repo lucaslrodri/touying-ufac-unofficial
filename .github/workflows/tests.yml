@@ -31,9 +31,14 @@ jobs:
       - name: Download fonts
         run: sh scripts/fonts.sh
 
-      # The decks and the tests import `@preview/touying-ufac-unofficial:<version>`: point it to this checkout.
-      - name: Link the package
-        run: sh scripts/link.sh
+      # The template, the example decks and the tests that include them import `@preview/touying-ufac-unofficial:<version>`,
+      # which scripts/with-preview.sh links to this checkout with gotpm (`gotpm install -e -n preview`, in a package
+      # folder of the run); its version is pinned here.
+      - name: Install gotpm
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -sSfL https://github.com/npikall/gotpm/releases/download/v0.8.0/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Setup Tytanic
         uses: typst-community/setup-tytanic@v1
@@ -41,7 +46,7 @@ jobs:
           tytanic-version: 0.4.1
 
       - name: Run test suite
-        run: tt run --font-path fonts --no-fail-fast
+        run: sh scripts/with-preview.sh tt run --font-path fonts --no-fail-fast
 
       # Not under act: its artifact server does not speak the protocol of upload-artifact v6+ (act 0.2.89).
       - name: Archive test results
@@ -72,8 +77,14 @@ jobs:
       - name: Download fonts
         run: sh scripts/fonts.sh
 
-      - name: Link the package
-        run: sh scripts/link.sh
+      # The template, the example decks and the tests that include them import `@preview/touying-ufac-unofficial:<version>`,
+      # which scripts/with-preview.sh links to this checkout with gotpm (`gotpm install -e -n preview`, in a package
+      # folder of the run); its version is pinned here.
+      - name: Install gotpm
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -sSfL https://github.com/npikall/gotpm/releases/download/v0.8.0/install.sh | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Read the minimum version
         id: manifest
@@ -87,8 +98,8 @@ jobs:
       - name: Compile the template and the example
         run: |
           typst --version
-          typst compile --font-path fonts --ignore-system-fonts template/main.typ /tmp/template.pdf
-          typst compile --font-path fonts --ignore-system-fonts example/main.typ /tmp/example.pdf
+          sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts template/main.typ /tmp/template.pdf
+          sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts example/main.typ /tmp/example.pdf
 
       # The errors raised when the deck is laid out, which `catch` in tests/unit/api cannot reach.
       - name: Check the error messages

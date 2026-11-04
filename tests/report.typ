@@ -1,6 +1,6 @@
 // Report of the test suite: for every test, its name, its synopsis, its code and, beside it, its reference pages.
 // Built by scripts/report.sh, which writes the list of the tests (.report.json) first; see that script.
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "../src/lib.typ": colors
 
 #set document(title: [touying-ufac-unofficial: test report])
 #set page(paper: "a4", margin: (x: 1.3cm, y: 1.5cm), numbering: "1")

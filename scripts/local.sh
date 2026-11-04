@@ -2,11 +2,16 @@
 # Runs on this machine, without Docker, what .github/workflows/tests.yml runs on the CI (act, in CONTRIBUTING.md, runs
 # the workflows themselves): the Tytanic suite, the two decks and the packaging into a temporary folder, which checks
 # the list of published files and the version of every import; the error messages raised at layout (scripts/errors.sh);
-# then that README.md is in step with the decks (scripts/readme.sh). The package must be linked already: scripts/link.sh is run by hand, once per version.
+# then that README.md is in step with the decks (scripts/readme.sh).
+#
+# The template, the example decks and the tests that include them import `@preview/touying-ufac-unofficial:<version>`:
+# the script runs itself through scripts/with-preview.sh, which links that name to this working copy with gotpm while
+# it runs, never in the system's package folder.
 #
 # Called by .githooks/pre-commit on every commit, once `git config core.hooksPath .githooks` is set; a failure aborts
 # the commit and `git commit --no-verify` skips the checks. It checks the working copy, not the index.
 set -eu
+[ -n "${TOUYING_UFAC_PREVIEW:-}" ] || exec sh "$(dirname "$0")/with-preview.sh" sh "$0" "$@"
 cd "$(dirname "$0")/.."
 
 fail() {
@@ -29,7 +34,6 @@ fi
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
-sh scripts/link.sh --check
 tt run $tt_fonts --no-fail-fast
 for deck in template example; do
   typst compile $typst_fonts "$deck/main.typ" "$tmp/$deck.pdf"

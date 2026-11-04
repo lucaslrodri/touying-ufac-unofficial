@@ -12,6 +12,9 @@
 # `sh scripts/readme.sh --check` writes nothing: it fails when README.md is out of date and only warns when a picture
 # is, since the pixels depend on the release of the installed fonts. scripts/local.sh runs it before every commit.
 set -eu
+# The decks import `@preview/touying-ufac-unofficial:<version>`: the script runs itself through scripts/with-preview.sh,
+# which links that name to this working copy while it runs.
+[ -n "${TOUYING_UFAC_PREVIEW:-}" ] || exec sh "$(dirname "$0")/with-preview.sh" sh "$0" "$@"
 cd "$(dirname "$0")/.."
 
 decks="template example"

@@ -1,8 +1,8 @@
-// Common preamble of the Tytanic tests: imports the package (`@preview/touying-ufac-unofficial:0.3.0`, i.e. this very
-// folder linked by scripts/link.sh), defines `setup` (theme + fixed config-info, `test-info`; not `info`, the name of the
+// Common preamble of the Tytanic tests: imports the theme by its entrypoint (`src/lib.typ`, by its path: the root is
+// the repository, as in Tytanic, tinymist and `typst compile --root .`), defines `setup` (theme + fixed config-info, `test-info`; not `info`, the name of the
 // theme's `#info`) and the `demo` helper (code on the left, the same text evaluated on the right).
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "../src/lib.typ": *
 #import "placeholder.typ": placeholder
 
 #let test-info = config-info(

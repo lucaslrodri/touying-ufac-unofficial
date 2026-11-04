@@ -9,8 +9,11 @@ repository = "https://github.com/lucaslrodri/touying-ufac-unofficial"
 keywords = ["touying", "slide", "theme", "ufac", "universidade federal do acre", "university", "lecture", "acre"]
 categories = ["presentation"]
 compiler = "0.14.0"
-# No `exclude`: only what the package needs is published (scripts/package.sh); example/, tests/, docs/ and scripts/ stay
-# in the repository.
+# Not part of the package on Typst Universe: the example decks, the tests, the manual and its sources, the scripts, the
+# development guide and the configuration of git, the CI, act and VS Code. gotpm (install, publish) leaves out these and
+# what .gitignore ignores; scripts/package.sh assembles the same files.
+exclude = [".actrc", ".gitattributes", ".githooks", ".github", ".vscode", "CONTRIBUTING.md", "docs", "example", "scripts",
+  "tests"]
 
 [template]
 path = "template"
@@ -28,3 +31,7 @@ tests = "tests"
 ppi = 96.0
 max-delta = 1
 max-deviations = 0
+
+# Publishing (gotpm, CONTRIBUTING.md): `gotpm publish` runs this gate first and stops when it fails.
+[tool.gotpm]
+pre-publish-hook = ["sh scripts/package.sh --check"]

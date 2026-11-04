@@ -1,5 +1,5 @@
 /// Synopsis: compile-only test (no `ref/`): checks the exported API of the theme with assertions.
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "../../../src/lib.typ": *
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
