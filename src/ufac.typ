@@ -192,57 +192,74 @@
   )
 }
 
-/// The box of an exercise or example, as in the handout of the MATLAB course, filling the slide: the fill in the colour
+/// The box of an exercise or example, as in the handout of the MATLAB course, drawn on the page: the fill in the colour
 /// lightened 95%, the badge with the title over the top border and the footer of the slide over the bottom one, in the
 /// colour of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
-/// them). Inside it only what has no style of its own follows the colour of the item (bold text, markers, arrows,
-/// highlights, the numbers of the lists, inline code, links); a code block, a callout and an `emph-box` keep theirs.
-/// -> content
-#let _item-box(
+/// them). It is the background of every page of the slide, so a content longer than one page goes on to the next one,
+/// in the same box; the content itself flows in the body of the page, inside the box. The geometry is in absolute
+/// lengths: the text of the slides is 22pt and the one of the footer 20pt.
+/// -> dictionary
+#let _item-page(
   /// Touying's `self`. -> dictionary
   self,
   /// Colour of the item. -> color
   c,
   /// The content of the badge. -> content
   badge,
+) = {
+  let em = 22pt
+  // the margin of the box to the page, the top of the badge, the room under the footer, the radius of the corners,
+  // the thickness of the lines of the footer (0.1em of 20pt) and its height (1.5em of 20pt)
+  let (mx, badge-top, below, r, thick, foot-h) = (1.2 * em, 1.3 * em, 0.5 * em, 6pt, 2pt, 30pt)
+  // one line: the strut of `_pill-line` (1em) and the vertical inset (2 × 0.38em); a long title shrinks to fit
+  let badge-h = 1.76 * em
+  let background = context {
+    let (w, h) = (page.width, page.height)
+    let (y-top, y-bottom) = (badge-top + badge-h / 2, h - below - foot-h / 2)
+    let (bw, bh) = (w - 2 * mx, y-bottom - y-top)
+    place(top + left, dx: mx, dy: y-top, {
+      place(rect(width: bw, height: bh, fill: c.lighten(95%), radius: r))
+      place(_box-outline(bw, bh, r, thick + c))
+    })
+    place(top + left, dx: mx + 0.8 * em, dy: badge-top, box(fill: c, radius: 3pt, inset: (x: 0.7 * em, y: 0.38 * em),
+      text(size: em, fill: white, weight: "bold", _in-box(c, utils.fit-to-width(grow: false, bw - 3.2 * em,
+        _pill-line(badge)), kind: "pill"))))
+  }
+  // the footer centred on the bottom border, between the curves of the corners: its lines close the box. It is the
+  // footer of the page, not part of the background, which is laid out before the slide counter steps. Touying lays
+  // the footer out across the whole width of the page, down to its bottom
+  let footer = context place(bottom + left, dx: mx + r, dy: -below, block(width: page.width - 2 * (mx + r),
+    height: foot-h, text(size: 20pt, _footer(self, color: c, lift: false))))
+  // the body inside the box: 1em from the sides, 0.75em under the badge, 0.6em above the footer
+  config-page(header: none, footer: footer, background: background,
+    margin: (top: badge-top + badge-h + 0.75 * em, bottom: below + foot-h + 0.6 * em, x: mx + em))
+}
+
+/// Inside the box of an item only what has no style of its own takes its colour (bold text, markers, arrows,
+/// highlights, inline code, links), as in an `emph-box`, plus the numbers of the lists, always blue elsewhere; a code
+/// block, a callout and an `emph-box` keep theirs.
+/// -> content
+#let _in-item(
+  /// Colour of the item. -> color
+  c,
   /// The body. -> content
   body,
 ) = {
-  let badge = box(fill: c, radius: 3pt, inset: (x: 0.7em, y: 0.38em),
-    text(fill: white, weight: "bold", _in-box(c, _pill-line(badge), kind: "pill")))
-  // the thickness of the lines of the footer (0.1em of its 20pt text), its height (1.5em) and the radius of the corners
-  let thick = 2pt
-  let foot-h = 30pt
-  let r = 6pt
-  layout(size => {
-    let h = measure(badge, width: size.width - 2em).height
-    let box-h = size.height - h / 2 - foot-h / 2
-    pad(top: h / 2, bottom: foot-h / 2, block(width: 100%, height: box-h, fill: c.lighten(95%), radius: r,
-      breakable: false, {
-        place(top + left, _box-outline(size.width, box-h, r, thick + c))
-        place(top + left, dx: 0.8em, dy: -h / 2, badge)
-        // the footer centred on the bottom border, between the curves of the corners: its lines close the box
-        place(bottom + left, dx: r, dy: foot-h / 2, block(width: size.width - 2 * r, height: foot-h,
-          text(size: 20pt, _footer(self, color: c, lift: false))))
-        block(width: 100%, inset: (x: 1em, top: h / 2 + 0.75em, bottom: foot-h / 2 + 0.6em), {
-          // as inside an `emph-box`, plus the numbers of the lists, always blue elsewhere
-          set list(marker: _markers(c))
-          let num(patterns) = (..nums) => {
-            let d = nums.pos().len()
-            text(fill: c, weight: "bold", numbering(patterns.at(calc.min(d, patterns.len()) - 1), nums.at(-1)))
-          }
-          set enum(full: true, numbering: num(("1.", "a)", "i.")))
-          _in-box(c, _flow(body))
-        })
-      }))
-  })
+  set list(marker: _markers(c))
+  let num(patterns) = (..nums) => {
+    let d = nums.pos().len()
+    text(fill: c, weight: "bold", numbering(patterns.at(calc.min(d, patterns.len()) - 1), nums.at(-1)))
+  }
+  set enum(full: true, numbering: num(("1.", "a)", "i.")))
+  _in-box(c, body)
 }
 
 /// The marker of the continuation of an exercise or example after a `---`, with the heading of the item.
 #let _continue-kind = "ufac-continue"
 
-/// Marks the continuations of the exercises and examples. A `---` inside an exercise breaks the page, and the exercise
-/// goes on in the next slide, until a `==` heading of another kind. Touying calls the slide of a continuation without
+/// Marks the continuations of the exercises and examples. A `---` (or a `#pagebreak()`) inside an exercise breaks the
+/// page, and the exercise goes on in the next slide, until a `==` heading of another kind. Touying calls the slide of a
+/// continuation without
 /// headings (`self.headings` is empty), so it would not know that it is an exercise, and its box changes the margins and
 /// drops the header and the footer, which is decided before any `context`. So, before Touying splits the deck, a marker
 /// with the heading of the item goes right after every `---` inside an exercise or example (also in the parts with
@@ -269,7 +286,10 @@
         out.push(inner)
       } else {
         out.push(c)
-        if h != none and c in ([—], [---]) { out.push(metadata((kind: _continue-kind, heading: h))) }
+        // Touying breaks the slide at a `---` and at a `#pagebreak()` alike
+        if h != none and (c in ([—], [---]) or c.func() == pagebreak) {
+          out.push(metadata((kind: _continue-kind, heading: h)))
+        }
       }
     }
     (out.join(), h)
@@ -290,9 +310,9 @@
   if m != none and _is-meta(m, _continue-kind) { m.value.heading }
 }
 
-/// The slide of an exercise or example: the box of the item filling the slide, without the header (the badge carries
-/// the title) and without the footer of the page (it goes into the box, in the colour of the item). The veil of
-/// `#pause` takes the fill of the box.
+/// The slide of an exercise or example: the box of the item on the page, without the header (the badge carries the
+/// title) and without the footer of the page (it goes into the box, in the colour of the item). The veil of `#pause`
+/// takes the fill of the box.
 /// -> content
 #let _item-slide(
   /// Touying's `self`. -> dictionary
@@ -322,10 +342,12 @@
     if type(s) == dictionary { s.page = s.at("page", default: (:)) + (fill: fill) }
     _cover(self: s, ..args, body)
   }
-  let self = utils.merge-dicts(self, config-page(header: none, footer: none,
-    margin: (top: 1.3em, bottom: 0.5em, x: 1.2em)), config-methods(cover: cover), config)
-  touying-slide(self: self, repeat: repeat, composer: composer,
-    setting: body => _item-box(self, color, badge, setting(body)), ..bodies.map(_split-solution))
+  let self = utils.merge-dicts(self, _item-page(self, color, badge), config-methods(cover: cover), config)
+  // as on a normal slide: every body through `_flow` and a top-level `===` repeated on the overflow pages
+  let bodies = bodies.map(_split-solution).map(_flow)
+  if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
+  touying-slide(self: self, repeat: repeat, composer: composer, setting: body => _in-item(color, setting(body)),
+    ..bodies)
 }
 
 /// Default slide of the theme, with header and footer. Every `==` heading opens one, so it is rarely called by

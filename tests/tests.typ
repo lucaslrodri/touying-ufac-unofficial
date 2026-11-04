@@ -53,6 +53,7 @@
 #include "./sections/lone-shorthands/body.typ"
 #include "./sections/exercises/body.typ"
 #include "./sections/items/body.typ"
+#include "./sections/items-pages/body.typ"
 #include "./sections/animations/body.typ"
 #include "./sections/pause-cover/body.typ"
 #include "./sections/explicit-slides/body.typ"

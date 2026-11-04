@@ -219,8 +219,9 @@ keep their own look.
 
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
 line and "Solution." / "Answer." in bold. With a `#pause` right before or after the marker, the solution appears on
-the next subslide. A `---` inside an exercise breaks the page and the exercise goes on in the next slide, with the same
-number, until a slide of another kind.
+the next subslide. An exercise or example can take several pages: a content longer than one page goes on to the next
+one by itself, in the same box, with the same number and the `===` subtitle; a `---` or a `#pagebreak()` breaks the page
+by hand. The item goes on until a slide of another kind.
 
 The icon is the name of an `icon`, any content (an image) or `none`, which leaves only the text. It is centered on the
 capitals of the text, whatever its height. `ufac-theme(exercise-icon:, example-icon:)` changes it in the whole deck;
