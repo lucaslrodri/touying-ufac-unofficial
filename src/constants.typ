@@ -1,6 +1,6 @@
-// touying-ufac-unofficial — constants: the color palette, the UFAC logo (its SVG and `ufac-logo-image`, which draws it in
-// the colours of the theme) and the code-block language table. Everything else derived from these values (tones,
-// `config-colors`, the footer) lives in the other modules.
+// touying-ufac-unofficial — constants: the color palette and the UFAC logo (its SVG and `ufac-logo-image`, which draws
+// it in the colours of the theme). Everything else derived from these values (tones, `config-colors`, the footer)
+// lives in the other modules.
 
 /// Seven-tone ramp of a base color, derived in RGB: `darkest`/`darker`/`dark` by `darken(75% / 55% / 30%)` and
 /// `light`/`lighter`/`lightest` by `lighten(30% / 60% / 85%)`. The base tone itself is inserted by the caller.
@@ -68,16 +68,6 @@
   }
   d
 }
-
-/// Languages known to codly in code blocks. The `name` is what `#local(display-name: true)[…]` shows as a label;
-/// `text` is labelled "saída" (output), in Portuguese like the other user-facing defaults of the theme.
-/// -> dictionary
-#let code-languages = (
-  python: (name: "Python", color: rgb("#3776AB")),
-  typst: (name: "Typst", color: rgb("#239DAD")),
-  bash: (name: "Bash", color: rgb("#4EAA25")),
-  text: (name: "saída", color: luma(120)),
-)
 
 // The logo lives in its own file, assets/ufac-logo.svg: it is copyrighted by the Universidade Federal do Acre (UFAC) and
 // is not covered by the license of this package (see the License section of the README).

@@ -1,0 +1,44 @@
+/// Synopsis: code blocks through codly 2 (`ufac-theme(codly: codly)`): the same look as without codly, plus codly's file name, highlights, range and diff; `code-languages` adds a language.
+#import "@preview/touying:0.7.4": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/codly:2.0.0" as codly
+#import "../../common.typ": info
+#show: ufac-theme.with(lang: "en", codly: codly, code-languages: (rust: (name: "Rust", icon: none)), info)
+
+== Code through codly 2
+The same look as without codly: the box, the numbers, the language pill and the output in green.
+```python
+def mean(values):
+    return sum(values) / len(values)
+```
+```text
+8.333333333333334
+```
+A language added with `code-languages` (no icon):
+```rust
+fn main() {}
+```
+
+== codly's own features
+#codly.new(
+  ```python
+  def mean(values):
+      total = sum(values)
+      return total / len(values)
+  ```,
+  file: "mean.py",
+  highlights: (
+    (line: 2, start: 13, end: 25, tag: [sum]),
+    (line: 3, start: 12, end: 31, fill: colors.quaternary),
+  ),
+)
+#codly.new(raw("-return total / 2\n+return total / len(values)", lang: "diff-py", block: true))
+#[
+  #show: codly.set_(range: (2, 3))
+  ```python
+  import math
+  x = math.sqrt(2)
+  y = x + 1
+  print(y)
+  ```
+]

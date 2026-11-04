@@ -1,93 +1,60 @@
 // Body of the `elements/code` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 #import "../../common.typ": *
 
-== Code: inline `raw` and blocks (codly)
-Inline in the text: `x = 1`, `#emph-box[...]`, `typst compile slides.typ`, in a gray chip at 0.85em. Blocks at 0.75em, numbered by codly, without a language header; long lines wrap with `smart-indent`:
+== Code: inline `raw` and blocks
+Inline in the text: `x = 1`, `#emph-box[...]`, `typst compile slides.typ`, in a gray chip at 0.85em. Blocks at 0.75em in the box of the theme: a light fill, a bar on the left, square corners, the line numbers and the language in a pill; long lines wrap:
 
 ```python
 def mean(values, digits=2):
     total = 0
     for v in values:
-        total += v                      # running total; long line to show the wrap with codly's smart-indent
+        total += v                      # running total; a long line to show how a line of code wraps in the box
     return round(total / len(values), digits)
 ```
 #cols[
-  Output (`text`), without numbers via `#local(number-format: none)`:
-  #local(number-format: none)[
+  The output of a program (`text`): the green box, without numbers:
   ```text
   item 1: value 0.693
   item 2: value 0.512 ==no highlight==
   ```
-  ]
 ][
-  Highlight and language name: `#local(display-name: true, highlights: (..))`:
-  #local(display-name: true, highlights: ((line: 2, fill: colors.secondary-lighter),))[
-  ```python
-  x = mean(values)
-  y = round(x, 1)
+  The other languages of the theme (`bash`, `matlab`):
+  ```bash
+  typst compile slides.typ
   ```
-  ]
+  ```matlab
+  x = linspace(0, 1, 5);
+  ```
 ]
 
 ---
 
 === Inline code in every context: pill with `code` (dark fill, light text)
-In running text the chip is gray: `x = 1`, and the shorthands are off inside it: `==x==`, `> a`, `-> b`, `~~c~~`, `~d~`. In boxes, light tones of the container color (fill `-lightest`, border `-lighter`, text `-dark`):
+In running text the chip is gray: `x = 1`, and the shorthands are off inside it: `==x==`, `> a`, `-> b`, `~~c~~`, `~d~`. In boxes, light tones of the container color (fill `-lightest`, a light border, text `-dark`):
 #cols[#emph-box(color: colors.primary)[`primary`]][#emph-box(color: colors.secondary)[`secondary`]][#emph-box(color: colors.tertiary)[`tertiary`]][#emph-box(color: colors.quaternary)[`quaternary`]][#emph-box(color: colors.neutral-dark)[`neutral`]]
 In the `==` header (next slide) and in the `=` title the chip uses the `primary` tones.
+
+== Code blocks in a box, and unknown languages
 #cols[
-  `#local(range: (2, 3))` shows only a slice:
-  #local(range: (2, 3))[
-  ```python
-  import math
-  x = math.sqrt(2)
-  y = x + 1
-  print(y)
-  ```
+  A block inside a colored box keeps its look:
+  #emph-box(color: colors.tertiary, title: [Box])[
+    ```python
+    y = x + 1
+    ```
   ]
 ][
-  Another configured language (`bash`) and `#no-codly[..]` (plain Typst raw):
-  ```bash
-  typst compile slides.typ
+  A language the theme does not know: no pill.
+  ```rust
+  fn main() { println!("hi"); }
   ```
-  #no-codly[
-  ```typst
-  #let x = 1
+  A block without a language:
   ```
-  ]
+  plain block
+  ```
 ]
 
 == Title `==` with `raw` in the header: chip in the `primary` tones
 ```typst
 // The shorthands are off in a raw block: ==x==, > a, -> b, ~~c~~, ~d~, "quote"
+#let x = 1
 ```
-
-== Code that splits: `#local(breakable: true)`
-A code block never splits by default (it moves whole to the next page); with `#local(breakable: true)` the lines and
-the box split across pages:
-#local(breakable: true)[
-```python
-def trapezoid(f, a, b, n=100):
-    """Trapezoidal rule with n intervals."""
-    h = (b - a) / n
-    total = (f(a) + f(b)) / 2
-    for i in range(1, n):
-        total += f(a + i * h)
-    return h * total
-
-def simpson(f, a, b, n=100):
-    """Simpson's rule (n even)."""
-    if n % 2:
-        n += 1
-    h = (b - a) / n
-    total = f(a) + f(b)
-    for i in range(1, n):
-        total += (4 if i % 2 else 2) * f(a + i * h)
-    return h * total / 3
-
-if __name__ == "__main__":
-    import math
-    print(trapezoid(math.sin, 0, math.pi))
-    print(simpson(math.sin, 0, math.pi))
-```
-]

@@ -1,20 +1,71 @@
-# Localized names of the theme (linguify database): the pill of `<exercise>`/`<example>` slides and the "Part N:" prefix
-# of section slides. Selected by `text.lang` (set from the `lang` parameter of `ufac-theme`); an unknown language falls
-# back to Portuguese. Each name can be overridden with `exercise-name`/`example-name`/`part-name`.
-[conf]
-default-lang = "pt"
+# Localized words of the theme, by language (the `lang` of `ufac-theme`, read from `text.lang`); an unknown language
+# falls back to Portuguese. Read by `_words` and `_tr` (src/utils.typ).
+#   exercise, example, part     the pill of the exercise and example slides, the label of the section slides
+#   solution, answer            the words that open `#solution` and `#answer`
+#   warning, tip, info, note    the titles of `callout`
+#   output                      the label of the output of a program in a code block
+#   thanks                      the title of `#ending-slide` without a title
+#   and                         the last separator of a list of names ("A, B e C")
+#   months, date                the date in full; in `date`, {day}, {month} and {year} are replaced
+#   instructors                 the author label of `kind: "course"`
+#   tcc, dissertation, thesis   the tag of the cover of those kinds
 
 [lang.pt]
 exercise = "Exercício"
 example = "Exemplo"
 part = "Parte"
+solution = "Solução."
+answer = "Resposta."
+warning = "Atenção"
+tip = "Dica"
+info = "Observação"
+note = "Nota"
+output = "Saída"
+thanks = "Obrigado!"
+and = "e"
+months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
+date = "{day} de {month} de {year}"
+instructors = "Ministrantes"
+tcc = "Trabalho de Conclusão de Curso"
+dissertation = "Dissertação de Mestrado"
+thesis = "Tese de Doutorado"
 
 [lang.en]
 exercise = "Exercise"
 example = "Example"
 part = "Part"
+solution = "Solution."
+answer = "Answer."
+warning = "Warning"
+tip = "Tip"
+info = "Remark"
+note = "Note"
+output = "Output"
+thanks = "Thank you!"
+and = "and"
+months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+date = "{month} {day}, {year}"
+instructors = "Instructors"
+tcc = "Undergraduate Thesis"
+dissertation = "Master's Dissertation"
+thesis = "Doctoral Thesis"
 
 [lang.es]
 exercise = "Ejercicio"
 example = "Ejemplo"
 part = "Parte"
+solution = "Solución."
+answer = "Respuesta."
+warning = "Atención"
+tip = "Consejo"
+info = "Observación"
+note = "Nota"
+output = "Salida"
+thanks = "¡Gracias!"
+and = "y"
+months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+date = "{day} de {month} de {year}"
+instructors = "Instructores"
+tcc = "Trabajo de Fin de Grado"
+dissertation = "Tesis de Maestría"
+thesis = "Tesis Doctoral"

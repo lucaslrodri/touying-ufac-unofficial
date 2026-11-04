@@ -1,7 +1,6 @@
 // touying-ufac-unofficial manual (PDF), in one file: every `=` heading is a chapter. Build with `sh docs/build.sh`,
 // which also renders the slide examples.
 #import "template.typ": *
-#import "../src/icons.typ" as icons
 
 #show: project.with(
   title: package.name,
@@ -26,12 +25,12 @@ A deck imports Touying and the theme, applies `ufac-theme` and usually starts wi
 
 ```typ
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.2.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 ```
 
 #slide-example("cover")
 
-`typst init @preview/touying-ufac-unofficial:0.2.0` creates a deck from the package template, and `example/main.typ`
+`typst init @preview/touying-ufac-unofficial:0.3.0` creates a deck from the package template, and `example/main.typ`
 shows the elements of the syntax in a short deck. From here on, every example shows the source on the left and the result on
 the right: a real slide when the feature belongs to the slide (headers, pills, continuations), otherwise the content
 alone, laid out by the same rules as in a deck.
@@ -79,17 +78,16 @@ the text language and those three names, and each name can still be overridden.
 
 == Dependencies <dependencies>
 
-#let sources = ("lib.typ", "ufac.typ", "components.typ", "utils.typ").map(f => read("../src/" + f)).join()
+#let sources = ("lib.typ", "ufac.typ", "components.typ", "utils.typ", "icons.typ", "code.typ").map(f => read("../src/" + f)).join()
 #let found = sources.matches(regex("@preview/([a-z0-9-]+):([0-9.]+)")).map(m => m.captures).dedup().sorted()
 #let roles = (
   touying: [the slide engine; the deck imports it too, with the same version],
-  codly: [code blocks; its functions are re-exported by the theme],
-  linguify: [localized names (Exercise, Example, Part)],
+  iconify: [the icons of a collection the deck provides (`provide-icons`); the theme's own icons are shipped with it],
 )
 
 The versions below are read from the sources of the package, so this table cannot go stale. They are fetched
-automatically by Typst. Newer major releases (touying 0.8, codly 2) require Typst 0.15; this version stays on the
-ones above, which also work with Typst 0.14.
+automatically by Typst. touying 0.8 requires Typst 0.15; this version stays on 0.7.4, which also works with Typst 0.14.
+codly is optional: a deck that wants it imports codly 2 itself and passes it to the theme (see @code).
 
 #table(
   columns: (auto, auto, 1fr),
@@ -483,19 +481,25 @@ The update rule is
 $ bold(w) <- bold(w) - eta nabla E(bold(w)) $
 ```
 
-== Code
+== Code <code>
 
-Inline `raw` is the chip of @inline. Code blocks go through codly: a gray box, gray line numbers, no zebra, never
-split across pages unless `#local(breakable: true)[..]` (or `codly(breakable: true)`) allows it; the box then splits
-with the lines. The theme re-exports codly, and its `local` wraps codly's for per-block settings;
-`#codly-range(..)` and `#no-codly[..]` work as usual. The languages with a label are `python`, `typst`, `bash` and
-`text` (labelled "saída").
+Inline `raw` is the chip of @inline. The theme does not depend on codly: a code block goes in the box of the theme, a
+light blue fill with a bar on the left and square corners, at 0.75em, with the line numbers on the left (a long line
+wraps and continues under the code), the language in a white pill with its logo at the top right and the syntax colours
+of the theme (`ufac-syntax`). The output of a program, a block in `text`, goes in a green box without numbers. A block
+never splits across pages, and inside a coloured box (an `emph-box`, an exercise) it keeps its look. The languages with a
+pill are `python`, `typst`, `matlab`, `bash` and `text`; a block in another language has no pill, and
+`ufac-theme(code-languages:)` adds languages.
 
 #slide-example("code")
 
-#reference("components", "local")
+With codly 2, the deck imports it and passes it to the theme, `ufac-theme(codly: codly)`: every block goes through
+codly with the same look, and codly's own features (a file name, highlights, ranges, `diff`) are at hand through its
+functions (`codly.new(..)`, `codly.set_(..)`). The theme never imports codly; codly 2 requires Typst 0.15.
 
-#reference("constants", "code-languages")
+#slide-example("code-codly")
+
+#reference("code", "code-languages", "codly-ufac-theme", "ufac-syntax")
 
 == Icons
 
@@ -503,20 +507,42 @@ with the lines. The theme re-exports codly, and its `local` wraps codly's for pe
 
 ```example
 #emph-box(color: colors.tertiary)[
-  #icon("alert") takes the box color.
+  #icon("warning") takes the box color.
 ]
 ```
 
-The 320 names, from #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT license):
+The theme ships only the icons it uses, from #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT
+license), #link("https://phosphoricons.com/")[Phosphor] (MIT license),
+#link("https://devicon.dev/")[Devicon] (MIT license) and #link("https://simpleicons.org/")[Simple Icons] (CC0); each
+one has a role in the theme, which is also its name for `#icon`:
 
 #{
   set text(size: 6.5pt)
   set par(justify: false)
   grid(
     columns: (1fr,) * 5, row-gutter: .75em, column-gutter: .5em,
-    ..icons.data.keys().sorted().map(name => [#icon(name, size: 1.5em) #h(.3em) #name]),
+    ..theme-icons.pairs().map(((name, full)) => [#icon(name, size: 1.5em) #h(.3em) #name #text(fill: luma(120))[(#full)]]),
   )
 }
+
+The Octicons of the theme keep their 0.2.0 names (`"alert"`, `"light-bulb"`, `"info"`, `"note"`, `"pencil"`, `"beaker"`,
+`"file-code"`, `"terminal"`, `"mail"`). Any other icon comes from a collection in the JSON format of
+#link("https://iconify.design/")[Iconify], given to `provide-icons` and written as `"collection:name"`:
+
+- *The whole collection*: download its JSON from the site of the
+  #link("https://typst.app/universe/package/iconify")[iconify package] (some are several megabytes).
+- *Only the chosen icons*: ask the Iconify API for them, such as
+  `https://api.iconify.design/octicon.json?icons=rocket-16,tools-16`, and save the answer as `octicon.json`.
+
+```typ
+#provide-icons(json("octicon.json"))
+#icon("octicon:rocket-16") launch
+```
+
+The names of a collection are on #link("https://icones.js.org/")[icones.js.org]. An Octicon of 0.2.0 that the theme no
+longer ships, such as `#icon("rocket")`, is written `#icon("octicon:rocket-16")` with its collection provided.
+
+#reference("icons", "theme-icons", "provide-icons")
 
 = Touying features <touying>
 

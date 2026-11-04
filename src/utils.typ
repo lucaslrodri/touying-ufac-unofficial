@@ -1,8 +1,7 @@
-// touying-ufac-unofficial — internal helpers: content inspection, the context color stack, the `raw` gate and code box,
-// backslash escapes, exercise/example labels, the current-subtitle query and the footer pieces.
+// touying-ufac-unofficial — internal helpers: content inspection, the context color stack, the `raw` gate, backslash
+// escapes, exercise/example labels, the localized words, the current-subtitle query and the footer pieces.
 // Names starting with `_` are not part of the public API (Typst has no private bindings, so they stay reachable).
 #import "@preview/touying:0.7.4": *
-#import "@preview/linguify:0.5.0": linguify
 #import "constants.typ": colors, ufac-logo-image
 
 // ---------- content inspection ----------
@@ -90,48 +89,13 @@
 /// True inside any `raw` (inline or block): the `==x==` shorthand is not applied there.
 /// -> state
 #let _in-raw = state("ufac-in-raw", false)
-/// Marks the inside of every `raw` (inline and block) so the `==x==` rule stays literal there. In `init` it comes
-/// after `codly-init` (innermost rule: it runs first, so the marks also wrap codly's output). codly's `local`
-/// installs its own, even more inner `show raw.where(block: true)` that converts the `raw` before the `init` rule
-/// sees it; that is why the theme re-exports a `local` that applies the gate inside the body (`no-codly` and
-/// `codly-range` only touch state and need nothing).
+/// Marks the inside of every `raw` (inline and block) so the `==x==` rule stays literal there. In `init` it comes after
+/// the code rules (innermost rule: it runs first, so the marks also wrap the code box and codly's output).
 /// -> content
 #let _gate-raw(
   /// Content whose `raw` elements are marked. -> content
   body,
 ) = { show raw: it => { _in-raw.update(true); it; _in-raw.update(false) }; body }
-/// Box of a code block, drawn by the theme OUTSIDE codly's lines: codly's `inset` is per line (cell, ×1.5), so
-/// enlarging it opens space between the lines instead of padding between the border and the code (the language
-/// label used to touch the border). The rule is inner to codly's (it wraps the `raw` in a block and codly transforms
-/// the `raw` inside; codly itself is left without fill/stroke). An outer rule would not work: codly's output is no
-/// longer `raw`. For the same reason as the gate it also goes inside `local`. With `#no-codly` (state
-/// `codly-enabled` = false) the plain raw is kept. By default the box splits across pages when codly's lines do
-/// (codly's `breakable`, off in the theme); `local(breakable: ..)` passes its own value here, since codly's `local`
-/// does not change that state.
-/// -> content
-#let _code-box(
-  /// Content whose code blocks are boxed. -> content
-  body,
-  /// Fill of the box. -> color
-  fill: luma(247),
-  /// Border of the box. -> stroke
-  stroke: .5pt + luma(210),
-  /// Corner radius of the box. -> length
-  radius: .35em,
-  /// Padding between the border and the code. -> length | dictionary
-  inset: (x: .3em, y: .3em),
-  /// Whether the box may split across pages; `auto` follows codly's `breakable`. -> auto | bool
-  breakable: auto,
-) = {
-  show raw.where(block: true): it => context {
-    if state("codly-enabled", true).get() {
-      let breakable = if breakable == auto { state("codly-breakable", true).get() } else { breakable }
-      block(width: 100%, fill: fill, stroke: stroke, radius: radius, inset: inset, breakable: breakable, it)
-    } else { it }
-  }
-  body
-}
-
 // ---------- key-equation signal ----------
 /// Set (to a color) by a lone `>` line: the next block equation gets an `eq-box` (see `show math.equation`
 /// in `init`, which consumes the signal).
@@ -218,9 +182,24 @@
   let s = str(lbl)
   if s == "exercise" or s.starts-with("exercise-") { "exercise" } else if s == "example" or s.starts-with("example-") { "example" }
 }
-/// Localized names (linguify database `lang.toml`: pt, en, es; unknown languages fall back to Portuguese).
+/// Localized words of the theme (`lang.toml`: pt, en, es).
 /// -> dictionary
-#let _lang-db = toml("lang.toml")
+#let _lang-db = toml("lang.toml").lang
+/// The words of a language (`"pt"`, `"en"`, `"es"`); an unknown language falls back to Portuguese.
+///
+/// #test(`_words("en").thanks == "Thank you!"`, `_words("fr").and == "e"`, `_words("es").months.len() == 12`)
+/// -> dictionary
+#let _words(
+  /// Language code, as in `text.lang`. -> str
+  lang,
+) = _lang-db.at(lang, default: _lang-db.pt)
+/// A localized word for the current `text.lang` (contextual content), so that a `#set text(lang:)` in the middle of a
+/// deck changes it too.
+/// -> content
+#let _tr(
+  /// Key of `lang.toml`: `"exercise"`, `"thanks"`, … -> str
+  key,
+) = context _words(text.lang).at(key)
 /// `lang` parameter of the theme → `(lang:, region:)` for `set text`: "pt"/"pt-br" (region BR by default), "en", "es";
 /// an explicit region may follow the code (`en-US`, `es-MX`); anything else is an error.
 ///
@@ -245,14 +224,14 @@
   (lang: code, region: region)
 }
 /// Name shown for `key` ("exercise", "example", "part"): the theme parameter `<key>-name` when given, otherwise the
-/// translation for the current `text.lang` (contextual content from linguify).
+/// translation for the current `text.lang` (contextual content).
 /// -> content
 #let _name(
   /// Touying's `self`. -> dictionary
   self,
   /// `"exercise"`, `"example"` or `"part"`. -> str
   key,
-) = { let v = self.store.at(key + "-name", default: auto); if v == auto { linguify(key, from: _lang-db) } else { v } }
+) = { let v = self.store.at(key + "-name", default: auto); if v == auto { _tr(key) } else { v } }
 /// `(name, color)` of a kind: the name comes from the theme store or the translation, the color from the palette.
 /// -> array
 #let _kind-style(

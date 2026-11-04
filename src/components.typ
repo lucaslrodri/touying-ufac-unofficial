@@ -1,11 +1,10 @@
 // touying-ufac-unofficial — components: color emphases, list markers and pills, `#icon`, the boxes (`emph-box`,
-// `quote-box`, `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`),
-// the `local` wrapper around codly and the deck's `outline`.
+// `quote-box`, `eq-box`), `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`)
+// and the deck's `outline`.
 #import "@preview/touying:0.7.4": *
-#import "@preview/codly:1.3.0" as _codly
 #import "constants.typ": colors
 #import "utils.typ": *
-#import "icons.typ" as _icons
+#import "icons.typ": _icon-source, _icon-svg
 
 // ---------- emphasis ----------
 /// Bold text in UFAC blue: the same as `#alert` (Touying's method) and as the `~~text~~` shorthand. Inside a pill
@@ -76,40 +75,36 @@
   text(fill: white, weight: "bold", _in-box(color, body, kind: "pill")))
 
 // ---------- icons ----------
-/// SVG source of an Octicon filled with `color` (the name → paths table is in `icons.typ`).
-/// -> str
-#let _icon-svg(
-  /// Name of the icon. -> str
-  name,
-  /// Fill color. -> color
-  color,
-) = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\" width=\"16\" height=\"16\" fill=\"" + color.to-hex() + "\">" + _icons.data.at(name) + "</svg>"
-/// An icon of the Octicons set (320 names), already wrapped in a `box` for inline use. An unknown name is a compile
-/// error.
+/// An icon, already wrapped in a `box` for inline use: a role of the theme (`"warning"`, `"tip"`, `"info"`, `"note"`,
+/// `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
+/// Octicons the theme ships by its 0.2.0 name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
+/// collection given with `provide-icons`, as `"collection:name"` (`"octicon:rocket-16"`, `"mdi:home"`). An unknown name
+/// is a compile error that says how to get the icon.
 ///
 /// ```example
-/// #icon("check-circle", color: colors.quaternary) Done,
-/// #icon("alert") attention and a big
-/// #icon("rocket", size: 1.6em, color: colors.primary)
+/// #icon("tip", color: colors.quaternary) A tip,
+/// #icon("warning") attention and a big
+/// #icon("python", size: 1.6em)
 /// ```
 /// -> content
 #let icon(
-  /// Name of the icon, e.g. `"check"`, `"alert"`, `"light-bulb"`, `"mark-github"`. -> str
+  /// Name of the icon. -> str
   name,
-  /// Fill color. With `auto` it follows the context like bold text: white inside a pill (a `===` subtitle, an
-  /// exercise header, the title of an @emph-box), the box or title color inside @emph-box and `==`, black elsewhere.
-  /// -> auto | color
+  /// Fill color (multicolour logos keep their colours). With `auto` it follows the context like bold text: white inside
+  /// a pill (a `===` subtitle, an exercise header, the title of an @emph-box), the box or title color inside @emph-box
+  /// and `==`, black elsewhere. -> auto | color
   color: auto,
-  /// Width and height of the icon. -> length
+  /// Height of the icon; the width follows its proportions (square for the icons of the theme). -> length
   size: 1em,
   /// Baseline of the box; the default aligns the icon with the text. -> relative
   baseline: 25%,
 ) = {
-  // Inside the section slide the `set image(width:, height:)` does not reach the icon: both dimensions are explicit.
-  assert(name in _icons.data, message: "unknown icon: \"" + name + "\" (see icons.typ for the available names)")
+  // the name is checked at the call: an unknown one fails here, not deep in the layout
+  let source = _icon-source(name)
   context {
     let c = if color != auto { color } else if _in-pill() { white } else { _current-box-color(colors.neutral-darkest) }
-    box(baseline: baseline, image(bytes(_icon-svg(name, c)), width: size, height: size, alt: name, format: "svg"))
+    // `width: auto` is explicit: the `set image(width:, height:)` of the section slide must not reach the icon
+    box(baseline: baseline, image(bytes(_icon-svg(source, c)), width: auto, height: size, alt: name, format: "svg"))
   }
 }
 /// Icon at the start of a pill (the header of an exercise or example, the badge of an @emph-box), followed by a small
@@ -461,25 +456,6 @@
   // the inner `show par` replaces the global one and returns a `list`, so nothing is processed twice
   show par: _rewrite-par.with(arrow-color: color)
   body
-}
-
-// ---------- code ----------
-/// Per-block code settings: codly's `local`, re-exported by the theme so that its code box and `raw` handling also
-/// apply inside (this `local` shadows codly's). Typical uses: `#local(number-format: none)[…]` hides the line numbers,
-/// `#local(display-name: true)[…]` shows the language label and
-/// `#local(highlights: ((line: 2, fill: colors.secondary-lighter),))[…]` highlights a line and
-/// `#local(breakable: true)[…]` lets a long block split across pages, box included. codly's `codly-range` and
-/// `no-codly` need no wrapper.
-/// -> content
-#let local(
-  /// Content with the code blocks. -> content
-  body,
-  /// Any argument of codly's `codly` function. -> any
-  ..args,
-) = {
-  // codly's `local` installs a `show raw.where(block: true)` that is more inner than the theme's rules, so the gate
-  // and the box go inside the body (see `_gate-raw`, `_code-box`)
-  _codly.local(_gate-raw(_code-box(body, breakable: args.named().at("breakable", default: auto))), ..args)
 }
 
 // ---------- outline ----------

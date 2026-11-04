@@ -73,7 +73,7 @@
 ]
 #demo[
 ```typst
-#emph-box(color: colors.secondary-dark, icon: "gear", title: [Application: *control*])[
+#emph-box(color: colors.secondary-dark, icon: "code", title: [Application: *control*])[
   In the badge *bold* stays white; in the body, *bold* takes the box color.
 ]
 ```

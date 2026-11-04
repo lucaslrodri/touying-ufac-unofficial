@@ -13,6 +13,6 @@
 )
 // --- example ---
 #title-slide[
-  #icon("cpu", size: 1.6em) \
+  #icon("code", size: 1.6em) \
   *Intelligent Systems Lab*
 ]

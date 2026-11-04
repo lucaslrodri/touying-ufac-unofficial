@@ -2,10 +2,10 @@
 
 <p align="center">
   <a href="https://typst.app/universe/package/touying-ufac-unofficial"><img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Flucaslrodri%2Ftouying-ufac-unofficial%2Fmain%2Ftypst.toml&amp;query=%24.package.version&amp;label=Typst%20Universe&amp;logo=typst&amp;color=239dad" alt="Version on Typst Universe"></a>
-  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/docs/manual.pdf"><img src="https://img.shields.io/badge/manual-PDF-orange" alt="Manual (PDF)"></a>
+  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf"><img src="https://img.shields.io/badge/manual-PDF-orange" alt="Manual (PDF)"></a>
   <a href="https://typst.app/"><img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Flucaslrodri%2Ftouying-ufac-unofficial%2Fmain%2Ftypst.toml&amp;query=%24.package.compiler&amp;prefix=%E2%89%A5%20&amp;label=Typst&amp;logo=typst&amp;color=239dad" alt="Minimum Typst version"></a>
   <a href="https://typst.app/universe/package/touying"><img src="https://img.shields.io/badge/Touying-0.7.4-blue" alt="Touying version: 0.7.4"></a>
-  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT%20AND%20MIT--0-green" alt="License: MIT and MIT-0"></a>
+  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT%20AND%20MIT--0-green" alt="License: MIT and MIT-0"></a>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 ## Basic usage
 
 ```sh
-typst init @preview/touying-ufac-unofficial:0.2.0
+typst init @preview/touying-ufac-unofficial:0.3.0
 ```
 
 creates a deck from [template/main.typ](template/main.typ), the cover and one slide. The font *New Computer Modern Sans* must be installed (see [Dependencies](#dependencies)).
@@ -24,7 +24,7 @@ creates a deck from [template/main.typ](template/main.typ), the cover and one sl
 ```typst
 // Starting deck for the touying-ufac-unofficial theme. Syntax: package README; every element: example/main.typ.
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.2.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
@@ -47,7 +47,7 @@ creates a deck from [template/main.typ](template/main.typ), the cover and one sl
 Text.
 ```
 
-![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.2.0/docs/readme/template.png)
+![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/template.png)
 <!-- template:end -->
 
 `config-info` fills the cover and the footer (on the cover, the footer texts go to the line at the top):
@@ -65,13 +65,13 @@ Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `
 
 ## Example
 
-[example/main.typ](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/example/main.typ) shows the elements of the [syntax](#syntax) in a short deck:
+[example/main.typ](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/main.typ) shows the elements of the [syntax](#syntax) in a short deck:
 
 <!-- example:begin (generated from example/main.typ by scripts/readme.sh: do not edit by hand) -->
 ```typst
 // Example deck of the touying-ufac-unofficial theme: the elements of the syntax at a glance (details: package README).
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.2.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
@@ -170,7 +170,7 @@ Citing the @exercise-a.
 Questions and suggestions: `your.name@ufac.br`
 ```
 
-![The 10 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.2.0/docs/readme/example.png)
+![The 10 pages of example/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/example.png)
 <!-- example:end -->
 
 ## Syntax
@@ -244,7 +244,7 @@ Markdown-like short forms (inline content only, always primary):
 
 ## Documentation
 
-A full set of documentation in PDF can be found in the [repository](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.2.0/docs/manual.pdf).
+A full set of documentation in PDF can be found in the [repository](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
 
 ## Dependencies
 

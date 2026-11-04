@@ -4,7 +4,8 @@
 `<empty-slide>`: no header; the title large and centered, the content below it.
 
 == Primary <empty-slide-primary>
-`<empty-slide-primary>`: white text and footer; *bold*, `code` and #icon("rocket") as in a pill.
+#provide-icons(octicons)
+`<empty-slide-primary>`: white text and footer; *bold*, `code` and #icon("octicon:rocket-16") as in a pill.
 
 == Secondary <empty-slide-secondary>
 `<empty-slide-secondary>`: a light color keeps the dark text and the blue title and footer.

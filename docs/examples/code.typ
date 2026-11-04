@@ -12,15 +12,10 @@ def step(w, grad, lr=0.1):
     return w - lr * grad
 ```
 
-#local(display-name: true, highlights: ((line: 2, fill: colors.secondary-lighter),))[
-  ```python
-  for epoch in range(10):
-      w = step(w, grad(w))
-  ```
-]
+```text
+w = 0.25
+```
 
-#local(number-format: none)[
-  ```bash
-  typst compile slides.typ
-  ```
-]
+```bash
+typst compile slides.typ
+```

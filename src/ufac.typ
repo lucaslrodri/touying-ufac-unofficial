@@ -1,11 +1,10 @@
 // touying-ufac-unofficial — the theme: slide header, `slide`, `empty-slide`, `exercise-slide`/`example-slide`, the
-// section and title slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, codly setup, Touying
-// configuration).
+// section and title slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, Touying configuration).
 #import "@preview/touying:0.7.4": *
-#import "@preview/codly:1.3.0": codly, codly-init
-#import "constants.typ": colors, code-languages
+#import "constants.typ": colors
 #import "utils.typ": *
 #import "components.typ": *
+#import "code.typ": _code-rules
 
 // ---------- header ----------
 /// Header of a content slide: the current `==` in blue (fit to width), or, when the heading carries an
@@ -409,7 +408,7 @@
 }
 
 /// Every other set/show rule of the syntax: lists, enums, bold/italic, underline, highlight, the `==x==`, `~x~` and
-/// `~~x~~` shorthands, paragraph rewriting, quotes, references, math, code (inline chip, codly blocks), tables, terms
+/// `~~x~~` shorthands, paragraph rewriting, quotes, references and links, math, code (inline chip, blocks), tables, terms
 /// and captions.
 /// -> content
 #let _rules(
@@ -417,8 +416,8 @@
   self,
   /// The content. -> content
   body,
-  /// Look of the code-block box: `fill`, `stroke`, `radius`, `inset` and `breakable` of `_code-box` (the manual frames its code differently). -> dictionary
-  code-box: (:),
+  /// Whether code blocks get the code rules of the theme (`_code-rules`); the manual frames its code itself. -> bool
+  code: true,
 ) = {
   set list(marker: _markers(self.colors.secondary))
   // enum numbers: pattern by level, always blue and bold (levels 2+ were yellow until 2026-09-16)
@@ -468,11 +467,18 @@
   show regex("\u{a0}\u{a0}([^\u{a0}]+?)\u{a0}\u{a0}"): it => (self.methods.alert)(self: self, it.text.trim("\u{a0}"))
   show par: _rewrite-par
   show quote: it => quote-box[#it.body #if it.attribution != none { linebreak(); std.align(right, text(size: .85em)[— #it.attribution]) }]
+  // links and references inside a coloured box (an `emph-box`, a callout, an exercise) in the colour of the box,
+  // darkened 25%, as in the boxes of the MATLAB course; elsewhere the theme does not colour them
+  let in-box-color(it) = context {
+    let s = _box-color.get()
+    if s.len() == 0 or s.last().kind != "box" { it } else { show text: set text(fill: s.last().color.darken(25%)); it }
+  }
+  show link: in-box-color
   // @exercise-id / @example-id → "Exercício 1.N" / "Exemplo 1.N", bold in the kind's color, linked to the slide.
   // `self.headings` cannot be used: Touying resets it after every `---` (`call-slide-fn-and-reset`).
   show ref: it => {
     let kind = _label-kind(it.target)
-    if kind == none { it } else { context {
+    if kind == none { in-box-color(it) } else { context {
       let hs = query(it.target)
       if hs.len() == 0 { it } else {
         let h = hs.first(); let (name, color) = _kind-style(self, kind)
@@ -482,15 +488,15 @@
   }
   show math.equation: set text(font: "New Computer Modern Math")
   show math.equation.where(block: true): set block(above: 0.55em, below: 0.55em)
-  // code: inline `raw` as a gray chip (0.85em); blocks at 0.75em via codly (gray numbers, no zebra nor language
-  // header, smart indent, split across pages only with `breakable: true`). Chip colors: gray out of context; inside a title or
-  // `emph-box` fill lightest / border lighter / text dark of the container color; inside a pill (already dark)
-  // fill dark / border darker / text lightest.
+  // code: inline `raw` as a gray chip (0.85em); blocks at 0.75em in the box of the theme (see code.typ). Chip colors:
+  // gray out of context; inside a title or `emph-box` fill lightest / a light border / text dark of the container
+  // color; inside a pill (already dark) fill dark / border darker / text lightest.
   show raw.where(block: false): it => context {
     let s = _box-color.get()
     let (bg, line, ink) = if s.len() == 0 { (luma(247), luma(210), self.colors.neutral-darkest) }
       else if s.last().kind == "pill" { let c = s.last().color; (c.darken(30%), c.darken(55%), c.lighten(85%)) }
-      else { let c = s.last().color; (c.lighten(85%), c.lighten(60%), c.darken(30%)) }
+      // the border lightened 78%: at 60% it was stronger than the border of the gray chip
+      else { let c = s.last().color; (c.lighten(85%), c.lighten(78%), c.darken(30%)) }
     // baseline: -.07em lifts the chip to center it on the cap height (without it the top matches the top of
     // the letters and the bottom hangs 0.14em below the baseline, so the chip looks pushed down).
     // Width: `auto` lets the content wrap inside the chip when it contains spaces (long chips in a narrow
@@ -503,21 +509,10 @@
     box(width: w, fill: bg, stroke: .5pt + line, radius: 3pt, inset: (x: .3em), outset: (y: .2em), baseline: -.07em, body)
   }
   show raw.where(block: true): set text(size: .75em)
-  show: codly-init.with()
-  codly(
-    // language label (`#local(display-name: true)`): codly's default moves it 0.32em out of the line (it
-    // invaded the right border of the `_code-box`) and gives it 0.32em of vertical padding, taller than the line
-    // (it touched the top border); with y: .1em it fits the first line like a pill (variants measured 2026-09-16)
-    lang-outset: (x: 0pt, y: 0pt),
-    lang-inset: (x: .32em, y: .1em),
-    languages: code-languages,
-    display-name: false, display-icon: false, zebra-fill: none, fill: none, stroke: none,
-    radius: 0pt, inset: (x: .3em, y: .16em), number-format: n => text(fill: luma(160), size: .8em, str(n)),
-    smart-indent: true, breakable: false,
-  )
-  // `raw` gate for the `==x==` shorthand (see `_gate-raw`): after `codly-init`, to be the innermost rule
+  // code blocks: the box of the theme, or codly 2 when the deck passed it (code.typ)
+  show: body => if code { _code-rules(self, body) } else { body }
+  // `raw` gate for the `==x==` shorthand (see `_gate-raw`): after the code rules, to be the innermost rule
   show: _gate-raw
-  show: _code-box.with(..code-box)   // block box (see `_code-box`): also inner to codly's rule
   // a lone `>` line set the signal: the next block equation gets an `eq-box` around its body. The equation is rebuilt
   // with the box inside (its numbering and label are kept); the rebuilt one is recognized by `_eq-mark` and left alone.
   show math.equation.where(block: true): it => if _has-eq-mark(it.body) {
@@ -612,6 +607,13 @@
   /// page margin (`1.8em`, the same as the text), for an image without a background or an icon; a length sets the
   /// distance. -> bool | length
   section-margin: false,
+  /// The codly 2 module, when the deck imports it (`#import "@preview/codly:2.0.0" as codly`): the code blocks then go
+  /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
+  /// codly. -> none | module
+  codly: none,
+  /// Languages added to those of the theme (`code-languages`) or replacing them, as `(name:, icon:)`; the dictionary of
+  /// the codly-languages package works too. -> dictionary
+  code-languages: (:),
   /// Touying configs, typically `config-info(..)`; also `config-common(..)`, `config-page(..)`. -> dictionary
   ..args,
   /// The deck. -> content
@@ -638,13 +640,16 @@
     config-common(slide-fn: slide, new-section-slide-fn: new-section-slide, receive-body-for-new-section-slide-fn: true, show-strong-with-alert: false),
     config-methods(
       init: (self: none, body) => _slide-rules(self, _rules(self, body)),
-      alert: (self: none, it) => context text(fill: _emph-color(self.colors.primary), weight: "bold", it),
+      // in the colour of the box around it, like bold text (blue elsewhere); yellow in a pill
+      alert: (self: none, it) => context text(weight: "bold",
+        fill: if _in-pill() { colors.secondary } else { _current-box-color(self.colors.primary) }, it),
       cover: _cover,   // veil in the page colour at 85% over the laid-out content (see `_cover` in utils.typ)
     ),
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
       exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
-      footer-right: footer-right, logos: logos, section-margin: section-margin),
+      footer-right: footer-right, logos: logos, section-margin: section-margin, codly: codly,
+      code-languages: code-languages),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile
     config-info(title: [], subtitle: [], subject: [], subject-code: [], author: none, counter-prefix: [1.]),

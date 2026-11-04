@@ -87,7 +87,7 @@
 // ---------- API reference ----------
 /// The documented modules of `src/`, parsed once. Labels are `<module>-<name>()` for functions and `<module>-<name>`
 /// for variables (tidy's convention), which the index chapter links to.
-#let modules = ("ufac", "components", "constants").map(name =>
+#let modules = ("ufac", "components", "icons", "code", "constants").map(name =>
   (name, tidy.parse-module(read("../src/" + name + ".typ"), name: name, scope: example-scope))).to-dict()
 #let api-style = mantys-like.style + (show-example: show-example)
 
@@ -122,9 +122,9 @@
 /// The look of the chapters, the theme rules and the example blocks: `manual.typ` applies it once, after `project`.
 #let chapter(body) = {
   show: _base
-  // code blocks: the theme's codly setup plus a zebra; the theme's gray box is switched off and every block that is
-  // not part of an example gets the frame instead (this rule is inner to `_rules`, so it wraps the `raw` first)
-  show: _rules.with(_self, code-box: (fill: none, stroke: none, radius: 0pt, inset: 0pt))
+  // code blocks: the theme's code box is switched off (`code: false`) and every block that is not part of an example
+  // gets the frame of the manual instead (this rule is inner to `_rules`, so it wraps the `raw` first)
+  show: _rules.with(_self, code: false)
   show raw.where(block: true): it => context if _in-example.get() { it } else { mantys-like.frame(..mantys-like.code-frame, inset: 0pt, clip: true, it) }
   show raw.where(block: true): set text(size: code-size)
   show raw.where(block: true): set par(justify: false)
@@ -132,7 +132,8 @@
   // Only for the displayed `typ` code: tidy evaluates a preview inside the `example` raw, which must keep the theme's.
   show raw.where(lang: "typ"): set underline(stroke: auto, offset: auto, evade: true, background: false)
   show: tidy.render-examples.with(scope: example-scope, layout: example-layout)
-  codly(zebra-fill: luma(240), inset: (x: .5em, y: .22em))   // codly's default zebra; after the `codly(..)` of `_rules`
+  // the code of the manual has a little room around it inside its frame
+  show raw.where(block: true): it => block(inset: (x: .5em, y: .35em), it)
   body
 }
 

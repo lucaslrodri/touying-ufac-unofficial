@@ -1,9 +1,9 @@
 /// Synopsis: compile-only test (no `ref/`): checks the exported API of the theme with assertions.
-#import "@preview/touying-ufac-unofficial:0.2.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, empty-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
-  primary, secondary, tertiary, quaternary, icon, local, eq-box, ufac-logo-image, outline) {
+  primary, secondary, tertiary, quaternary, icon, eq-box, ufac-logo-image, outline, provide-icons) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
@@ -32,17 +32,28 @@
 #assert.eq(_label-kind(<exercises>), none)
 #assert.eq(_label-kind(<eq-y>), none)
 
-// icons: an unknown name fails at the call, with a clear message; a valid name returns content
+// icons: an unknown bare name fails at the call, with a clear message that tells how to get it; a role, a shipped
+// Octicon by its 0.2.0 name and a "collection:name" (checked later, in context) return content
 #assert-panic(() => icon("does-not-exist"))
 #assert(catch(() => icon("does-not-exist")).contains("unknown icon"))
-#assert.eq(type(icon("link")), content)
+#assert(catch(() => icon("rocket")).contains("octicon:rocket-16"))
+#assert.eq(type(icon("warning")), content)
+#assert.eq(type(icon("alert")), content)
+#assert.eq(type(icon("devicon:python")), content)
+#assert.eq(type(icon("mdi:home")), content)
+#assert.eq(theme-icons.tip, "octicon:light-bulb-16")
+
+// code: the languages of the theme and codly's theme as plain data
+#assert.eq(code-languages.python.name, "Python")
+#assert.eq(type(codly-ufac-theme), dictionary)
+#assert.eq(codly-ufac-theme.radius, 0pt)
 
 // eq-box: a markup body (`#eq-box[x = 2]` is text, not math) is refused with a hint; math is accepted
 #assert-panic(() => eq-box[x = 2])
 #assert(catch(() => eq-box[x = 2]).contains("between dollar signs"))
 #assert.eq(type(eq-box[$x = 2$]), content)
 #assert.eq(type(eq-box(color: colors.quaternary, $x = 2$)), content)
-#assert.eq(type(icon("link", color: colors.tertiary, size: 2em)), content)
+#assert.eq(type(icon("tip", color: colors.tertiary, size: 2em)), content)
 
 // title-slide: one optional content and no named argument, checked at the call
 #assert.eq(type(title-slide()), content)

@@ -9,7 +9,8 @@
 #image("../../logo.svg")
 
 = Section with an icon (no background)
-#icon("gear", size: 7em, color: colors.primary-lighter)
+#provide-icons(octicons)
+#icon("octicon:gear-16", size: 7em, color: colors.primary-lighter)
 
 = Section without image
 

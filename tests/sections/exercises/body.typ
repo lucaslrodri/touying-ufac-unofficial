@@ -43,7 +43,7 @@ Expected so far: 5 exercises and 3 examples; the next exercise is 1.6 and the ne
 == One more <exercise>
 Exercise 1.6.
 
-#exercise-slide(title: [Custom icon], icon: "tools")[`#exercise-slide(icon: "tools")`: Exercise 1.7, another icon of the set.]
+#exercise-slide(title: [Custom icon], icon: "octicon:tools-16")[#provide-icons(octicons)`#exercise-slide(icon: "octicon:tools-16")`: Exercise 1.7, an icon of a collection given with `provide-icons`.]
 
 #example-slide(title: [Content as icon], icon: circle(radius: 0.55em, fill: white))[`#example-slide(icon: circle(..))`: Example 1.4, any content as the icon, centered on the capitals.]
 

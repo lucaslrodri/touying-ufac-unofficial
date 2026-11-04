@@ -13,7 +13,7 @@ Find the transfer function of the system.
 
 Two hidden neurons are enough.
 
-#exercise-slide(title: [Haykin 4.2], color: colors.primary, icon: "tools")[
+#exercise-slide(title: [Haykin 4.2], color: colors.primary, icon: "terminal")[
   The function form, with another color and icon.
 ]
 
