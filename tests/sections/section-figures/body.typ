@@ -1,6 +1,6 @@
 // Body of the `sections/section-figures` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
-// The frame of the figure of a section slide, 12em × 66%, is a limit: each image has a border (cut, if it is cropped)
-// and a circle (an ellipse, if it is stretched).
+// The frame of the figure of a section slide, 12em × 66%: an image without a size fills it, one with a size shrinks to
+// it. Each image has a border (cut, if it is cropped) and a circle (an ellipse, if it is stretched).
 #import "../../common.typ": *
 #let shape(w, h) = image(format: "svg", bytes("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 " + str(w) + " "
   + str(h) + "'><rect x='2' y='2' width='" + str(w - 4) + "' height='" + str(h - 4) + "' fill='#E6EDF6' stroke='#0C4DA2'"
@@ -47,7 +47,7 @@
 #sized(300, 100, width: 50%)
 
 = A height relative to the room (`80%`): against the frame
-#sized(300, 200, height: 80%)
+#sized(100, 300, height: 80%)
 
 = An icon in the title #icon("tip") stays inline
 #shape(200, 100)
