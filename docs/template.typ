@@ -81,7 +81,8 @@
   let src = read("examples/" + name + ".typ")
   let shown = src.slice(src.position(_marker) + _marker.len()).trim("\n")
   let slides = pages.map(n => block(stroke: .5pt + luma(220), image("examples/out/" + name + "-" + str(n) + ".svg", width: 100%)))
-  _side-by-side(columns: columns, breakable: true, raw(shown, lang: "typ", block: true), slides)
+  // an example of one or two slides stays whole; a longer one may break across pages
+  _side-by-side(columns: columns, breakable: pages.len() > 2, raw(shown, lang: "typ", block: true), slides)
 }
 
 // ---------- API reference ----------
@@ -113,16 +114,31 @@
   link(target, text(font: mantys-like.mono, size: .95em, n)) + context [ #text(fill: luma(110))[p. #locate(target).page()]]
 }).join([, ])))
 
-/// Every public definition with the page of its reference. A definition that no chapter documents has no label,
-/// so forgetting one is a compile error.
-#let index() = for (module, docs) in modules {
-  let entries = (docs.functions.map(f => (f.name, f.name + "()")) + docs.variables.map(v => (v.name, v.name)))
-    .filter(((name, _)) => not name.starts-with("_")).sorted()
-  block(above: 1.2em, below: .6em, strong(raw(module + ".typ")))
-  grid(columns: (1fr,) * 3, row-gutter: .65em, ..entries.map(((name, shown)) => {
-    let target = label(module + "-" + shown)
-    link(target, text(font: mantys-like.mono, size: .85em, shown)) + context [ #h(.3em) #text(fill: luma(110), size: .85em)[p. #locate(target).page()]]
-  }))
+/// Every public definition of the package, by name, with its label: `(name, shown, label)`, `shown` with `()` for a
+/// function. Tidy labels the reference of a definition `<module-name()>` (a function) or `<module-name>` (a variable).
+#let _definitions = {
+  let all = ()
+  for (module, docs) in modules {
+    for f in docs.functions { all.push((f.name, f.name + "()", label(module + "-" + f.name + "()"))) }
+    for v in docs.variables { all.push((v.name, v.name, label(module + "-" + v.name))) }
+  }
+  all.filter(d => not d.first().starts-with("_")).sorted(key: d => d.first())
+}
+
+/// Every public definition with the page of its reference, in alphabetical order. A definition that the reference
+/// chapter does not show has no label, so forgetting one is a compile error.
+#let index() = grid(columns: (1fr,) * 3, row-gutter: .65em, .._definitions.map(((name, shown, target)) => {
+  link(target, text(font: mantys-like.mono, size: .85em, shown)) + context [ #h(.3em) #text(fill: luma(110), size: .85em)[p. #locate(target).page()]]
+}))
+
+/// Inline code that starts with the name of a public definition (`#title-slide()`, `emph-box`, `colors.primary`,
+/// `#info("logo")`) is a link to its reference. The name is the identifier at the start of the code, after an
+/// optional `#`; a string (`"tip"`) or a name of Touying (`config-info`) is left alone.
+#let _linked(it) = {
+  let m = it.text.match(regex("^#?([a-z][a-z0-9-]*)"))
+  if m == none { return it }
+  let d = _definitions.find(d => d.first() == m.captures.first())
+  if d == none { it } else { link(d.at(2), it) }
 }
 
 // ---------- shells ----------
@@ -132,6 +148,8 @@
   // code blocks: the theme's code box is switched off (`code: false`) and every block that is not part of an example
   // gets the frame of the manual instead (this rule is inner to `_rules`, so it wraps the `raw` first)
   show: _rules.with(_self, code: false)
+  // the names of the definitions, in inline code, link to their reference
+  show raw.where(block: false): _linked
   show raw.where(block: true): it => context if _in-example.get() { it } else {
     mantys-like.frame(..mantys-like.code-frame, inset: (x: .6em, y: .45em), clip: true, it)
   }
