@@ -5,7 +5,7 @@
 #import "utils.typ": *
 #import "components.typ": *
 #import "code.typ": _code-rules
-#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors, _contact
+#import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors
 
 // ---------- header ----------
 /// Header of a content slide: the current `==` in blue, fit to width. (Exercises and examples have no header: their
@@ -745,9 +745,10 @@
 }
 
 /// Closing slide (the name of the templates of Tylina): the blue page of the cover, with a large title with the yellow
-/// rule under it, a subtitle in yellow, a free body and the contact of `config-info` right below them, centered; and the
-/// footer of the slides in white (the logos, the title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the
-/// language of the deck; `title: none` removes the title and the rule.
+/// rule under it, a subtitle in yellow and a free body, centered; and the footer of the slides in white (the logos, the
+/// title, the authors and the slide number). Without a title it says "Obrigado!" / "Thank you!" in the language of the
+/// deck; `title: none` removes the title and the rule. The contact of `config-info` goes in the body, if wanted:
+/// `#deck-info("contact")`.
 ///
 /// Two forms: up to three contents in order, `[title][subtitle][body]`, or the named `title:` and `subtitle:` with
 /// the content as the body.
@@ -756,6 +757,7 @@
 /// #ending-slide()
 /// #ending-slide[Good work!][Next lecture: functions][Read chapter 3.]
 /// #ending-slide(title: [Questions?], subtitle: [Lab 4 on Friday])[*See you!*]
+/// #ending-slide(subtitle: [Questions?])[#deck-info("contact")]
 /// ```
 /// -> content
 #let ending-slide(
@@ -763,9 +765,6 @@
   title: auto,
   /// The subtitle, in yellow; `auto` and `none` give none. -> auto | none | content
   subtitle: auto,
-  /// The contact under the content; `auto` is the one of `config-info(contact:)`, `none` hides it.
-  /// -> auto | none | content
-  contact: auto,
   /// Up to three contents, `[title][subtitle][body]`, or the body alone with `title:` or `subtitle:`. -> content
   ..args,
 ) = {
@@ -773,7 +772,6 @@
   touying-slide-wrapper(self => {
     let t = if t == auto { _tr("thanks") } else { t }
     let st = if st == auto { none } else { st }
-    let c = if contact == auto { _contact(self) } else { contact }
     // the page of the cover, with the footer of the slides in white (the logos, the title, the authors, the number)
     let self = utils.merge-dicts(self, _blue-page(self), config-page(footer: self => _footer(self, white: true),
       margin: (x: 1.8em, top: 1.2em, bottom: 1.75em)))
@@ -800,9 +798,7 @@
           if gap { v(0.75em) }
           // the body goes through `_flow`, so that a lone `-> item`, `> box` or `"quote"` is rewritten
           _flow(body)
-          gap = true
         }
-        if _given(c) { if gap { v(1.1em) }; text(size: 0.8em, c) }
       })
     })
     touying-slide(self: self, setting: decorate, if body == none { [] } else { body })

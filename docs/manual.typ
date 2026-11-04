@@ -50,7 +50,7 @@ alone, laid out by the same rules as in a deck.
   [`date`], [`none`], [`auto` (today), a `datetime` (written in full in the language of the deck) or a text],
   [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; only for `#deck-info`],
   [`logo`], [`auto`], [one or an array, in the footer and on the cover (see Logos below)],
-  [`contact`], [`none`], [one or an array (an e-mail, a page)],
+  [`contact`], [`none`], [one or an array (an e-mail, a page); only for `#deck-info`],
   [`counter-prefix`], [`[1.]`], [prefix of the exercise and example numbers: `[1.]` gives "Exercise 1.N", `none` gives "Exercise N"],
 )
 
@@ -250,8 +250,8 @@ Only a top-level `===` is repeated; inside `#[ ]`, a column or a box the pill st
 === The closing slide: `#ending-slide`
 
 `#ending-slide` closes the deck on the blue page of the cover: a large title with the yellow rule, a subtitle in
-yellow, a free body and the contact of `config-info` right below them, and the footer of the slides in white, with the
-logos. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
+yellow and a free body, and the footer of the slides in white, with the logos. The contact of `config-info` goes in
+the body, with `#deck-info("contact")`. Without a title it says "Obrigado!" / "Thank you!" in the language of the deck. The labels
 `<empty-slide>` and `<empty-slide-primary>` of 0.2.0 are gone; Touying's own `#empty-slide` (no header nor footer) is
 still there for whoever imports Touying.
 

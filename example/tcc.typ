@@ -53,4 +53,4 @@
 - A classifier with an accuracy of 0.86 on the test set
 - The code, open
 
-#ending-slide[Thank you!][Questions?]
+#ending-slide[Thank you!][Questions?][#deck-info("contact")]

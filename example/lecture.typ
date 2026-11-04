@@ -14,7 +14,6 @@
     unit-title: [The solar system],
     semester: [2026.2],
     author: [Prof. Dr. Your Name],
-    contact: [`your.name@example.com`],
   ),
 )
 

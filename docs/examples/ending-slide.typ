@@ -11,8 +11,8 @@
 // --- example ---
 #ending-slide()
 
-#ending-slide[Good work!][Next: ocean currents][
-  Read chapter 4.
+#ending-slide[Questions?][Next: ocean currents][
+  #deck-info("contact")
 ]
 
 #ending-slide(title: none)[

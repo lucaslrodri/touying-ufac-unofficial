@@ -11,4 +11,3 @@
 
 #ending-slide(title: none)[Only the body: no title and no rule.]
 
-#ending-slide(contact: [`author@example.com` #sym.dot.c `example.com/author`])[The contact right below the text.]

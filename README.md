@@ -62,7 +62,7 @@ Text.
 | `date` | `none`, `auto` (today), a `datetime` (in full, in the language of the deck) or a text |
 | `institution` | `auto` (the Federal University of Acre) or an array; only for `#deck-info` |
 | `logo` | the logos of the footer and of the cover: `auto` is the UFAC logo; an array, in order, separated by dots; each one content, `color => ...` or `auto` |
-| `contact` | on the closing slide |
+| `contact` | one or an array (an e-mail, a page); only for `#deck-info`, such as in the body of `#ending-slide` |
 | `counter-prefix` | "Exercise 1.N" / "Example 1.N"; `none` gives "Exercise N" |
 
 Aliases in the words of a course: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` (`"lecture"`, `"course"`, `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`) brings the recommended style of the cover, label of the authors and tag; what the deck writes wins. `#deck-info("title")` (any field or alias, or `#deck-info(i => ..)`) shows them anywhere.
@@ -177,8 +177,8 @@ Statement. (Also `#exercise-slide(title: [Title])[...]`.)
 
 Citing the @exercise-a.
 
-// closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!", and
-// the contact of `config-info(contact:)` goes right below the text
+// closing slide: the blue page of the cover with the footer in white; `#ending-slide()` alone says "Thank you!"; the
+// contact of `config-info(contact:)`, when there is one, goes in the body: `#deck-info("contact")`
 #ending-slide[Thank you!][Questions and suggestions][`your.name@example.com`]
 ```
 

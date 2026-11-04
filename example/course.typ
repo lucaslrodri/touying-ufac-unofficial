@@ -59,4 +59,4 @@ Write a function that returns the largest item of a list.
 
 #tip[Python has `max`, but try writing it with a loop first.]
 
-#ending-slide()
+#ending-slide(subtitle: [Questions?])[#deck-info("contact")]
