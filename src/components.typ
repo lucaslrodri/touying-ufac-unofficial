@@ -1,5 +1,5 @@
 // touying-ufac-unofficial — components: color emphases, list markers and pills, `#icon`, the boxes (`emph-box`,
-// `quote-box`, `eq-box`), `#tag`, `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`)
+// `quote-box`, `eq-box`), `#callout`, `#tag`, `#cols`, the Markdown-like paragraph rewriting (`> box`, `"quote"`, `-> item`, `#arrows`)
 // and the deck's `outline`.
 #import "@preview/touying:0.7.4": *
 #import "constants.typ": colors
@@ -308,6 +308,89 @@
   /// The quotation. -> content
   body,
 ) = block(stroke: (left: .25em + color), inset: (left: 1em, y: .6em), width: 100%, body)
+
+// ---------- callouts ----------
+/// The kinds of @callout: the colour (a key of `colors`) and the icon (a role of `icon`). The colours follow the
+/// convention of the theme: red for problems, green for advantages, blue for definitions, gray for what is secondary.
+///
+/// #test(`_callout-kinds.warning.color == "tertiary"`, `_callout-kinds.keys() == ("warning", "tip", "info", "note")`)
+/// -> dictionary
+#let _callout-kinds = (
+  warning: (color: "tertiary", icon: "warning"),
+  tip: (color: "quaternary", icon: "tip"),
+  info: (color: "primary", icon: "info"),
+  note: (color: "neutral-dark", icon: "note"),
+)
+
+/// The style `"bar"` of @callout, the box of the MATLAB course: a 3pt bar on the left, the fill in the colour lightened
+/// 92%, the icon beside the text, which starts with the label in bold.
+/// -> content
+#let _callout-bar(
+  /// Colour of the kind. -> color
+  c,
+  /// Icon: a name of `icon`, content or `none`. -> none | str | content
+  ic,
+  /// The label that opens the text, or `none`. -> none | content
+  label,
+  /// The text. -> content
+  body,
+) = block(width: 100%, fill: c.lighten(92%), stroke: (left: 3pt + c), radius: (left: 0pt, right: 4pt),
+  inset: (left: 0.8em, right: 1em, y: 0.65em), breakable: false, {
+    set list(marker: _markers(c))
+    set text(fill: colors.neutral-darkest)
+    _in-box(c, grid(columns: (auto, 1fr), column-gutter: 0.55em,
+      // the icon (0.9em) centered on the capitals of the first line: the line starts at the top of the cell, at the
+      // height of the capitals, and the icon goes up half of what it has more than them
+      if ic != none { context {
+        let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
+        let size = 0.9em.to-absolute()
+        move(dy: -(size - cap) / 2, if type(ic) == str { icon(ic, color: c, size: size, baseline: 0pt) } else { box(height: size, ic) })
+      } },
+      _flow[#if label != none [#text(weight: "bold", fill: c.darken(25%), label)#h(0.35em)]#body],
+    ))
+  })
+
+/// Callout: a box with the colour, the icon and the title of its kind, the title in the language of the deck. The
+/// default style, `"bar"`, is the box of the MATLAB course: a bar on the left, a light fill, the icon and the title in
+/// bold opening the text ("*Tip.* …", "*Warning!* …"); `"badge"` is an @emph-box with the title on a badge over the
+/// border. Inside it, as in a box, the bold text, the markers and the arrows take its colour; a code block keeps its
+/// own look.
+///
+/// ```example
+/// #callout("warning")[`x*y` with two vectors is an error.]
+/// #callout("tip")[The up arrow recalls a command.]
+/// #callout("info", style: "badge")[The style with the badge.]
+/// ```
+/// -> content
+#let callout(
+  /// `"warning"` (red), `"tip"` (green), `"info"` (blue) or `"note"` (gray). -> str
+  kind,
+  /// `"bar"` (a bar on the left and the title opening the text) or `"badge"` (the title on a badge over the border).
+  /// -> str
+  style: "bar",
+  /// The title; `auto` is the name of the kind in the language of the deck ("Warning" / "Atenção"; in the style `"bar"`
+  /// with its punctuation, "Warning!", "¡Atención!", "Tip."); `none` leaves the icon alone. -> auto | none | content
+  title: auto,
+  /// The colour; `auto` is the one of the kind. -> auto | color
+  color: auto,
+  /// The icon: a name of `icon`, content or `none`; `auto` is the one of the kind. -> auto | none | str | content
+  icon: auto,
+  /// The text. -> content
+  body,
+) = {
+  assert(kind in _callout-kinds, message: "callout: unknown kind " + repr(kind) + "; use "
+    + _callout-kinds.keys().map(k => "\"" + k + "\"").join(", "))
+  assert(style in ("bar", "badge"), message: "callout: style is \"bar\" or \"badge\"")
+  let k = _callout-kinds.at(kind)
+  let c = if color == auto { colors.at(k.color) } else { color }
+  let ic = if icon == auto { k.icon } else { icon }
+  if style == "bar" {
+    let label = if title == auto { context _words(text.lang).bar.at(kind) } else { title }
+    _callout-bar(c, ic, label, body)
+  } else {
+    emph-box(color: c, icon: ic, title: if title == auto { _tr(kind) } else { title }, body)
+  }
+}
 
 // ---------- tag ----------
 /// Relative luminance of a colour (WCAG 2), to choose the colour of the text of a @tag by the contrast.

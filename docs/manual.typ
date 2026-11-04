@@ -434,6 +434,14 @@ A paragraph whose lines start with `>` is a box in the primary color; a first li
   inline equation, is an ordinary box: the shorthand takes a block equation.
 ]
 
+== Callouts
+
+A warning, a tip, a remark or a note, each with its colour, icon and title in the language of the deck. The default
+style is the box of the MATLAB course, with a bar on the left and the title opening the text; `style: "badge"` gives an
+emphasis box with the title on a badge.
+
+#reference("components", "callout")
+
 == Tags
 
 The yellow tag of the cover and of the section slides is an element of its own, for the text, the titles and the tables:
