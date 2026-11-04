@@ -820,8 +820,14 @@
         }
         if body not in (none, []) {
           if gap { v(0.75em) }
-          // the body goes through `_flow`, so that a lone `-> item`, `> box` or `"quote"` is rewritten
-          _flow(body)
+          // the body goes through `_flow`, so that a lone `-> item`, `> box` or `"quote"` is rewritten, in a `box` as
+          // wide as its content: a list keeps its markers next to its text, aligned at the left of the box, in the
+          // center of the page
+          box({
+            show list: set std.align(left)
+            show enum: set std.align(left)
+            _flow(body)
+          })
         }
       })
     })
