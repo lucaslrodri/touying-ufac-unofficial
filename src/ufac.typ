@@ -457,7 +457,10 @@
 ///
 /// ```typ
 /// #exercise-slide(title: [Tide table])[Find the next high tide.]
-/// #exercise-slide(title: [Lab], color: colors.primary, icon: "terminal")[Another color and icon.]
+/// #exercise-slide(title: [Lab],
+///   color: colors.primary,
+///   icon: "terminal",
+/// )[Another color and icon.]
 /// ```
 /// -> content
 #let exercise-slide(
@@ -863,7 +866,9 @@
 // ---------- section ----------
 /// Section slide, created by every `= Title`: on the left, "PART N" in the yellow tag, the title in blue and the yellow
 /// rule, as on the cover; on the right, the content right after the `=` (typically an `#image`), at the page margin
-/// from the edge. The theme calls it for every `=`; it is not meant to be called by hand.
+/// from the edge, in a frame of 12em × 66% of the height of the content area: an image without a size fills it, an
+/// image with a size keeps it and shrinks when it is larger than the frame. The theme calls it for every `=`; it is
+/// not meant to be called by hand.
 /// -> content
 #let new-section-slide(
   /// Slide configuration, see @slide.config. -> dictionary

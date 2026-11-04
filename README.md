@@ -20,7 +20,7 @@ Slides with the look of UFAC for lectures, extension courses, coursework and fin
 typst init @preview/touying-ufac-unofficial:0.3.0
 ```
 
-creates a deck from [template/main.typ](template/main.typ): the cover and one slide.
+The command creates a deck from [template/main.typ](template/main.typ): the cover and one slide.
 
 The theme uses the font *New Computer Modern Sans*, which Typst does not bundle: without it, the slides fall back to another font. It belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family: download the archive from CTAN and take the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
@@ -73,7 +73,7 @@ Text.
 
 ### The kind of work and the aliases
 
-A deck of a course uses the aliases of the table above; giving one field under two names (`subject` and `title`) is an error. `kind` tells what the presentation is and brings the recommended cover; what the deck writes wins:
+A deck of a course uses the aliases of the table above; giving one field under two names (`subject` and `title`) is an error. `kind` tells what the presentation is and brings the recommended cover and numbering; anything the deck sets itself wins:
 
 | `kind` | Recommends |
 | ------ | ---------- |
@@ -108,7 +108,7 @@ config-info(
 
 ### Showing the information: `#info`
 
-`#info` shows any field or alias anywhere in a slide, inside boxes and tables too: `#info("subject")`, `#info("author")` (as written), `#info("date")` (in full), `#info("logo", height: 2em, white: true)`. With a function, it receives every field at once.
+`#info` shows any field of the table but `counter-prefix`, or any alias, anywhere in a slide, inside boxes and tables too: `#info("subject")`, `#info("author")` (as written), `#info("date")` (in full), `#info("logo", height: 2em, white: true)`. With a function, it receives every field at once.
 
 ```typst
 #emph-box(title: info("subject-code"))[
@@ -283,11 +283,11 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 
 | Markup                          | Effect                                                                                       |
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
-| `= Title` + `#image(...)`       | Section slide: the title under "PART N" in a yellow tag (`PARTE` in Portuguese and Spanish); the content right after `=` sits on the right, one page margin away from the edge, in a frame of 12em × 66% of the height: an image without a size fills it, one with a size keeps it and shrinks when it passes it (never cropped nor stretched) |
+| `= Title` + `#image(...)`       | Section slide: the title under "PART N" in a yellow tag (`PARTE` in Portuguese and Spanish); the content right after `=` sits on the right, one page margin away from the edge, in a frame of 12em × 66% of the height of the content area: an image without a size fills it, one with a size keeps it and shrinks when it is larger than the frame (never cropped or stretched) |
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
-| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise: a dashed line and "Solution." / "Answer.": followed by text, it opens that paragraph; followed by a blank line, it stands alone on its line; with a `#pause` before or after, it appears on the next subslide; outside an exercise or example it shows nothing; `#answer(sep: ":")` or `#solution(sep: [:\ ])` for a separator other than the period |
+| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise (outside, nothing): a dashed line, then "Solution." / "Answer." in bold before the text that follows; with a `#pause` before or after the marker, the solution appears on the next subslide; `#answer(sep: ":")` or `#solution(sep: [:\ ])` for a separator other than the period |
 | `=== Subtitle`                  | Pill in the color of the box around it (blue on a slide), no new slide; repeated at the top of every continuation and overflow page |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header; in an exercise or example, the same box and number); a long content also goes on by itself |
@@ -329,12 +329,12 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 #emph-box(color: colors.tertiary, icon: "exercise", title: [Homework])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
 #caution[...]                                         // a mistake to avoid; #tip (a shortcut), #remark (to recall what was seen), #note (something secondary)
-#callout("tip", style: "badge")[...]                  // the same callouts by kind; style: "badge" for the emph-box look, title: for another title
+#callout("tip", style: "badge")[...]                  // the same callouts by kind; style: "badge" for the emph-box look, title: [Reminder.] for another title, with its punctuation
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
 ```
 
-Markdown-like short forms (inline content only, always primary):
+Markdown-like short forms (inline content only; the boxes in the primary color, the quotes cycling yellow, blue, green and red):
 
 ```
 > Box without title.
@@ -349,7 +349,7 @@ Markdown-like short forms (inline content only, always primary):
 
 ### Code
 
-A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A long block goes on to the next page of the slide, as any long content. For a file name, highlights or ranges, use [codly](#code-blocks-with-codly).
+A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A long block goes on to the next page of the slide, as any long content (a callout does not split: a long listing goes outside it). For a file name, highlights or ranges, use [codly](#code-blocks-with-codly).
 
 ````typst
 #show: ufac-theme.with(
@@ -412,7 +412,7 @@ The names of the icons are on [icones.js.org](https://icones.js.org/); a whole c
 
 ## Documentation
 
-The [manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf) goes from the first deck to every detail, with an example next to each feature, and ends with the reference of every function and the migration from 0.2.0.
+The [manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf) goes from the first deck to every detail, with an example next to each feature, then the migration from 0.2.0, the reference of every function and an index.
 
 ## Dependencies
 
@@ -422,7 +422,7 @@ The [manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v
 | [touying](https://typst.app/universe/package/touying) | 0.7.4 | slide engine (the deck imports it too) |
 | [iconify](https://typst.app/universe/package/iconify) | 0.5.3 | the icons of a collection the deck gives to `provide-icons` (see [Icons](#icons)); the theme's own icons are shipped with the theme |
 | [codly](https://typst.app/universe/package/codly) | 2.0.0 | optional: the code blocks through codly (Typst ≥ 0.15); see [codly](#code-blocks-with-codly) |
-| *New Computer Modern Sans* | | font, installed on the system (not bundled with Typst, unlike *New Computer Modern Math*, used for the equations) |
+| *New Computer Modern Sans* | | font, not bundled with Typst, unlike *New Computer Modern Math*, used for the equations (see [Basic usage](#basic-usage)) |
 
 The packages are fetched automatically; the theme imports touying and iconify, and a deck imports codly when it wants it. The font is not fetched: see [Basic usage](#basic-usage).
 
@@ -440,10 +440,10 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 
 Breaking changes, and how to move a 0.2.0 deck:
 
-- The information of the deck is Touying's `config-info`: keep `subject` and `subject-code`, now aliases of `title` and `short-title`; rename the old `title` to `unit-title` (or `subtitle`) and the old `subtitle` to `unit` (or `short-subtitle`), since `subject` and `title` together are an error; `ufac-theme(logos: ..)` → `config-info(logo: ..)`.
-- `<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide` are removed: the theme has no empty slide of its own. A label `<empty-slide…>` is now an ordinary label, so the slide becomes an ordinary one, with its header: look for these labels in the deck. Use Touying's `#empty-slide[...]`, without header or footer (the deck imports Touying), which takes no `color:` nor `title:`; for a colored page, `#empty-slide(config: config-page(fill: colors.tertiary))[...]`. A `==` without text gives a slide without a title, with the footer, and the new `#ending-slide[...]` closes the deck.
-- The theme no longer depends on codly or linguify: the functions of codly 1 it exported (`codly`, `local`, `codly-range`, `no-codly`, …) are gone. The theme's own code box goes on to the next page by itself, so `#local(breakable: true)` is not needed; for codly, codly 2 (Typst ≥ 0.15): `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
-- The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
+- The information of the deck is Touying's `config-info`: keep `subject` and `subject-code`, now aliases of `title` and `short-title`; rename the old `title` to `unit-title` (or `subtitle`) and the old `subtitle` to `unit` (or `short-subtitle`), since `subject` and `title` together are an error; `ufac-theme(logos: ..)` → `config-info(logo: ..)`. A function of `footer-left` or `footer-right` reads Touying's names, `self.info.title` and `self.info.short-title` (`self.info.subject` is gone), or the footer is content with `#info("subject")`.
+- `<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide` are removed: the theme has no empty slide of its own. A label `<empty-slide…>` is now an ordinary label, so the slide becomes an ordinary one, with its header: look for these labels in the deck. The blue page of the cover, with the footer, is the new `#ending-slide(title: none)[...]`; a page without header or footer is Touying's `#empty-slide[...]` (the deck imports Touying), which takes neither `color:` nor `title:`: for another color, `#empty-slide(config: config-page(fill: colors.tertiary))[#set text(fill: white); ...]`. A `==` without text gives a slide without a title, with the footer.
+- The theme no longer depends on codly or linguify: the functions of codly 1 it exported (`codly`, `local`, `codly-range`, `no-codly`, …) are gone. The theme's own code box goes on to the next page by itself, so `#local(breakable: true)` is not needed; to keep codly, use codly 2 (Typst ≥ 0.15): `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
+- The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")` (see [Icons](#icons)); the Octicons the theme ships keep their own names (`"alert"`, `"pencil"`, `"beaker"`, …).
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
 - `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
 
@@ -455,8 +455,8 @@ New:
 - Callouts (`#caution`, `#tip`, `#remark`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo, which go on to the next page when they are long; `code-languages` adds languages, and the output has its pill in the language of the deck.
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer.
 - `provide-icons` gives the deck the icons of any collection of Iconify.
-- Inside a box, the alert, the subtitles and the links follow its color too; a slide whose content is only a shorthand (`-> item`, `> box`) now gets it rewritten.
-- The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks to it when it passes it.
+- Inside a box, the alert, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
+- The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
 ### 0.2.0

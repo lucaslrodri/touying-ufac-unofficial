@@ -46,7 +46,8 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 From here on, every example shows the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
 deck. The repository has complete decks to start from: a lecture, an extension course, a final paper and the work of
-students for a course (`example/`).
+students for a course
+(#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
 == Dependencies <dependencies>
 
@@ -105,13 +106,16 @@ group: the cover shows it as written, and the footer and the metadata get the na
 present.
 
 ```typ
-config-info(author: [_Students_ \ First Author \ Second Author \ _Advisor_ \ Prof. Dr. Advisor Name])
+config-info(author: [
+  _Students_ \ First Author \ Second Author \
+  _Advisor_ \ Prof. Dr. Advisor Name
+])
 ```
 
 == The kind of work and the aliases <kinds>
 
-In a course, the fields have names of their own, which are aliases of the fields above; two names of one field are an
-error. A date given as `semester` or `year` is short, and also goes to the footer, after the title.
+In a course, the fields have names of their own, which are aliases of the fields above; giving one field under two
+names (`subject` and `title`) is an error. A date given as `semester` or `year` is short, and also goes to the footer, after the title.
 
 #table(
   columns: (auto, auto),
@@ -203,9 +207,9 @@ Headings build the deck: no function call is needed for the ordinary slides.
 
 Every `=` heading opens a section slide: "PART N" in the yellow tag, the title in blue and the yellow rule. The content
 right after the `=`, typically an image, sits on the right, one page margin away from the edge, in a frame of 12em ×
-66% of the height. An image without a size fills the frame, scaled up or down with its proportions. An image with a
-size keeps it, and shrinks whole when it passes the frame, so a small image or an `#icon` keeps its size; a size
-relative to the room (`width: 100%`, `height: 50%`) is taken against the frame. The image is neither cropped nor
+66% of the height of the content area. An image without a size fills the frame, scaled up or down with its
+proportions. An image with a size keeps it, and shrinks whole when it is larger than the frame, so a small image or an
+`#icon` keeps its size; a size in percent (`width: 100%`, `height: 50%`) is a share of the frame. The image is neither cropped nor
 stretched, also inside a figure, an `align` or a link.
 
 #see("ufac", "new-section-slide()")
@@ -348,7 +352,8 @@ Call `fit(x, y)` first.
 Bold text, alerts, highlights, underlines, arrows, chips, links, icons (@icons) and the `===` pills read the color of what
 contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
 (@tables); white or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
-block, and a box inside another box, which brings its own color.
+block, a box inside another box, which brings its own color, and a reference to an exercise or example, in the
+color of its kind.
 
 #slide-example("pills", columns: (1fr, 1fr))
 
@@ -543,7 +548,8 @@ a block keeps its look. The languages with a pill are `python` (`py`), `typst` (
 the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
 
 A long block goes on to the next page of the slide, as any long content, with the `===` pill repeated at the top; the
-language pill stays on its first part. For a file name, highlights or ranges, the deck takes codly (@codly).
+language pill appears only on its first part. A callout does not split, so a long listing goes outside it. For a file
+name, highlights or ranges, the deck takes codly (@codly).
 
 #see("code", "code-languages", "ufac-syntax")
 
@@ -603,7 +609,7 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 == The footer and the badges
 
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
-two do not fit, the longer is cut with "…". `ufac-theme(footer-left:, footer-right:)` replaces either with content or a
+two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content or a
 function of `self`. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`).
@@ -721,7 +727,8 @@ and each collection has its own license.
 #set par(justify: false)
 - *Only the chosen icons*: ask the Iconify API for them and save the answer, here as `ph.json`:
   `https://api.iconify.design/ph.json?icons=boat-bold,sun-bold,waves-bold`.
-- *The whole collection*: download its JSON from the site of the iconify package (some are several megabytes).
+- *The whole collection*: download its JSON from the #link("https://ecstrema.github.io/iconify-typst")[site of the iconify package]
+  (some are several megabytes).
 ]
 
 
@@ -734,17 +741,15 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
   table.header([In 0.2.0], [In 0.3.0]),
   [`config-info` with the fields of the theme: `subject`, `subject-code`, `title` (the topic), `subtitle` (the unit)],
   [keep `subject` and `subject-code`, now aliases of Touying's `title` and `short-title`; rename the old `title` to
-    `unit-title` and the old `subtitle` to `unit` (@information). `subject` and `title` together are an error],
+    `unit-title` and the old `subtitle` to `unit` (@information). `subject` and `title` together are an error. A
+    function of `footer-left` or `footer-right` reads Touying's names, `self.info.title` and `self.info.short-title`,
+    or the footer is content with `#info("subject")`],
   [`ufac-theme(logos: ..)`], [`config-info(logo: ..)` (@logos)],
   [`ufac-theme(section-margin: ..)`; the figure of a section flush with the edge],
   [the figure keeps the page margin; for the old look,
     `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`],
   [`<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide`],
-  [removed: the theme has no empty slide of its own. A label `<empty-slide…>` is now an ordinary label, so the
-    slide becomes an ordinary one, with its header: look for these labels in the deck. Use Touying's
-    `#empty-slide[..]`, without header or footer (the deck imports Touying), which takes no `color:` nor `title:`;
-    for a colored page, `#empty-slide(config: config-page(fill: colors.tertiary))[..]`. A `==` without text gives a
-    slide without a title, with the footer, and `#ending-slide[..]` closes the deck (@cover)],
+  [removed: the theme has no empty slide of its own (below)],
   [`local`, `codly-range`, `no-codly`; codly imported by the theme; `#local(breakable: true)` for a block that
     splits],
   [the theme has its own code box, which goes on to the next page by itself (no `breakable:` needed); for codly,
@@ -754,6 +759,20 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
   [`ufac-logo-image(..)`], [`#info("logo", height: 2em)`, with `white: true` on a dark background; outside a deck,
     `image(bytes(ufac-logo))`],
 )
+
+A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:
+look for these labels in the deck. The blue page of the cover, with the footer, is `#ending-slide(title: none)[..]`
+(@cover); a page without header or footer is Touying's `#empty-slide[..]` (the deck imports Touying), which takes
+neither `color:` nor `title:`, so a page of another color sets its fill and the color of its text:
+
+```typ
+#empty-slide(config: config-page(fill: colors.tertiary))[
+  #set text(fill: white)
+  #align(center + horizon)[*Break*: 15 minutes]
+]
+```
+
+A `==` without text gives a slide without a title, with the footer.
 
 The figure of a section, which 0.2.0 cropped to fill 12em × 66% of the slide, now fits whole in that frame; a deck
 needs no change for it.

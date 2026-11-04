@@ -16,5 +16,5 @@ and the Sun.
 
 ---
 
-The same slide goes on: same
-header, same number.
+The same slide goes on, with
+the same header.

@@ -85,7 +85,7 @@
 ) = context _pill(color: _current-box-color(colors.primary), body)
 
 // ---------- icons ----------
-/// An icon, already wrapped in a `box` for inline use: a role of the theme (`"warning"`, `"tip"`, `"info"`, `"note"`,
+/// An icon, already wrapped in a `box` for inline use: a role of the theme (`"caution"` or `"warning"`, `"tip"`, `"info"`, `"note"`,
 /// `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
 /// Octicons the theme ships by its own name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
 /// collection given with `provide-icons`, as `"collection:name"` (`"octicon:rocket-16"`, `"mdi:home"`). An unknown name
