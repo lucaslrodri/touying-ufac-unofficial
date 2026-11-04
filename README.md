@@ -67,7 +67,7 @@ Text.
 
 Aliases in the words of a course: `subject` (`title`), `subject-code` (`short-title`), `unit` and `course` (`short-subtitle`), `unit-title` (`subtitle`), `semester` and `year` (`date`, which then also goes to the footer). `kind` (`"lecture"`, `"course"`, `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`) brings the recommended style of the cover, label of the authors and tag; what the deck writes wins. `#info("title")` (any field or alias, or `#info(i => ..)`) shows them anywhere.
 
-Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `section-margin` (`true`, the default, keeps the page margin to the right of the content of the section slides; `false` puts it flush with the edge, for a photo; a length sets the distance), `codly` (the module of codly 2, when the deck imports it) and `code-languages` (more languages for the code blocks).
+Options of `ufac-theme`: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`), `codly` (the module of codly 2, when the deck imports it) and `code-languages` (more languages for the code blocks).
 
 ## Example
 
@@ -198,7 +198,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 
 | Markup                          | Effect                                                                                       |
 | ------------------------------- | -------------------------------------------------------------------------------------------- |
-| `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, flush with the page edge (`section-margin: true` in `ufac-theme`, or `#pad(right: 1.8em)[...]` on one slide, keeps the margin) |
+| `= Title` + `#image(...)`       | Section slide "Part N: Title" (`Parte` in Portuguese and Spanish); the content right after `=` sits on the right, at the page margin from the edge |
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
@@ -296,7 +296,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The closing slide is `#ending-slide[...]`; `<empty-slide>`, `<empty-slide-COLOR>` and `#empty-slide` are gone (a slide without a title is a `==` without text).
 - The theme no longer depends on codly nor on linguify: `local`, `codly-range` and `no-codly` are gone; with codly 2, `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")`.
-- The content of the section slides keeps the page margin by default (`section-margin: false` for the old look).
+- The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
 
 New:
 

@@ -812,8 +812,7 @@
 // ---------- section ----------
 /// Section slide, created by every `= Title`: on the left, "PART N" in the yellow tag, the title in blue and the yellow
 /// rule, as on the cover; on the right, the content right after the `=` (typically an `#image`), at the page margin
-/// from the edge. `ufac-theme(section-margin: false)` puts it flush with the edge on every section slide, for photos and
-/// figures with a background. Not meant to be called by hand.
+/// from the edge. The theme calls it for every `=`; it is not meant to be called by hand.
 /// -> content
 #let new-section-slide(
   /// Slide configuration, see @slide.config. -> dictionary
@@ -822,19 +821,23 @@
   level: 1,
   /// Passed by Touying; the part is always numbered. -> bool
   numbered: true,
+  /// Distance between the content (what follows `=`, on the right) and the right edge of the page: `auto` is the page
+  /// margin (`1.8em`, the same as the text), `0pt` puts it flush with the edge. -> auto | length
+  margin: auto,
   /// Content that follows the `=` heading. -> content
   body,
 ) = touying-slide-wrapper(self => {
   // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the
-  // grid still reserves its width and the title never runs under it; `section-margin` pads it on the right inside
-  // the move (as `#pad(right:)` in the deck does), so it stops that far from the edge
+  // grid still reserves its width and the title never runs under it; `margin` pads it on the right inside the move,
+  // so it stops that far from the edge
   let slide-body = {
     set std.align(left + horizon)
     set image(width: 12em, height: 66%)
-    let margin = self.page.at("margin", default: (:))
-    let dx = if type(margin) == dictionary { margin.at("x", default: 1.8em) } else { margin }
-    let gap = self.store.at("section-margin", default: true)
-    let gap = if gap == true { dx } else if gap == false { 0pt } else { gap }
+    let page-margin = self.page.at("margin", default: (:))
+    let dx = if type(page-margin) == dictionary { page-margin.at("x", default: 1.8em) } else { page-margin }
+    assert(margin == auto or type(margin) == length, message: "new-section-slide: margin is auto (the page margin) or"
+      + " a length, such as 0pt (flush with the edge)")
+    let gap = if margin == auto { dx } else { margin }
     let body = if body in (none, []) or gap == 0pt { body } else { pad(right: gap, body) }
     grid(columns: (1fr, auto), column-gutter: 1em, {
       set par(leading: 0.4em, spacing: 0pt, justify: false)
@@ -1070,10 +1073,6 @@
   /// Right text of the footer; a function receives `self`. `auto` is the authors in running text ("A, B and C"); of an
   /// author written as free content, the names of its first group. -> auto | content | function
   footer-right: auto,
-  /// Distance between the content of the section slides (what follows `=`, on the right) and the right edge of the
-  /// page. `true` keeps the page margin (`1.8em`, the same as the text); `false` puts it flush with the edge, which
-  /// suits a photo or a figure with a background; a length sets the distance. -> bool | length
-  section-margin: true,
   /// Background of the cover and of the closing slide: `"circles"` (the solid UFAC blue with two translucent circles),
   /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone, the cover of 0.2.0). -> str
   background: "circles",
@@ -1101,8 +1100,8 @@
   assert(background in _backgrounds, message: "ufac-theme: background is "
     + _backgrounds.keys().map(k => "\"" + k + "\"").join(", "))
   let bg = _backgrounds.at(background)
-  assert(type(section-margin) in (bool, length),
-    message: "ufac-theme: section-margin is true (the page margin), false (flush with the edge) or a length")
+  assert("section-margin" not in args.named(), message: "ufac-theme: section-margin moved to new-section-slide(margin:)"
+    + " in 0.3.0: config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))")
   for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
     assert(ic == none or type(ic) in (str, content, symbol),
       message: "ufac-theme: " + key + " is the name of an icon, content (an image, a symbol) or none")
@@ -1126,7 +1125,7 @@
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
       exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
-      footer-right: footer-right, section-margin: section-margin, codly: codly, code-languages: code-languages,
+      footer-right: footer-right, codly: codly, code-languages: code-languages,
       cover-fill: bg.fill, cover-circles: bg.circles),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile

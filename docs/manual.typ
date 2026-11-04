@@ -177,11 +177,6 @@ language of the deck, or `ufac-theme(part-name:)`), the title in blue and the ye
 
 #slide-example("section")
 
-A photo or a figure with a background looks better flush with the edge: `section-margin: false` in `ufac-theme` puts
-it there on every section slide, and a length sets another distance.
-
-#slide-example("section-margin")
-
 == Outline
 
 `#outline()` lists the parts of the deck, the `= Title` headings, with their numbers in small pills, the titles in

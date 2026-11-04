@@ -1,6 +1,6 @@
-/// Synopsis: `section-margin: false`: the content of every section slide touches the right edge instead of keeping the page margin (1.8em, the default); a section without content is unchanged.
+/// Synopsis: `new-section-slide(margin: 0pt)`, given to Touying's `config-common(new-section-slide-fn:)`: the content of every section slide touches the right edge instead of keeping the page margin (1.8em, the default); a section without content is unchanged.
 #import "../../common.typ": *
-#show: ufac-theme.with(lang: "en", section-margin: false, test-info)
+#show: ufac-theme.with(lang: "en", test-info, config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt)))
 
 = Section with a placeholder
 #placeholder(label: [section figure])

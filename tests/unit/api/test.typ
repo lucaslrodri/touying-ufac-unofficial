@@ -99,10 +99,10 @@
   Text.
 ]
 
-// section-margin: true, false or a length; anything else fails at the call, with a clear message
-#assert-panic(() => ufac-theme(section-margin: "yes")[])
-#assert(catch(() => ufac-theme(section-margin: "yes")[]).contains("section-margin"))
-#assert.eq(type(ufac-theme(section-margin: 2em)[= Part]), content)   // Touying needs a slide: an empty deck fails
+// the margin of the section slides is a parameter of `new-section-slide` (auto or a length); the `section-margin` of
+// 0.2.0 fails at the call and says where it went
+#assert(catch(() => ufac-theme(section-margin: 2em)[]).contains("new-section-slide(margin:)"))
+#assert.eq(type(ufac-theme(config-common(new-section-slide-fn: new-section-slide.with(margin: 2em)))[= Part]), content)
 
 API test done.
 
