@@ -164,10 +164,10 @@ with 2 lines"
 == Callouts
 // a warning, a tip, a remark or a note: the colour, the icon and the title in the language of the deck;
 // `style: "badge"` gives the look of the boxes above
-#callout("warning")[A warning: `x * y` with two lists is an error.]
-#callout("tip")[A tip: the up arrow recalls the last command.]
-#callout("info")[A remark: a *function* is a named block of code.]
-#callout("note")[A note: something secondary.]
+#warning[A warning: `x * y` with two lists is an error.]
+#tip[A tip: the up arrow recalls the last command.]
+#info[A remark: a *function* is a named block of code.]
+#note[A note: something secondary.]
 
 == An exercise <exercise-a>
 
@@ -241,7 +241,7 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
 #emph-box(color: colors.tertiary, icon: "alert", title: [Caution])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
-#callout("warning")[...]                              // "tip", "info", "note"; style: "badge" for the emph-box look
+#warning[...]                                         // #tip, #info, #note: #callout(kind)[...]; style: "badge" for the emph-box look
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
 ```
@@ -303,7 +303,7 @@ New:
 - A new cover, with three styles (`"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three backgrounds (`background:`); the section slide follows it.
 - Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#deck-info`.
 - Exercises and examples in a box, as in the handouts: the solution with `#solution` / `#answer`, over several pages.
-- `#callout`, `#tag` and the code blocks in a box of their own, with the language and its logo.
+- Callouts (`#warning`, `#tip`, `#info`, `#note`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo.
 - Inside a box, the alert, the subtitles and the links follow its color too; a slide made only of a shorthand is rewritten.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 

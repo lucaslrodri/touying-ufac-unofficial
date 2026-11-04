@@ -362,12 +362,12 @@
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
 /// bold opening the text ("*Tip.* …", "*Warning!* …"); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its colour; a code block keeps its
-/// own look.
+/// own look. Each kind has a shorthand, with the same options: @warning, @tip, @info and @note.
 ///
 /// ```example
 /// #callout("warning")[`x*y` with two vectors is an error.]
-/// #callout("tip")[The up arrow recalls a command.]
-/// #callout("info", style: "badge")[The style with the badge.]
+/// #callout("tip", style: "badge")[The style with the badge.]
+/// #callout("info", title: [Definition.])[Another title.]
 /// ```
 /// -> content
 #let callout(
@@ -399,6 +399,51 @@
     emph-box(color: c, icon: ic, title: if title == auto { _tr(kind) } else { title }, body)
   }
 }
+
+/// A warning, red: `#warning[..]` is `#callout("warning")[..]`, with the same options (`style`, `title`, `color`,
+/// `icon`).
+///
+/// ```example
+/// #warning[`x*y` with two vectors is an error.]
+/// ```
+/// -> content
+#let warning(
+  /// The options of @callout and the text. -> arguments
+  ..args,
+) = callout("warning", ..args)
+
+/// A tip, green: `#tip[..]` is `#callout("tip")[..]`, with the same options.
+///
+/// ```example
+/// #tip[The up arrow recalls a command.]
+/// ```
+/// -> content
+#let tip(
+  /// The options of @callout and the text. -> arguments
+  ..args,
+) = callout("tip", ..args)
+
+/// A remark, blue: `#info[..]` is `#callout("info")[..]`, with the same options.
+///
+/// ```example
+/// #info[A *function* is a named block of code.]
+/// ```
+/// -> content
+#let info(
+  /// The options of @callout and the text. -> arguments
+  ..args,
+) = callout("info", ..args)
+
+/// A note, gray, for what is secondary: `#note[..]` is `#callout("note")[..]`, with the same options.
+///
+/// ```example
+/// #note[Two versions of the program differ here.]
+/// ```
+/// -> content
+#let note(
+  /// The options of @callout and the text. -> arguments
+  ..args,
+) = callout("note", ..args)
 
 // ---------- tag ----------
 /// Relative luminance of a colour (WCAG 2), to choose the colour of the text of a @tag by the contrast.

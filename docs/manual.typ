@@ -446,11 +446,12 @@ A paragraph whose lines start with `>` is a box in the primary color; a first li
 
 == Callouts
 
-A warning, a tip, a remark or a note, each with its colour, icon and title in the language of the deck. The default
-style is the box of a printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an
-emphasis box with the title on a badge.
+A warning, a tip, a remark or a note, each with its colour, icon and title in the language of the deck: `#warning[..]`,
+`#tip[..]`, `#info[..]` and `#note[..]`, shorthands of `#callout(kind)[..]`. The default style is the box of a printed
+handout, with a bar on the left and the title opening the text; `style: "badge"` gives an emphasis box with the title
+on a badge.
 
-#reference("components", "callout")
+#reference("components", "warning", "tip", "info", "note", "callout")
 
 == Tags
 

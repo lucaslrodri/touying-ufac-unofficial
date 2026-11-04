@@ -7,6 +7,15 @@
 #callout("info")[A *function* is a named block of code.]
 #callout("note")[two versions of a program differ here.]
 
+== The shorthands (`#warning`, `#tip`, `#info`, `#note`)
+#warning[`#warning[..]` is `#callout("warning")[..]`.]
+#tip[`#tip[..]`, the tip.]
+#cols[
+  #info(style: "badge")[`#info(style: "badge")`: the options go through.]
+][
+  #note(title: [Aside.], icon: none)[No icon, another title.]
+]
+
 == The `"badge"` style and the options
 #cols[
   #callout("warning", style: "badge")[The `emph-box` with the title on a badge.]

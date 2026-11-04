@@ -26,6 +26,7 @@
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,
   utils: utils, components: components, provide-icons: provide-icons, octicons: octicons, tag: tag, callout: callout,
+  warning: warning, tip: tip, info: info, note: note, deck-info: deck-info,
   placeholder: placeholder,
 )
 /// Code on the left (raw) + the same text evaluated as markup on the right; `stacked: true` puts one above the other.

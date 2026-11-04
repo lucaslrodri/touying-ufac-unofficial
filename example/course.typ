@@ -33,7 +33,7 @@ for fruit in fruits:
     print(fruit.upper())
 ```
 
-#callout("note")[A `for` loop visits the items in order.]
+#note[A `for` loop visits the items in order.]
 
 == A shopping list <example>
 Add up the prices of a shopping list.
@@ -57,6 +57,6 @@ The built-in `sum` adds the items of a list:
 == A function <exercise>
 Write a function that returns the largest item of a list.
 
-#callout("tip")[Python has `max`, but try writing it with a loop first.]
+#tip[Python has `max`, but try writing it with a loop first.]
 
 #ending-slide()

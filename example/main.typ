@@ -87,10 +87,10 @@ with 2 lines"
 == Callouts
 // a warning, a tip, a remark or a note: the colour, the icon and the title in the language of the deck;
 // `style: "badge"` gives the look of the boxes above
-#callout("warning")[A warning: `x * y` with two lists is an error.]
-#callout("tip")[A tip: the up arrow recalls the last command.]
-#callout("info")[A remark: a *function* is a named block of code.]
-#callout("note")[A note: something secondary.]
+#warning[A warning: `x * y` with two lists is an error.]
+#tip[A tip: the up arrow recalls the last command.]
+#info[A remark: a *function* is a named block of code.]
+#note[A note: something secondary.]
 
 == An exercise <exercise-a>
 

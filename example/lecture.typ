@@ -34,7 +34,7 @@
 > == Definition
 > An astronomical unit (au) is the mean distance from the Earth to the Sun, about $1.5 times 10^8$ km.
 
-#callout("tip")[In years and astronomical units, Kepler's third law is just $T^2 = a^3$.]
+#tip[In years and astronomical units, Kepler's third law is just $T^2 = a^3$.]
 
 == The period of Mars <example>
 Mars orbits the Sun at $a = 1.52$ au. How long is its year?
@@ -70,6 +70,6 @@ Earth 1.0
 Mars 1.87
 ```
 
-#callout("warning")[`a ** 1.5` is the same as `sqrt(a ** 3)`.]
+#warning[`a ** 1.5` is the same as `sqrt(a ** 3)`.]
 
 #ending-slide[Thank you!][Next lecture: the Moon][Read chapter 3 of the book.]

@@ -36,6 +36,6 @@ Five students took 10, 15, 20, 25 and 30 minutes. Find the mean and the standard
 #solution
 $ overline(x) = 20 "min", quad s = sqrt((100 + 25 + 0 + 25 + 100) / 4) approx 7.9 "min" $
 
-#callout("warning")[The sample standard deviation divides by $n - 1$, not by $n$.]
+#warning[The sample standard deviation divides by $n - 1$, not by $n$.]
 
 #ending-slide()
