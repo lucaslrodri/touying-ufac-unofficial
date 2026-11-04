@@ -713,8 +713,9 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
   [the figure keeps the page margin; for the old look,
     `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`],
   [`<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide`],
-  [`#ending-slide[..]` to close the deck; a `==` without text for a slide without a title. Touying's own
-    `#empty-slide`, without header or footer, is still there for a deck that imports Touying],
+  [removed: the theme has no empty slide of its own. Use Touying's `#empty-slide[..]`, without header or footer (the
+    deck imports Touying), or a `==` without text for a slide without a title, with the footer; the deck closes with
+    `#ending-slide[..]` (@cover)],
   [`local`, `codly-range`, `no-codly`; codly imported by the theme; `#local(breakable: true)` for a block that
     splits],
   [the theme has its own code box, which never splits; for codly (and its blocks that split), `#import "@preview/codly:2.0.0" as codly` and

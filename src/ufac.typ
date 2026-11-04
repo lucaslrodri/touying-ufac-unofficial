@@ -403,15 +403,10 @@
   /// The slide bodies. -> content
   ..bodies,
 ) = touying-slide-wrapper(self => {
-  // the labels of the `empty-slide` of 0.2.0 are gone: say what replaces them
   let hs = self.at("headings", default: ())
   let h = if hs.len() > 0 { hs.last() } else { _continued-heading(bodies) }
   let kind = if h != none and h.depth == 2 { _label-kind(h.at("label", default: none)) }
   if kind != none { return _item-slide(self, h, kind, config, repeat, setting, composer, bodies.pos()) }
-  let lbl = if hs.len() > 0 and hs.last().depth == 2 and hs.last().has("label") { str(hs.last().label) }
-  assert(lbl == none or not (lbl == "empty-slide" or lbl.starts-with("empty-slide-")), message: "<" + lbl
-    + "> was removed in 0.3.0: use #ending-slide[..] for the closing slide, or a `==` heading without text for a slide"
-    + " without a title")
   let self = utils.merge-dicts(self, config-page(header: _header, footer: _footer), config)
   // every body goes through `_flow`: since Typst 0.12 a lone text in a container is not a paragraph, so a slide whose
   // content is only a shorthand (`-> item`, `> box`, `"quote"`) never reached the `show par` of the theme
