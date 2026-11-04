@@ -495,7 +495,9 @@ A sentence with a "quotation" inside.
 Touying's `side-by-side` (no divider) is still available, and `#slide(composer: (1fr, 2fr))[..][..]` lays out the
 bodies of a whole slide.
 
-= Colors and logo <colors>
+= Style and customization <style>
+
+== Colors <colors>
 
 Five families of seven tones. The light tones serve as fills of highlights and boxes, the dark ones as text on white.
 
@@ -523,6 +525,8 @@ and #text(fill: colors.primary-dark)[dark blue text].
 ```
 
 #reference("constants", "colors")
+
+== The UFAC logo
 
 The UFAC logo comes with the theme as its SVG (`ufac-logo`): in a deck, `#deck-info("logo")` shows it in the colours
 of the theme; outside one, as in a handout that goes with the slides, `image(bytes(ufac-logo))` draws it.
