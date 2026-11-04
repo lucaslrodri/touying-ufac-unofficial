@@ -27,7 +27,10 @@ Is a long wave faster than a short one in deep water?
 Yes: the speed grows with the square root of the wavelength.
 
 #exercise-slide(title: [Field trip], color: colors.primary, icon: "terminal")[
-  The function form, with another color and icon.
+  The function form, with another color and icon: how long between two high tides?
+
+  #answer
+  About 12 h 25 min.
 ]
 
 #example-slide(title: [Lighthouse], icon: none)[
