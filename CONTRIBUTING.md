@@ -25,6 +25,7 @@ tt run --font-path fonts        # the same, as the CI runs it: fonts/ plus the f
 sh docs/build.sh                # docs/manual.pdf
 sh scripts/package.sh           # dist/preview/touying-ufac-unofficial/<version>/: the files that go to Typst Universe
 sh scripts/readme.sh            # README.md (Basic usage, Example), docs/readme/*.png and thumbnail.png from the decks
+sh scripts/icons.sh             # assets/icons/*.json: the icons the theme ships, from the Iconify API (only when the list changes)
 sh scripts/local.sh             # what tests.yml checks, in seconds: test suite, the two decks, packaging, README
 ```
 
