@@ -14,6 +14,8 @@ Second step, after `#pause`.
 
 #only(3)[And this only on the 3rd subpage (`#only(3)`).]
 
+#alternatives[From the current step on (`#alternatives`): one text on the 3rd subpage][another on the 4th][and a third on the 5th.]
+
 ---
 
 Continuation with `---` + `#pause`: the repeated pill and the example number do not change.

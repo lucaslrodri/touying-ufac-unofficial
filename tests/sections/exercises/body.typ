@@ -50,3 +50,6 @@ Exercise 1.6.
 #exercise-slide(title: [No icon], icon: none)[`#exercise-slide(icon: none)`: Exercise 1.8, without icon.]
 
 #example-slide(title: [No icon], icon: none)[`#example-slide(icon: none)`: Example 1.5, without icon.]
+
+== A long title that does not fit on the badge of the exercise, however wide the slide may be <exercise>
+`== A long title <exercise>`: Exercise 1.9; the title shrinks to fit the width of the badge, on one line.

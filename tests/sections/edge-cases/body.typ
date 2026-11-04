@@ -18,3 +18,10 @@ Previous text without a blank line
 
 A paragraph with — an em dash and plain text is safe; an em dash next to markup (`Text — *bold*`) would break the slide, unless inside `#[ ]`: #[Text — *bold* protected].
 ]
+
+== Empty content
+An empty callout, an empty callout with a badge and an empty box with a title still show their frame:
+
+#tip[]
+#caution(style: "badge")[]
+#emph-box(title: [Title])[]

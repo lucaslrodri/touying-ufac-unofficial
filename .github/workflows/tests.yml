@@ -89,3 +89,7 @@ jobs:
           typst --version
           typst compile --font-path fonts --ignore-system-fonts template/main.typ /tmp/template.pdf
           typst compile --font-path fonts --ignore-system-fonts example/main.typ /tmp/example.pdf
+
+      # The errors raised when the deck is laid out, which `catch` in tests/unit/api cannot reach.
+      - name: Check the error messages
+        run: sh scripts/errors.sh

@@ -28,7 +28,8 @@ sh scripts/readme.sh            # README.md (Basic usage, Example), docs/readme/
 sh scripts/icons.sh             # assets/icons/*.json: the icons the theme ships, from the Iconify API (only when the list changes)
 sh scripts/examples.sh          # docs/decks/*.pdf: the PDF of every example deck (example/*.typ), linked from the README
 sh scripts/report.sh            # tests/report.pdf: every test with its synopsis, its code and its reference pages (git-ignored)
-sh scripts/local.sh             # what tests.yml checks, in seconds: test suite, the two decks, packaging, README
+sh scripts/errors.sh            # tests/errors/*.typ must fail to compile, each with the message of its first line
+sh scripts/local.sh             # what tests.yml checks, in seconds: test suite, the two decks, packaging, errors, README
 ```
 
 `scripts/local.sh` is the pre-commit hook (`.githooks/pre-commit`): a failure aborts the commit, and `git commit --no-verify` skips it. It uses `fonts/` as the CI does when that folder exists, else the installed fonts, and it checks the working copy, not only what is staged. It does not link the package: when the link is missing or points elsewhere it stops and asks for `scripts/link.sh`. Git does not version its configuration, so the `git config` line above is needed once in every clone.

@@ -1,4 +1,4 @@
-/// Synopsis: `config-info(logo:)`: the UFAC logo, a partner's logo (content) and one drawn in the color of the footer (a function), separated by dots, in the footer and, in white, on the cover.
+/// Synopsis: `config-info(logo:)`: the UFAC logo, a partner's logo (content) and one drawn in the color of the footer (a function), separated by dots, in the footer and, in white, on the cover; `#info("logo")` with the three logos in a line of text.
 #import "../../common.typ": *
 #show: ufac-theme.with(
   lang: "en",
@@ -13,3 +13,5 @@
 
 == The footer
 The UFAC logo, the yellow square and "LAB" in blue, with a dot between each two; on the cover, the same in white.
+
+In a line of text, `#info("logo")` gives the whole row, centered on the capitals: #info("logo") in the text.

@@ -81,3 +81,18 @@ A bare `#solution` on a slide of another kind opens nothing and shows nothing:
 
 #solution
 The text goes on, without a line nor a word.
+
+== The separator after a pause <exercise>
+`#pause` and then `#answer(sep: ":")`: the line and "Answer:" open the next subslide.
+
+#pause
+#answer(sep: ":")
+The next high tide is at 18:35.
+
+== The separator in a paragraph of its own <example>
+`#solution(sep: ":")`, a `#pause` after it and a blank line: "Solution:" stays alone on its line, and the solution comes on the next subslide.
+
+#solution(sep: ":")
+#pause
+
+The solution starts in a new paragraph, below the word.

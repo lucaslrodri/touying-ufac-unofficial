@@ -1,8 +1,8 @@
 #!/bin/sh
 # Runs on this machine, without Docker, what .github/workflows/tests.yml runs on the CI (act, in CONTRIBUTING.md, runs
 # the workflows themselves): the Tytanic suite, the two decks and the packaging into a temporary folder, which checks
-# the list of published files and the version of every import; then that README.md is in step with the decks
-# (scripts/readme.sh). The package must be linked already: scripts/link.sh is run by hand, once per version.
+# the list of published files and the version of every import; the error messages raised at layout (scripts/errors.sh);
+# then that README.md is in step with the decks (scripts/readme.sh). The package must be linked already: scripts/link.sh is run by hand, once per version.
 #
 # Called by .githooks/pre-commit on every commit, once `git config core.hooksPath .githooks` is set; a failure aborts
 # the commit and `git commit --no-verify` skips the checks. It checks the working copy, not the index.
@@ -35,6 +35,7 @@ for deck in template example; do
   typst compile $typst_fonts "$deck/main.typ" "$tmp/$deck.pdf"
 done
 sh scripts/package.sh "$tmp/dist" > /dev/null
+sh scripts/errors.sh
 sh scripts/readme.sh --check
 
 echo "local checks passed"

@@ -153,6 +153,9 @@
 #assert(catch(() => callout("x")[a]).contains("unknown kind"))
 #assert(catch(() => callout("tip", style: "x")[a]).contains("style"))
 #assert(catch(() => icon(5)).contains("string"))
+// the icons of the badges are checked when the theme is applied
+#assert(catch(() => ufac-theme(exercise-icon: 5)[x]).contains("exercise-icon is the name of an icon"))
+#assert(catch(() => ufac-theme(example-icon: 5)[x]).contains("example-icon"))
 // every language has every word of Portuguese, the titles of the bar callouts included
 #for (lang, words) in _lang-db {
   assert.eq(words.keys().sorted(), _lang-db.pt.keys().sorted(), message: lang)
