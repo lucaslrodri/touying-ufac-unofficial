@@ -554,7 +554,7 @@ of the theme; outside one, as in a handout that goes with the slides, `image(byt
 
 #reference("constants", "ufac-logo")
 
-= Tables, figures, math, code and icons <elements>
+= Tables, figures, math and code <elements>
 
 == Tables
 
@@ -602,39 +602,10 @@ pill are `python`, `typst`, `matlab`, `bash` and `sh` (these two with the termin
 
 #reference("code", "code-languages", "ufac-syntax")
 
-== Icons <icons>
-
-#reference("components", "icon")
-
-```example
-#emph-box(color: colors.tertiary)[
-  #icon("warning") takes the box color.
-]
-```
-
-The theme ships only the icons it uses, from #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT
-license), #link("https://phosphoricons.com/")[Phosphor] (MIT license),
-#link("https://devicon.dev/")[Devicon] (MIT license) and #link("https://simpleicons.org/")[Simple Icons] (CC0); each
-one has a role in the theme, which is also its name for `#icon`:
-
-#{
-  set text(size: 6.5pt)
-  set par(justify: false)
-  grid(
-    columns: (1fr,) * 5, row-gutter: .75em, column-gutter: .5em,
-    ..theme-icons.pairs().map(((name, full)) => [#icon(name, size: 1.5em) #h(.3em) #name #text(fill: luma(120))[(#full)]]),
-  )
-}
-
-The Octicons of the theme keep their 0.2.0 names (`"alert"`, `"light-bulb"`, `"info"`, `"note"`, `"pencil"`, `"beaker"`,
-`"file-code"`, `"terminal"`, `"mail"`).
-
-#reference("icons", "theme-icons")
-
 = Integrations <integrations>
 
-The theme sits on Touying and works with the packages a deck usually takes along: codly for the code blocks, and the
-collections of Iconify for more icons.
+The theme sits on Touying and works with the packages a deck usually takes along: codly for the code blocks, and
+Iconify for the icons, those the theme ships and those of any other collection.
 
 == Touying <touying>
 
@@ -680,9 +651,38 @@ requires Typst 0.15. The languages of the codly-languages package can be given t
 
 #reference("code", "codly-ufac-theme")
 
-== More icons: the collections of Iconify
+== Icons <icons>
 
-The theme ships only the icons it uses (@icons). Any other icon comes from a collection in the JSON format of
+#reference("components", "icon")
+
+```example
+#emph-box(color: colors.tertiary)[
+  #icon("warning") takes the box color.
+]
+```
+
+The theme ships only the icons it uses, from #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT
+license), #link("https://phosphoricons.com/")[Phosphor] (MIT license),
+#link("https://devicon.dev/")[Devicon] (MIT license) and #link("https://simpleicons.org/")[Simple Icons] (CC0); each
+one has a role in the theme, which is also its name for `#icon`:
+
+#{
+  set text(size: 6.5pt)
+  set par(justify: false)
+  grid(
+    columns: (1fr,) * 5, row-gutter: .75em, column-gutter: .5em,
+    ..theme-icons.pairs().map(((name, full)) => [#icon(name, size: 1.5em) #h(.3em) #name #text(fill: luma(120))[(#full)]]),
+  )
+}
+
+The Octicons of the theme keep their 0.2.0 names (`"alert"`, `"light-bulb"`, `"info"`, `"note"`, `"pencil"`, `"beaker"`,
+`"file-code"`, `"terminal"`, `"mail"`).
+
+#reference("icons", "theme-icons")
+
+=== Icons of other collections
+
+Any other icon comes from a collection in the JSON format of
 #link("https://iconify.design/")[Iconify], read by the #link("https://typst.app/universe/package/iconify")[iconify]
 package, which the theme imports: the deck gives the collection to `provide-icons` and writes the icon as
 `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of

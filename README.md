@@ -265,7 +265,6 @@ Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-le
 | `~text~`, `#underline[...]` | strong yellow underline (box color inside `emph-box`)                                   |
 | `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green                       |
 | `` `code` ``               | gray chip; inside titles, boxes, pills and table cells it follows the container color (inverted in the blue header and in cells of a dark palette tone, light tones in cells of a light one) |
-| `#icon("name", color: auto, size: 1em)` | an icon of the theme (`"warning"`, `"tip"`, `"python"`, …) or `"collection:name"` of a collection given to `provide-icons` (see [Integrations](#integrations)); colored by context |
 | `#tag[text]`               | the yellow tag of the cover, for the text, the titles and the tables; `color:` for another one |
 
 Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand is applied inside `raw`.
@@ -334,9 +333,9 @@ The theme draws its own code box and does not need [codly](https://typst.app/uni
 )
 ````
 
-### More icons: the collections of Iconify
+### Icons
 
-The theme ships only the icons it uses. Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
+`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the colour of where it is: black in the text, the colour of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name: `"warning"`, `"tip"`, `"info"`, `"note"`, `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, `"matlab"`, `"typst"`. Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/), read by the [iconify](https://typst.app/universe/package/iconify) package, which the theme imports: give the collection to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes the name of an icon (an `emph-box`, a callout, the pill of an exercise or example). It is then an icon like those of the theme: the same size, the same place on the line and the colour of where it is.
 
 ```typst
 == Field trip
