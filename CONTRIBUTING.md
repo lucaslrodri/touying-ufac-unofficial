@@ -27,6 +27,7 @@ sh scripts/package.sh           # dist/preview/touying-ufac-unofficial/<version>
 sh scripts/readme.sh            # README.md (Basic usage, Example), docs/readme/*.png and thumbnail.png from the decks
 sh scripts/icons.sh             # assets/icons/*.json: the icons the theme ships, from the Iconify API (only when the list changes)
 sh scripts/examples.sh          # docs/decks/*.pdf: the PDF of every example deck (example/*.typ), linked from the README
+sh scripts/report.sh            # tests/report.pdf: every test with its synopsis, its code and its reference pages (git-ignored)
 sh scripts/local.sh             # what tests.yml checks, in seconds: test suite, the two decks, packaging, README
 ```
 

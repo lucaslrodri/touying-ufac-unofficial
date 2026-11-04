@@ -10,6 +10,7 @@ tt new --use-system-fonts new/my-case            # creates tests/new/my-case/tes
 tt list                                          # lists the tests; `tt status` shows the summary
 tt util clean                                    # removes out/ and diff/
 typst compile tests/tests.typ                    # the full catalogue (same bodies); also `typst compile tests.typ` from tests/
+sh scripts/report.sh                             # tests/report.pdf: every test, its synopsis, its code and its reference pages
 ```
 
 `--use-system-fonts` is mandatory: the theme uses New Computer Modern Sans, which is not bundled with Typst (tytanic 0.4.1 does not accept that option in the manifest). Without the flag every test fails with a substituted font. Where the fonts are not installed, and in the CI (`.github/workflows/tests.yml`, see [CONTRIBUTING.md](../CONTRIBUTING.md)), `sh scripts/fonts.sh` downloads them into `fonts/` and the flag becomes `--font-path fonts`.
