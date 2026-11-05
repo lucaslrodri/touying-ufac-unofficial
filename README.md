@@ -121,7 +121,7 @@ config-info(
 
 ### Options of the theme
 
-`ufac-theme` takes: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercises and examples: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`; each text of the footer stays on one line, cut with "…" when the two do not fit), `codly` (see [codly](#code-blocks-with-codly)) and `code-languages` (more languages for the code blocks, see [Code](#code)). Touying's configs go in the same call, as positional arguments: `config-info(..)`, `config-common(..)`, `config-page(..)`.
+`ufac-theme` takes: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercise and example slides: the name of an icon, content or `none`; a pencil and a beaker by default; the callouts `#example` and `#examples` keep their title and beaker, which `title:` and `icon:` change), `footer-left` and `footer-right` (content or `self => ...`; each text of the footer stays on one line, cut with "…" when the two do not fit), `codly` (see [codly](#code-blocks-with-codly)) and `code-languages` (more languages for the code blocks, see [Code](#code)). Touying's configs go in the same call, as positional arguments: `config-info(..)`, `config-common(..)`, `config-page(..)`.
 
 ## Example
 
@@ -286,7 +286,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 | `= Title` + `#image(...)`       | Section slide: the title under "PART N" in a yellow tag (`PARTE` in Portuguese and Spanish); the content right after `=` sits on the right, one page margin away from the edge, in a frame of 12em × 66% of the height of the content area: an image without a size fills it, one with a size keeps it and shrinks when it is larger than the frame (never cropped or stretched) |
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
-| `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise |
+| `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise; a short example inside an ordinary slide is the callout `#example[...]` |
 | `#solution`, `#answer`          | Alone on a line, inside an example or an exercise (outside, nothing): a dashed line, then "Solution." / "Answer." in bold before the text that follows; with a `#pause` before or after the marker, the solution appears on the next subslide; `#answer(sep: ":")` or `#solution(sep: [:\ ])` for a separator other than the period |
 | `=== Subtitle`                  | Pill in the color of the box around it (blue on a slide), no new slide; repeated at the top of every continuation and overflow page |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
@@ -328,8 +328,9 @@ Escapes: `\==x==`, `\> text`, `-\> item`, `\~text\~`, `\"quote\"`. No shorthand 
 #emph-box(color: colors.quaternary, title: [Title])[...]   // badge over the top border
 #emph-box(color: colors.tertiary, icon: "exercise", title: [Homework])[...]   // icon before the title (name or content)
 $ #eq-box[$E = m c^2$] $                              // equation box, inside the equation (`color:` optional)
-#caution[...]                                         // a mistake to avoid; #tip (a shortcut), #remark (to recall what was seen), #note (something secondary), #example (a short example, green), #examples (several examples)
-#callout("tip", style: "badge")[...]                  // the same callouts by kind; style: "badge" for the emph-box look, title: [Reminder.] for another title, with its punctuation
+#caution[...]                                         // a mistake to avoid, red; #tip (a shortcut), #remark (to recall what was seen), #note (something secondary)
+#example[...]                                         // a short example, green with a beaker; #examples[...] for several
+#callout("tip", style: "badge")[...]                  // the same callouts by kind; style: "badge" for the emph-box look, title: [Shortcut.] for another title, with its punctuation
 #quote-box(color: colors.secondary)[...]              // vertical bar on the left
 #cols(divider: true, columns: (1fr, 2fr))[A][B]       // Touying's cols, optional blue divider
 ```

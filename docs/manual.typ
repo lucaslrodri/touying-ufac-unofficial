@@ -258,6 +258,7 @@ A label on the `==` heading turns the slide into the box of an exercise (red) or
 handout. The box fills the slide; the title goes on a badge over its top border, with the icon of the kind (a pencil, a
 beaker), the name, the number and the title; the footer of the slide closes the box. A suffix makes the label unique,
 as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", linked to the slide.
+A short example inside an ordinary slide, without a number, is the callout `#example` (@callouts).
 
 Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
 gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
@@ -457,15 +458,27 @@ $ #eq-box[$E = m c^2$] $
 
 #see("components", "eq-box()")
 
-== Callouts
+== Callouts <callouts>
 
 A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. Each
-kind has a role and a function of its own: `#caution`, a mistake to avoid; `#tip`, a shortcut; `#remark`,
-titled "Reminder" ("Relembrando" in Portuguese), to recall what was seen before; `#note`, something secondary;
-`#example`, green with the beaker of the example slides, a short example inside an ordinary slide; `#examples`, the
-same with the title in the plural ("Examples", "Exemplos"), for several of them. The default style is the box of a
-printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an emphasis box with
-the title on a badge.
+kind has a function of its own, `#callout(kind)` written short:
+
+#table(
+  columns: (auto, auto, auto, 1fr),
+  table.header([Function], [Title], [Color], [For]),
+  [`#caution`], [Caution!], [red], [a mistake to avoid],
+  [`#tip`], [Tip.], [green], [a shortcut],
+  [`#remark`], [Reminder.], [blue], [to recall what was seen before ("Relembrando." in Portuguese)],
+  [`#note`], [Note.], [gray], [something secondary],
+  [`#example`], [Example.], [green], [a short example inside an ordinary slide, with the beaker of the example slides;
+    an example that takes the whole slide is `== Title <example>` (@items)],
+  [`#examples`], [Examples.], [green], [the same, for several examples],
+)
+
+The default style is the box of a printed handout, with a bar on the left and the title opening the text;
+`style: "badge"` gives an emphasis box with the title on a badge, without the punctuation. `title:` and `icon:`
+change the title and the icon of one callout; `example-name` and `example-icon` of the theme change only the example
+slides, not `#example` and `#examples`. A callout does not split across pages: a long text or list goes outside it.
 
 ```example
 #caution[
@@ -622,7 +635,8 @@ The footer shows the short title and the title on the left and the authors on th
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content or a
 function of `self`. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
-slides another word (`part-name`).
+slides another word (`part-name`). The callouts `#example` and `#examples` keep their title and their beaker: `title:`
+and `icon:` change them (@callouts).
 
 ```typ
 #show: ufac-theme.with(
