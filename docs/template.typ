@@ -121,7 +121,7 @@
 /// link with the page: `see("ufac", "title-slide()")`.
 #let see(module, ..names) = block(above: 1em, text(size: .9em, [*Reference:* ] + names.pos().map(n => {
   let target = label(module + "-" + n)
-  link(target, text(font: mantys-like.mono, size: .95em, n)) + context [ #text(fill: luma(110))[p. #locate(target).page()]]
+  link(target, text(font: mantys-like.mono, size: .95em, n)) + context [ #text(fill: luma(110))[p.~#locate(target).page()]]
 }).join([, ])))
 
 /// Every public definition of the package, by name, with its label: `(name, shown, label)`, `shown` with `()` for a
@@ -139,7 +139,7 @@
 /// chapter does not show has no label, so forgetting one is a compile error.
 #let index() = {
   let entry(((name, shown, target))) = block(below: .65em, link(target, text(font: mantys-like.mono, size: .85em,
-    shown)) + context [ #h(.3em) #text(fill: luma(110), size: .85em)[p. #locate(target).page()]])
+    shown)) + context [ #h(.3em) #text(fill: luma(110), size: .85em)[p.~#locate(target).page()]])
   // read down each column, then across: the alphabetical order goes from top to bottom
   let n = calc.ceil(_definitions.len() / 3)
   grid(columns: (1fr,) * 3, ..range(3).map(i => _definitions.slice(calc.min(i * n, _definitions.len()),

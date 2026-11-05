@@ -43,7 +43,7 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 
 #slide-example("cover", columns: (1fr, 1fr))
 
-From here on, every example shows the source on the left and the result on the right: a real slide when the feature
+From here on, most examples show the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
 deck. The repository has complete decks to start from: a lecture, an extension course, a final paper and the work of
 students for a course
@@ -650,9 +650,9 @@ and `icon:` change them (@callouts).
 
 == The information anywhere: `#info` <info>
 
-`#info` shows any field of the deck, or any alias, anywhere in a slide, inside boxes and tables too: the author as
-written, the date in full, the contact, and with `"logo"` the logos of the footer, with a height and in white for a dark
-background. With a function, it receives every field at once.
+`#info` shows any field of the deck but `counter-prefix`, or any alias, anywhere in a slide, inside boxes and tables
+too: the author as written, the date in full, the contact, and with `"logo"` the logos of the footer, with a height and
+in white for a dark background. With a function, it receives every field at once.
 
 #see("info", "info()")
 
