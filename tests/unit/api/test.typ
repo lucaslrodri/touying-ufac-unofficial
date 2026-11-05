@@ -126,6 +126,9 @@
   assert(infos.all(i => "counter-prefix" not in i), message: kind + " keeps the prefix of the theme")
 }
 #assert(catch(() => info("nope")).contains("unknown key"))
+// `counter-prefix` and `kind` are not information to show
+#assert(catch(() => info("counter-prefix")).contains("unknown key"))
+#assert(catch(() => info("kind")).contains("unknown key"))
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form
 // for the cover and gives the names of its first group

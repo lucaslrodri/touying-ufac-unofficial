@@ -3,7 +3,8 @@
 // catalogue: what is here is exactly what the suite compares. For a new case:
 // `sh scripts/with-preview.sh tt new --use-system-fonts group/case`, move the markup to body.typ, leave test.typ with
 // the #include and add the matching #include below.
-// The config/ tests (theme parameters, 4:3) and unit/ (assertions) have their own preamble and are not included here.
+// Not included here, as they have their own preamble or are whole documents: config/ (theme parameters, 4:3), unit/
+// (assertions), deck/ (the decks of the repository), docs/manual, elements/code-codly and sections/touying-packages.
 // Compile from the repository: `typst compile --root . tests/tests.typ` (the root must be the repository).
 #import "common.typ": *
 #show: setup

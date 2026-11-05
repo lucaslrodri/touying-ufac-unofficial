@@ -2,7 +2,7 @@
 #import "../../common.typ": *
 == Normal title (`==`)
 === Subtitle (`===`): blue pill, repeated after `---`
-Text below the subtitle. The section slide (`= Part`) opens this block with "Part N: …" at 2em, with `\` in the title and the image flush with the right edge.
+Text below the subtitle.
 
 ==== Sub-subtitle (`====`): same pill, not repeated
 Text below the sub-subtitle.

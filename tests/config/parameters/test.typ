@@ -38,4 +38,4 @@ Pill "Ex. 2.1" and the title, without icon (`example-icon: none`).
 `example-name` and `example-icon` change only the example slides:
 #example[The title of the language and the beaker.]
 #examples(style: "badge")[The same in the plural, on the badge.]
-#example(title: [Ex.], icon: none)[`title:` and `icon:` change the callout.]
+#example(title: [Case.], icon: none)[`title:` and `icon:` change the callout.]
