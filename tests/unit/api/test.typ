@@ -3,7 +3,7 @@
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, cols,
-  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, caution, tip, remark, note, tag,
+  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, caution, tip, remark, note, example, examples, tag,
   info, solution, answer) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
@@ -165,7 +165,14 @@
 // the icons of the badges are checked when the theme is applied
 #assert(catch(() => ufac-theme(exercise-icon: 5)[x]).contains("exercise-icon is the name of an icon"))
 #assert(catch(() => ufac-theme(example-icon: 5)[x]).contains("example-icon"))
-// every language has every word of Portuguese, the titles of the bar callouts included
+// every kind of callout has its title in both styles; every language has every word of Portuguese, the titles of the
+// bar callouts included
+#for kind in _callout-kinds.keys() {
+  assert(kind in _lang-db.pt, message: kind)
+  assert(kind in _lang-db.pt.bar, message: kind)
+}
+#assert.eq((_lang-db.pt.bar.examples, _lang-db.en.bar.examples, _lang-db.es.bar.examples),
+  ("Exemplos.", "Examples.", "Ejemplos."))
 #for (lang, words) in _lang-db {
   assert.eq(words.keys().sorted(), _lang-db.pt.keys().sorted(), message: lang)
   assert.eq(words.bar.keys().sorted(), _lang-db.pt.bar.keys().sorted(), message: lang)

@@ -461,7 +461,9 @@ $ #eq-box[$E = m c^2$] $
 
 A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. Each
 kind has a role and a function of its own: `#caution`, a mistake to avoid; `#tip`, a shortcut; `#remark`,
-titled "Reminder" ("Relembrando" in Portuguese), to recall what was seen before; `#note`, something secondary. The default style is the box of a
+titled "Reminder" ("Relembrando" in Portuguese), to recall what was seen before; `#note`, something secondary;
+`#example`, green with the beaker of the example slides, a short example inside an ordinary slide; `#examples`, the
+same with the title in the plural ("Examples", "Exemplos"), for several of them. The default style is the box of a
 printed handout, with a bar on the left and the title opening the text; `style: "badge"` gives an emphasis box with
 the title on a badge.
 
@@ -475,12 +477,19 @@ the title on a badge.
 ]
 #note[Two versions of the program
   differ here.]
+#example[
+  $x[n] = 4$ has infinite energy.
+]
+#examples[
+  - speech, in time;
+  - air pressure, in altitude.
+]
 #callout("tip", style: "badge")[
   The badge style.
 ]
 ```
 
-#see("components", "callout()", "caution()", "tip()", "remark()", "note()")
+#see("components", "callout()", "caution()", "tip()", "remark()", "note()", "example()", "examples()")
 
 == Tags and quotations
 
@@ -793,8 +802,8 @@ chapters above show how to use them.
 
 == Boxes and emphases
 
-#reference("components", "emph-box", "eq-box", "callout", "caution", "tip", "remark", "note", "tag", "quote-box",
-  "primary", "secondary", "tertiary", "quaternary")
+#reference("components", "emph-box", "eq-box", "callout", "caution", "tip", "remark", "note", "example", "examples",
+  "tag", "quote-box", "primary", "secondary", "tertiary", "quaternary")
 
 == Lists, columns and the outline
 

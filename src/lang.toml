@@ -2,8 +2,9 @@
 # falls back to Portuguese. Read by `_words` and `_tr` (src/utils.typ).
 #   exercise, example, part     the pill of the exercise and example slides, the label of the section slides
 #   solution, answer            the words that open `#solution` and `#answer`, before the separator (".")
-#   caution, tip, remark, note  the titles of `callout` in the style "badge"; [lang.xx.bar], the same in the style "bar",
-#                               which open the text (with the punctuation of the language)
+#   caution, tip, remark, note, the titles of `callout` in the style "badge" (`example` too, the word above);
+#   examples                    [lang.xx.bar], the same in the style "bar", example included, which open the text (with
+#                               the punctuation of the language)
 #   output                      the label of the output of a program in a code block
 #   thanks                      the title of `#ending-slide` without a title
 #   and                         the last separator of a list of names ("A, B e C")
@@ -21,6 +22,7 @@ caution = "Atenção"
 tip = "Dica"
 remark = "Relembrando"
 note = "Nota"
+examples = "Exemplos"
 output = "Saída"
 thanks = "Obrigado!"
 and = "e"
@@ -36,6 +38,8 @@ caution = "Atenção!"
 tip = "Dica."
 remark = "Relembrando."
 note = "Nota."
+example = "Exemplo."
+examples = "Exemplos."
 
 [lang.en]
 exercise = "Exercise"
@@ -47,6 +51,7 @@ caution = "Caution"
 tip = "Tip"
 remark = "Reminder"
 note = "Note"
+examples = "Examples"
 output = "Output"
 thanks = "Thank you!"
 and = "and"
@@ -62,6 +67,8 @@ caution = "Caution!"
 tip = "Tip."
 remark = "Reminder."
 note = "Note."
+example = "Example."
+examples = "Examples."
 
 [lang.es]
 exercise = "Ejercicio"
@@ -73,6 +80,7 @@ caution = "Precaución"
 tip = "Consejo"
 remark = "Recordando"
 note = "Nota"
+examples = "Ejemplos"
 output = "Salida"
 thanks = "¡Gracias!"
 and = "y"
@@ -88,3 +96,5 @@ caution = "¡Precaución!"
 tip = "Consejo."
 remark = "Recordando."
 note = "Nota."
+example = "Ejemplo."
+examples = "Ejemplos."

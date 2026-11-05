@@ -329,16 +329,23 @@
 
 // ---------- callouts ----------
 /// The kinds of @callout: the color (a key of `colors`) and the icon (a role of `icon`). The colors follow the
-/// convention of the theme: red for problems, green for advantages, blue for what is recalled, gray for what is
-/// secondary.
+/// convention of the theme: red for problems, green for advantages and for examples (as the example slides), blue
+/// for what is recalled, gray for what is secondary. `examples` is `example` with the title in the plural.
 ///
-/// #test(`_callout-kinds.caution.color == "tertiary"`, `_callout-kinds.keys() == ("caution", "tip", "remark", "note")`)
+/// #test(
+///   `_callout-kinds.caution.color == "tertiary"`,
+///   `_callout-kinds.keys() == ("caution", "tip", "remark", "note", "example", "examples")`,
+///   `_callout-kinds.example == (color: "quaternary", icon: "example")`,
+///   `_callout-kinds.examples == _callout-kinds.example`,
+/// )
 /// -> dictionary
 #let _callout-kinds = (
   caution: (color: "tertiary", icon: "caution"),
   tip: (color: "quaternary", icon: "tip"),
   remark: (color: "primary", icon: "remark"),
   note: (color: "neutral-dark", icon: "note"),
+  example: (color: "quaternary", icon: "example"),
+  examples: (color: "quaternary", icon: "example"),
 )
 
 /// The style `"bar"` of @callout, the box of a printed handout: a 3pt bar on the left, the fill in the color lightened
@@ -378,7 +385,8 @@
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
 /// bold opening the text ("*Tip.* …", "*Caution!* …"); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its color; a code block keeps its
-/// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark and @note.
+/// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark, @note, @example and
+/// @examples.
 ///
 /// ```example
 /// #callout("caution")[
@@ -394,7 +402,9 @@
 /// -> content
 #let callout(
   /// `"caution"` (red, a mistake to avoid), `"tip"` (green, a shortcut), `"remark"` (blue, to recall what was seen:
-  /// "Relembrando" / "Reminder" / "Recordando") or `"note"` (gray, something secondary). -> str
+  /// "Relembrando" / "Reminder" / "Recordando"), `"note"` (gray, something secondary), `"example"` (green, with the
+  /// beaker of the example slides, a short example inside an ordinary slide) or `"examples"` (the same, with the title
+  /// in the plural: "Exemplos" / "Examples" / "Ejemplos"). -> str
   kind,
   /// `"bar"` (a bar on the left and the title opening the text) or `"badge"` (the title on a badge over the border).
   /// -> str
@@ -473,6 +483,36 @@
   /// The options of @callout and the text. -> arguments
   ..args,
 ) = callout("note", ..args)
+
+/// An example, green, with the beaker of the example slides ("Exemplo" / "Example" / "Ejemplo"), for a short example
+/// inside an ordinary slide; an example that takes the whole slide is `== Title <example>`. `#example[..]` is
+/// `#callout("example")[..]`, with the same options.
+///
+/// ```example
+/// #example[
+///   The constant signal $x[n] = 4$ has infinite energy.
+/// ]
+/// ```
+/// -> content
+#let example(
+  /// The options of @callout and the text. -> arguments
+  ..args,
+) = callout("example", ..args)
+
+/// Several examples, as @example with the title in the plural ("Exemplos" / "Examples" / "Ejemplos"):
+/// `#examples[..]` is `#callout("examples")[..]`, with the same options.
+///
+/// ```example
+/// #examples[
+///   - speech, in time;
+///   - air pressure, in altitude.
+/// ]
+/// ```
+/// -> content
+#let examples(
+  /// The options of @callout and the text. -> arguments
+  ..args,
+) = callout("examples", ..args)
 
 // ---------- tag ----------
 /// Relative luminance of a color (WCAG 2), to choose the color of the text of a @tag by the contrast.

@@ -24,6 +24,8 @@ The word of the solution.
 
 == More words of the language
 #remark[The title of a reminder.] #note[The title of a note.]
+#cols[#example[In the singular.]][#examples[In the plural.]]
+#examples(style: "badge")[The plural on the badge, without the period.]
 ```text
 the output of a program
 ```

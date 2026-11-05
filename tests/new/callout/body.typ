@@ -6,10 +6,12 @@
 #callout("tip")[The up arrow recalls the last command.]
 #callout("remark")[A *function* is a named block of code.]
 #callout("note")[Two versions of a program differ here.]
+#callout("example")[The constant signal $x[n] = 4$ has infinite energy.]
 
-== The functions of each kind (`#caution`, `#tip`, `#remark`, `#note`)
+== The functions of each kind (`#caution`, `#tip`, `#remark`, `#note`, `#example`)
 #caution[`#caution[..]` is `#callout("caution")[..]`.]
 #tip[`#tip[..]`, the tip.]
+#example(style: "badge")[`#example(style: "badge")`: green, with the beaker of the example slides.]
 #cols[
   #remark(style: "badge")[`#remark(style: "badge")`: the options go through.]
 ][
@@ -54,3 +56,17 @@
   y = x * 2
   ```
 ]
+
+== Several examples (`#examples`)
+#cols[
+  #examples[
+    - speech, in time;
+    - air pressure, in altitude.
+  ]
+][
+  #examples(style: "badge")[
+    - speech, in time;
+    - air pressure, in altitude.
+  ]
+]
+#examples(title: [Two examples.])[`title:` replaces the title in the plural too.]

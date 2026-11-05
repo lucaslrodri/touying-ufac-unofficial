@@ -53,6 +53,16 @@
 /// What the example snippets can use (`eval` does not see the file scope).
 #let example-scope = dictionary(ufac-lib) + (alert: primary)
 
+/// The scope of the API reference: the same, without the callout `example`, whose name is also the one of tidy's own
+/// renderer of the ```example blocks (the scope of a module overrides it); the snippets get it back through the
+/// preamble of `tidy.parse-module`.
+#let api-scope = {
+  let s = example-scope
+  let _ = s.remove("example")
+  s
+}
+#let api-preamble = "#let example(..args) = callout(\"example\", ..args)\n"
+
 /// Code on the left, result on the right, in one frame (Mantys' side-by-side example): the `layout` of tidy's
 /// `show-example`, used for the ```` ```example ```` blocks of the chapters and of the doc-comments alike. `_flow` forces
 /// a paragraph so that a lone `-> item`, `> box` or `"quote"` is rewritten.
@@ -89,7 +99,7 @@
 /// The documented modules of `src/`, parsed once. Labels are `<module>-<name>()` for functions and `<module>-<name>`
 /// for variables (tidy's convention), which the index chapter links to.
 #let modules = ("ufac", "components", "icons", "code", "info", "constants").map(name =>
-  (name, tidy.parse-module(read("../src/" + name + ".typ"), name: name, scope: example-scope))).to-dict()
+  (name, tidy.parse-module(read("../src/" + name + ".typ"), name: name, scope: api-scope, preamble: api-preamble))).to-dict()
 #let api-style = mantys-like.style + (show-example: show-example)
 
 /// Reference of the given definitions of a module, in the given order, in the reference chapter at the end: signature
