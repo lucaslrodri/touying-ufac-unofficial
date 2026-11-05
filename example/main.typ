@@ -95,7 +95,7 @@ with 2 lines"
 #cols[
   #example[`len([1, 2, 3])` is 3.]
 ][
-  #examples[`int` and `str`.]
+  #examples[Types: `int`, `str`.]
 ]
 
 == Code and its output
