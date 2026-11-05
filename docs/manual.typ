@@ -98,7 +98,7 @@ reads these fields:
   [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; shown with `#info` (@info)],
   [`logo`], [`auto`], [the logos of the footer and of the cover (@logos)],
   [`contact`], [`none`], [one or an array (an e-mail, a page); shown with `#info` (@info)],
-  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N"; `none` gives "Exercise N", the default of the kinds without units (@kinds)],
+  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N" (@items)],
 )
 
 An author written as free content keeps its lines (broken with `\`), and a line only in emphasis is a label over a
@@ -271,9 +271,8 @@ gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gi
 ))
 ```
 
-Inside the box, what has no style of its own takes the color of the item: the bold text, the markers, the arrows, the
-numbers of the lists, the inline code, the links and the `===` pills. A code block, a callout and an `emph-box` keep
-their own look.
+Inside the box, the bold text, the markers, the links, the `===` pills and the rest of what has no style of its own
+take the color of the item (@context-colors).
 
 `#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
 line and "Solution." or "Answer." in bold at the start of the next paragraph; after a blank line, the word stays alone
@@ -348,7 +347,7 @@ Call `fit(x, y)` first.
 ]
 ````
 
-== Colors by context
+== Colors by context <context-colors>
 
 Bold text, alerts, highlights, underlines, arrows, chips, links, icons (@icons) and the `===` pills read the color of what
 contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
