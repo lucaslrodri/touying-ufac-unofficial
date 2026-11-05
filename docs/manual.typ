@@ -477,7 +477,11 @@ kind has a function of its own, `#callout(kind)` written short:
 The default style is the box of a printed handout, with a bar on the left and the title opening the text;
 `style: "badge"` gives an emphasis box with the title on a badge, without the punctuation. `title:` and `icon:`
 change the title and the icon of one callout; `example-name` and `example-icon` of the theme change only the example
-slides, not `#example` and `#examples`. A callout does not split across pages: a long text or list goes outside it.
+slides, not `#example` and `#examples`.
+
+In the default style a callout does not split: one that does not fit what is left of the page goes whole to the next
+one, so a text longer than a page goes outside it. With `style: "badge"` it continues on the next page, as an
+`emph-box`.
 
 ```example
 #caution[
@@ -570,7 +574,7 @@ a block keeps its look. The languages with a pill are `python` (`py`), `typst` (
 the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
 
 A long block goes on to the next page of the slide, as any long content, with the `===` pill repeated at the top; the
-language pill appears only on its first part. A callout does not split, so a long listing goes outside it. For a file
+language pill appears only on its first part. A callout in the default style does not split (@callouts), so a long listing goes outside it. For a file
 name, highlights or ranges, the deck takes codly (@codly).
 
 #see("code", "code-languages", "ufac-syntax")

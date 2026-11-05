@@ -355,7 +355,7 @@ Markdown-like short forms (inline content only; the boxes in the primary color, 
 
 ### Code
 
-A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A long block goes on to the next page of the slide, as any long content (a callout does not split: a long listing goes outside it). For a file name, highlights or ranges, use [codly](#code-blocks-with-codly).
+A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A long block goes on to the next page of the slide, as any long content (a callout in the default style does not split: a long listing goes outside it). For a file name, highlights or ranges, use [codly](#code-blocks-with-codly).
 
 ````typst
 #show: ufac-theme.with(
