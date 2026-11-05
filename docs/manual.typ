@@ -233,8 +233,8 @@ with the same header (the number in the footer counts the pages); a long content
 #slide-example("heading", pages: (1, 2))
 
 #caution[
-  Touying breaks the page at _any_ top-level em dash, so an em dash next to inline markup, as in
-  `Text — *bold*`, also starts a new page. Use an en dash or wrap the paragraph in `#[ ]`.
+  Touying breaks the page at a top-level em dash next to inline markup, as in `Text — *bold*`. Use
+  an en dash or put the paragraph in a `#block[ ]`; a plain `#[ ]` does not protect it.
 ]
 
 The `===` subtitle is repeated on the pages that continue the slide, unless the continuation starts with another

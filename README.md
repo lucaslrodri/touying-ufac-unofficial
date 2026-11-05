@@ -298,7 +298,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 | `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header; in an exercise or example, the same box and number); a long content also goes on by itself |
 | `==` (without text)            | A slide without a title, with the footer |
 
-Touying breaks the page at any top-level em dash, so `Text — *bold*` also starts a new page: use an en dash (`–`) or wrap the paragraph in `#[ ]`.
+Touying breaks the page at a top-level em dash next to inline markup, so `Text — *bold*` starts a new page: use an en dash (`–`) or put the paragraph in a `#block[ ]` (a plain `#[ ]` does not protect it).
 
 Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, each a link to its section slide), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`.
 

@@ -16,7 +16,7 @@
 Previous text without a blank line
 -> glued to the text above, stays text (the `->` list must open the paragraph)
 
-A paragraph with — an em dash and plain text is safe; an em dash next to markup (`Text — *bold*`) would break the slide, unless inside `#[ ]`: #[Text — *bold* protected].
+A paragraph with — an em dash and plain text is safe; an em dash next to markup (`Text — *bold*`) would break the slide (a plain `#[ ]` does not protect it).
 ]
 
 == Empty content
@@ -25,3 +25,6 @@ An empty callout, an empty callout with a badge and an empty box with a title st
 #tip[]
 #caution(style: "badge")[]
 #emph-box(title: [Title])[]
+
+== An em dash next to markup
+#block[In a `#block[ ]`, at the top level: Text — *bold* stays on this page, which is the only one of this slide.]
