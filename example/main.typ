@@ -85,13 +85,18 @@ with 2 lines"
 ]
 
 == Callouts
-// a caution (a mistake to avoid), a tip (a shortcut), a remark (to recall what was seen) or a note (something
-// secondary): the color, the icon and the title in the language of the deck;
-// `style: "badge"` gives the look of the boxes above
+// a caution (a mistake to avoid), a tip (a shortcut), a remark (to recall what was seen), a note (something
+// secondary), an example and several examples (short, inside an ordinary slide): the color, the icon and the title in
+// the language of the deck; `style: "badge"` gives the look of the boxes above
 #caution[`x * y` with two lists is an error.]
 #tip[The up arrow recalls the last command.]
 #remark[A *function* is a named block of code.]
 #note[Two versions of the program differ here.]
+#cols[
+  #example[`len([1, 2, 3])` is 3.]
+][
+  #examples[`int` and `str`.]
+]
 
 == Code and its output
 // the language in a pill at the top right; `text` (or `txt`, `output`) is the output of a program, in a gray box
