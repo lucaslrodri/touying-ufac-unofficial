@@ -77,3 +77,4 @@
   tip[A callout of two lines keeps its icon on the first one.],
 )
 #align(center, block(width: 60%, remark[Centered on the page, the text of the callout stays on the left.]))
+#align(center, block(width: 60%, remark(style: "badge")[The same with the badge: the text on the left.]))

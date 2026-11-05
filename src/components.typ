@@ -431,7 +431,8 @@
     let label = if title == auto { context _words(text.lang).bar.at(kind) } else { title }
     _callout-bar(c, ic, label, body)
   } else {
-    emph-box(color: c, icon: ic, title: if title == auto { _tr(kind) } else { title }, body)
+    // the text on the left in a centered layout, as in the style "bar"
+    align(left, emph-box(color: c, icon: ic, title: if title == auto { _tr(kind) } else { title }, body))
   }
 }
 
