@@ -666,6 +666,10 @@ in white for a dark background. With a function, it receives every field at once
 The theme sits on Touying and works with the packages a deck usually takes along: codly for the code blocks, and the
 icons of any collection of Iconify.
 
+The theme exports short names that other packages also use, such as `example`, `remark` and `solution` of theorion:
+with two imports with `*`, the later one wins in silence. Import the other package by its name,
+`#import "@preview/theorion:0.3.3" as theorion`, and write `#theorion.example[..]`.
+
 == Touying <touying>
 
 The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
@@ -785,6 +789,10 @@ A deck of 0.2.0 needs these changes; everything else keeps working.
     `#provide-icons(json("octicon.json"))` and `#icon("octicon:rocket-16")` (@icons)],
   [`ufac-logo-image(..)`], [`#info("logo", height: 2em)`, with `white: true` on a dark background; outside a deck,
     `image(bytes(ufac-logo))`],
+  [another package imported with `*` before the theme, such as theorion], [the theme now exports `caution`, `tip`,
+    `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`, which win over the names of the
+    package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
+    (@integrations)],
 )
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:

@@ -374,7 +374,7 @@ int main(void) { return 0; }
 
 ## Integrations
 
-The theme sits on Touying and works with the packages a deck usually takes along.
+The theme sits on Touying and works with the packages a deck usually takes along. It exports short names that other packages also use, such as `example`, `remark` and `solution` of theorion: with two imports with `*`, the later one wins in silence, so import the other package by its name (`#import "@preview/theorion:0.3.3" as theorion`, then `#theorion.example[..]`).
 
 ### Touying
 
@@ -451,6 +451,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The theme no longer depends on codly or linguify: the functions of codly 1 it exported (`codly`, `local`, `codly-range`, `no-codly`, …) are gone. The theme's own code box goes on to the next page by itself, so `#local(breakable: true)` is not needed; to keep codly, use codly 2 (Typst ≥ 0.15): `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`.
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))`, and `#icon("octicon:rocket-16")` (see [Icons](#icons)); the Octicons the theme ships keep their own names (`"alert"`, `"pencil"`, `"beaker"`, …).
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
+- The theme exports new names: `caution`, `tip`, `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`. A package imported with `*` before the theme loses those it shares, such as theorion's `example`, `remark` and `solution`: import it by its name (see [Integrations](#integrations)).
 - `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
 
 New:
