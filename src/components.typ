@@ -489,8 +489,8 @@
 
 /// An example, green, with the beaker of the example slides ("Exemplo" / "Example" / "Ejemplo"), for a short example
 /// inside an ordinary slide; an example that takes the whole slide is `== Title <example>`. `#example[..]` is
-/// `#callout("example")[..]`, with the same options. `ufac-theme(example-name:, example-icon:)` change only the
-/// example slides: `title:` and `icon:` change the callout.
+/// `#callout("example")[..]`, with the same options. The `example-name` and the `example-icon` of `ufac-theme` change
+/// only the example slides; `title:` and `icon:` change the callout.
 ///
 /// ```example
 /// #example[

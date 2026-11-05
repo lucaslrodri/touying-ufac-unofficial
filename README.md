@@ -121,7 +121,7 @@ config-info(
 
 ### Options of the theme
 
-`ufac-theme` takes: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercise and example slides: the name of an icon, content or `none`; a pencil and a beaker by default; the callouts `#example` and `#examples` keep their title and beaker, which `title:` and `icon:` change), `footer-left` and `footer-right` (content or `self => ...`; each text of the footer stays on one line, cut with "…" when the two do not fit), `codly` (see [codly](#code-blocks-with-codly)) and `code-languages` (more languages for the code blocks, see [Code](#code)). Touying's configs go in the same call, as positional arguments: `config-info(..)`, `config-common(..)`, `config-page(..)`.
+`ufac-theme` takes: `aspect-ratio` (`"16-9"`, `"4-3"`, anything Touying's `utils.page-args-from-aspect-ratio` accepts), `lang` (`"pt-br"`, `"en"` or `"es"`), `background` of the cover and of the closing slide (`"circles"`, the default, `"gradient"` or `"plain"`), `exercise-name`, `example-name` and `part-name` (override the localized names), `exercise-icon` and `example-icon` (the icon on the badge of the exercise and example slides: the name of an icon, content or `none`; a pencil and a beaker by default), `footer-left` and `footer-right` (content or `self => ...`; each text of the footer stays on one line, cut with "…" when the two do not fit), `codly` (see [codly](#code-blocks-with-codly)) and `code-languages` (more languages for the code blocks, see [Code](#code)). Touying's configs go in the same call, as positional arguments: `config-info(..)`, `config-common(..)`, `config-page(..)`. `example-name` and `example-icon` change only the example slides: the callouts `#example` and `#examples` keep their own title and beaker, changed with their own `title:` and `icon:` (`#example(title: [Case.])[..]`).
 
 ## Example
 
@@ -306,10 +306,10 @@ Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-le
 
 | Markup                     | Result                                                                                   |
 | -------------------------- | ---------------------------------------------------------------------------------------- |
-| `*text*` / `_text_`        | black bold / black italic (bold takes the box color inside `emph-box`, white inside pills) |
+| `*text*` / `_text_`        | black bold / black italic (bold takes the box color inside a box, white inside pills) |
 | `#alert[text]`, `~~text~~` | blue bold (the box color inside a box, UFAC yellow inside pills)                         |
 | `==text==`, `#highlight[...]` | light-yellow background (`#highlight(fill: colors.quaternary-lighter)` for other tones) |
-| `~text~`, `#underline[...]` | strong yellow underline (box color inside `emph-box`)                                   |
+| `~text~`, `#underline[...]` | strong yellow underline (box color inside a box)                                   |
 | `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green                       |
 | `` `code` ``               | gray chip; inside titles, boxes, pills and table cells it follows the container color (inverted in the blue header and in cells of a dark palette tone, light tones in cells of a light one) |
 | `#tag[text]`               | the yellow tag of the cover, for the text, the titles and the tables; `color:` for another one |
@@ -459,7 +459,9 @@ New:
 - A new cover, with three styles (`"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three backgrounds (`background:`); the section slide follows it.
 - Aliases of a course (`subject`, `semester`, …), `kind`, authors as free content with labels, `date`, `institution`, `contact` and `#info`.
 - Exercises and examples in a box filling the slide, as in a printed handout: the solution with `#solution` / `#answer`, over several pages.
-- Callouts (`#caution`, `#tip`, `#remark`, `#note`, `#example`, `#examples`, or `#callout(kind)`), `#tag` and the code blocks in a box of their own, with the language and its logo, which go on to the next page when they are long; `code-languages` adds languages, and the output has its pill in the language of the deck.
+- Callouts: `#caution`, `#tip`, `#remark`, `#note`, `#example`, `#examples`, or `#callout(kind)`.
+- `#tag`, the yellow tag of the cover, for the text, the titles and the tables.
+- The code blocks in a box of their own, with the language and its logo, which go on to the next page when they are long; `code-languages` adds languages, and the output has its pill in the language of the deck.
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer.
 - `provide-icons` gives the deck the icons of any collection of Iconify.
 - Inside a box, the alert, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.

@@ -349,7 +349,8 @@ Call `fit(x, y)` first.
 
 == Colors by context <context-colors>
 
-Bold text, alerts, highlights, underlines, arrows, chips, links, icons (@icons) and the `===` pills read the color of what
+Bold text, alerts, highlights, underlines, arrows, the markers of the lists (and, in an exercise or example, their
+numbers), chips, links, icons (@icons) and the `===` pills read the color of what
 contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
 (@tables); white or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
 block, a box inside another box, which brings its own color, and a reference to an exercise or example, in the
@@ -460,9 +461,9 @@ $ #eq-box[$E = m c^2$] $
 == Callouts <callouts>
 
 A callout is a box with the color, the icon and the title of its kind, the title in the language of the deck. Each
-kind has a function of its own, `#callout(kind)` written short:
+kind has a function of its own, short for `#callout(kind)`: `#tip[..]` is `#callout("tip")[..]`.
 
-#table(
+#block(breakable: false, table(
   columns: (auto, auto, auto, 1fr),
   table.header([Function], [Title], [Color], [For]),
   [`#caution`], [Caution!], [red], [a mistake to avoid],
@@ -472,7 +473,7 @@ kind has a function of its own, `#callout(kind)` written short:
   [`#example`], [Example.], [green], [a short example inside an ordinary slide, with the beaker of the example slides;
     an example that takes the whole slide is `== Title <example>` (@items)],
   [`#examples`], [Examples.], [green], [the same, for several examples],
-)
+))
 
 The default style is the box of a printed handout, with a bar on the left and the title opening the text;
 `style: "badge"` gives an emphasis box with the title on a badge, without the punctuation. `title:` and `icon:`
@@ -638,8 +639,7 @@ The footer shows the short title and the title on the left and the authors on th
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content or a
 function of `self`. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
-slides another word (`part-name`). The callouts `#example` and `#examples` keep their title and their beaker: `title:`
-and `icon:` change them (@callouts).
+slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).
 
 ```typ
 #show: ufac-theme.with(
@@ -653,7 +653,7 @@ and `icon:` change them (@callouts).
 
 == The information anywhere: `#info` <info>
 
-`#info` shows any field of the deck but `counter-prefix`, or any alias, anywhere in a slide, inside boxes and tables
+`#info` shows any field of the table of @information but `counter-prefix`, or any alias, anywhere in a slide, inside boxes and tables
 too: the author as written, the date in full, the contact, and with `"logo"` the logos of the footer, with a height and
 in white for a dark background. With a function, it receives every field at once.
 
