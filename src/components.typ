@@ -366,7 +366,9 @@
     let body = _trim(_children(body)).join()
     set list(marker: _markers(c))
     set text(fill: colors.neutral-darkest)
-    _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em },
+    // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
+    // closing slide), the icon stays on the first line and the text on the left
+    _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
       // the icon (0.9em) centered on the capitals of the first line: the line starts at the top of the cell, at the
       // height of the capitals, and the icon goes up half of what it has more than them
       if ic != none { context {

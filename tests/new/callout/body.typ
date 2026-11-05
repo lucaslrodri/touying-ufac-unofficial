@@ -70,3 +70,10 @@
   ]
 ]
 #examples(title: [Two examples.])[`title:` replaces the title in the plural too.]
+
+== Two lines in a centered layout
+#grid(columns: (1fr, 1fr), gutter: 1em, align: horizon,
+  [A `grid(align: horizon)`, the usual layout of a slide: the icon stays on the first line of the callout.],
+  tip[A callout of two lines keeps its icon on the first one.],
+)
+#align(center, block(width: 60%, remark[Centered on the page, the text of the callout stays on the left.]))
