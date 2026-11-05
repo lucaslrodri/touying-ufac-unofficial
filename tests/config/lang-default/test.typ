@@ -1,4 +1,4 @@
-/// Synopsis: `lang` omitted: Portuguese (pt-BR) names Exercício/Exemplo/Parte, `text.lang` = pt, region BR.
+/// Synopsis: `lang` omitted: Portuguese (pt-BR) names Exercício/Exemplo/Parte, `text.lang` = pt, region BR. The shared body (config/lang-body.typ) also checks the smart quotes, the titles of the callouts (`#example` and `#examples` included, in both styles), the word of the solution and the pill of the output.
 #import "../../common.typ": *
 #show: ufac-theme.with(test-info)
 #include "../lang-body.typ"

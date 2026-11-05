@@ -1,9 +1,10 @@
 // TEST catalogue of the touying-ufac-unofficial syntax. Each topic lives in tests/<group>/<case>/body.typ, which is at
 // the same time a Tytanic test (tests/<group>/<case>/test.typ = preamble + #include "body.typ") and a chunk of this
-// catalogue: what is here is exactly what the suite compares. For a new case: `tt new --use-system-fonts group/case`,
-// move the markup to body.typ, leave test.typ with the #include and add the matching #include below.
+// catalogue: what is here is exactly what the suite compares. For a new case:
+// `sh scripts/with-preview.sh tt new --use-system-fonts group/case`, move the markup to body.typ, leave test.typ with
+// the #include and add the matching #include below.
 // The config/ tests (theme parameters, 4:3) and unit/ (assertions) have their own preamble and are not included here.
-// Compile: `typst compile tests.typ` (inside this folder). Every path in the suite is relative, so the root does not matter.
+// Compile from the repository: `typst compile --root . tests/tests.typ` (the root must be the repository).
 #import "common.typ": *
 #show: setup
 
