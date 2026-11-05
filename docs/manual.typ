@@ -478,11 +478,12 @@ the title on a badge.
 #note[Two versions of the program
   differ here.]
 #example[
-  $x[n] = 4$ has infinite energy.
+  The Bay of Fundy has tides of 16 m.
 ]
 #examples[
-  - speech, in time;
-  - air pressure, in altitude.
+  Tides that follow the Moon:
+  - spring tides, at full moon;
+  - neap tides, at the quarter moons.
 ]
 #callout("tip", style: "badge")[
   The badge style.

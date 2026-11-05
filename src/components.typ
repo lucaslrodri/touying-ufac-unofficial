@@ -492,7 +492,7 @@
 ///
 /// ```example
 /// #example[
-///   The constant signal $x[n] = 4$ has infinite energy.
+///   The Bay of Fundy has tides of 16 m.
 /// ]
 /// ```
 /// -> content
@@ -506,8 +506,9 @@
 ///
 /// ```example
 /// #examples[
-///   - speech, in time;
-///   - air pressure, in altitude.
+///   Waves made by the wind:
+///   - ripples, a few centimeters long;
+///   - swell, which crosses oceans.
 /// ]
 /// ```
 /// -> content

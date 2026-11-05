@@ -6,7 +6,7 @@
 #callout("tip")[The up arrow recalls the last command.]
 #callout("remark")[A *function* is a named block of code.]
 #callout("note")[Two versions of a program differ here.]
-#callout("example")[The constant signal $x[n] = 4$ has infinite energy.]
+#callout("example")[The Bay of Fundy has tides of 16 m.]
 
 == The functions of each kind (`#caution`, `#tip`, `#remark`, `#note`, `#example`)
 #caution[`#caution[..]` is `#callout("caution")[..]`.]
@@ -60,13 +60,13 @@
 == Several examples (`#examples`)
 #cols[
   #examples[
-    - speech, in time;
-    - air pressure, in altitude.
+    - spring tides, at full moon;
+    - neap tides, at the quarter moons.
   ]
 ][
   #examples(style: "badge")[
-    - speech, in time;
-    - air pressure, in altitude.
+    - spring tides, at full moon;
+    - neap tides, at the quarter moons.
   ]
 ]
 #examples(title: [Two examples.])[`title:` replaces the title in the plural too.]
