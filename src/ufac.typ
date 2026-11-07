@@ -867,8 +867,8 @@
 /// Section slide, created by every `= Title`: on the left, "PART N" in the yellow tag, the title in blue and the yellow
 /// rule, as on the cover; on the right, the content right after the `=` (typically an `#image`), at the page margin
 /// from the edge, in a frame of 12em × 66% of the height of the content area: an image without a size fills it, an
-/// image with a size keeps it and shrinks when it is larger than the frame. The theme calls it for every `=`; it is
-/// not meant to be called by hand.
+/// image with a size keeps it and shrinks when it is larger than the frame, and a caption wraps at the width of the
+/// frame. The theme calls it for every `=`; it is not meant to be called by hand.
 /// -> content
 #let new-section-slide(
   /// Slide configuration, see @slide.config. -> dictionary
@@ -910,6 +910,12 @@
   let body = if body in (none, []) { body } else {
     set image(fit: "contain")
     show image: limit
+    // a figure wider than the frame (a caption longer than the image) takes the width of the frame, so the caption
+    // wraps there instead of widening the column, which would push the title and the image
+    show figure: it => context {
+      let fw = 12em.to-absolute()
+      if measure(it).width <= fw { it } else { block(width: fw, it) }
+    }
     body
   }
   // the body goes in the second column of a `grid((1fr, auto))` and is moved by the horizontal page margin, so the

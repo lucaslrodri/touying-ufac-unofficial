@@ -59,3 +59,6 @@ A line with #icon("tip") an icon.
   #tip[A callout keeps its icon.]
   #emph-box(icon: "info", title: [Box])[A badge with an icon.]
 ]
+
+= A long caption wraps at the frame
+#figure(shape(300, 100), caption: [A caption much longer than the image wraps at the width of the frame, and the title keeps its column.])
