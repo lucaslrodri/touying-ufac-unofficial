@@ -29,6 +29,6 @@ Derived in RGB: `darken(75% / 55% / 30%)` and `lighten(30% / 60% / 85%)`; `neutr
   [`secondary`], [#sw(colors.secondary) `#FFBF14`], [`-` markers, `#secondary`, `==x==` highlight (`-lighter`), 1st `"quote"`],
   [`tertiary`], [#sw(colors.tertiary) `#BE1E2D`], [`#tertiary`, exercises, problem boxes, `#caution`, 4th `"quote"`],
   [`quaternary`], [#sw(colors.quaternary) `#09B081`], [`#quaternary`, examples, advantage boxes, `#tip`, 3rd `"quote"`],
-  [`neutral`], [#sw(colors.neutral) `#808080`], [`-darkest` = bold, italic and terms; `-lightest` = background; `-dark` = captions, secondary labels, `#note` and the output of a program],
+  [`neutral`], [#sw(colors.neutral) `#808080`], [`-darkest` = bold, italic and terms; `-lightest` = background; `-dark` = secondary labels, `#note` and the output of a program],
 )
 ]
