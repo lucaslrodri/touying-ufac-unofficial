@@ -370,12 +370,14 @@
   if body == none { return [] }
   let fill = if type(self) == dictionary { self.at("page", default: (:)).at("fill", default: white) } else { white }
   let veil = (if type(fill) == color { fill } else { white }).transparentize(15%)
-  let fallback = utils.cover-with-rect(self: self, ..args, fill: veil, body)
-  if type(body) != content { return fallback }
+  // Touying's cover, built only when it is used: it reads fields that some elements do not have yet at this point (a
+  // `quote` without `block:`, which the theme veils itself)
+  let fallback() = utils.cover-with-rect(self: self, ..args, fill: veil, body)
+  if type(body) != content { return fallback() }
   let ch = _trim(_children(_unstyle(body)))
   if ch.len() == 0 { return body }
   let lone-context = ch.len() == 1 and ch.first().func() == [#context none].func()
-  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) { return fallback }
+  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) { return fallback() }
   context {
     let s = here().position()
     let ends = query(metadata.where(value: _veil-end).after(here()))

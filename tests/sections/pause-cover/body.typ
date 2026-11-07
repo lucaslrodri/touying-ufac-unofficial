@@ -25,3 +25,10 @@ The covered list below does not fit on this page. A block that breaks across pag
 #pause
 
 #for i in range(1, 16) [- Covered item #i]
+
+== Covered `#quote`
+Typst's `#quote` without `block: true`, which the theme shows as a quote box, is veiled after `#pause` too.
+
+#pause
+
+#quote(attribution: [Author])[A covered quotation, written as `#quote`.]
