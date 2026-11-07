@@ -1114,7 +1114,9 @@
       _in-box(it.fill, it, kind: "pill")
     }
   }
-  show figure.caption: it => it.body
+  // the caption is its body alone, without "Figure N", at 0.6 of the text, so that a figure and its caption fit on
+  // the slide together with the text around them
+  show figure.caption: it => text(size: 0.6em, it.body)
   set terms(tight: false)
   show terms.item: it => { text(weight: "bold", fill: self.colors.neutral-darkest, it.term + ": "); it.description; linebreak() }
   body

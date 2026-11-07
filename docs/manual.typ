@@ -552,7 +552,7 @@ with a dark tone is like a pill, with white text.
 
 == Figures and math
 
-A figure caption shows its body only, without "Figure N". Math uses New Computer Modern Math, and block equations sit
+A figure caption shows its body only, without "Figure N", at 0.6 of the text. Math uses New Computer Modern Math, and block equations sit
 closer to the text than Typst's default.
 
 ```example
