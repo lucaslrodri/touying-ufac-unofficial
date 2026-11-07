@@ -20,7 +20,7 @@ Slides with the look of UFAC for lectures, extension courses, coursework and fin
 typst init @preview/touying-ufac-unofficial:0.3.0
 ```
 
-The command creates a deck from [template/main.typ](template/main.typ): the cover and one slide.
+The command creates a deck from [template/main.typ](template/main.typ): the cover and one slide. In the new folder, `typst watch main.typ` compiles it on every change.
 
 The theme uses the font *New Computer Modern Sans*, which Typst does not bundle: without it, the slides fall back to another font. It belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family: download the archive from CTAN and take the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, or keep them in a folder and compile with `typst compile --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
@@ -378,7 +378,7 @@ int main(void) { return 0; }
 
 ## Integrations
 
-The theme sits on Touying and works with the packages a deck usually takes along. It exports short names that other packages also use, such as `example`, `remark` and `solution` of theorion: with two imports with `*`, the later one wins in silence, so import the other package by its name (`#import "@preview/theorion:0.3.3" as theorion`, then `#theorion.example[..]`).
+The theme sits on Touying and works with the packages a deck usually takes along. It exports short names that other packages also use, such as `example`, `remark` and `solution` of theorion: with two imports with `*`, the later one wins silently, so import the other package by its name (`#import "@preview/theorion:0.3.3" as theorion`, then `#theorion.example[..]`).
 
 ### Touying
 
@@ -404,7 +404,7 @@ The theme draws its own code box and does not need [codly](https://typst.app/uni
 
 ### Icons
 
-`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the color of its surroundings: black in the text, the color of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name (`"caution"`, `"tip"`, `"remark"`, `"note"`, `"exercise"`, `"example"`, `"python"`, …; the full list is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf)). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/): give it to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes an icon (an `emph-box`, a callout, the badge of an exercise or example), where it behaves like an icon of the theme.
+`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the color of its surroundings: black in the text, the color of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name (`"caution"`, `"tip"`, `"remark"`, `"note"`, `"exercise"`, `"example"`, `"python"`, …; the full list is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf), section Icons). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/): give it to `provide-icons` and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes an icon (an `emph-box`, a callout, the badge of an exercise or example), where it behaves like an icon of the theme.
 
 ```typst
 == Field trip
@@ -434,7 +434,7 @@ The [manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v
 | [codly](https://typst.app/universe/package/codly) | 2.0.0 | optional: the code blocks through codly (Typst ≥ 0.15); see [codly](#code-blocks-with-codly) |
 | *New Computer Modern Sans* | | font, not bundled with Typst, unlike *New Computer Modern Math*, used for the equations (see [Basic usage](#basic-usage)) |
 
-The packages are fetched automatically; the theme imports touying and iconify, and a deck imports codly when it wants it. The font is not fetched: see [Basic usage](#basic-usage).
+The packages are fetched automatically; the theme imports touying and iconify, and a deck imports codly when it wants it. The font is not fetched.
 
 ## License
 
