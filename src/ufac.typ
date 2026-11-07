@@ -1120,9 +1120,11 @@
       _in-box(it.fill, it, kind: "pill")
     }
   }
-  // the caption is its body alone, without "Figure N", at 0.6 of the text, so that a figure and its caption fit on
-  // the slide together with the text around them
-  show figure.caption: it => text(size: 0.6em, it.body)
+  // the caption is its body alone, without "Figure N", at 0.6 of the size of the text, so that a figure and its caption
+  // fit on the slide together with the text around them; the size is a `set` rule, so that a deck gives another one
+  // with its own `show figure.caption: set text(size: ..)`
+  show figure.caption: set text(size: 0.6em)
+  show figure.caption: it => it.body
   set terms(tight: false)
   show terms.item: it => { text(weight: "bold", fill: self.colors.neutral-darkest, it.term + ": "); it.description; linebreak() }
   body

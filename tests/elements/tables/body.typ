@@ -13,7 +13,7 @@
     [Sine], [$sin x$], [$cos x$],
   )
 ][
-  `#figure(table(..), caption: [..])`: caption with the body only, no "Table 1:":
+  `#figure(table(..), caption: [..])`: caption with the body only, no "Table 1:", at 0.6 of the text:
   #figure(table(columns: 3, [Year], [Value], [Change], [2024], [1.20], [3 %], [2025], [1.35], [12 %]), caption: [Yearly series (table)])
   `table.header(..)` is row 0 as well:
   #table(columns: 2, table.header([A], [B]), [1], [2])

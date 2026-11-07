@@ -552,8 +552,10 @@ with a dark tone is like a pill, with white text.
 
 == Figures and math
 
-A figure caption shows its body only, without "Figure N", at 0.6 of the text. Math uses New Computer Modern Math, and block equations sit
-closer to the text than Typst's default.
+A figure caption shows its body only, without "Figure N", at 0.6 of the size of the text, so that it leaves room for
+the figure. A deck gives another size after the theme, as for any text: `#show figure.caption: set text(size: 18pt)`
+(the text of a slide is 22pt; a size in `em` is a share of the caption, not of the text). Math uses New Computer
+Modern Math, and block equations sit closer to the text than Typst's default.
 
 ```example
 #figure(
@@ -811,6 +813,10 @@ A `==` without text gives a slide without a title, with the footer.
 
 The figure of a section, which 0.2.0 cropped to fill 12em × 66% of the slide, now fits whole in that frame; a deck
 needs no change for it.
+
+A figure caption, at the size of the text in 0.2.0, is now 0.6 of it. A deck that made its captions smaller by hand,
+with `#show figure.caption: set text(size: 0.6em)` or a `text(size: ..)` in the caption, drops that, or they get
+smaller twice.
 
 = Reference <reference>
 
