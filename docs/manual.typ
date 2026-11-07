@@ -28,12 +28,13 @@ The theme uses the font *New Computer Modern Sans*, which is not bundled with Ty
 another font and the slides do not look like the ones in this manual. It belongs to the
 #link("https://ctan.org/pkg/newcomputermodern")[New Computer Modern] family: download the archive from CTAN and take
 the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, or keep them in a folder and compile
-with `typst compile --font-path <folder> main.typ`. In the #link("https://typst.app/")[Typst web app], upload the
+with `typst watch --font-path <folder> main.typ`. In the #link("https://typst.app/")[Typst web app], upload the
 `.otf` files to the project.
 
 == A first deck
 
-`typst init @preview/touying-ufac-unofficial:0.3.0` creates a deck from the template of the package. A deck imports
+`typst init @preview/touying-ufac-unofficial:0.3.0` creates a deck from the template of the package; in the new folder,
+`typst watch main.typ` compiles it on every change. A deck imports
 Touying and the theme, applies `ufac-theme` with the information of the deck, and starts with the cover:
 
 ```typ
@@ -554,11 +555,16 @@ with a dark tone is like a pill, with white text.
 == Figures and math
 
 A figure caption shows its body only, without "Figure N", at 0.6 of the size of the text, so that it leaves room for
-the figure. A deck gives another size after the theme, as for any text: `#show figure.caption: set text(size: 18pt)`
-(the text of a slide is 22pt; a size in `em` is a share of the caption, not of the text). A large image, such as a
-photo, needs a height, as below: without one it can take the whole height of the slide, and its caption runs into the
-footer. A reference to a figure (`@label`) still says "Figure 1", a number the slide does not show, so a figure is
-better cited in words.
+the figure. A deck gives another size with `#show figure.caption: set text(size: 18pt)`, after
+`#show: ufac-theme.with(..)`: written before it, the rule gets the 0.6 of the theme on top (18pt gives 10.8pt). A size
+in `em` is a share of the caption: `0.8em` gives 0.8 × 0.6 = 0.48 of the text, which is 22pt on a slide.
+
+On an ordinary slide, a large image, such as a photo, needs a height, as below: without one it can take the whole
+height of the slide, and its caption runs into the footer. A height in percent is a share of the content area of the
+slide, not of the room left under the text: `height: 60%` leaves room for a line or two above the figure; with more
+text, the figure goes next to it, in `#cols`. A reference to a figure (`@label`) says "Figure 1" in the language of the
+deck, a number the slide does not show (the figure of a section slide counts too), so a figure is better cited in
+words.
 
 #slide-example("figure")
 
@@ -670,7 +676,7 @@ The theme sits on Touying and works with the packages a deck usually takes along
 icons of any collection of Iconify.
 
 The theme exports short names that other packages also use, such as `example`, `remark` and `solution` of theorion:
-with two imports with `*`, the later one wins in silence. Import the other package by its name,
+with two imports with `*`, the later one wins silently. Import the other package by its name,
 `#import "@preview/theorion:0.3.3" as theorion`, and write `#theorion.example[..]`.
 
 == Touying <touying>
@@ -768,7 +774,7 @@ and each collection has its own license.
 
 = Moving from 0.2.0 <migration>
 
-A deck of 0.2.0 needs these changes; everything else keeps working.
+A deck of 0.2.0 needs the changes of this table and, in some cases, those of the notes after it.
 
 #table(
   columns: (1fr, 1.3fr),
@@ -815,9 +821,9 @@ A `==` without text gives a slide without a title, with the footer.
 The figure of a section, which 0.2.0 cropped to fill 12em × 66% of the slide, now fits whole in that frame; a deck
 needs no change for it.
 
-A figure caption, at the size of the text in 0.2.0, is now 0.6 of it. A deck that made its captions smaller by hand,
-with `#show figure.caption: set text(size: 0.6em)` or a `text(size: ..)` in the caption, drops that, or they get
-smaller twice.
+A figure caption, at the size of the text in 0.2.0, is now 0.6 of it. A deck that made its captions smaller by hand
+with a size in `em`, as `#show figure.caption: set text(size: 0.6em)` or a `text(size: 0.6em)[..]` in the caption,
+drops that, or they get smaller twice.
 
 = Reference <reference>
 
