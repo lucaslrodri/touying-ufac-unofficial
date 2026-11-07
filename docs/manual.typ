@@ -554,16 +554,16 @@ with a dark tone is like a pill, with white text.
 
 A figure caption shows its body only, without "Figure N", at 0.6 of the size of the text, so that it leaves room for
 the figure. A deck gives another size after the theme, as for any text: `#show figure.caption: set text(size: 18pt)`
-(the text of a slide is 22pt; a size in `em` is a share of the caption, not of the text). Math uses New Computer
-Modern Math, and block equations sit closer to the text than Typst's default.
+(the text of a slide is 22pt; a size in `em` is a share of the caption, not of the text). A large image, such as a
+photo, needs a height, as below: without one it can take the whole height of the slide, and its caption runs into the
+footer. A reference to a figure (`@label`) still says "Figure 1", a number the slide does not show, so a figure is
+better cited in words.
+
+#slide-example("figure")
+
+Math uses New Computer Modern Math, and block equations sit closer to the text than Typst's default.
 
 ```example
-#figure(
-  rect(width: 60%, height: 3em,
-    fill: colors.primary-lightest),
-  caption: [The caption, no number.],
-)
-
 The speed of a wave in deep water is
 $ c = sqrt((g lambda) / (2 pi)) $
 ```

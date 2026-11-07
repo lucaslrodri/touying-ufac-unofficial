@@ -353,6 +353,10 @@ Markdown-like short forms (inline content only; the boxes in the primary color, 
 "A quotation."          // paragraph made only of quoted lines → one quote box per line
 ```
 
+### Figures
+
+A caption shows its body only, without "Figure N", at 0.6 of the size of the text; `#show figure.caption: set text(size: 18pt)` gives another size. A large image, such as a photo, needs a height, `#figure(image("photo.jpg", height: 60%), caption: [...])`, or its caption can run into the footer. A reference to a figure (`@label`) says "Figure 1", a number the slide does not show.
+
 ### Code
 
 A code block goes in the box of the theme, with the line numbers and the language in a pill: `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`; `ufac-theme(code-languages:)` adds others, as `(name:, icon:)`. The output of a program, a block in `text` (or `txt`, `output`), goes in a gray box with its own pill ("Output", in the language of the deck); the [example](#example) shows both. A long block goes on to the next page of the slide, as any long content (a callout in the default style does not split: a long listing goes outside it). For a file name, highlights or ranges, use [codly](#code-blocks-with-codly).
