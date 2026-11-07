@@ -210,7 +210,8 @@ right after the `=`, typically an image, sits on the right, one page margin away
 66% of the height of the content area. An image without a size fills the frame, scaled up or down with its
 proportions. An image with a size keeps it, and shrinks whole when it is larger than the frame, so a small image or an
 `#icon` keeps its size; a size in percent (`width: 100%`, `height: 50%`) is a share of the frame. The image is neither cropped nor
-stretched, also inside a figure, an `align` or a link. A caption wraps at the width of the frame.
+stretched, also inside a figure, an `align` or a link. A long caption wraps at the width of the frame; a table or a
+drawing wider than the frame keeps its width, and its caption wraps there.
 
 #see("ufac", "new-section-slide()")
 

@@ -910,11 +910,12 @@
   let body = if body in (none, []) { body } else {
     set image(fit: "contain")
     show image: limit
-    // a figure wider than the frame (a caption longer than the image) takes the width of the frame, so the caption
-    // wraps there instead of widening the column, which would push the title and the image
+    // a caption wider than the frame and than the body of its figure wraps at the wider of the two, instead of
+    // widening the column, which would push the title and the image; a body wider than the frame (a table, a drawing:
+    // only an image is scaled to the frame) keeps its width, so it is never squeezed
     show figure: it => context {
-      let fw = 12em.to-absolute()
-      if measure(it).width <= fw { it } else { block(width: fw, it) }
+      let w = calc.max(12em.to-absolute(), measure(it.body).width)
+      if measure(it).width <= w { it } else { block(width: w, it) }
     }
     body
   }

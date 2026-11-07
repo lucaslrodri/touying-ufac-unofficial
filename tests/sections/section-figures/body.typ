@@ -62,3 +62,9 @@ A line with #icon("tip") an icon.
 
 = A long caption wraps at the frame
 #figure(shape(300, 100), caption: [A caption much longer than the image wraps at the width of the frame, and the title keeps its column.])
+
+= A long caption under a small image
+#figure(sized(100, 100, width: 3em), caption: [A long caption under a small image wraps at the width of the frame.])
+
+= A wide body that is not an image keeps its width
+#figure(rect(width: 16em, height: 3em, fill: colors.primary-lightest, stroke: colors.primary), caption: [A drawing wider than the frame, with a caption longer than the frame too, which wraps at its width.])
