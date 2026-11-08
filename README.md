@@ -391,7 +391,16 @@ Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simp
 - inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, any animation (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) makes Touying stop with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
 - a covered list, code block or box that runs on to the next page is hidden instead of veiled: split the slide with `---`;
 - on a slide that goes on to the next page, put a `#pause` after a `===`, not right before it (otherwise it leaves blank pages), and give a `#pause` between `->` lines a paragraph of its own (glued to the lines, the document does not converge);
-- a `#pause` between the lines of a `>` box or of quotations, or with `#uncover`/`#only` in one paragraph, a `#speaker-note` glued to the items of a list, a `#pause` in a column with a callout or an image in the next one, a list split by a `#pause` under a `#set enum(start: ..)`, and Touying's `#item-by-item`, which shows every item at once with this theme, have their own limits, with their ways out, in the manual.
+- more cases, each with its way out in the manual:
+  - a `#pause` between the lines of a `>` box or of quotations;
+  - a `#pause` and an `#uncover`/`#only` in one paragraph;
+  - a line glued to a `#pause`, with an image or a shape after it, which shows on the first step;
+  - a `#speaker-note` glued to the items of a list;
+  - an `#uncover` around an item right after another item of a list, which does not veil it;
+  - a list right inside an `#align(center)`, whose covered markers move;
+  - what is in the columns after a `#pause` in a column;
+  - a list split by a `#pause` under a `#set enum(start: ..)`, which counts from 1;
+  - Touying's `#item-by-item`, which shows every item at once with this theme.
 
 ### Code blocks with codly
 

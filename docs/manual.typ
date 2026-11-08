@@ -697,7 +697,7 @@ with two imports with `*`, the later one wins silently. Import the other package
 == Touying <touying>
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
-of the theme, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
+of the theme, with the limits below, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
 The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside a box
 with a badge, a `#tag` or the header of a table, and its `#cols` has no `divider`.
 
@@ -725,7 +725,7 @@ at parts of a slide; and #link("https://touying-typ.github.io/docs/integration/m
 Their pages in the documentation of Touying show how. Instead of the `outline-slide` of other Touying themes, write a
 slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart here.
 
-The limits, each with its way out:
+The limits of the animations, each with its way out:
 
 - Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, every
   animation of Touying (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) stops the compilation with
@@ -739,10 +739,16 @@ The limits, each with its way out:
   color of the cycle).
 - A `#pause` on its own line between two lines of text, with an image or a shape after the covered line, leaves that
   line visible on the first step (only the image or the shape is veiled): give the `#pause` a paragraph of its own.
-- A `#pause` in a column covers the next columns too, but a callout or an image there is only partly veiled: put
-  `#uncover(2)[..]` around the content of the next column.
+- A `#pause` in a column covers the next columns too, but badly: a callout there is veiled in bands, an image or a
+  shape not at all, and a list alone in a column shows on the first step as plain text (`->`) or with its markers
+  unveiled (`-`): put `#uncover(2)[..]` (the step the `#pause` opens) around the content of the next columns.
 - A `#speaker-note` glued to the items of a list, between them or right after them, shows the covered items on the
   first step: write the note at the start of the slide, or at its end after a blank line.
+- An `#uncover` around an item right after another item of a list does not veil it: put a `#pause` between the
+  items.
+- In a list right inside an `#align(center)`, the marker of a covered item stands in the middle on the first step and
+  goes to the margin on the next, as in Touying's own themes: center the list as a block,
+  `#align(center, block(align(left)[..]))`.
 - A numbered list split by a `#pause` counts from 1, whatever the `#set enum(start: ..)`: write the first number
   (`3.`), and the next items follow it.
 - A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
