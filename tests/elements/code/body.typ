@@ -62,3 +62,14 @@ In the `==` header (next slide) and in the `=` title the chip uses the `primary`
 // The shorthands are off in a raw block: ==x==, > a, -> b, ~~c~~, ~d~, "quote"
 #let x = 1
 ```
+
+== A first line as wide as the block
+The first line leaves the width of the pill free and wraps before it, in code and in the output of a program:
+```python
+total = sum(value * weight for value, weight in zip(values, weights)) / sum(weights)
+print(total)
+```
+```text
+the first line of a long output of a program, as wide as the box, wraps before the pill
+the second line has the whole width of the box, as the others
+```

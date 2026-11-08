@@ -202,8 +202,8 @@
 }
 
 /// Code blocks without codly: the box of the theme around the block (the bar, the fill and the thin border, in the
-/// color of code or output), the language pill at the top right, the line numbers from `raw.line` (not in an output)
-/// and the syntax colors of `ufac-syntax`.
+/// color of code or output), the language pill at the top right (the first line leaves its width free), the line numbers
+/// from `raw.line` (not in an output) and the syntax colors of `ufac-syntax`.
 /// -> content
 #let _native(
   /// The languages, see `code-languages`. -> dictionary
@@ -218,15 +218,23 @@
       bottom: 0.5pt + k.edge), inset: (left: 0.6em, right: 0.4em, y: 0.45em), breakable: true, {
         let label = _label(langs, it.lang, k.bar)
         if label != none { place(top + right, label) }
-        if it.lang in _output-langs { it } else {
-          // the code of a line in a box with the rest of the width: a line that wraps continues under the code, not
-          // under the number, and the number stays on the baseline of the first line
-          show raw.line: l => {
-            box(width: 1.4em, align(right, text(fill: k.bar.lighten(45%), size: 0.8em, str(l.number))))
-            h(0.7em)
-            box(width: 1fr, l.body)
+        // the first line leaves the width of the pill free, so a long one wraps before it instead of running under it
+        context {
+          let free = if label != none { measure(label).width + 0.4em }
+          let first(l) = if l.number == 1 and free != none { box(width: 1fr, l.body); h(free) } else { box(width: 1fr, l.body) }
+          if it.lang in _output-langs {
+            show raw.line: l => if l.number == 1 and free != none { first(l) } else { l }
+            it
+          } else {
+            // the code of a line in a box with the rest of the width: a line that wraps continues under the code, not
+            // under the number, and the number stays on the baseline of the first line
+            show raw.line: l => {
+              box(width: 1.4em, align(right, text(fill: k.bar.lighten(45%), size: 0.8em, str(l.number))))
+              h(0.7em)
+              first(l)
+            }
+            it
           }
-          it
         }
       })
   }
