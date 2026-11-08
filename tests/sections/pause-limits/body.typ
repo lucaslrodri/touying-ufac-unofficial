@@ -25,3 +25,63 @@ After the box: only this waits for the second step.
   - first item
   - second item
 ]
+
+== Limit: a `#speaker-note` glued to the items
+- first item
+#pause
+- second item, shown on the first step
+#speaker-note[A note.]
+
+== Way out: the note after a blank line
+- first item
+#pause
+- second item, veiled
+
+#speaker-note[A note.]
+
+== Limit: a covered line glued to a visible one, then a shape
+Visible line.
+#pause
+Covered line, shown on the first step.
+#rect(width: 4em, height: 1.5em, fill: colors.primary)
+
+== Way out: the `#pause` in a paragraph of its own
+Visible line.
+
+#pause
+
+Covered line, veiled.
+#rect(width: 4em, height: 1.5em, fill: colors.primary)
+
+== Limit: a `#pause` in a column, and the next column
+#cols[
+  - first item
+  #pause
+  - second item
+][
+  #tip[A callout in the next column, veiled in bands.]
+  #rect(width: 4em, height: 1.5em, fill: colors.primary)
+]
+
+== Way out: `#uncover` around the next column
+#cols[
+  - first item
+  #pause
+  - second item
+][
+  #uncover(2)[
+    #tip[A callout in the next column, veiled whole.]
+    #rect(width: 4em, height: 1.5em, fill: colors.primary)
+  ]
+]
+
+== Way out: the first number written
+3. three, written
+#pause
++ four
+
+#set enum(start: 3)
+== Limit: a split list after `#set enum(start: 3)` (last: the rule reaches the slides after it)
++ first, numbered 1.
+#pause
++ second, numbered 2.
