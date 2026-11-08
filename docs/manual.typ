@@ -699,15 +699,15 @@ with two imports with `*`, the later one wins silently. Import the other package
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
 of the theme, with the limits below, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
 The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside an
-`emph-box` with a title or an icon (a callout with `style: "badge"` included), a `#tag` or the header of a table,
-and its `#cols` has no `divider`.
+`emph-box` with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header
+of a table, and its `#cols` has no `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
 
 Between the items of a list (`-`, `+`), the `#pause` goes on its own line or in a paragraph of its own, with blank
 lines around it: the list is the same on every step, and numbered items keep their numbers under the veil, also inside
-an `emph-box` without a title or an icon, a callout in the default style or a column (an `emph-box` with a title or
-an icon and a callout with `style: "badge"` take no animation: see the first limit below).
+an `emph-box` without a title or an icon, a callout in the default style or a column (the boxes that take no animation are in the
+first limit below).
 
 #table(
   columns: (auto, 1fr),
@@ -728,10 +728,10 @@ slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart he
 
 The limits of the animations, each with its way out:
 
-- Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, every
-  animation of Touying (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) stops the compilation with
-  "Unsupported mark … inside some functions like context": a `#pause` goes before such a box, or `#uncover`/`#only`
-  around it.
+- Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box`, a `#tag` or the header
+  of a table, every animation of Touying (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) stops the
+  compilation with "Unsupported mark … inside some functions like context": a `#pause` goes before such a box or
+  table, or `#uncover`/`#only` around it.
 - A `#pause` between the lines of a `>` box only holds back what follows the box, and the bottom edge of the box is
   lightly veiled on the first step: for a box revealed in steps, write `#emph-box[..]` without a title, with the
   `#pause` in a paragraph of its own.
@@ -749,8 +749,8 @@ The limits of the animations, each with its way out:
 - An `#uncover` around an item that follows another item of a list, glued to it or after a blank line, does not veil
   it: put a `#pause` between the items.
 - In a list right inside an `#align(center)` or an `#align(right)`, the marker of a covered item stands next to its
-  text on the first step and goes to the left margin on the next, as in Touying's own themes: center the list as a
-  block, `#align(center, block(align(left)[..]))`.
+  text on the first step and goes to the left margin on the next, as in Touying's own themes: put the list in a block
+  with its text on the left, in the same `align`: `#align(center, block(align(left)[..]))`, or with `right`.
 - A numbered list split by a `#pause` counts from 1, whatever the `#set enum(start: ..)`: write the first number
   (`3.`), and the next items follow it.
 - A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span

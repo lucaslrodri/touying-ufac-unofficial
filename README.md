@@ -388,11 +388,11 @@ The theme sits on Touying and works with the packages a deck usually takes along
 
 Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simple) (`#pause`, `#meanwhile`, and [`#uncover`, `#only`, `#alternatives`](https://touying-typ.github.io/docs/tutorials/dynamic/complex)), `#speaker-note`, `#slide(composer:)` etc. work as usual on the elements of the theme, and so do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex). Covered content stays faintly visible under a veil in the color of the page, or of the box around it. The limits, each with its way out:
 
-- inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, any animation (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) makes Touying stop with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
+- inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box`, a `#tag` or the header of a table, any animation (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) makes Touying stop with "Unsupported mark": put a `#pause` before such a box or table, or `#uncover`/`#only` around it;
 - a covered list, code block or box that runs on to the next page is hidden instead of veiled: split the slide with `---`;
 - on a slide that goes on to the next page, put a `#pause` after a `===`, not right before it (otherwise it leaves blank pages), and give a `#pause` between `->` lines a paragraph of its own (glued to the lines, the document does not converge);
 - more cases, each with its way out in the section "Touying" of the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf):
-  - a `#pause` between the lines of a `>` box or of quotations, which shows them on the first step;
+  - a `#pause` between the lines of a `>` box, which shows the whole box on the first step, or between quotations, which show on it as plain text, without their boxes;
   - a `#pause` and an `#uncover`/`#only` in one paragraph, which Touying reorders on the first step;
   - a covered line glued to a `#pause` and followed by an image or a shape, which leaves the line visible on the first step;
   - a `#speaker-note` glued to the items of a list, which shows the covered items on the first step;
@@ -468,7 +468,7 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 
 ### Unreleased
 
-- A `#pause` in a paragraph of its own, with blank lines around it, between two items of a list, reveals the next item, as a `#pause` on its own line does; also inside an `emph-box` without a title or an icon, a callout in the default style, a column, an `align` (a list centered as a block: see the limits), a `pad` or an item, and after a `set` rule. The list then has the spacing of a list without blank lines.
+- A `#pause` in a paragraph of its own, with blank lines around it, between two items of a list, reveals the next item, as a `#pause` on its own line does; also inside an `emph-box` without a title or an icon, a callout in the default style, a column, an `align` (with the list in a block: see the limits), a `pad` or an item, and after a `set` rule. The list then has the spacing of a list without blank lines.
 - Numbered items split by a `#pause` keep their numbers under the veil also inside an `emph-box` without a title or an icon, a callout in the default style or a column, and after a `#set enum(numbering: ..)`; a `#set enum(start: ..)`, which 0.3.0 ignored, applies to a list that no `#pause` splits.
 - The veil no longer reaches the descenders of the visible line right before a covered block. A shape (`#circle`, `#line`…) after a `#pause` is veiled, where 0.3.0 stopped the compilation.
 - An arrow list (`->`), a `>` box, a quote or a `>` before an equation at the start of a callout in the default style starts on the line under the title, where 0.3.0 printed them as text after it ("Tip. -> item").
@@ -498,7 +498,7 @@ New:
 - The code blocks in a box of their own, with the language and its logo, which go on to the next page when they are long; `code-languages` adds languages, and the output has its pill in the language of the deck.
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer. `footer-left` and `footer-right` also take an array: its items joined by a dot, those that show nothing left out (with none left, the footer line runs unbroken).
 - `provide-icons` gives the deck the icons of any collection of Iconify.
-- `#alert` works inside every box, where Touying's stopped the compilation (an `emph-box` with a title or an icon, a callout with `style: "badge"`, a `#tag`, the header of a table).
+- `#alert` works inside every box, where Touying's stopped the compilation (an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box`, a `#tag`, the header of a table).
 - On a slide with animations that goes on to a second page, every step repeats the page numbers of the first (Touying repeated the number of the last page on the later steps).
 - Inside a box, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
 - The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.

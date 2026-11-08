@@ -22,8 +22,8 @@
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
 /// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which stops the compilation inside an `emph-box`
-/// with a title or an icon (a callout with `style: "badge"` included), a `#tag` or the header of a table; this one
-/// works inside every box, with the theme imported after Touying.
+/// with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header of a table;
+/// this one works inside every box, with the theme imported after Touying.
 ///
 /// ```example
 /// An #alert[important] word.
