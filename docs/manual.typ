@@ -654,8 +654,9 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 == The footer and the badges
 
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
-two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content or a
-function of `self`. The badge of the exercises and examples takes
+two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
+array or a function of `self`: the items of an array are joined by a dot, the empty ones left out, and with none left
+the rule runs on. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).
 

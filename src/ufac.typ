@@ -1171,12 +1171,14 @@
   example-icon: "beaker",
   /// The word of the tag of the section slides ("PART N"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
-  /// Left text of the footer; a function receives `self`. `auto` is the `short-title` and the `title` separated by a
-  /// dot and, when the date is a `semester` or a `year`, the date too ("AST101 • Astronomy • 2026.2").
-  /// -> auto | content | function
+  /// Left text of the footer; a function receives `self`. An array (or a function that returns one) shows its items
+  /// separated by a dot, the empty ones left out; with none left, the rule runs on. `auto` is the `short-title`, the
+  /// `title` and, when the date is a `semester` or a `year`, the date ("AST101 • Astronomy • 2026.2").
+  /// -> auto | content | array | function
   footer-left: auto,
-  /// Right text of the footer; a function receives `self`. `auto` is the authors in running text ("A, B and C"); of an
-  /// author written as free content, the names of its first group. -> auto | content | function
+  /// Right text of the footer; a function receives `self`, and an array is joined by a dot, as in `footer-left`. `auto`
+  /// is the authors in running text ("A, B and C"); of an author written as free content, the names of its first
+  /// group. -> auto | content | array | function
   footer-right: auto,
   /// Background of the cover and of the closing slide: `"circles"` (the solid UFAC blue with two translucent circles),
   /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone). -> str
@@ -1199,7 +1201,7 @@
   let footer-left = if footer-left != auto { footer-left } else { self => {
     let parts = (self.info.at("short-title", default: none), self.info.title)
     if self.info.at("date-short", default: false) { parts.push(_date(self)) }
-    parts.filter(_given).map(x => [#x]).join([ #_sep-dot ])
+    _dot-join(parts)
   } }
   let footer-right = if footer-right != auto { footer-right } else { self => _author-names(self) }
   let configs = _prepare-configs(l.lang, args.pos())

@@ -76,6 +76,16 @@
   /// A value, an array or `none`. -> any
   x,
 ) = if x == none { () } else if type(x) == array { x } else { (x,) }
+/// A value that shows nothing: not given (`_given`), or a text or content made only of spaces and line breaks.
+///
+/// #test(`_blank([ ])`, `_blank("  ")`, `_blank(none)`, `_blank([])`, `not _blank([x])`, `not _blank([ x ])`)
+/// -> bool
+#let _blank(
+  /// Any value. -> any
+  x,
+) = if not _given(x) { true } else if type(x) == str { x.trim() == "" } else if type(x) != content { false } else {
+  _children(x).all(c => _is-space(c) or c.func() in (linebreak, parbreak))
+}
 /// A body made of a single paragraph inside a `block`/`grid` does not become a `par` element (Typst treats it as
 /// inline content), so the `show par` rewrites (`->`, `> `, `"…"`) never run. A leading `parbreak()` forces the
 /// paragraph without adding space.
@@ -441,6 +451,18 @@
 /// was too small and its bullet (U+2022) is a square (2026-09-18).
 /// -> content
 #let _sep-dot = box(baseline: 0.18em - 0.36em, context circle(radius: 0.18em, fill: text.fill))
+/// Items of a text of the footer joined by `_sep-dot`, the empty ones (`_blank`) left out: no dot next to an item that
+/// is not there, and `none` when no item is left, so that the rule of the footer runs on without a gap.
+///
+/// #test(`_dot-join(()) == none`, `_dot-join(([], none, [ ], "")) == none`, `_dot-join(([a], none)) != none`)
+/// -> content | none
+#let _dot-join(
+  /// The items: an array, or one item. -> any
+  items,
+) = {
+  let xs = _list(items).filter(x => not _blank(x)).map(x => [#x])
+  if xs.len() > 0 { xs.join([ #_sep-dot ]) }
+}
 /// Rule line of the footer, in the primary color.
 /// -> content
 #let _line(
@@ -643,8 +665,12 @@
   context layout(size => {
     let last-column-size = measure(box(text(utils.last-slide-number, size: 0.6em), inset: 0.4em)).width
     let logos = _logos(self, white: white, color: mono)
-    let (left, right) = (utils.call-or-display(self, self.store.footer-left), utils.call-or-display(self,
-      self.store.footer-right))
+    // a text of the footer, or what its function returns, may be an array: the items joined by the dot (`_dot-join`)
+    let shown(it) = {
+      let v = if type(it) == function { it(self) } else { it }
+      if type(v) == array { _dot-join(v) } else { [#v] }
+    }
+    let (left, right) = (shown(self.store.footer-left), shown(self.store.footer-right))
     // the room of the two texts: the width less the rules (1em, 1.25em, at least 2em between the texts, 2em, 1em),
     // the logos and the number. When both texts do not fit, the right one gets what the left one leaves, at least a
     // third of the room, and the left one the rest
