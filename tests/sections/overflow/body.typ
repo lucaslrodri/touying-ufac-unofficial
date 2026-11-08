@@ -44,3 +44,12 @@ With `style: "badge"` the callout continues on the next page, as an `emph-box`. 
   The callout split between two pages:
   #for i in range(1, 11) [- Step #i of the tip]
 ]
+
+== A box with a title on the next page
+#caution[Não confunda distância percorrida com deslocamento.]
+#tip[Converta km/h para m/s dividindo por 3,6.]
+#remark[A velocidade média depende só das posições inicial e final.]
+#note[No MRU, a velocidade instantânea é igual à média.]
+#cols[#example[Um carro a 72 km/h anda a 20 m/s.]][#examples[Unidades: m/s, km/h, nós.]]
+
+#emph-box(color: colors.quaternary, icon: "tip", title: [Homework])[Read chapter 2 of the textbook, alone at the top of the next page.]
