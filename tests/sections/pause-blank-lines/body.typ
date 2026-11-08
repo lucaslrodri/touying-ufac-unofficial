@@ -106,6 +106,17 @@
   - second item, veiled
 ]
 
+== A `#pause`, then a `#meanwhile`
+- first item
+
+#pause
+
+- second item, veiled on the first step
+
+#meanwhile
+
+- third item, shown on the first step
+
 == After a `set` rule of the slide (last: the rule reaches the slides after it)
 #set text(size: .9em)
 - first item

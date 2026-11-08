@@ -42,6 +42,13 @@
   #pause
   + second, still 2. under the veil
 
+== A `#meanwhile` after a split
++ first
+#pause
++ second, veiled on the first step
+#meanwhile
++ third, shown on the first step, still 3.
+
 #set enum(start: 3)
 == A numbered list after `#set enum(start: 3)` outside the slide
 + three
