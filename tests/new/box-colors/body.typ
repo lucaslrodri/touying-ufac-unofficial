@@ -66,8 +66,11 @@ A tag with an alert: #tag[#alert[alert] tag].
 #table(columns: 2, table.header([#alert[Alert] header], [B]), [1], [2])
 
 == `#alert` inside an equation box
-// Touying's `#alert` stops the compilation here ("Unsupported mark"); the theme's takes the color of the box
+// Touying's `#alert` stops the compilation here ("Unsupported mark"); the theme's works, in the color of the box around
+// the equation, not that of the `eq-box`: blue on a slide, also in a green `eq-box`, and red in a red `emph-box`
 
 $ #eq-box[$x = #alert[2]$] $
 
-In the line: #box[$#eq-box[$y = #alert[3]$]$].
+In the line, #box[$#eq-box[$y = #alert[3]$]$], and in a green one, #box[$#eq-box(color: colors.quaternary)[$z = #alert[4]$]$].
+
+#emph-box(color: colors.tertiary)[In a red box: #box[$#eq-box[$w = #alert[5]$]$].]
