@@ -5,7 +5,7 @@ Visible line with *bold*, #alert[alert], `chip` and ==highlight==.
 
 #pause
 
-Covered running text: *bold*, _italic_, #alert[alert], `chip`, ==highlight==, ~underline~ and $x^2$.
+Covered running text: *bold*, _italic_, #alert[alert], `chip`, ==highlight==, ~underline~, ~~alert~~ and $x^2$.
 
 - list item
   - sub-item
@@ -32,3 +32,6 @@ Typst's `#quote` without `block: true`, which the theme shows as a quote box, is
 #pause
 
 #quote(attribution: [Author])[A covered quotation, written as `#quote`.]
+
+== Covered shorthands in running text
+A paragraph covered from the middle #pause keeps ~underline~, ~~alert~~ and Fig.~1 as revealed, on a line of the same length.

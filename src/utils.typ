@@ -338,6 +338,50 @@
   ((_is-text(first) and first.text.starts-with(">")) or (_is-dq(first) and _is-dq(ch.last()))
     or (_is-text(first) and first.text == "-" and ch.len() > 1 and _is-text(ch.at(1)) and ch.at(1).text.starts-with(">")))
 }
+/// Covered running text with a non-breaking space. Touying's `cover-with-rect` covers each child of a sequence on its own,
+/// a `strike` over each piece of text, so the text of the line no longer merges, and the rules that match the merged
+/// text no longer see `~underline~` and `~~alert~~` (made of non-breaking spaces): the covered line showed wide spaces
+/// instead. Here each run of inline text stays whole, under one `strike` drawn as `cover-with-rect` draws it, and the
+/// other children (an equation, a box, a styled part) go to `cover-with-rect` one by one. Text without a non-breaking
+/// space goes to `cover-with-rect` as it is.
+/// -> content
+#let _cover-text(
+  /// Touying's `self`. -> dictionary | none
+  self,
+  /// The color of the veil. -> color
+  veil,
+  /// Arguments forwarded to `cover-with-rect`. -> arguments
+  args,
+  /// The covered running text. -> content
+  body,
+) = {
+  let styled = text(red)[].func()
+  if body.func() == styled { return styled(_cover-text(self, veil, args, body.child), body.styles) }
+  let ch = if body.func() == [].func() { body.children } else { (body,) }
+  // in markup, `~` is a `symbol` element, not text
+  let symbol = [~].func()
+  if not ch.any(c => c.func() in (text, symbol) and c.has("text") and c.text.contains("\u{a0}")) {
+    return utils.cover-with-rect(self: self, ..args, fill: veil, body)
+  }
+  let inline = (text, symbol, [ ].func(), strong, emph, smartquote, highlight, underline, overline, sub, super, link,
+    linebreak)
+  let in-run(c) = c.func() in inline or (c.func() == raw and not c.block)
+  // the strike of `cover-with-rect` for inline content: a bar 1.6 times the height of a line, over each line fragment
+  let veil-run(run) = context {
+    let h = measure(par[Xg]).height
+    strike(stroke: 1.6 * h + veil, offset: -0.35 * h, extent: 0.05 * h, run.join())
+  }
+  let (out, run) = ((), ())
+  for c in ch {
+    if in-run(c) { run.push(c) } else {
+      if run.len() > 0 { out.push(veil-run(run)); run = () }
+      out.push(utils.cover-with-rect(self: self, ..args, fill: veil, c))
+    }
+  }
+  if run.len() > 0 { out.push(veil-run(run)) }
+  out.join()
+}
+
 /// Covered content stays faintly visible under a veil in the page color at 85% opacity, as in 0.0.1. Touying's own
 /// covers cannot do that for this theme (checked with 0.7.4 and 0.8.0, 2026-09-18): `alpha-changing-cover` (0.8) fades `fill`/`stroke` fields
 /// by rebuilding the content tree before layout and `cover-with-rect` splits the content into leaves (a thick `strike`
@@ -354,7 +398,8 @@
 /// A chunk that breaks across pages cannot be veiled by one rectangle: it is hidden instead (same space, breakable),
 /// decided from the end marker of the previous layout pass. Plain running text (no block element, no shorthand) goes to
 /// Touying's `cover-with-rect`, which is line-break aware, so a `#pause` in the middle of a paragraph still works; an
-/// `#icon` inside such text is the one thing left unveiled.
+/// `#icon` inside such text is the one thing left unveiled. Running text with a non-breaking space goes through
+/// `_cover-text` first (`~underline~` and `~~alert~~`).
 /// -> content
 #let _cover(
   /// Touying's `self`; in Touying 0.8 the sentinel `utils.cover-kind-query` asks for the kind of cover. -> dictionary | none
@@ -377,7 +422,7 @@
   let ch = _trim(_children(_unstyle(body)))
   if ch.len() == 0 { return body }
   let lone-context = ch.len() == 1 and ch.first().func() == [#context none].func()
-  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) { return fallback() }
+  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) { return _cover-text(self, veil, args, body) }
   context {
     let s = here().position()
     let ends = query(metadata.where(value: _veil-end).after(here()))
