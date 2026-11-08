@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160">
+  <!-- Lugar do meme: o professor troca este desenho pelo meme que escolher, com o crédito no slide de créditos. -->
+  <rect x="4" y="4" width="192" height="152" rx="14" fill="#f2f4f8" stroke="#0c4da2" stroke-width="4" stroke-dasharray="12 8"/>
+  <circle cx="100" cy="80" r="44" fill="#fdc300" stroke="#0c4da2" stroke-width="4"/>
+  <circle cx="84" cy="70" r="6" fill="#0c4da2"/>
+  <circle cx="116" cy="70" r="6" fill="#0c4da2"/>
+  <path d="M78 94 Q100 116 122 94" fill="none" stroke="#0c4da2" stroke-width="5" stroke-linecap="round"/>
+</svg>

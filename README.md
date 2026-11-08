@@ -431,7 +431,7 @@ The names of the icons are on [icones.js.org](https://icones.js.org/); a whole c
 
 The [manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf) goes from the first deck to every detail, with an example next to each feature, then the migration from 0.2.0, the reference of every function and an index.
 
-The [`skills/`](https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/skills) folder of the repository has Claude Code skills, in Portuguese, that teach an AI agent to write lectures and the presentation of an academic work with this theme.
+The [`skills/`](https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/skills) folder of the repository has a Claude Code skill, in Portuguese, that teaches an AI agent to write decks with this theme, in two modes: the lectures of a course and the presentation of an academic work.
 
 ## Dependencies
 

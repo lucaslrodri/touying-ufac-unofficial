@@ -32,3 +32,4 @@ tinymist.lock
 # Tytanic also writes a .gitignore inside every tests/**/out and tests/**/diff
 /tests/**/out/
 /tests/**/diff/
+__pycache__/

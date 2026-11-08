@@ -2,7 +2,8 @@
 # Runs on this machine, without Docker, what .github/workflows/tests.yml runs on the CI (act, in CONTRIBUTING.md, runs
 # the workflows themselves): the Tytanic suite, the two decks and the packaging into a temporary folder, which checks
 # the list of published files and the version of every import, and that gotpm would publish the same files (the
-# offline part of `package.sh --check`); the templates of the skills (skills/); the error messages raised at layout
+# offline part of `package.sh --check`); the templates of the skill (skills/touying-ufac/templates/); the error
+# messages raised at layout
 # (scripts/errors.sh); then that README.md is in step with the decks (scripts/readme.sh).
 #
 # The template, the example decks and the tests that include them import `@preview/touying-ufac-unofficial:<version>`:
@@ -45,10 +46,12 @@ out=$(sh scripts/package.sh "$tmp/dist")
 gotpm install --install-dir "$tmp/gotpm" > /dev/null
 find "$tmp/gotpm" -name .DS_Store -delete
 diff -rq "$out" "$tmp/gotpm" >&2 || fail "gotpm would publish other files than scripts/package.sh: align the \`exclude\` of typst.toml"
-# the templates of the skills that compile on their own (the deck of skills/lectures needs the comum.typ of a course)
-for f in skills/academic/templates/deck.typ skills/academic/templates/circuitos-zap.typ \
-  skills/lectures/templates/circuitos-zap.typ; do
-  typst compile $typst_fonts "$f" "$tmp/skill.pdf" || fail "$f does not compile"
+# the templates of the skill, each compiled with its folder as the root, where the absolute paths of its files start
+# (/common.typ, /data/soc.csv, /header.typ): a course folder in aula/, a deck folder in academico/ and circuitos/
+templates=skills/touying-ufac/templates
+for f in aula/slide-01/slide-01.typ academico/deck.typ circuitos/circuitos-zap.typ; do
+  typst compile $typst_fonts --root "$templates/${f%%/*}" "$templates/$f" "$tmp/skill.pdf" ||
+    fail "$templates/$f does not compile"
 done
 sh scripts/errors.sh
 sh scripts/readme.sh --check
