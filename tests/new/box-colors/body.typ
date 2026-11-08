@@ -64,3 +64,10 @@
 A tag with an alert: #tag[#alert[alert] tag].
 
 #table(columns: 2, table.header([#alert[Alert] header], [B]), [1], [2])
+
+== `#alert` inside an equation box
+// Touying's `#alert` stops the compilation here ("Unsupported mark"); the theme's takes the color of the box
+
+$ #eq-box[$x = #alert[2]$] $
+
+In the line: #box[$#eq-box[$y = #alert[3]$]$].
