@@ -79,13 +79,14 @@ Headings make the slides, and a few Markdown-like shorthands make boxes, quotes 
 | Preview | Element |
 | --- | --- |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle; `---` goes on to a new page. `->` at the start of a paragraph makes a list with arrows. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-section.png" width="340" alt="A section slide"> | **Sections.** `= Title` opens a section slide. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` or `#solution` opens the answer. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text` makes a box, `"A quotation."` alone in its paragraph a quote, and `> $ … $` an equation box. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-emphasis.png" width="340" alt="A slide with bold, italic, alert, highlight and underline"> | **Emphasis.** `*bold*`, `_italic_`, `~~alert~~`, `==highlight==` and `~underline~`. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-section.png" width="340" alt="A section slide with a figure on the right"> | **Sections.** `= Title` opens a section slide; an image after it goes on the right. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` opens the answer, and `#solution` the solution. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text` makes a box and `> $ … $` an equation box. A paragraph of only `"A quotation."` is a quote. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, remark, note, example and examples"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note`, `#example` and `#examples`. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-code.png" width="340" alt="Python code and its output"> | **Code.** A fenced block shows its language. A `text` block is the output. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-table.png" width="340" alt="A table with a blue header"> | **Tables.** The header row is blue. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-ending.png" width="340" alt="The closing slide"> | **Closing slide.** `#ending-slide[Thank you!]`. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-code.png" width="340" alt="Python code and its output"> | **Code.** A fenced block of Python, Typst, MATLAB or shell shows its language; a `text` block is the output. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-table.png" width="340" alt="A table with a blue header"> | **Tables.** The header row is blue, and a cell filled with a light tone colors its bold text. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-ending.png" width="340" alt="The closing slide"> | **Closing slide.** `#ending-slide[Thank you!][Subtitle][Body]`. |
 
 ## Examples
 

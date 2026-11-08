@@ -1,6 +1,7 @@
 #!/bin/sh
 # Runs on this machine, without Docker, what .github/workflows/tests.yml runs on the CI (act, in CONTRIBUTING.md, runs
-# the workflows themselves): the Tytanic suite, the two decks and the packaging into a temporary folder, which checks
+# the workflows themselves): the Tytanic suite, the template, the example decks and the deck of the README pictures
+# (docs/readme/gallery.typ), and the packaging into a temporary folder, which checks
 # the list of published files and the version of every import, and that gotpm would publish the same files (the
 # offline part of `package.sh --check`); the templates of the skill (skills/touying-ufac/templates/); the error
 # messages raised at layout
@@ -38,7 +39,7 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
 tt run $tt_fonts --no-fail-fast
-for deck in template/main.typ example/*.typ; do
+for deck in template/main.typ example/*.typ docs/readme/gallery.typ; do
   typst compile $typst_fonts "$deck" "$tmp/$(basename "$(dirname "$deck")")-$(basename "$deck" .typ).pdf"
 done
 out=$(sh scripts/package.sh "$tmp/dist")

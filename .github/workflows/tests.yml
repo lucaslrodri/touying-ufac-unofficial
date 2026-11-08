@@ -61,7 +61,8 @@ jobs:
           retention-days: 5
 
   minimum-compiler:
-    # `compiler` in typst.toml promises that the package works from that Typst version on: compile the two decks with it.
+    # `compiler` in typst.toml promises that the package works from that Typst version on: compile with it the template,
+    # the example decks and docs/readme/gallery.typ, which has the shorthands the example decks do not use.
     name: Decks on the minimum Typst version
     runs-on: ubuntu-latest
     steps:
@@ -98,7 +99,7 @@ jobs:
       - name: Compile the template and the example decks
         run: |
           typst --version
-          for deck in template/main.typ example/*.typ; do
+          for deck in template/main.typ example/*.typ docs/readme/gallery.typ; do
             sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts "$deck" /tmp/deck.pdf
           done
 

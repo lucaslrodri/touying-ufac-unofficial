@@ -1,6 +1,8 @@
 // Slides of the README pictures that no example deck has: scripts/readme.sh renders this deck and takes its pages, in
-// this order, for the rows of "Elements" (element-boxes.png, element-callouts.png, element-table.png). It is not an
-// example, and it is not published; the other rows come from the decks of example/.
+// this order, for the rows of "Elements" (element-boxes.png, element-callouts.png, element-table.png,
+// element-emphasis.png, element-section.png). It is not an example, and it is not published; the other rows come from
+// the decks of example/. The test of the minimum version of Typst (.github/workflows/tests.yml) compiles it too, for the
+// shorthands that the example decks do not use.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -44,3 +46,10 @@
   [Cod], [200], [4],
   [Tuna], [50], table.cell(fill: colors.secondary-lighter)[*18*],
 )
+
+== Emphasis
+
+Text with *bold*, _italic_, ~~alert~~, ==highlight== and ~underline~.
+
+= A section
+#image("figure.svg")
