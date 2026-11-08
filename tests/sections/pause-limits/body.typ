@@ -75,6 +75,20 @@ Covered line, veiled.
   ]
 ]
 
+== Limit: a list right inside `#align(center)`
+#align(center)[
+  - first item
+  #pause
+  - second item, its marker in the middle on the first step
+]
+
+== Way out: the list centered as a block, with its text on the left
+#align(center, block(align(left)[
+  - first item
+  #pause
+  - second item, its marker in place
+]))
+
 == Way out: the first number written
 3. three, written
 #pause

@@ -51,14 +51,14 @@
   - veiled
 ]
 
-== Centered
-#align(center)[
-  - centered
+== Centered as a block
+#align(center, block(align(left)[
+  - centered, in the same place on both steps
 
   #pause
 
   - veiled
-]
+]))
 
 == Inside a block with a `set` rule
 #[
