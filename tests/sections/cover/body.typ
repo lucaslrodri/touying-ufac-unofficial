@@ -10,3 +10,6 @@ The slide counter skips the cover (`freeze-slide-counter`): this is slide 1.
   #provide-icons(octicons)
   Content below the titles: *bold* and #icon("octicon:rocket-16") white, #alert[alert] yellow
 ]
+
+// a body that shows nothing: the same cover as the first one, titles in the same place
+#title-slide[#provide-icons(octicons)]

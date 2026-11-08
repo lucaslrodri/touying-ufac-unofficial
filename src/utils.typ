@@ -86,6 +86,19 @@
 ) = if not _given(x) { true } else if type(x) == str { x.trim() == "" } else if type(x) != content { false } else {
   _children(x).all(c => _is-space(c) or c.func() in (linebreak, parbreak))
 }
+/// Content that is there and shows nothing: only updates of a state or a counter (`#provide-icons(..)`), metadata,
+/// spaces and breaks.
+///
+/// #test(`_unseen([#state("s").update(1)])`, `_unseen([ #metadata(1) ])`, `not _unseen([])`, `not _unseen([x])`)
+/// -> bool
+#let _unseen(
+  /// Any content. -> content
+  x,
+) = {
+  let quiet = ([#state("_").update(none)].func(), [#counter("_").update(0)].func(), metadata)
+  let ch = _children(_unstyle(x)).filter(c => not (_is-space(c) or c.func() in (linebreak, parbreak)))
+  ch.len() > 0 and ch.all(c => c.func() in quiet)
+}
 /// A body made of a single paragraph inside a `block`/`grid` does not become a `par` element (Typst treats it as
 /// inline content), so the `show par` rewrites (`->`, `> `, `"…"`) never run. A leading `parbreak()` forces the
 /// paragraph without adding space.
