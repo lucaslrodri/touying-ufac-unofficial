@@ -65,12 +65,25 @@
 /// `show-example`, used for the ```` ```example ```` blocks of the chapters and of the doc-comments alike. `_flow` forces
 /// a paragraph so that a lone `-> item`, `> box` or `"quote"` is rewritten.
 #let _in-example = state("manual-in-example", false)   // code inside an example gets no frame of its own
+/// The code of an example, checked line by line against the width of its column: a line that does not fit wraps in
+/// the PDF, and the code copied from it no longer compiles (a comment cut in two, a name cut at a hyphen). The build
+/// stops instead, naming the line.
+#let _fitting(code) = layout(size => {
+  if type(code) == content and code.func() == raw {
+    for line in code.text.split("\n") {
+      let width = measure(raw(line, lang: code.at("lang", default: none), block: true)).width
+      assert(width <= size.width, message: "manual: a line of an example is wider than its column ("
+        + repr(width) + " > " + repr(size.width) + "), so it wraps in the PDF: " + line)
+    }
+  }
+  code
+})
 #let _side-by-side(code, results, columns: (1fr, 1fr), breakable: false) = mantys-like.frame(
   ..mantys-like.code-frame, breakable: breakable, inset: 0pt, clip: true, above: 1.1em, below: 1.1em,
   grid(columns: columns, inset: (x, _) => if x == 0 { (x: .6em, y: .45em) } else { 8pt },
     stroke: (x, _) => if x == 1 { (left: mantys-like.code-frame.stroke) },
     // the code in the left cell, with some room around it; one row per result, the code spanning them all
-    grid.cell(rowspan: results.len(), { _in-example.update(true); show raw.where(block: true): set text(size: code-size); code; _in-example.update(false) }),
+    grid.cell(rowspan: results.len(), { _in-example.update(true); show raw.where(block: true): set text(size: code-size); _fitting(code); _in-example.update(false) }),
     ..results),
 )
 #let example-layout(code, preview, ..options) = _side-by-side(code, ({
