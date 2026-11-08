@@ -5,7 +5,7 @@
 // Sintaxe e componentes: references/padroes-do-tema.md.
 
 #import "@preview/touying:0.7.4": *
-#import "@local/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 // #import "@local/ufac-syllabus:0.0.3": deck   // só na apresentação do curso (primeira aula)
 #import "../comum.typ": *   // ajudantes do curso; define `icones` (ícones Phosphor em JSON do Iconify)
 

@@ -52,6 +52,10 @@ description: Use ao preparar, escrever, revisar ou reorganizar slides de aula ou
 
    Destaques (`~~ ~~`, `== ==`) com parcimônia, nunca em item curto nem em tópico. Nada de travessão "—" no texto, que quebra a página no tema.
 
+## Antes de começar: o tema 0.3.0
+
+Os modelos importam o tema pelo nome publicado, `@preview/touying-ufac-unofficial:0.3.0`. Se a 0.3.0 ainda não estiver no Typst Universe, use a versão de desenvolvimento como pacote local: se `@local/touying-ufac-unofficial:0.3.0` não estiver instalado, instale o branch `develop` do [repositório](https://github.com/lucaslrodri/touying-ufac-unofficial) (com o gotpm, ou copiando-o para a pasta de pacotes locais do Typst) e troque `@preview` por `@local` no import do tema. Diga ao usuário o que instalou e onde.
+
 ## Fluxo
 
 Crie uma tarefa para cada passo.

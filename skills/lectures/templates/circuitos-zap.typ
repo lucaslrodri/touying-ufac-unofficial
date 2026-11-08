@@ -5,7 +5,7 @@
 // Como levar para o comum.typ do curso:
 //   1. No topo do comum.typ, importe o zap e as cores do tema, se ainda não estiverem lá:
 //        #import "@preview/zap:0.6.0"
-//        #import "@local/touying-ufac-unofficial:0.3.0": colors
+//        #import "@preview/touying-ufac-unofficial:0.3.0": colors
 //   2. Copie para o comum.typ o trecho entre as marcas INÍCIO e FIM, mais abaixo.
 //   3. O deck já importa o comum.typ (`#import "../comum.typ": *`), que traz o `zap` e as funções. Cada circuito é
 //      escrito no slide:
@@ -18,7 +18,7 @@
 //   typst compile circuitos-zap.typ
 
 #import "@preview/touying:0.7.4": *
-#import "@local/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "@preview/zap:0.6.0"
 
 // ===== INÍCIO: copiar para o comum.typ ===============================================================================

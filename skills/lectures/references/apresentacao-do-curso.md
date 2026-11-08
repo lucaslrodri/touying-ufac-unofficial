@@ -62,7 +62,7 @@ O arquivo começa assim. O `plano`, o `codigo-turma`, os `icones` e o `icone-tit
 ```typ
 // Apresentação do curso: a primeira Parte do deck da Unidade I. Tudo lido do plano de curso (`plano`, do comum.typ).
 #import "@preview/touying:0.7.4": *
-#import "@local/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "@local/ufac-syllabus:0.0.3": deck
 #import "../comum.typ": *
 

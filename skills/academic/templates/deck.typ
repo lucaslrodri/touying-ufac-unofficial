@@ -7,7 +7,7 @@
 // references/estrutura.md.
 
 #import "@preview/touying:0.7.4": *
-#import "@local/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "@preview/lilaq:0.6.0" as lq
 #import "@preview/zero:0.6.1"
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
