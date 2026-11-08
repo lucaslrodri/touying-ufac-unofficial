@@ -9,8 +9,8 @@
   authors: ("Lucas Lima Rodrigues",),
   abstract: [
     A #link("https://touying-typ.github.io/")[Touying] theme for the slides of the
-    #link("https://www.ufac.br/")[Federal University of Acre]: lectures, courses, the work of students, final papers
-    and theses. Slides are written with headings and a few Markdown-like shorthands for boxes, quotations, arrow lists
+    #link("https://www.ufac.br/")[Federal University of Acre]: lectures, the work of students, final papers and
+    theses. Slides are written with headings and a few Markdown-like shorthands for boxes, quotations, arrow lists
     and emphases. This manual is set with the rules of the theme itself.
   ],
   url: package.repository,
@@ -48,8 +48,8 @@ The theme comes after Touying, as above: both export `alert` and `cols`, and the
 
 From here on, most examples show the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
-deck. The repository has complete decks to start from: a lecture, an extension course, a final paper and the work of
-students for a course
+deck. The repository has complete decks to start from, one for each flavor (@flavors): a lecture, the work of students
+for a course and a final paper; and `main.typ`, every element in a short deck
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
 Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even
@@ -127,7 +127,7 @@ config-info(author: [
 
 == The flavor and the aliases <flavors>
 
-In a course, the fields have names of their own, which are aliases of the fields above; giving one field under two
+In the lectures of a subject, the fields have names of their own, which are aliases of the fields above; giving one field under two
 names (`subject` and `title`) is an error. A date given as `semester` or `year` is short, and also goes to the footer, after the title.
 
 #table(
@@ -144,7 +144,8 @@ of a course, so the flavors without units number them without it ("Exercise 1").
 #table(
   columns: (auto, 1fr),
   table.header([`flavor`], [Recommends]),
-  [`"lecture"` (the default)], [the layout `"line"`: the authors and the date on one line at the bottom],
+  [`"lecture"` (the default)], [the layout of the cover (`cover-layout`, @cover) `"line"`: the authors and the date on
+    one line at the bottom],
   [`"coursework"`], [the layout `"stack"`: the authors in groups at the bottom left; no units: exercises without a
     prefix],
   [`"tcc"`, `"dissertation"`, `"thesis"`], [the layout `"top"` and the tag of the work ("Undergraduate Thesis", …);
@@ -168,11 +169,11 @@ advisors at the top right. `"dissertation"` and `"thesis"` do the same with thei
 == The cover
 
 `#title-slide()` draws the cover in three bands: the logos at the top left, the titles in the center, and the authors
-and the date. The `cover-layout` decides where the authors and the date go: `"line"` (the one of a lecture) puts them on
-one line at the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
+and the date. The `cover-layout` of `title-slide` decides where the authors and the date go, and the flavor gives its
+default (@flavors): `"line"` (the one of a lecture) puts them on one line at the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
 `"top"` puts them at the top right and the date in the center of the bottom. Each of the six positions can be changed
 on its own, with content, an array (as `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying keeps of the deck
-(`self => self.info.title`).
+(`self => self.info.title`). `author-label` puts a label over the authors, such as "Instructors".
 
 #slide-example("cover-layouts", pages: (1, 2, 3, 4), columns: (1fr, 1fr))
 
@@ -747,7 +748,7 @@ The limits of the animations, each with its way out:
   it: put a `#pause` between the items.
 - In a list right inside an `#align(center)` or an `#align(right)`, the marker of a covered item stands next to its
   text on the first step and goes to the left margin on the next, as in Touying's own themes: put the list in a block
-  with its text on the left, in the same `align`: `#align(center, block(align(left)[..]))`, or with `right`.
+  with its text on the left, in the same `align`: `#align(center, block(align(left)[..]))`, or `#align(right, block(align(left)[..]))`.
 - A numbered list split by a `#pause` counts from 1, whatever the `#set enum(start: ..)`: write the first number
   (`3.`), and the next items follow it.
 - A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span

@@ -582,7 +582,7 @@
 }
 
 /// Tag: capitals, spaced and bold, on a color, with rounded corners; by default UFAC yellow with the text in dark blue,
-/// as on the cover ("EXTENSION COURSE") and on the section slides ("PART 2"). The text is dark blue or white,
+/// as on the cover ("UNDERGRADUATE THESIS") and on the section slides ("PART 2"). The text is dark blue or white,
 /// whichever contrasts more with the color. The vertical padding is an `outset`, as in @eq-box: in a line of text the
 /// tag does not change the height of the line.
 ///
