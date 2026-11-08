@@ -42,8 +42,8 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 ```
 
-The theme comes after Touying: for the names both export, such as `alert`, `slide` and `cols`, the later import wins,
-and the theme's own are the ones that work inside its boxes.
+The theme comes after Touying, as above: `alert` and `cols` are names of both, the later import wins, and the theme's
+are the ones this manual describes (@touying).
 
 #slide-example("cover", columns: (1fr, 1fr))
 
@@ -698,30 +698,14 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
 of the theme, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
+Two names are the theme's own, which is why the theme is imported after Touying: Touying's `#alert` stops the
+compilation inside a box with a title, and its `#cols` has no `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
 
-The limits, each with its way out:
-
-- Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, Touying stops
-  with "Unsupported mark … inside some functions like context": a `#pause` goes before such a box, or `#uncover`/`#only`
-  around it.
-- A `#pause` between the lines of a `>` box only holds back what follows the box, and the bottom edge of the box is
-  lightly veiled on the first step: for a box revealed in steps, write `#emph-box[..]` without a title, with the
-  `#pause` in a paragraph of its own.
-- A `#pause` between quotations on consecutive lines, without a blank line between them, makes them show on the
-  first step as plain text in quotation marks: separate them by blank lines, with the `#pause` between them (each one is then yellow, the first
-  color of the cycle).
-- A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
-  two pages, and so is a covered block at the foot of a page when the covered content after it goes on to the next:
-  split the slide with `---`, so that the covered block fits on its page.
-- On a slide that goes on to the next page, a `#pause` right before a `===` subtitle leaves blank pages or the warning
-  "document did not converge": put the `#pause` after the `===`, or split the slide with `---`.
-- On such a slide, a `#pause` on its own line between `->` lines does not converge either: give it a paragraph of its
-  own, with blank lines around it.
-- `#pause` and `#uncover`/`#only` in one paragraph: Touying reorders the covered part on the first subslide; keep them
-  in separate paragraphs.
-- With this theme, Touying's `#item-by-item` shows every item from the first step: put a `#pause` between the items.
+Between the items of a list (`-`, `+`), the `#pause` goes on its own line or in a paragraph of its own, with blank
+lines around it: the list is the same on every step, and numbered items keep their numbers under the veil, also inside
+a box, a callout or a column.
 
 #table(
   columns: (auto, 1fr),
@@ -739,6 +723,37 @@ The packages Touying integrates work as in any Touying theme:
 at parts of a slide; and #link("https://touying-typ.github.io/docs/integration/mitex")[MiTeX], for LaTeX formulas.
 Their pages in the documentation of Touying show how. Instead of the `outline-slide` of other Touying themes, write a
 slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart here.
+
+The limits, each with its way out:
+
+- Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, every
+  animation of Touying (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) stops the compilation with
+  "Unsupported mark … inside some functions like context": a `#pause` goes before such a box, or `#uncover`/`#only`
+  around it.
+- A `#pause` between the lines of a `>` box only holds back what follows the box, and the bottom edge of the box is
+  lightly veiled on the first step: for a box revealed in steps, write `#emph-box[..]` without a title, with the
+  `#pause` in a paragraph of its own.
+- A `#pause` between quotations on consecutive lines, without a blank line between them, makes them show on the
+  first step as plain text in quotation marks: separate them by blank lines, with the `#pause` between them (each one is then yellow, the first
+  color of the cycle).
+- A `#pause` on its own line between two lines of text, with an image or a shape after the covered line, leaves that
+  line visible on the first step (only the image or the shape is veiled): give the `#pause` a paragraph of its own.
+- A `#pause` in a column covers the next columns too, but a callout or an image there is only partly veiled: put
+  `#uncover(2)[..]` around the content of the next column.
+- A `#speaker-note` glued to the items of a list, between them or right after them, shows the covered items on the
+  first step: write the note at the start of the slide, or at its end after a blank line.
+- A numbered list split by a `#pause` counts from 1, whatever the `#set enum(start: ..)`: write the first number
+  (`3.`), and the next items follow it.
+- A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
+  two pages, and so is a covered block at the foot of a page when the covered content after it goes on to the next:
+  split the slide with `---`, so that the covered block fits on its page.
+- On a slide that goes on to the next page, a `#pause` right before a `===` subtitle leaves blank pages or the warning
+  "document did not converge": put the `#pause` after the `===`, or split the slide with `---`.
+- On such a slide, a `#pause` on its own line between `->` lines does not converge either: give it a paragraph of its
+  own, with blank lines around it.
+- `#pause` and `#uncover`/`#only` in one paragraph: Touying reorders the covered part on the first step; keep them
+  in separate paragraphs.
+- With this theme, Touying's `#item-by-item` shows every item from the first step: put a `#pause` between the items.
 
 == Code blocks with codly <codly>
 
@@ -836,7 +851,7 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
     (@integrations)],
   [`#alert` inside a box, `config-methods(alert: ..)`], [`#alert` is now the theme's own: inside a box it takes the
-    color of the box (for the blue of 0.2.0, `#primary`), and a custom `alert` method reaches only `~~text~~`; to
+    color of the box, as `~~text~~` does (for the blue of 0.2.0, `#primary`), and a custom `alert` method reaches only `~~text~~`; to
     restyle `#alert` too, `#let alert(body) = ..` after the imports],
 )
 

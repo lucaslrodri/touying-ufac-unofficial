@@ -21,7 +21,7 @@
 ) = context text(fill: _emph-color(colors.primary), weight: "bold", body)
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
-/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which stopped the compilation inside a box with a
+/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which stops the compilation inside a box with a
 /// badge, a `#tag` or the header of a table; this one works inside every box, with the theme imported after Touying.
 ///
 /// ```example

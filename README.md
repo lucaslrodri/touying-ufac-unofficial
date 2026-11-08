@@ -58,6 +58,8 @@ Text.
 ![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/template.png)
 <!-- template:end -->
 
+The theme is imported after Touying, as here: `alert` and `cols` are names of both, and the theme's are the ones that work inside its boxes and take a `divider`.
+
 `config-info` (Touying's) fills the cover and the footer:
 
 | Field | Alias | What it is and where it goes |
@@ -294,7 +296,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 | `== Title`                      | New slide with a blue header                                                                 |
 | `== Title <exercise>`           | Exercise slide: a red box filling the slide, "Exercise 1.N — Title" (`Exercício`/`Ejercicio`) on a badge with a pencil, the footer closing the box; numbered automatically; `<exercise-id>` makes it citable with `@exercise-id` |
 | `== Title <example>`            | Example slide: the same in green, with a beaker, "Example 1.N — Title" (`Exemplo`/`Ejemplo`), independent counter; `<example-id>` likewise; a short example inside an ordinary slide is the callout `#example[...]` |
-| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise (outside, nothing): a dashed line, then "Solution." / "Answer." in bold before the text that follows; with a `#pause` before or after the marker, the solution appears on the next subslide; `#answer(sep: ":")` or `#solution(sep: [:\ ])` for a separator other than the period |
+| `#solution`, `#answer`          | Alone on a line, inside an example or an exercise (outside, nothing): a dashed line, then "Solution." / "Answer." in bold before the text that follows; with a `#pause` before or after the marker, the solution appears on the next step; `#answer(sep: ":")` or `#solution(sep: [:\ ])` for a separator other than the period |
 | `=== Subtitle`                  | Pill in the color of the box around it (blue on a slide), no new slide; repeated at the top of every continuation and overflow page |
 | `==== Subtitle`                 | Same pill, not repeated                                                                      |
 | `---` (alone on a line), `#pagebreak()` | Next page of the same slide (same header; in an exercise or example, the same box and number); a long content also goes on by itself |
@@ -386,10 +388,10 @@ The theme sits on Touying and works with the packages a deck usually takes along
 
 Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simple) (`#pause`, `#meanwhile`, and [`#uncover`, `#only`, `#alternatives`](https://touying-typ.github.io/docs/tutorials/dynamic/complex)), `#speaker-note`, `#slide(composer:)` etc. work as usual on the elements of the theme, and so do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex). Covered content stays faintly visible under a veil in the color of the page, or of the box around it. The limits, each with its way out (more in the section "Touying" of the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf)):
 
-- a `#pause` or `#meanwhile` inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag` makes Touying stop with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
+- inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, any animation (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) makes Touying stop with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
 - a covered list, code block or box that runs on to the next page is hidden instead of veiled: split the slide with `---`;
 - on a slide that goes on to the next page, put a `#pause` after a `===`, not right before it (otherwise it leaves blank pages), and give a `#pause` between `->` lines a paragraph of its own (glued to the lines, the document does not converge);
-- a `#pause` between the lines of a `>` box or of quotations, Touying's `#item-by-item` (with this theme) and `#pause` with `#uncover`/`#only` in one paragraph have their own limits, with their ways out, in the manual.
+- a `#pause` between the lines of a `>` box or of quotations, or with `#uncover`/`#only` in one paragraph, a `#speaker-note` glued to the items of a list, a `#pause` in a column with a callout or an image in the next one, a list split by a `#pause` under a `#set enum(start: ..)`, and Touying's `#item-by-item`, which shows every item at once with this theme, have their own limits, with their ways out, in the manual.
 
 ### Code blocks with codly
 
@@ -457,10 +459,9 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 
 ### Unreleased
 
-- A `#pause` with blank lines around it, between two items of a list, reveals the next item, as when glued to the lines; also inside a box, a callout, a column or after a `set` rule.
-- Numbered items split by a `#pause` keep their numbers under the veil, also inside a box; a `#set enum(start: ..)` applies again to a list that no `#pause` splits.
-- The veil no longer reaches the descenders of the visible line right before a covered block, and covers shapes (`#circle`, `#line`…) after a `#pause`, which no longer stops the compilation.
-- On a slide with animations that goes on to a second page, the footer number never goes below the first page of the slide.
+- A `#pause` in a paragraph of its own, with blank lines around it, between two items of a list, reveals the next item, as a `#pause` on its own line does; also inside an `emph-box` without a title, a callout, a column, an `align` or an item, and after a `set` rule. The list then has the spacing of a list without blank lines.
+- Numbered items split by a `#pause` keep their numbers under the veil also inside a box, a callout or a column, and after a `#set enum(numbering: ..)`; a `#set enum(start: ..)`, which 0.3.0 ignored, applies to a list that no `#pause` splits.
+- The veil no longer reaches the descenders of the visible line right before a covered block. A shape (`#circle`, `#line`…) after a `#pause` is veiled, where 0.3.0 stopped the compilation.
 - The skill for AI agents is one skill with two modes (`skills/touying-ufac/`).
 
 ### 0.3.0
@@ -489,7 +490,7 @@ New:
 - `provide-icons` gives the deck the icons of any collection of Iconify.
 - `#alert` works inside every box, where Touying's stopped the compilation (a box with a badge, a `#tag`, the header of a table).
 - On a slide with animations that goes on to a second page, every step repeats the page numbers of the first (Touying repeated the number of the last page on the later steps).
-- Inside a box, the alert, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
+- Inside a box, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
 - The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
