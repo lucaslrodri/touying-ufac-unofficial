@@ -289,7 +289,8 @@
     + ch.map(c => if _is-text(c) { c.text } else { " " }).join() + "$]")
   let eq = _only-eq(body)
   _eq-mark   // tells the shorthand rule that this equation is already boxed (see `_eq-mark`)
-  context {
+  // the `context` inside a `box`: the veil of `#pause` covers a box whole, and a bare `context` as running text
+  box(context {
     let where = _eq-ctx.get()   // "whole" | "part" of a block equation, or `none`: running text or inline math
     let c = if color == auto { _current-box-color(colors.primary) } else { color }
     // The content of a `box` inside an equation is not laid out as math, so it becomes an equation of its own: in
@@ -311,7 +312,7 @@
       else if where == "part" { (inset: (x: 0.35em, y: 0.3em)) }
       else { (inset: (x: 0.3em), outset: (y: 0.2em)) }
     box(fill: c.lighten(92%), stroke: 0.8pt + c.lighten(35%), radius: if where == none { 0.3em } else { 0.4em }, ..padding, inner)
-  }
+  })
 }
 
 /// Quotation box: a vertical bar on the left. Typst's `#quote(attribution: [Author])[…]` is shown as a `quote-box`
@@ -577,12 +578,13 @@
   let dark = colors.primary.darken(45%)
   let ink = if _contrast(dark, color) >= _contrast(white, color) { dark } else { white }
   // the room above and below is half the size of the tag, up to 0.35em of the text around it (the tag of the section
-  // slides, at 0.7em): a bigger tag in running text does not reach the line above
-  context {
+  // slides, at 0.7em): a bigger tag in running text does not reach the line above. The `context` goes inside a `box`:
+  // the veil of `#pause` covers a box whole, and a bare `context` as running text
+  box(context {
     let room = calc.min((0.5 * size).to-absolute(), 0.35em.to-absolute())
     box(fill: color, radius: 3pt, inset: (x: 0.7 * size), outset: (y: room), text(size: size, weight: "bold", fill: ink,
       tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline", upper(body)))
-  }
+  })
 }
 
 // ---------- columns ----------

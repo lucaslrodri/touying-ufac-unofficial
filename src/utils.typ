@@ -333,7 +333,9 @@
 #let _veil-end = "ufac-veil-end"
 /// Element functions that make a covered chunk block-level.
 /// -> array
-#let _block-funcs = (list.item, enum.item, terms.item, list, enum, terms, heading, table, grid, figure, block, stack, pad, align, columns, image, rect, quote)
+#let _block-funcs = (list.item, enum.item, terms.item, list, enum, terms, heading, table, grid, figure, block, stack, pad, align, columns, image, rect, quote,
+  // a `layout` (the box with a title): its element is not the function `layout`
+  [#layout(_ => none)].func())
 /// True when the content holds a block-level element (or a paragraph break).
 ///
 /// #test(`_is-blocky([- item])`, `_is-blocky([a #parbreak() b])`, `not _is-blocky([plain *text*])`)
@@ -390,10 +392,11 @@
     let h = measure(par[Xg]).height
     strike(stroke: 1.9 * h + veil, offset: -0.5 * h, extent: 0.05 * h, run.join())
   }
-  // a chip (with its outset of 0.2em and its border), an icon: a rectangle over the box, which keeps its place
+  // a chip (with its outset of 0.2em and its border), a tag (outset up to 0.35em), an icon: a rectangle over the box,
+  // which keeps its place
   let veil-box(c) = context {
     let size = measure(c)
-    let room = 0.2em + 0.5pt
+    let room = 0.35em + 0.5pt
     box({ c; place(top + left, dx: -0.5pt, dy: -room, rect(width: size.width + 1pt, height: size.height + 2 * room,
       fill: veil)) })
   }

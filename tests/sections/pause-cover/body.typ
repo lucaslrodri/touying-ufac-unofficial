@@ -45,3 +45,14 @@ Visible `chip` and ==high==.
 #pause
 
 Covered `chip`, ==highlight==, #icon("note") and ~under~ in the box of an exercise.
+
+== Covered boxes with a badge, tags, logos and framed equations
+Visible #tag[tag] and #eq-box[$x = 2$].
+
+#pause
+
+#emph-box(title: [Box title])[Body of a box with a title.]
+
+#emph-box(title: [With an icon], icon: "tip")[Body of a box with an icon.]
+
+Covered #tag[tag], #tag(size: 1em)[big tag], #eq-box[$x = 2$] and #info("logo", height: 2em) in running text.
