@@ -1,8 +1,8 @@
 // Slides of the README pictures that no example deck has: scripts/readme.sh renders this deck and takes its pages, in
 // this order, for the rows of "Elements" (element-boxes.png, element-callouts.png, element-table.png,
-// element-emphasis.png, element-section.png). It is not an example, and it is not published; the other rows come from
-// the decks of example/. The test of the minimum version of Typst (.github/workflows/tests.yml) compiles it too, for the
-// shorthands that the example decks do not use.
+// element-emphasis.png, element-section.png). It is not an example, and it is not published; the other rows come
+// from the decks of example/. The test of the minimum version of Typst (.github/workflows/tests.yml) compiles it too,
+// for the shorthands that the example decks do not use.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -49,7 +49,10 @@
 
 == Emphasis
 
-Text with *bold*, _italic_, ~~alert~~, ==highlight== and ~underline~.
+-> *bold* and _italic_
+-> an ~~alert~~, in the blue of the slide
+-> a ==highlight==
+-> an ~underline~
 
 = A section
 #image("figure.svg")
