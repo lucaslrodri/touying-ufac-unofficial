@@ -85,16 +85,19 @@ The theme needs *Typst #package.compiler or later*. Typst fetches the packages b
 touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.4, which also works with Typst 0.14.
 codly is imported by the deck that wants it (@codly).
 
+#[
+#set par(justify: false)   // the long chips of this paragraph would leave wide gaps between the words
 Before a version reaches Typst Universe, its development version, the `develop` branch of the repository, can be
 installed as a local package and imported as `@local/touying-ufac-unofficial:<version>` (the `version` of its
 `typst.toml`) instead of `@preview`: clone the branch
 (`git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`) and, in the new folder, install it with
 #link("https://github.com/npikall/gotpm")[gotpm] (`gotpm install`); see
 #link("https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm")[Local installation with gotpm] in the contributing guide.
+]
 
 = The information of the deck <information>
 
-== The fields
+== The fields <fields>
 
 The cover, the footer and the metadata of the PDF come from Touying's `config-info`, given to `ufac-theme`. The theme
 reads these fields:
@@ -309,7 +312,7 @@ box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. 
 = Writing on a slide <writing>
 
 Most emphases have two forms: a function and a *shorthand*, a short piece of markup that the theme rewrites into the
-same function. The shorthands take plain text only (no markup inside), and none of them applies inside `raw`.
+same function. These shorthands take plain text only (no markup inside), and none of them applies inside `raw`.
 
 #table(
   columns: (auto, auto, 1fr),
@@ -680,7 +683,7 @@ slides another word (`part-name`); the callouts `#example` and `#examples` keep 
 
 == The information anywhere: `#info` <info>
 
-`#info` shows any field of the table of @information but `counter-prefix`, or any alias, anywhere in a slide, inside boxes and tables
+`#info` shows any field of the table of @fields except `counter-prefix`, or any alias, anywhere in a slide, inside boxes and tables
 too: the author as written, the date in full, the contact, and with `"logo"` the logos of the footer, with a height and
 in white for a dark background. With a function, it receives every field at once.
 

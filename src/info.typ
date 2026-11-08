@@ -297,7 +297,7 @@
 /// `#info("author")` gives the authors as written, or "A, B and C" for an array; `#info("date")` the date in full;
 /// `#info("logo", height: 2em)` the logos. The aliases are keys too: `#info("subject")` is the `title`. With a
 /// function, it receives the dictionary of all the information, with the keys above plus `authors` and `institutions`
-/// (arrays): `#info(i => [#i.short-title: #i.title])`.
+/// (arrays): `#info(i => [#i.subject-code: #i.subject])`.
 ///
 /// ```typ
 /// The course #info("subject"), taught by #info("author").
