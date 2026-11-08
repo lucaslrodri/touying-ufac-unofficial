@@ -131,7 +131,13 @@
   let c = if type(ic) == str { icon(ic, baseline: 0pt) } else { ic }
   context {
     let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
-    box(baseline: (measure(c).height - cap) / 2, c)
+    let h = measure(c).height
+    let below = (h - cap) / 2
+    // the part of the icon below the baseline overflows its box, up to the depth that the end strut of `_pill-line`
+    // gives the last line: a title that wraps keeps its first line as deep as the others; a taller icon (content)
+    // keeps the excess
+    let keep = calc.max(0pt, below - (1em.to-absolute() - cap) / 2)
+    box(height: h - below + keep, baseline: keep, c)
   }
   h(gap)
 }
