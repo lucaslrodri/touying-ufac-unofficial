@@ -246,8 +246,10 @@ the first); a long content goes on by itself.
 #slide-example("heading", pages: (1, 2))
 
 #caution[
-  Touying breaks the page at a top-level em dash next to inline markup, as in `Text — *bold*`. Use
-  an en dash or put the paragraph in a `#block[ ]`; a plain `#[ ]` does not protect it.
+  Touying takes `---` for a page break wherever it is, also in the middle of a sentence, where Typst would write an
+  em dash: `A root --- when it exists --- is unique` goes on three pages. A typed em dash (`—`) breaks the page too
+  when inline markup is next to it, as in `Text — *bold*`. For a dash in a sentence, type `—` away from markup, use an
+  en dash (`--`), or put the paragraph in a `#block[ ]`; a plain `#[ ]` does not protect it.
 ]
 
 The `===` subtitle is repeated on the pages that continue the slide, unless the continuation starts with another
@@ -842,7 +844,7 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
   [`ufac-theme(logos: ..)`], [`config-info(logo: ..)` (@logos)],
   [`ufac-theme(section-margin: ..)`; the figure of a section flush with the edge],
   [the figure keeps the page margin; for the old look,
-    `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`],
+    #box(`config-common(new-section-slide-fn:`) #box(`new-section-slide.with(margin: 0pt))`)],
   [`<empty-slide>`, `<empty-slide-COLOR>` and the theme's `#empty-slide`],
   [removed: the theme has no empty slide of its own (below)],
   [`local`, `codly-range`, `no-codly`; codly imported by the theme; `#local(breakable: true)` for a block that
