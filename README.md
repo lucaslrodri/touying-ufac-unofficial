@@ -56,7 +56,7 @@ Text.
 
 ## Choose a flavor
 
-`flavor` in `config-info` sets where the authors go on the cover, the tag of a final paper and the numbering of the exercises, unless the deck sets them itself.
+`flavor` in `config-info` sets where the authors go on the cover, the tag on the cover of a final paper and the numbering of the exercises, unless the deck sets them itself.
 
 | `flavor` | For |
 | --- | --- |
@@ -78,14 +78,14 @@ Headings make the slides, and a few Markdown-like shorthands make arrow lists, e
 
 | Preview | Element |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle; `---` goes on to a new page. `->` at the start of a paragraph makes a list with arrows. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle; `---` goes on to a new page, even in a sentence: for a dash, type `—` or `--`. `->` at the start of a paragraph makes a list with arrows. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-section.png" width="340" alt="A section slide with a figure on the right"> | **Sections.** `= Title` opens a section slide; an image after it goes on the right. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` (in an exercise) or `#solution` (in an example) opens the answer; `#answer(sep: ":")` writes "Answer:". |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` (in an exercise) or `#solution` (in an example) opens the answer or the solution; `#answer(sep: ":")` writes "Answer:". |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-emphasis.png" width="340" alt="Arrows with bold, italic, alert, highlight and underline"> | **Emphasis.** `*bold*`, `_italic_`, `~~alert~~`, `==highlight==` and `~underline~`. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text` makes a box and `> $ … $` an equation box. `"A quotation."` alone in a paragraph is a quote. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, remark, note, example and examples"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note`, `#example` and `#examples`. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, reminder (#remark), note, example and examples"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note`, `#example` and `#examples`. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-table.png" width="340" alt="A table with a blue header"> | **Tables.** The header row is blue; in a cell with `table.cell(fill: colors.secondary-lighter)`, the bold text takes a darker tone of the fill. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-code.png" width="340" alt="Python code and its output"> | **Code.** A fenced `python`, `typst`, `matlab`, `bash` or `sh` block shows its language; a `text` block is the output. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-table.png" width="340" alt="A table with a blue header"> | **Tables.** The header row is blue, and a cell filled with a light tone of `colors` (`table.cell(fill: colors.secondary-lighter)`) colors its bold text. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-ending.png" width="340" alt="The closing slide"> | **Closing slide.** `#ending-slide[Thank you!][Subtitle][Body]`. |
 
 ## Examples
@@ -199,9 +199,8 @@ Mars 1.87
 <summary>Show the code of example/coursework.typ</summary>
 
 ````typst
-// Example deck of the touying-ufac-unofficial theme: a paper for a course (`flavor: "coursework"`), with the students
-// and the teacher in groups on the cover (the cover layout "stack", which the flavor brings) and `#info` inside the
-// slides.
+// Example deck of the touying-ufac-unofficial theme: the work of students for a course (`flavor: "coursework"`), with
+// the students and the teacher in groups on the cover (the cover layout "stack") and `#info` inside the slides.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -249,9 +248,8 @@ $ overline(x) = 20 "min", quad s = sqrt((100 + 25 + 0 + 25 + 100) / 4) approx 7.
 <summary>Show the code of example/tcc.typ</summary>
 
 ````typst
-// Example deck of the touying-ufac-unofficial theme: the defense of a final paper (`flavor: "tcc"`), with the student,
-// the advisor and the co-advisor written as free content, the cover style "gradient" and the tag of the work on the
-// cover.
+// Example deck of the touying-ufac-unofficial theme: the defense of a final paper (`flavor: "tcc"`), with the student
+// and the advisors as free content, the cover style "gradient" and the tag of the work on the cover.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
