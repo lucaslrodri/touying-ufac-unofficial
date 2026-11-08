@@ -55,3 +55,8 @@ Visible.
 #uncover(2)[
   #emph-box(title: [Box])[Covered body.]
 ]
+
+== A numbered list that no `#pause` splits
+#set enum(start: 3)
++ keeps `set enum(start: 3)`: three
++ four

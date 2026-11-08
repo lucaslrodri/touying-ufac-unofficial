@@ -99,29 +99,39 @@
   let ch = _children(_unstyle(x)).filter(c => not (_is-space(c) or c.func() in (linebreak, parbreak)))
   ch.len() > 0 and ch.all(c => c.func() in quiet)
 }
-/// The consecutive `+` items of a body of a slide with their numbers written in (`enum.item(n, ..)`), counted as
-/// Typst counts them (an item with its own number sets it; other content between items starts again at 1). Touying
-/// splits a list at a `#pause`, and the covered part, a list of its own under the veil, started again at 1: "1. second"
-/// on the first step, "2. second" once revealed.
+/// The consecutive `+` items of a body of a slide that a mark of Touying splits (`#pause` is a `metadata` between two
+/// items), with their numbers written in (`enum.item(n, ..)`), counted as Typst counts them (an item with its own
+/// number sets it). Touying splits a list at a `#pause`, and the covered part, a list of its own under the veil,
+/// started again at 1: "1. second" on the first step, "2. second" once revealed. A list that no mark splits is left
+/// alone, so that `#set enum(start: ..)` and the like still apply to it.
 ///
 /// #test(`_number-items([+ a
-/// + b]).children.filter(c => c.func() == enum.item).map(c => c.number) == (1, 2)`)
+/// #metadata(1)
+/// + b]).children.filter(c => c.func() == enum.item).map(c => c.number) == (1, 2)`, `_number-items([+ a
+/// + b]).children.filter(c => c.func() == enum.item).all(c => c.at("number", default: auto) == auto)`)
 /// -> any
 #let _number-items(
   /// A body of the slide. -> any
   body,
 ) = {
   if type(body) != content or body.func() != _seq { return body }
-  let (n, out) = (0, ())
-  for c in body.children {
-    if c.func() == enum.item {
-      let own = c.at("number", default: auto)
+  let ch = body.children
+  // the runs of consecutive items: a space, a paragraph break or a mark of Touying between two items keeps a run going
+  let (runs, run) = ((), ())
+  for (i, c) in ch.enumerate() {
+    if c.func() == enum.item { run.push(i) } else if not (_is-space(c) or c.func() in (parbreak, metadata)) {
+      if run.len() > 0 { runs.push(run); run = () }
+    }
+  }
+  if run.len() > 0 { runs.push(run) }
+  let out = ch
+  for run in runs {
+    if not range(run.first(), run.last()).any(i => ch.at(i).func() == metadata) { continue }
+    let n = 0
+    for i in run {
+      let own = ch.at(i).at("number", default: auto)
       n = if own == auto or own == none { n + 1 } else { own }
-      out.push(if own == auto or own == none { enum.item(n, c.body) } else { c })
-    } else {
-      // a space, a paragraph break or a mark of Touying (`#pause` is a `metadata`) keeps the list going
-      if not (_is-space(c) or c.func() in (parbreak, metadata)) { n = 0 }
-      out.push(c)
+      if own == auto or own == none { out.at(i) = enum.item(n, ch.at(i).body) }
     }
   }
   out.join()
