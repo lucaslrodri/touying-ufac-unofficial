@@ -97,6 +97,15 @@
   - second item, in red, veiled
 ] <labelled-box>
 
+== Inside a `pad`
+#pad(left: 3em)[
+  - first item
+
+  #pause
+
+  - second item, veiled
+]
+
 == After a `set` rule of the slide (last: the rule reaches the slides after it)
 #set text(size: .9em)
 - first item

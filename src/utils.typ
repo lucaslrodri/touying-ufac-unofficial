@@ -105,7 +105,7 @@
 /// a list item, at any depth. An element that `f` leaves as it was is given back as it was, and a rebuilt one keeps its
 /// label (`#show <label>: ..`, `locate(<label>)`).
 ///
-/// #test(`_in-sequences([#block[a *b*] <b>].children.first(), x => [z]).at("label", default: none) == <b>`, `_in-sequences(align(center)[a *b*], x => [z]).body == [z]`, `_in-sequences(block[a *b*], x => x) == block[a *b*]`)
+/// #test(`_in-sequences([#block[a *b*] <b>].children.first(), x => [z]).at("label", default: none) == <b>`, `_in-sequences(align(center)[a *b*], x => [z]).body == [z]`, `_in-sequences(pad(left: 1em)[a *b*], x => [z]).body == [z]`, `_in-sequences(block[a *b*], x => x) == block[a *b*]`)
 /// -> any
 #let _in-sequences(
   /// A body of the slide, or a part of it. -> any
