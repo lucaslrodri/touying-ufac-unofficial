@@ -491,7 +491,8 @@ kind has a function of its own, short for `#callout(kind)`: `#tip[..]` is `#call
 ))
 
 The default style is the box of a printed handout, with a bar on the left and the title opening the text (a text that
-opens with a list, `->`, a `>` box or a quote starts on the line under the title);
+opens with a list (`-`, `+` or `->`), a `>` box, a quote or a lone `>` before an equation starts on the line under
+the title);
 `style: "badge"` gives an emphasis box with the title on a badge, without the punctuation. `title:` and `icon:`
 change the title and the icon of one callout; `example-name` and `example-icon` of the theme change only the example
 slides, not `#example` and `#examples`.

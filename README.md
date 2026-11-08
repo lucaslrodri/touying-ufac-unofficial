@@ -471,7 +471,7 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 - A `#pause` in a paragraph of its own, with blank lines around it, between two items of a list, reveals the next item, as a `#pause` on its own line does; also inside an `emph-box` without a title, a callout in the default style, a column, an `align`, a `pad` or an item, and after a `set` rule. The list then has the spacing of a list without blank lines.
 - Numbered items split by a `#pause` keep their numbers under the veil also inside an `emph-box` without a title, a callout in the default style or a column, and after a `#set enum(numbering: ..)`; a `#set enum(start: ..)`, which 0.3.0 ignored, applies to a list that no `#pause` splits.
 - The veil no longer reaches the descenders of the visible line right before a covered block. A shape (`#circle`, `#line`…) after a `#pause` is veiled, where 0.3.0 stopped the compilation.
-- An arrow list (`->`), a `>` box or a quote at the start of a callout in the default style starts on the line under the title, where 0.3.0 printed them as text after it ("Tip. -> item").
+- An arrow list (`->`), a `>` box, a quote or a lone `>` before an equation at the start of a callout in the default style starts on the line under the title, where 0.3.0 printed them as text after it ("Tip. -> item").
 - The skill for AI agents is one skill with two modes (`skills/touying-ufac/`).
 
 ### 0.3.0
