@@ -202,7 +202,7 @@ O degrau tem duas propriedades.
 #figure(image("../assets/fotos/lua.jpg", height: 8em), caption: [O brilho da Lua: um sinal de duas variáveis])
 ```
 
-- A legenda tem o tamanho do corpo (22pt) e só o texto, sem "Figura N": escreva uma linha curta.
+- A legenda sai a 0.6 do corpo (13,2pt), pelo tema, e só com o texto, sem "Figura N": escreva uma linha curta. Não mude o tamanho dela com `show figure.caption`.
 - Toda imagem tem crédito (autor, licença, fonte com link) no slide "Créditos das imagens", antes do "Fim!", no tamanho do corpo. Figura redesenhada de um livro leva a fonte no próprio slide ("redesenhado da Figura 1.1 do Oppenheim").
 - Em Sinais e Sistemas: `#figure(foto("lua", height: 8em), caption: [..])` e `#lista-creditos(tamanho: 1em, "osciloscopio", "lua")` (o padrão do ajudante é `.6em`).
 - Circuito ou gráfico nunca entra como imagem de outro lugar: refaça com zap ou lilaq.

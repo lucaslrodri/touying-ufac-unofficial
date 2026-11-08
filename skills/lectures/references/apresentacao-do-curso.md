@@ -30,7 +30,7 @@ O que não está nessas fontes não entra: sala, contato, horário de atendiment
   - `text(size: .85em)` nos cartões e `.62em` no período;
   - `#set text(size: .8em)` na bibliografia;
   - o cronograma a `.56em`;
-  - `#show figure.caption: set text(size: .6em)`.
+  - `#show figure.caption: set text(size: .6em)` no deck (o tema já põe a legenda a 0.6em).
 
   O rótulo do `deck.stats` sai a `.56em`: passe `text(size: 1.8em)` no uso. O `#tag[seminário]` (0,6 do corpo) é componente do tema e é a única exceção.
 - **Sem encontros.** Fica de fora:

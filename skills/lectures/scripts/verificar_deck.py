@@ -57,8 +57,8 @@ delas) não conta; o título (a faixa de cima) não conta como palavra.
   BLOQUEIO. Palavra é um token com 2 ou mais letras latinas: fórmulas e números não contam.
 - LETRA_PEQUENA (REVISAR): texto com corpo (altura da caixa no pdftotext -bbox) abaixo de --limiar (0,8) do
   corpo do tema (--corpo, 22 pt). Uma linha por tamanho, com as páginas e os trechos. Não contam: a capa, as
-  etiquetas #tag (0,6 do corpo, em maiúsculas), o "PARTE N" das seções, a matemática (𝑥, 𝜑, cos, Re) e o
-  código (raw) dos .typ. O 0,8 pega os rótulos a 17 pt (0,77), como o "sem atrito" da linha de base.
+  etiquetas #tag (0,6 do corpo, em maiúsculas), as legendas de figura (0,6 do corpo, pelo tema, se o deck tem
+  caption:), o "PARTE N" das seções, a matemática (𝑥, 𝜑, cos, Re) e o código (raw) dos .typ. O 0,8 pega os rótulos a 17 pt (0,77), como o "sem atrito" da linha de base.
 - NUMEROS_PEQUENOS (AVISO): números soltos (eixos de gráfico, marcas) abaixo do limiar, numa linha só.
   Índices e limites da matemática (0,7 e 0,5 do corpo) não contam.
 - TEXTO_NA_BORDA (REVISAR): texto a menos de --borda (12 pt) da borda lateral da página.
@@ -810,7 +810,7 @@ LINGUAGENS = {"Typst", "Python", "MATLAB", "C", "C++", "Shell", "Bash", "Assembl
               "Octave", "Arduino", "VHDL", "Verilog", "Text", "Saída"}
 
 
-def verificar_pdf(paginas, ach, args, codigo=""):
+def verificar_pdf(paginas, ach, args, codigo="", tem_legenda=False):
     repetidas = marcar_rodape(paginas)
     corpo = args.corpo
     limite = args.limiar * corpo
@@ -852,6 +852,8 @@ def verificar_pdf(paginas, ach, args, codigo=""):
                     continue  # #tag do tema
                 if linha_parte and abs(h - 0.7 * corpo) < 0.45:
                     continue  # "PARTE N" da seção
+                if tem_legenda and abs(h - 0.6 * corpo) < 0.15:
+                    continue  # legenda de figura, a 0,6 do corpo pelo tema
                 indice = any(abs(h - f * corpo) < 0.25 for f in (0.7, 0.5))  # tamanhos de índice na matemática
                 if eh_numero(t) and not indice and not colado(w, l["palavras"]):
                     numeros_da_pagina.append(round(h, 1))
@@ -1071,7 +1073,8 @@ def main():
         paginas = ler_paginas(pdf)
         if len(paginas) != n_paginas:
             raise Incompleta(f"pdftotext leu {len(paginas)} páginas, pdfinfo diz {n_paginas}")
-        resumo = verificar_pdf(paginas, ach, args, "\x00".join(f.codigo for f in fontes if f.codigo))
+        tem_legenda = any(re.search(r"caption\s*:", f.texto) for f in fontes)
+        resumo = verificar_pdf(paginas, ach, args, "\x00".join(f.codigo for f in fontes if f.codigo), tem_legenda)
 
         if not args.sem_compilar:
             principal = achar_principal(fontes, pdf, args.principal)

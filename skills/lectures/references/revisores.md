@@ -265,9 +265,11 @@ Subagente (general-purpose):
     L4. Sem salto: o primeiro ponto em que você travaria (símbolo não
         definido, passo pulado, "é fácil ver", notação trocada sem aviso).
         Diga a dúvida que teria ("de onde veio o fator 2?").
-    L5. Nenhuma letra pequena: texto visivelmente menor que o corpo (legenda,
-        número ou rótulo de gráfico, rótulo de circuito, tabela, nota) que
-        você não leria do fundo da sala. Diga onde fica, no PNG.
+    L5. Nenhuma letra pequena: texto visivelmente menor que o corpo (número
+        ou rótulo de gráfico, rótulo de circuito, tabela, nota) que você não
+        leria do fundo da sala. Diga onde fica, no PNG. A legenda embaixo de
+        uma figura é menor de propósito (do tema): só aponte se ela passa de
+        uma linha curta.
     L6. Perguntas: pergunta ao aluno fora de uma caixa de exercício (vermelha,
         "Exercício N.M"); alternativas (A) a (D), verdadeiro ou falso, "qual
         destes", votação, "aquecimento"; "Resposta." visível na mesma página
@@ -384,10 +386,11 @@ Subagente (general-purpose):
         elemento sobre o cabeçalho ou o rodapé.
     T4. Letra (regra 2): text(size:) ou set text(size:) menor que 1em,
         scale() sobre texto, inset ou margem apertados, ajudante que reduz a
-        letra (também os do comum.typ e um show de legenda em .6em), e toda
-        palavra da busca no PDF. Números e rótulos de gráfico: confira no PNG
-        e no ajudante que os desenha. Não contam: rodapé, número da página,
-        etiqueta da capa, "PARTE N", índices e limites de fórmulas. Um
+        letra (também os do comum.typ e um show figure.caption no deck), e
+        toda palavra da busca no PDF. Números e rótulos de gráfico: confira no
+        PNG e no ajudante que os desenha. Não contam: rodapé, número da
+        página, etiqueta da capa, "PARTE N", legenda de figura (0.6em, do
+        tema), índices e limites de fórmulas. Um
         ajudante do curso que reduz a letra é um achado só, com as páginas;
         a correção é passar o tamanho no uso ou propor o ajuste no comum.typ.
     T5. Exercício e exemplo (regras 3 e 4): == Título <exercise> (ou
