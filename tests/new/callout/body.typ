@@ -78,3 +78,22 @@
 )
 #align(center, block(width: 60%, remark[Centered on the page, the text of the callout stays on the left.]))
 #align(center, block(width: 60%, remark(style: "badge")[The same with the badge: the text on the left.]))
+
+== A shorthand at the start of the text
+#cols[
+  #tip[
+    -> an arrow list
+    -> under the title
+  ]
+  #remark[
+    > A box
+  ]
+  #note["A quote"]
+][
+  #example[
+    >
+    $ x = 1 $
+  ]
+  #tip[\> escaped: here.]
+  #tip["A quote" and text: here.]
+]

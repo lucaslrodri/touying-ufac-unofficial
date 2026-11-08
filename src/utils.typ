@@ -340,6 +340,40 @@
   if i < ch.len() and _is-space(ch.at(i)) { i += 1 }
   i < ch.len() and _is-text(ch.at(i)) and _alnum-start(ch.at(i).text)
 }
+/// Which shorthand of the theme's `show par` the paragraph that opens these children is: `"eq"` (a lone `>` before a
+/// block equation, `eq-box`), `"box"` (`> text`), `"quotes"` (`"…"` runs and nothing else) or `"arrows"` (`-> item`);
+/// `none` if it is none, or if it is escaped (`\> word`, `-\> word`). The paragraph runs until the first paragraph
+/// break, list item or block equation, so the children of a whole body (a callout's) can be given.
+///
+/// #test(
+///   `_shorthand(_children([-> a])) == "arrows"`, `_shorthand(_children([> a])) == "box"`,
+///   `_shorthand(_children(["a" "b"])) == "quotes"`, `_shorthand(_children([>])) == "eq"`,
+///   `_shorthand(_children([\> a])) == none`, `_shorthand(_children(["a" b])) == none`,
+///   `_shorthand(_children([a])) == none`, `_shorthand(()) == none`,
+/// )
+/// -> str | none
+#let _shorthand(
+  /// Children of a paragraph or of a body. -> array
+  ch,
+) = {
+  let p = ()
+  for c in ch {
+    if c.func() in (parbreak, list.item, enum.item, terms.item) or (c.func() == math.equation and c.block) { break }
+    p.push(c)
+  }
+  if p.len() == 0 { return none }
+  let first = p.first()
+  if p.all(c => _is-space(c) or (_is-text(c) and c.text.trim() == ">")) { return "eq" }
+  if _is-text(first) and first.text.starts-with(">") and not (first.text == ">" and _escaped-after(p, 1)) { return "box" }
+  if _is-dq(first) and _is-dq(p.last()) {
+    // only quotes and the spaces between them
+    let open = false; let outside = false
+    for c in p { if _is-dq(c) { open = not open } else if not open and not _is-space(c) { outside = true } }
+    if not open and not outside { return "quotes" }
+  }
+  if _is-text(first) and first.text == "-" and p.len() > 1 and _is-text(p.at(1)) and p.at(1).text.starts-with(">") and not (p.at(1).text == ">" and _escaped-after(p, 2)) { return "arrows" }
+  none
+}
 
 // ---------- exercise / example labels ----------
 /// Kind of a heading label: `<exercise>`/`<exercise-id>` → "exercise", `<example>`/`<example-id>` → "example",

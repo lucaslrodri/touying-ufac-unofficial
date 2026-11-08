@@ -391,7 +391,12 @@
 ) = block(width: 100%, fill: c.lighten(92%), stroke: (left: 3pt + c), radius: (left: 0pt, right: 4pt),
   inset: (left: 0.8em, right: 1em, y: 0.65em), breakable: false, {
     // a body that starts on a new line (`#tip[\n  text]`) starts with a space, which would add to the one after the label
-    let body = _trim(_children(body)).join()
+    let ch = _trim(_children(body))
+    let body = ch.join()
+    // a text that opens with a shorthand (`-> item`, `> box`, `"quote"`, a lone `>` before an equation) gets a paragraph
+    // of its own, as a list does: on the line of the label the paragraph would start with the label, and `show par`
+    // would leave the shorthand as text
+    let after-label = if _shorthand(ch) != none { parbreak() } else { h(0.35em) }
     set list(marker: _markers(c))
     set text(fill: colors.neutral-darkest)
     // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
@@ -407,13 +412,14 @@
           text(fill: c, box(height: size, ic))
         })
       } },
-      _flow[#if label != none [#text(weight: "bold", fill: c.darken(25%), label)#h(0.35em)]#body],
+      _flow[#if label != none [#text(weight: "bold", fill: c.darken(25%), label)#after-label]#body],
     ))
   })
 
 /// Callout: a box with the color, the icon and the title of its kind, the title in the language of the deck. The
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
-/// bold opening the text ("*Tip.* …", "*Caution!* …"); `"badge"` is an @emph-box with the title on a badge over the
+/// bold opening the text ("*Tip.* …", "*Caution!* …"; a text that opens with a list, `->`, a `>` box or a quote starts on
+/// the line under it); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its color; a code block keeps its
 /// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark, @note, @example and
 /// @examples.
@@ -719,7 +725,8 @@
   } else { text(fill: color, sym.arrow.r) }
   list(marker: marker, ..items.map(it => it.sum(default: [])))
 }
-/// The `show par` rule of the theme. It inspects `it.body.children`: a lone `>` → signal for the next block
+/// The `show par` rule of the theme. It inspects `it.body.children` (which shorthand they are is `_shorthand`, which the
+/// default callout also asks): a lone `>` → signal for the next block
 /// equation (@eq-box); a first text child starting with `>` → `emph-box`; first and last children
 /// `smartquote(double: true)` → `quote-box`es; `[-]` followed by `[> …]` → arrow list. `\> word` and `-\> word` are
 /// escapes (see `_escaped-after`); `\"…\"` already arrives as the text `"`, not as a `smartquote`.
@@ -735,12 +742,13 @@
   /// Color of the `->` arrows, see @arrows. -> auto | color
   arrow-color: auto,
 ) = {
-  let ch = _children(it.body); let first = ch.at(0)
-  if ch.all(c => _is-space(c) or (_is-text(c) and c.text.trim() == ">")) { return _key-eq.update(colors.primary) }
-  if _is-text(first) and first.text.starts-with(">") and not (first.text == ">" and _escaped-after(ch, 1)) { return _blockquote(ch) }
-  if _is-dq(first) and _is-dq(ch.last()) { let q = _quotes(ch); if q != none { return q } }
-  if _is-text(first) and first.text == "-" and ch.len() > 1 and _is-text(ch.at(1)) and ch.at(1).text.starts-with(">") and not (ch.at(1).text == ">" and _escaped-after(ch, 2)) { return _arrows(ch, arrow-color) }
-  it
+  let ch = _children(it.body)
+  let kind = _shorthand(ch)
+  if kind == "eq" { _key-eq.update(colors.primary) }
+  else if kind == "box" { _blockquote(ch) }
+  else if kind == "quotes" { _quotes(ch) }
+  else if kind == "arrows" { _arrows(ch, arrow-color) }
+  else { it }
 }
 /// Arrow lists with the arrow in another color, for everything inside the body. The `-> item` shorthand itself
 /// needs no function: consecutive lines starting with `->` become one list with a blue arrow (the box color inside an
