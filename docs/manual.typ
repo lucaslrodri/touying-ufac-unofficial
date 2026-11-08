@@ -48,8 +48,8 @@ The theme comes after Touying, as above: both export `alert` and `cols`, and the
 
 From here on, most examples show the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
-deck. The repository has complete decks to start from, one for each flavor (@flavors): a lecture, the work of students
-for a course and a final paper; and `main.typ`, every element in a short deck
+deck. The repository has three complete decks to start from (@flavors): a lecture, the work of students for a course
+and a final paper; and `main.typ`, every element in a short deck
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
 Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even
@@ -137,15 +137,15 @@ names (`subject` and `title`) is an error. A date given as `semester` or `year` 
   [`course` (the program, in a final paper)], [`short-subtitle`], [`semester`, `year`], [`date`],
 )
 
-`flavor` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes
+`config-info(flavor:)` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes
 wins over it. The default is `"lecture"`. The prefix of the exercises and examples ("Exercise 1.1") stands for the unit
 of a course, so the flavors without units number them without it ("Exercise 1").
 
 #table(
   columns: (auto, 1fr),
   table.header([`flavor`], [Recommends]),
-  [`"lecture"` (the default)], [the layout of the cover (`cover-layout`, @cover) `"line"`: the authors and the date on
-    one line at the bottom],
+  [`"lecture"` (the default)], [the cover layout `"line"` (`cover-layout`, @cover): the authors and the date on one line
+    at the bottom],
   [`"coursework"`], [the layout `"stack"`: the authors in groups at the bottom left; no units: exercises without a
     prefix],
   [`"tcc"`, `"dissertation"`, `"thesis"`], [the layout `"top"` and the tag of the work ("Undergraduate Thesis", …);
@@ -173,7 +173,7 @@ and the date. The `cover-layout` of `title-slide` decides where the authors and 
 default (@flavors): `"line"` (the one of a lecture) puts them on one line at the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
 `"top"` puts them at the top right and the date in the center of the bottom. Each of the six positions can be changed
 on its own, with content, an array (as `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying keeps of the deck
-(`self => self.info.title`). `author-label` puts a label over the authors, such as "Instructors".
+(`self => self.info.title`). `author-label` puts a label over the authors (before them in `"line"`), such as "Instructors".
 
 #slide-example("cover-layouts", pages: (1, 2, 3, 4), columns: (1fr, 1fr))
 
