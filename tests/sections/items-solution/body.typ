@@ -45,7 +45,7 @@ The same, with `#solution` right before `#pause`.
 
 #solution
 #pause
-The opening appears with the solution, on the next subslide.
+The word appears with the solution, on the next subslide; the line stays.
 
 == The answer in a paragraph of its own <exercise>
 A blank line after `#answer`: "Answer." stays alone on its line.

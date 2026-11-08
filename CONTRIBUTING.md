@@ -41,7 +41,7 @@ gotpm install                                                      # the same, a
 gotpm install -r github.com/lucaslrodri/touying-ufac-unofficial    # the highest v<version> tag on GitHub, without this copy (-t HEAD: main)
 ```
 
-The development version of the next release is the `develop` branch: `git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`, then `gotpm install` in the new folder, installs it as `@local/touying-ufac-unofficial:<version>`, the `version` of its `typst.toml`.
+The development version of the next release is the `develop` branch. Clone it (`git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`) and run `gotpm install` in the new folder: it installs as `@local/touying-ufac-unofficial:<version>`, the `version` of its `typst.toml` (`-f` replaces an older installation of the same version).
 
 The copy holds what goes to Typst Universe: the `exclude` of `typst.toml` and what `.gitignore` ignores are left out, as in `scripts/package.sh`. `-f` replaces an installation of the same version (of a link, only the link is deleted), `gotpm list` shows what is installed and `gotpm uninstall touying-ufac-unofficial -V <version>` removes it. Then `#import "@local/touying-ufac-unofficial:<version>": *` works before the version reaches Typst Universe. Two cautions:
 

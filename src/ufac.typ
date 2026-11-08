@@ -121,7 +121,8 @@
 // ---------- exercises and examples ----------
 /// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
 /// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." /
-/// "Solución." in bold. With a `#pause` right before or right after it, the solution appears on the next subslide, opening included.
+/// "Solución." in bold. With a `#pause` right before or right after it, the word and the solution appear on the next
+/// subslide; the dashed line stays, closing the statement.
 /// Written alone, `#solution`, the word ends with a period; `#solution(sep: ":")` ends it with another separator.
 ///
 /// ```typ

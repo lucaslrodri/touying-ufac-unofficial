@@ -52,7 +52,6 @@ students for a course
 
 Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even
 content that is not seen, such as `#provide-icons(..)` (@icons), opens an extra page, with the footer, before the cover.
-Put it in any slide after the cover: its icons serve the whole deck, the cover included.
 
 == Dependencies <dependencies>
 
@@ -85,8 +84,9 @@ touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.
 codly is imported by the deck that wants it (@codly).
 
 Before a version reaches Typst Universe, its development version, the `develop` branch of the repository, can be
-installed as a local package and imported as `@local/touying-ufac-unofficial:0.3.0` instead of `@preview`: with gotpm,
-`git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`, then `gotpm install` in the new folder; see
+installed as a local package and imported as `@local/touying-ufac-unofficial:0.3.0` instead of `@preview`: clone the branch
+(`git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`) and, in the new folder, install it with
+#link("https://github.com/npikall/gotpm")[gotpm] (`gotpm install`); see
 #link("https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm")[Local installation with gotpm] in the contributing guide.
 
 = The information of the deck <information>
@@ -656,7 +656,7 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
 array or a function of `self`: the items of an array are joined by a dot, those that show nothing left out (as
-`info("semester")` below, in a deck without a semester), and with none left the footer line runs unbroken. The badge of the exercises and examples takes
+`info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).
 
@@ -692,10 +692,12 @@ with two imports with `*`, the later one wins silently. Import the other package
 == Touying <touying>
 
 The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
-faintly visible under a veil in the color of the page, or of the box around it; a covered part that runs on to the
-next page is hidden instead, as one rectangle cannot veil it across two pages. Animations work inside a box too, except
-an `emph-box` with a title or an icon, a callout with `style: "badge"` and an `eq-box`: there Touying stops with
-"Unsupported mark … inside some functions like context", so the `#pause` goes before the box.
+faintly visible under a veil in the color of the page, or of the box around it; a covered list, code block or box that
+runs on to the next page is hidden instead, as the veil cannot span two pages. Animations work inside a box too, except
+inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` and a `#tag`: there Touying
+stops with "Unsupported mark … inside some functions like context", so a `#pause` goes before the box, and
+`#uncover`/`#only` around it. A `#pause` between the lines of a `>` box or of quotations does nothing: for a box
+revealed in steps, write `#emph-box[..]` without a title, with the `#pause` in a paragraph of its own.
 
 #slide-example("pause", pages: (1, 2, 3))
 
@@ -771,8 +773,8 @@ Any other icon comes from a collection in the JSON format of #link("https://icon
 #link("https://typst.app/universe/package/iconify")[iconify] package, which the theme imports: the deck gives the
 collection to `provide-icons` and writes the icon as `"collection:name"`, in `#icon` or wherever the theme takes the
 name of an icon (an `emph-box`, a callout, the badge of an exercise or example). It is then an icon like those of the
-theme, with the same size, the same place on the line and the color of its surroundings. As in the example,
-`#provide-icons` goes in any slide after the cover, never before it (@first-deck); its icons serve the whole deck.
+theme, with the same size, the same place on the line and the color of its surroundings. `#provide-icons` goes in any
+slide after the cover, never before it (@first-deck); its icons serve the whole deck, the cover included.
 
 #slide-example("icons-iconify", pages: (1, 2), columns: (1fr, 1fr))
 
