@@ -1,6 +1,6 @@
 // Example deck of the touying-ufac-unofficial theme: a lecture of a course, with the aliases of a course (`subject`,
-// `subject-code`, `unit`, `unit-title`, `semester`), exercises and examples with their solutions, callouts and the
-// closing slide.
+// `subject-code`, `unit`, `unit-title`, `semester`), a slide revealed step by step, exercises and examples with their
+// solutions, callouts and the closing slide.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -34,6 +34,16 @@
 > An astronomical unit (au) is the mean distance from the Earth to the Sun, about $1.5 times 10^8$ km.
 
 #tip[In years and astronomical units, Kepler's third law is just $T^2 = a^3$.]
+
+// Touying's animations: a `#pause` between two lines, then `#uncover(3)` around a box, which shows on the third step
+== One step at a time
+-> The orbit of a planet is an ellipse
+#pause
+-> The Sun sits at one of its foci
+
+#uncover(3)[
+  #emph-box(title: [Kepler's first law])[The planets move on ellipses, with the Sun at one focus.]
+]
 
 == The period of Mars <example>
 Mars orbits the Sun at $a = 1.52$ au. How long is its year?
