@@ -138,15 +138,19 @@
 /// with an invisible strut as tall as a pill icon (1em) and placed like one, centered on the capitals, so that the
 /// pills with and without an icon have the same height: without it the line is as tall as the capitals, shorter than
 /// the icon centered on them. A long title still wraps and the pill grows with it (a fixed height would cut the second
-/// line); a taller icon (content) makes the line taller.
+/// line); a taller icon (content) makes the line taller. The strut is in two parts, the one above the baseline at the
+/// start and the one below it at the end: on one line they make the same height, and a title that wraps keeps the same
+/// space between its lines (a whole strut at the start made the first line deeper than the others).
 /// -> content
 #let _pill-line(
   /// Content of the pill, with or without a `_pill-icon`. -> content
   body,
 ) = context {
   let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
-  box(width: 0pt, height: 1em, baseline: (1em.to-absolute() - cap) / 2)
+  let below = (1em.to-absolute() - cap) / 2
+  box(width: 0pt, height: 1em.to-absolute() - below)
   body
+  box(width: 0pt, height: below, baseline: below)
 }
 
 // ---------- boxes ----------
@@ -569,8 +573,13 @@
 ) = {
   let dark = colors.primary.darken(45%)
   let ink = if _contrast(dark, color) >= _contrast(white, color) { dark } else { white }
-  text(size: size, box(fill: color, radius: 3pt, inset: (x: 0.7em), outset: (y: 0.5em),
-    text(weight: "bold", fill: ink, tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline", upper(body))))
+  // the room above and below is half the size of the tag, up to 0.35em of the text around it (the tag of the section
+  // slides, at 0.7em): a bigger tag in running text does not reach the line above
+  context {
+    let room = calc.min((0.5 * size).to-absolute(), 0.35em.to-absolute())
+    box(fill: color, radius: 3pt, inset: (x: 0.7 * size), outset: (y: room), text(size: size, weight: "bold", fill: ink,
+      tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline", upper(body)))
+  }
 }
 
 // ---------- columns ----------
