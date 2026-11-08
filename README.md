@@ -6,6 +6,7 @@
   <a href="https://typst.app/"><img src="https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2Flucaslrodri%2Ftouying-ufac-unofficial%2Fmain%2Ftypst.toml&amp;query=%24.package.compiler&amp;prefix=%E2%89%A5%20&amp;label=Typst&amp;logo=typst&amp;color=239dad" alt="Minimum Typst version"></a>
   <a href="https://typst.app/universe/package/touying"><img src="https://img.shields.io/badge/Touying-0.7.4-blue" alt="Touying version: 0.7.4"></a>
   <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/LICENSE"><img src="https://img.shields.io/badge/license-MIT%20AND%20MIT--0-green" alt="License: MIT and MIT-0"></a>
+  <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/skills"><img src="https://img.shields.io/badge/skill-Claude%20Code-D97757?logo=claude&amp;logoColor=white" alt="Skill for Claude Code"></a>
 </p>
 
 <p align="center"><img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/flavors.png" alt="The covers of a lecture, the work of students for a course and a final paper" width="760"></p>
