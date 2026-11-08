@@ -35,3 +35,13 @@ Typst's `#quote` without `block: true`, which the theme shows as a quote box, is
 
 == Covered shorthands in running text
 A paragraph covered from the middle #pause keeps ~underline~, ~~alert~~ and Fig.~1 as revealed, on a line of the same length.
+
+== Covered inside a callout
+#tip[Visible `chip` and ==high==. #pause Covered `chip`, ==highlight==, #icon("note") and ~under~, under a veil in the color of the callout.]
+
+== Covered in an exercise <exercise>
+Visible `chip` and ==high==.
+
+#pause
+
+Covered `chip`, ==highlight==, #icon("note") and ~under~ in the box of an exercise.

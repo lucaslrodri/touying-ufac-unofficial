@@ -96,19 +96,31 @@
 ) = { parbreak(); body }
 
 // ---------- context color stack ----------
-/// Stack of `(color:, kind:)` entries, `kind` ∈ "box" | "pill" | "title", pushed by `emph-box` (body: "box";
+/// Stack of `(color:, kind:, fill:)` entries, `kind` ∈ "box" | "pill" | "title", pushed by `emph-box` (body: "box";
 /// title badge: "pill"), `_pill`, the slide header ("title"), the section title ("title") and the content of the
 /// cover ("pill": white on blue). `*bold*`,
 /// `==highlight==`, the `->` arrow, `#underline`, `#icon` and inline `raw` read the color at layout time (in
 /// `context`): in the `> box` form the paragraph reaches `show par` already realized (strong/highlight become
 /// `styled(...)` with black/yellow baked in), so set/show rules inside the box cannot reach them anymore; a `state`
 /// resolves at the right place. Inline `raw` uses light tones in boxes and titles and dark tones with light text in pills.
+/// `fill` is the background of a box that has one (a callout, a light cell of a table, a pill), for the veil of `#pause`.
 /// -> state
 #let _box-color = state("ufac-box-color", ())
-#let _in-box(color, body, kind: "box") = {
-  _box-color.update(s => s + ((color: color, kind: kind),))
+#let _in-box(color, body, kind: "box", fill: none) = {
+  _box-color.update(s => s + ((color: color, kind: kind, fill: fill),))
   body
   _box-color.update(s => s.slice(0, -1))
+}
+/// The color of the veil of `#pause` at this place (in `context`): the background of the nearest box around that has
+/// one (a callout, a light cell of a table), else the page; at 85% opacity, so the covered content stays faintly
+/// visible. A white veil over a callout left white bands over its color.
+/// -> color
+#let _veil-color(
+  /// The fill of the page. -> any
+  page,
+) = {
+  let boxed = _box-color.get().rev().find(e => e.at("fill", default: none) != none)
+  (if boxed != none { boxed.fill } else if type(page) == color { page } else { white }).transparentize(15%)
 }
 #let _current-box-color(fallback) = { let s = _box-color.get(); if s.len() == 0 { fallback } else { s.last().color } }
 #let _in-pill() = { let s = _box-color.get(); s.len() > 0 and s.last().kind == "pill" }
@@ -348,12 +360,13 @@
   ((_is-text(first) and first.text.starts-with(">")) or (_is-dq(first) and _is-dq(ch.last()))
     or (_is-text(first) and first.text == "-" and ch.len() > 1 and _is-text(ch.at(1)) and ch.at(1).text.starts-with(">")))
 }
-/// Covered running text with a non-breaking space. Touying's `cover-with-rect` covers each child of a sequence on its own,
-/// a `strike` over each piece of text, so the text of the line no longer merges, and the rules that match the merged
-/// text no longer see `~underline~` and `~~alert~~` (made of non-breaking spaces): the covered line showed wide spaces
-/// instead. Here each run of inline text stays whole, under one `strike` drawn as `cover-with-rect` draws it, and the
-/// other children (an equation, a box, a styled part) go to `cover-with-rect` one by one. Text without a non-breaking
-/// space goes to `cover-with-rect` as it is.
+/// Covered running text (a paragraph after `#pause`, or the rest of one). Touying's `cover-with-rect` covers each child
+/// of a sequence on its own, a `strike` over each piece of text: the text of the line no longer merges, so the rules
+/// that match the merged text no longer saw `~underline~` and `~~alert~~` (made of non-breaking spaces, wide spaces in
+/// the covered line), and the bar, as tall as the letters, left the sides of a code chip, the edge of a highlight and an
+/// icon uncovered. Here each run of inline text stays whole, under one `strike` a little taller than Touying's (it
+/// reaches the background of a highlight); a chip, an icon or another inline box gets a rectangle of its measured size
+/// and the room the chip paints around it; the rest (an equation, a styled part) goes to `cover-with-rect`.
 /// -> content
 #let _cover-text(
   /// Touying's `self`. -> dictionary | none
@@ -369,23 +382,28 @@
   if body.func() == styled { return styled(_cover-text(self, veil, args, body.child), body.styles) }
   let ch = if body.func() == [].func() { body.children } else { (body,) }
   // in markup, `~` is a `symbol` element, not text
-  let symbol = [~].func()
-  if not ch.any(c => c.func() in (text, symbol) and c.has("text") and c.text.contains("\u{a0}")) {
-    return utils.cover-with-rect(self: self, ..args, fill: veil, body)
-  }
-  let inline = (text, symbol, [ ].func(), strong, emph, smartquote, highlight, underline, overline, sub, super, link,
-    linebreak)
-  let in-run(c) = c.func() in inline or (c.func() == raw and not c.block)
-  // the strike of `cover-with-rect` for inline content: a bar 1.6 times the height of a line, over each line fragment
+  // a `context` element in running text is text (the word of a solution, `#info`); an icon is a `box`
+  let inline = (text, [~].func(), [ ].func(), strong, emph, smartquote, highlight, underline, overline, sub, super, link,
+    linebreak, [#context none].func())
+  // the bar of `cover-with-rect` (1.6 times the height of the capitals, 0.35 of it above the baseline), taller upwards
   let veil-run(run) = context {
     let h = measure(par[Xg]).height
-    strike(stroke: 1.6 * h + veil, offset: -0.35 * h, extent: 0.05 * h, run.join())
+    strike(stroke: 1.9 * h + veil, offset: -0.5 * h, extent: 0.05 * h, run.join())
+  }
+  // a chip (with its outset of 0.2em and its border), an icon: a rectangle over the box, which keeps its place
+  let veil-box(c) = context {
+    let size = measure(c)
+    let room = 0.2em + 0.5pt
+    box({ c; place(top + left, dx: -0.5pt, dy: -room, rect(width: size.width + 1pt, height: size.height + 2 * room,
+      fill: veil)) })
   }
   let (out, run) = ((), ())
   for c in ch {
-    if in-run(c) { run.push(c) } else {
+    if c.func() in inline { run.push(c) } else {
       if run.len() > 0 { out.push(veil-run(run)); run = () }
-      out.push(utils.cover-with-rect(self: self, ..args, fill: veil, c))
+      out.push(if (c.func() == raw and not c.block) or c.func() == box { veil-box(c) } else {
+        utils.cover-with-rect(self: self, ..args, fill: veil, c)
+      })
     }
   }
   if run.len() > 0 { out.push(veil-run(run)) }
@@ -407,9 +425,8 @@
 /// The rectangle's outset reaches what the theme paints outside the layout box (pill outset, quote bar, box stroke).
 /// A chunk that breaks across pages cannot be veiled by one rectangle: it is hidden instead (same space, breakable),
 /// decided from the end marker of the previous layout pass. Plain running text (no block element, no shorthand) goes to
-/// Touying's `cover-with-rect`, which is line-break aware, so a `#pause` in the middle of a paragraph still works; an
-/// `#icon` inside such text is the one thing left unveiled. Running text with a non-breaking space goes through
-/// `_cover-text` first (`~underline~` and `~~alert~~`).
+/// `_cover-text`, which veils it line by line, so a `#pause` in the middle of a paragraph still works. The veil takes
+/// the background of the box around (`_veil-color`), not always the page.
 /// -> content
 #let _cover(
   /// Touying's `self`; in Touying 0.8 the sentinel `utils.cover-kind-query` asks for the kind of cover. -> dictionary | none
@@ -423,17 +440,18 @@
   let kind-query = dictionary(utils).at("cover-kind-query", default: none)
   if kind-query != none and self == kind-query { return "paint" }
   if body == none { return [] }
-  let fill = if type(self) == dictionary { self.at("page", default: (:)).at("fill", default: white) } else { white }
-  let veil = (if type(fill) == color { fill } else { white }).transparentize(15%)
+  let page = if type(self) == dictionary { self.at("page", default: (:)).at("fill", default: white) } else { white }
   // Touying's cover, built only when it is used: it reads fields that some elements do not have yet at this point (a
   // `quote` without `block:`, which the theme veils itself)
-  let fallback() = utils.cover-with-rect(self: self, ..args, fill: veil, body)
-  if type(body) != content { return fallback() }
+  if type(body) != content { return context utils.cover-with-rect(self: self, ..args, fill: _veil-color(page), body) }
   let ch = _trim(_children(_unstyle(body)))
   if ch.len() == 0 { return body }
   let lone-context = ch.len() == 1 and ch.first().func() == [#context none].func()
-  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) { return _cover-text(self, veil, args, body) }
+  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) {
+    return context _cover-text(self, _veil-color(page), args, body)
+  }
   context {
+    let veil = _veil-color(page)
     let s = here().position()
     let ends = query(metadata.where(value: _veil-end).after(here()))
     if ends.len() > 0 and ends.first().location().page() != s.page { hide(body) } else {

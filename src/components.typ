@@ -74,7 +74,7 @@
   /// Fill of the label. -> color
   color: colors.primary,
 ) = box(fill: color, radius: 5pt, inset: (x: .7em), outset: (y: .4em),
-  text(fill: white, weight: "bold", _in-box(color, body, kind: "pill")))
+  text(fill: white, weight: "bold", _in-box(color, body, kind: "pill", fill: color)))
 
 /// Pill of a subtitle (`===`, `====`): in the color of the box around it, the color of the item inside an exercise
 /// (red) or an example (green), and blue elsewhere.
@@ -112,10 +112,11 @@
 ) = {
   // the name is checked at the call: an unknown one fails here, not deep in the layout
   let source = _icon-source(name)
-  context {
+  // a `box` around the `context`, of the same size: the veil of `#pause` (`_cover-text`) knows the icon as a box
+  box(context {
     let c = if color != auto { color } else if _in-pill() { white } else { _current-box-color(colors.neutral-darkest) }
     box(baseline: baseline, image(bytes(_icon-svg(source, c)), width: auto, height: size, alt: name, format: "svg"))
-  }
+  })
 }
 /// Icon at the start of a pill (the header of an exercise or example, the badge of an @emph-box), followed by a small
 /// space and centered on the height of the capitals of the text, whatever its height: the name of an @icon (white in
@@ -372,7 +373,7 @@
     set text(fill: colors.neutral-darkest)
     // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
     // closing slide), the icon stays on the first line and the text on the left
-    _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
+    _in-box(c, fill: c.lighten(92%), grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
       // the icon (0.9em) centered on the capitals of the first line: the line starts at the top of the cell, at the
       // height of the capitals, and the icon goes up half of what it has more than them
       if ic != none { context {

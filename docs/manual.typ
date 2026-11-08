@@ -691,8 +691,8 @@ with two imports with `*`, the later one wins silently. Import the other package
 == Touying <touying>
 
 The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
-faintly visible under a veil in the color of the page. One exception: an `#icon` in running text covered by a `#pause`
-stays visible; a `#block[..]` around the paragraph veils it too. A `#pause` goes outside a box, not inside it.
+faintly visible under a veil in the color of the page, or of the box around it. A `#pause` goes outside a box, not
+inside it.
 
 #slide-example("pause", pages: (1, 2, 3))
 
