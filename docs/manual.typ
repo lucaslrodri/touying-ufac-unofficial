@@ -703,21 +703,21 @@ The limits, each with its way out:
 - Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, Touying stops
   with "Unsupported mark … inside some functions like context": a `#pause` goes before such a box, or `#uncover`/`#only`
   around it.
-- A `#pause` between the lines of a `>` box only holds back what follows the box; between quotations glued line to
-  line, the first step shows them as plain text between quotes. For a box revealed in steps, write `#emph-box[..]`
-  without a title, with the `#pause` in a paragraph of its own; separate the quotations by blank lines, with the
-  `#pause` between them (each one then starts the cycle of colors again).
+- A `#pause` between the lines of a `>` box only holds back what follows the box: for a box revealed in steps, write
+  `#emph-box[..]` without a title, with the `#pause` in a paragraph of its own.
+- Quotations on consecutive lines, without a blank line between them, show on the first step as plain text in
+  quotation marks: separate them by blank lines, with the `#pause` between them (each one is then yellow, the first
+  color of the cycle).
 - A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
-  two pages, and so is a covered block at the foot of a page when the covered content after it goes on to the next.
+  two pages, and so is a covered block at the foot of a page when the covered content after it goes on to the next:
+  split the slide with `---`, so that the covered block fits on its page.
+- On a slide that goes on to the next page, a `#pause` right before a `===` subtitle leaves blank pages or the warning
+  "document did not converge": put the `#pause` after the `===`, or split the slide with `---`.
+- On such a slide, a `#pause` on its own line between `->` lines does not converge either: give it a paragraph of its
+  own, with blank lines around it.
+- `#pause` and `#uncover`/`#only` in one paragraph: Touying reorders the covered part on the first subslide; keep them
+  in separate paragraphs.
 - Touying's `#item-by-item` shows every item from the first step: put a `#pause` between the items.
-
-#caution[
-  Keep `#pause` and `#uncover`/`#only` in separate paragraphs: within one paragraph Touying reorders the covered
-  part on the first subslide. On a slide that goes on to the next page, a `#pause` right before a `===` subtitle
-  leaves blank pages or the warning "document did not converge": put the `#pause` after the `===`, or split the slide
-  with `---`; and a `#pause` between `->` lines goes in a paragraph of its own, with blank lines around it (glued to
-  the lines, the document does not converge).
-]
 
 #table(
   columns: (auto, 1fr),
@@ -831,8 +831,9 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`, which win over the names of the
     package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
     (@integrations)],
-  [`config-methods(alert: ..)`], [`#alert` is now the theme's own, with the same look, and works inside every box;
-    a custom `alert` method reaches only `~~text~~`],
+  [`#alert` inside a box, `config-methods(alert: ..)`], [`#alert` is now the theme's own: inside a box it takes the
+    color of the box (for the blue of 0.2.0, `#primary`), and a custom `alert` method reaches only `~~text~~`; to
+    restyle `#alert` too, `#let alert(body) = ..` after the imports],
 )
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:

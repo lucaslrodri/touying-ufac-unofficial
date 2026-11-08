@@ -35,10 +35,13 @@
 
 #tip[In years and astronomical units, Kepler's third law is just $T^2 = a^3$.]
 
-// Touying's animations: a `#pause` between two lines, then `#uncover(3)` around a box, which shows on the third step
+// Touying's animations: a `#pause` in a paragraph of its own between two lines, then `#uncover(3)` around a box,
+// which shows on the third step
 == One step at a time
 -> The orbit of a planet is an ellipse
+
 #pause
+
 -> The Sun sits at one of its foci
 
 #uncover(3)[
