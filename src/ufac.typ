@@ -699,10 +699,11 @@
   assert(body.pos().len() <= 1, message: "title-slide: takes one optional content, `#title-slide[..]`")
   assert(style == auto or style in _preset-lines, message: "title-slide: style is auto (\"line\"), \"line\", \"stack\" or \"top\"")
   let body = body.pos().at(0, default: none)
-  // a body that shows nothing (`#title-slide[#provide-icons(..)]`) stays on the slide, out of the stack: as an item it
-  // added a gap that lifted the titles, and a cover with a body is not scaled down when it does not fit
+  // a body that shows nothing (`#title-slide[#provide-icons(..)]`, or `#title-slide[]`) stays on the slide, out of the
+  // stack: as an item it added a gap that lifted the titles, and a cover with a body is not scaled down when it does
+  // not fit
   let unseen = none
-  if body != none and _unseen(body) { unseen = body; body = none }
+  if body != none and (_unseen(body) or _blank(body)) { unseen = body; body = none }
   touying-slide-wrapper(self => {
     // `auto`: what the `kind` of the deck recommends (in the store), else the default of the theme ("line", no label)
     let style = if style == auto { self.store.at("cover-style", default: "line") } else { style }

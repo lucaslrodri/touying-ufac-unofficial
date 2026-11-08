@@ -13,3 +13,6 @@ The slide counter skips the cover (`freeze-slide-counter`): this is slide 1.
 
 // a body that shows nothing: the same cover as the first one, titles in the same place
 #title-slide[#provide-icons(octicons)]
+
+// an empty body: the same cover too
+#title-slide[]
