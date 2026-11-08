@@ -89,3 +89,13 @@ A title that wraps makes the badge taller and pushes the body down; `title: []` 
 ][
   #emph-box(title: [])[`title: []`: thin box.]
 ]
+
+== Emphasis box: the `> ==` badge and the function's
+The badge of `> == Title` and the one of `#emph-box(title: [Title])` have the same width:
+
+#cols[
+  > == Definition
+  > The `> ` form.
+][
+  #emph-box(title: [Definition])[The function.]
+]
