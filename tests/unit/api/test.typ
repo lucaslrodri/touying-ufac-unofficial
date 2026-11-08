@@ -130,6 +130,8 @@
 // an option of the cover in the wrong place fails with the right one, instead of being ignored
 #assert(catch(() => ufac-theme(config-info(cover-style: "plain"))[x]).contains("ufac-theme(cover-style:"))
 #assert(catch(() => ufac-theme(config-info(cover-layout: "top"))[x]).contains("title-slide(cover-layout:"))
+#assert(catch(() => ufac-theme(config-info(author-label: [A]))[x]).contains("title-slide(author-label:"))
+#assert(catch(() => title-slide(cover-style: "plain")).contains("ufac-theme(cover-style:"))
 #assert(catch(() => ufac-theme(cover-layout: "top")[x]).contains("title-slide(cover-layout:"))
 #assert(catch(() => ufac-theme(author-label: [A])[x]).contains("title-slide(author-label:"))
 #assert(catch(() => ufac-theme(kind: "tcc")[x]).contains("config-info(flavor:"))
@@ -160,6 +162,7 @@
 // `background`) fail with the new ones
 #assert(catch(() => title-slide(cover-layout: "left")).contains("\"stack\""))
 #assert(catch(() => ufac-theme(cover-style: "circles")[x]).contains("\"circles\" is now \"bubbles\""))
+#assert(catch(() => ufac-theme(cover-style: "dark")[x]).contains("\"plain\""))
 #assert(catch(() => title-slide(style: "stack")).contains("style is now cover-layout (cover-layout: \"stack\")"))
 #assert(catch(() => ufac-theme(background: "plain")[x]).contains("background is now cover-style (cover-style: \"plain\")"))
 #assert(catch(() => ufac-theme(background: "circles")[x]).contains("(cover-style: \"bubbles\")"))

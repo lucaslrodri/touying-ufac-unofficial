@@ -697,6 +697,7 @@
 ) = {
   assert("style" not in body.named(),
     message: "title-slide: style is now cover-layout (cover-layout: " + repr(body.named().at("style", default: none)) + ")")
+  assert("cover-style" not in body.named(), message: "title-slide: cover-style goes in ufac-theme(cover-style: ..)")
   assert(body.named().len() == 0, message: "title-slide: unknown argument " + repr(body.named().keys().at(0, default: "")))
   assert(body.pos().len() <= 1, message: "title-slide: takes one optional content, `#title-slide[..]`")
   assert(cover-layout == auto or cover-layout in _preset-lines,

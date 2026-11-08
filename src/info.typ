@@ -247,6 +247,7 @@
   // the options of the cover written in config-info, which Touying would keep as unknown fields
   assert(infos.all(i => "cover-style" not in i), message: "config-info: cover-style goes in ufac-theme(cover-style: ..)")
   assert(infos.all(i => "cover-layout" not in i), message: "config-info: cover-layout goes in title-slide(cover-layout: ..)")
+  assert(infos.all(i => "author-label" not in i), message: "config-info: author-label goes in title-slide(author-label: ..)")
   let flavor = infos.filter(i => "flavor" in i).map(i => i.flavor).at(-1, default: "lecture")
   assert(flavor in _flavors, message: "config-info: unknown flavor " + repr(flavor) + "; use "
     + _flavors.keys().map(k => "\"" + k + "\"").join(", "))
