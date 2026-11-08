@@ -57,6 +57,7 @@ The copy holds what goes to Typst Universe: the `exclude` of `typst.toml` and wh
 | [`docs/`](docs/) | the manual (`manual.typ`, `template.typ`, `build.sh`, the decks of its examples in `examples/`), the PDFs of the example decks (`decks/`) and the pictures of the README (`readme/`) |
 | [`tests/`](tests/) | the Tytanic suite ([tests/README.md](tests/README.md)) |
 | [`scripts/`](scripts/) | the scripts for linking, building and checking |
+| [`skills/`](skills/) | two skills for AI agents that write decks with the theme, in Portuguese ([skills/README.md](skills/README.md)) |
 
 Only `typst.toml`, `LICENSE`, `LICENSE-MIT-0`, `README.md`, `thumbnail.png`, `src/`, `assets/` and `template/` go to Typst Universe: the `exclude` of `typst.toml` and `scripts/package.sh` leave out the rest, and `sh scripts/package.sh --check` refuses a difference between the two.
 
