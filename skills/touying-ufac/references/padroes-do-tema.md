@@ -127,7 +127,7 @@ A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), 
 ```
 
 - **Autores:** em conteúdo livre, cada linha só em itálico é um rótulo de grupo (`_Discente_`, `_Orientador_`, `_Coorientadora_`). O rodapé e os metadados do PDF levam só o primeiro grupo, quem apresenta.
-- **Estilo da capa:** `ufac-theme.with(cover-style: "plain")` (ou `"gradient"`) tira as bolhas da capa e do encerramento, se o programa pedir sobriedade.
+- **Estilo da capa:** `ufac-theme.with(cover-style: "plain")` tira as bolhas da capa e do encerramento, se o programa pedir sobriedade; `"gradient"` escurece o azul num degradê e mantém as bolhas.
 - **Roteiro:** numa fala de até 10 minutos, ele pode sair.
 
 ### Nos dois modos
