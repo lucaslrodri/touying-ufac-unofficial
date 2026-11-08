@@ -645,6 +645,10 @@
   if rest.len() >= 3 and rest.at(0).text == ">" and _is-space(rest.at(1)) and _is-text(rest.at(2)) and rest.at(2).text == "==" {
     rest = rest.slice(3); let t = ()
     while rest.len() > 0 and not (_is-text(rest.at(0)) and rest.at(0).text.starts-with(">")) { t.push(rest.remove(0)) }
+    // the spaces around the title (after `==` and the line break before the next `>`) would widen the badge, more
+    // than the one of `emph-box(title: ..)`
+    while t.len() > 0 and _is-space(t.first()) { t.remove(0) }
+    while t.len() > 0 and _is-space(t.last()) { t.pop() }
     title = t.sum(default: [])
   }
   emph-box(title: title, rest.map(c => if _is-text(c) { _strip-gt(c) } else { c }).filter(c => c != none).sum(default: []))
