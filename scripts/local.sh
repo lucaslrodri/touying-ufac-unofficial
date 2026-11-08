@@ -1,8 +1,9 @@
 #!/bin/sh
 # Runs on this machine, without Docker, what .github/workflows/tests.yml runs on the CI (act, in CONTRIBUTING.md, runs
 # the workflows themselves): the Tytanic suite, the two decks and the packaging into a temporary folder, which checks
-# the list of published files and the version of every import; the error messages raised at layout (scripts/errors.sh);
-# then that README.md is in step with the decks (scripts/readme.sh).
+# the list of published files and the version of every import, and that gotpm would publish the same files (the
+# offline part of `package.sh --check`); the templates of the skills (skills/); the error messages raised at layout
+# (scripts/errors.sh); then that README.md is in step with the decks (scripts/readme.sh).
 #
 # The template, the example decks and the tests that include them import `@preview/touying-ufac-unofficial:<version>`:
 # the script runs itself through scripts/with-preview.sh, which links that name to this working copy with gotpm while
@@ -21,6 +22,7 @@ fail() {
 
 command -v tt > /dev/null || fail "tt (Tytanic) is not installed"
 command -v typst > /dev/null || fail "typst is not installed"
+command -v gotpm > /dev/null || fail "gotpm is not installed"
 
 # As the CI (only fonts/ and the embedded fonts) when scripts/fonts.sh has downloaded fonts/, else the installed fonts.
 if [ -d fonts ]; then
@@ -38,7 +40,16 @@ tt run $tt_fonts --no-fail-fast
 for deck in template example; do
   typst compile $typst_fonts "$deck/main.typ" "$tmp/$deck.pdf"
 done
-sh scripts/package.sh "$tmp/dist" > /dev/null
+out=$(sh scripts/package.sh "$tmp/dist")
+# gotpm publishes what the `exclude` of typst.toml and .gitignore leave: the same files as package.sh
+gotpm install --install-dir "$tmp/gotpm" > /dev/null
+find "$tmp/gotpm" -name .DS_Store -delete
+diff -rq "$out" "$tmp/gotpm" >&2 || fail "gotpm would publish other files than scripts/package.sh: align the \`exclude\` of typst.toml"
+# the templates of the skills that compile on their own (the deck of skills/lectures needs the comum.typ of a course)
+for f in skills/academic/templates/deck.typ skills/academic/templates/circuitos-zap.typ \
+  skills/lectures/templates/circuitos-zap.typ; do
+  typst compile $typst_fonts "$f" "$tmp/skill.pdf" || fail "$f does not compile"
+done
 sh scripts/errors.sh
 sh scripts/readme.sh --check
 
