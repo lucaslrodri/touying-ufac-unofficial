@@ -62,6 +62,7 @@
 #include "./sections/items-pages/body.typ"
 #include "./sections/animations/body.typ"
 #include "./sections/pause-cover/body.typ"
+#include "./sections/pause-overflow/body.typ"
 #include "./sections/explicit-slides/body.typ"
 #include "./sections/ending/body.typ"
 
