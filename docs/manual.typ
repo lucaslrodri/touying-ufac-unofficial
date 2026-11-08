@@ -698,7 +698,7 @@ with two imports with `*`, the later one wins silently. Import the other package
 == Touying <touying>
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
-of the theme, with the limits below, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
+of the theme, with the limits of @limitations, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
 The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside an
 `emph-box` with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header
 of a table, and its `#cols` has no `divider`.
@@ -708,7 +708,7 @@ of a table, and its `#cols` has no `divider`.
 Between the items of a list (`-`, `+`), the `#pause` goes on its own line or in a paragraph of its own, with blank
 lines around it: the list is the same on every step, and numbered items keep their numbers under the veil, also inside
 an `emph-box` without a title or an icon, a callout in the default style or a column (the boxes that take no animation are in the
-first limit below).
+first limit of @limitations).
 
 #table(
   columns: (auto, 1fr),
@@ -727,7 +727,10 @@ at parts of a slide; and #link("https://touying-typ.github.io/docs/integration/m
 Their pages in the documentation of Touying show how. Instead of the `outline-slide` of other Touying themes, write a
 slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart here.
 
-The limits of the animations, each with its way out:
+// the one numbered heading of level 3 (the template numbers two levels; the API reference uses the third, unnumbered)
+#heading(level: 3, numbering: "1.1.1")[Known limitations] <limitations>
+
+The animations of Touying have these limits on the elements of the theme, each with its way out:
 
 - Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box`, a `#tag` or the header
   of a table, every animation of Touying (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) stops the
