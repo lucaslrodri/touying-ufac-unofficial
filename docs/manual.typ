@@ -703,8 +703,11 @@ The limits, each with its way out:
 - Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, Touying stops
   with "Unsupported mark … inside some functions like context": a `#pause` goes before such a box, or `#uncover`/`#only`
   around it.
-- A `#pause` between the lines of a `>` box only holds back what follows the box: for a box revealed in steps, write
-  `#emph-box[..]` without a title, with the `#pause` in a paragraph of its own.
+- A `#pause` between the lines of a `>` box only holds back what follows the box, and the bottom edge of the box is
+  lightly veiled on the first step: for a box revealed in steps, write `#emph-box[..]` without a title, with the
+  `#pause` in a paragraph of its own.
+- Numbered items (`+`) split by a `#pause` inside a box or a column start again at 1 under the veil: write the numbers
+  (`1.`, `2.`), which they keep, or put the list outside the box.
 - Quotations on consecutive lines, without a blank line between them, show on the first step as plain text in
   quotation marks: separate them by blank lines, with the `#pause` between them (each one is then yellow, the first
   color of the cycle).

@@ -20,23 +20,3 @@
 
   Shown at the third step.
 ]
-
-== A `#pause` between the lines of a `>` box
-> First line of the box.
-#pause
-> Second line of the box.
-
-After the box: only this waits for the second step.
-
-== Quotations separated by blank lines
-"First quotation."
-
-#pause
-
-"Second quotation, revealed on the second step."
-
-== `#item-by-item`
-#item-by-item[
-  - first item
-  - second item
-]

@@ -65,6 +65,7 @@
 #include "./sections/pause-overflow/body.typ"
 #include "./sections/pause-glued/body.typ"
 #include "./sections/pause-in-boxes/body.typ"
+#include "./sections/pause-limits/body.typ"
 #include "./sections/explicit-slides/body.typ"
 #include "./sections/ending/body.typ"
 

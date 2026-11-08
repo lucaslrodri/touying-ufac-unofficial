@@ -74,3 +74,8 @@ Visible.
 #pause
 
 + second, veiled whole, still 2.
+
+== Numbered items split in an example <example>
++ first step
+#pause
++ second step, still 2. under the veil, in the color of the example

@@ -389,7 +389,7 @@ Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simp
 - inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, Touying stops with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
 - a covered list, code block or box that runs on to the next page is hidden instead of veiled: split the slide with `---`;
 - on a slide that goes on to the next page, put a `#pause` after a `===`, not right before it (otherwise it leaves blank pages), and give a `#pause` between `->` lines a paragraph of its own (glued to the lines, the document does not converge);
-- a `#pause` between the lines of a `>` box or of quotations, Touying's `#item-by-item`, and `#pause` with `#uncover` in one paragraph have their own limits, with their way out, in the manual.
+- a `#pause` between the lines of a `>` box or of quotations, numbered items split inside a box, Touying's `#item-by-item`, and `#pause` with `#uncover` in one paragraph have their own limits, with their way out, in the manual.
 
 ### Code blocks with codly
 
