@@ -116,7 +116,7 @@
 
 // ---------- aliases and kinds ----------
 /// The aliases of `config-info` in the words of a course, and the field of Touying behind each one: the name of the
-/// course is the `title`, its code the `short-title`, the unit the `short-subtitle` (in a final paper, the program:
+/// course is the `title`, its code the `short-title`, the unit the `short-subtitle` (in a thesis defense, the program:
 /// `course`), the topic of the unit the `subtitle`, and the semester or the year the `date`.
 ///
 /// #test(`_aliases.subject == "title"`, `_aliases.semester == "date"`)
@@ -181,7 +181,7 @@
   lecture: (layout: "line"),
   // a paper for a course: the students and the teacher in groups, at the bottom; no unit, so no prefix
   coursework: (layout: "stack", counter-prefix: none),
-  // final papers: the student, the advisor and the co-advisor at the top; the tag says what the work is
+  // thesis defenses: the student, the advisor and the co-advisor at the top; the tag says what the work is
   tcc: (layout: "top", short-title: "tcc", counter-prefix: none),
   dissertation: (layout: "top", short-title: "dissertation", counter-prefix: none),
   thesis: (layout: "top", short-title: "thesis", counter-prefix: none),

@@ -1,5 +1,5 @@
-// Example deck of the touying-ufac-unofficial theme: the defense of a final paper (`flavor: "tcc"`), with the student
-// and the advisors under their labels, the cover style "gradient" and the tag of the work on the cover.
+// Example deck of the touying-ufac-unofficial theme: the defense of an undergraduate thesis (`flavor: "tcc"`), with
+// the student and the advisors under their labels, the cover style "gradient" and the tag of the work on the cover.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 

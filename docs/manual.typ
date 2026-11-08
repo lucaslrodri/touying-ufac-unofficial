@@ -9,9 +9,9 @@
   authors: ("Lucas Lima Rodrigues",),
   abstract: [
     A #link("https://touying-typ.github.io/")[Touying] theme for the slides of the
-    #link("https://www.ufac.br/")[Federal University of Acre]: lectures, the work of students, final papers and
-    theses. Slides are written with headings and a few Markdown-like shorthands for boxes, quotations, arrow lists
-    and emphases. This manual is set with the rules of the theme itself.
+    #link("https://www.ufac.br/")[Federal University of Acre]: lectures and academic presentations, the work of students
+    for a course and thesis defenses. Slides are written with headings and a few Markdown-like shorthands for boxes,
+    quotations, arrow lists and emphases. This manual is set with the rules of the theme itself.
   ],
   url: package.repository,
   date: datetime.today().display("[month repr:long] [day], [year]"),
@@ -49,7 +49,7 @@ The theme comes after Touying, as above: both export `alert` and `cols`, and the
 From here on, most examples show the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
 deck. The repository has three complete decks to start from (@flavors): a lecture, the work of students for a course
-and a final paper
+and a thesis defense
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
 Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even
@@ -134,7 +134,7 @@ names (`subject` and `title`) is an error. A date given as `semester` or `year` 
   columns: (auto, auto),
   table.header([Alias], [Field]),
   [`subject`], [`title`], [`subject-code`], [`short-title`], [`unit`], [`short-subtitle`], [`unit-title`], [`subtitle`],
-  [`course` (the program, in a final paper)], [`short-subtitle`], [`semester`, `year`], [`date`],
+  [`course` (the program, in a thesis defense)], [`short-subtitle`], [`semester`, `year`], [`date`],
 )
 
 `config-info(flavor:)` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes
@@ -157,8 +157,9 @@ teacher stack at the bottom left, each group under its label, and the top right 
 
 #slide-example("cover-coursework", pages: (1, 2), columns: (1fr, 1fr))
 
-A final paper takes `flavor: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
-advisors at the top right. `"dissertation"` and `"thesis"` do the same with their own tag.
+The defense of an undergraduate thesis takes `flavor: "tcc"`: the tag of the work over the title, the program as
+`course`, and the student and the advisors at the top right. `"dissertation"` (a master's dissertation) and `"thesis"`
+(a doctoral thesis) do the same with their own tag.
 
 #see("ufac", "ufac-theme()")
 

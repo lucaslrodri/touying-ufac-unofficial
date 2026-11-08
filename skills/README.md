@@ -7,7 +7,7 @@ The skill has two modes, which share the common rules (little per slide, never a
 | Mode | For | Template |
 | ---- | --- | -------- |
 | aula | the lectures of a course: the lesson plan, the deck and its review, and the presentation of the course | [`templates/aula/`](touying-ufac/templates/aula/), a course folder with its `common.typ` and one deck |
-| acadêmico | the presentation of an academic work: the defense of a final paper, a dissertation or a thesis, a qualifying exam, a coursework | [`templates/academico/`](touying-ufac/templates/academico/), the folder of one presentation |
+| acadêmico | the presentation of an academic work: the defense of an undergraduate thesis, a dissertation or a thesis, a qualifying exam, a coursework | [`templates/academico/`](touying-ufac/templates/academico/), the folder of one presentation |
 
 The agent picks the mode from the request, or from the `flavor` of an existing deck. Both modes lay out a deck the same way: each figure made in Typst in its own file under `figures/` (`graphs/`, `diagrams/`, `drawings/`, `circuits/`), the data in `data/`, the images in `assets/` and the large helper functions in `header.typ` (in lectures, what several decks of a course share in its `common.typ`).
 

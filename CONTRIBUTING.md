@@ -55,7 +55,7 @@ The copy holds what goes to Typst Universe: the `exclude` of `typst.toml` and wh
 | [`src/`](src/) | the theme; `src/lib.typ` is the entrypoint |
 | [`assets/`](assets/) | the UFAC logo, the icons the theme ships and the syntax theme of the code blocks |
 | [`template/`](template/) | the starting deck of `typst init` |
-| [`example/`](example/) | a deck for a lecture, the work of students and a final paper (`lecture`, `coursework`, `tcc`), shown in the README with its code |
+| [`example/`](example/) | a deck for a lecture, the work of students and a thesis defense (`lecture`, `coursework`, `tcc`), shown in the README with its code |
 | [`docs/`](docs/) | the manual (`manual.typ`, `template.typ`, `build.sh`, the decks of its examples in `examples/`), the PDFs of the example decks (`decks/`) and the pictures of the README with their sources (`readme/`) |
 | [`tests/`](tests/) | the Tytanic suite ([tests/README.md](tests/README.md)) |
 | [`scripts/`](scripts/) | the scripts for linking, building and checking |

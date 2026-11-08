@@ -9,9 +9,9 @@
   <a href="https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/skills"><img src="https://img.shields.io/badge/skill-Claude%20Code-D97757?logo=claude&amp;logoColor=white" alt="Skill for Claude Code"></a>
 </p>
 
-<p align="center"><img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/flavors.png" alt="The covers of a lecture, the work of students for a course and a final paper" width="760"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/flavors.png" alt="The covers of a lecture, the work of students for a course and a thesis defense" width="760"></p>
 
-Slides for the [Federal University of Acre (UFAC)](https://www.ufac.br/), Brazil, in [Typst](https://typst.app/) with [Touying](https://touying-typ.github.io/). For lectures, coursework and theses.
+Slides for the [Federal University of Acre (UFAC)](https://www.ufac.br/), Brazil, in [Typst](https://typst.app/) with [Touying](https://touying-typ.github.io/). For lectures and academic presentations: coursework and thesis defenses.
 
 [Manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf) · [Example decks](https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example) · [Skill for AI agents](https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/skills) · [Changelog](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CHANGELOG.md)
 
@@ -26,7 +26,7 @@ This creates a deck from the template. In the new folder, `typst watch main.typ`
 <!-- template:begin (generated from template/main.typ by scripts/readme.sh: do not edit by hand) -->
 ````typst
 // Starting deck for the touying-ufac-unofficial theme. Syntax: the manual, docs/manual.pdf; whole decks: example/ (a
-// lecture, coursework and a final paper), both at https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0
+// lecture, coursework, a thesis defense), both at https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -57,13 +57,13 @@ Text.
 
 ## Choose a flavor
 
-`flavor` in `config-info` sets where the authors go on the cover, the tag on the cover of a final paper and the numbering of the exercises, unless the deck sets them itself.
+`flavor` in `config-info` sets where the authors go on the cover, the tag on the cover of a thesis defense and the numbering of the exercises, unless the deck sets them itself.
 
 | `flavor` | For |
 | --- | --- |
 | `"lecture"` (default) | a lecture of a course |
 | `"coursework"` | the work of students for a course |
-| `"tcc"`, `"dissertation"`, `"thesis"` | an undergraduate thesis, a master's dissertation, a doctoral thesis |
+| `"tcc"`, `"dissertation"`, `"thesis"` | the defense of an undergraduate thesis, a master's dissertation or a doctoral thesis |
 
 ## Choose a cover style
 
@@ -97,7 +97,7 @@ Three example decks:
 | --- | --- |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-lecture.png" width="400" alt="The cover and an example with its solution of the lecture deck"> | **[lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/lecture.pdf)): a lecture with an outline, step-by-step reveals, exercises and code. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-coursework.png" width="400" alt="The cover and an example with a formula of the coursework deck"> | **[coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/coursework.pdf)): the work of students, with the students and the teacher under their labels on the cover. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-tcc.png" width="400" alt="The cover and the slide of the problem of the tcc deck"> | **[tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/tcc.pdf)): the defense of a final paper. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-tcc.png" width="400" alt="The cover and the slide of the problem of the tcc deck"> | **[tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/tcc.pdf)): the defense of an undergraduate thesis. |
 
 <!-- examples:begin (generated from the decks of example/ by scripts/readme.sh: do not edit by hand) -->
 <details>
@@ -249,8 +249,8 @@ $ overline(x) = 20 "min", quad s = sqrt((100 + 25 + 0 + 25 + 100) / 4) approx 7.
 <summary>Show the code of example/tcc.typ</summary>
 
 ````typst
-// Example deck of the touying-ufac-unofficial theme: the defense of a final paper (`flavor: "tcc"`), with the student
-// and the advisors under their labels, the cover style "gradient" and the tag of the work on the cover.
+// Example deck of the touying-ufac-unofficial theme: the defense of an undergraduate thesis (`flavor: "tcc"`), with
+// the student and the advisors under their labels, the cover style "gradient" and the tag of the work on the cover.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
