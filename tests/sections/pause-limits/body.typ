@@ -39,11 +39,16 @@ After the box: only this waits for the second step.
 
 #speaker-note[A note.]
 
-== Limit: a covered line glued to a visible one, then a shape or an image
+== Limit: a covered line glued to a visible one, then a shape
 Visible line.
 #pause
 Covered line, shown on the first step.
 #rect(width: 4em, height: 1.5em, fill: colors.primary)
+
+== Limit: a covered line glued to a visible one, then an image
+Visible line.
+#pause
+Covered line, shown on the first step.
 #image("../../logo.svg", height: 1.5em)
 
 == Way out: the `#pause` in a paragraph of its own
@@ -144,6 +149,27 @@ Covered line, veiled.
   #pause
   - second item, its marker in place
 ]))
+
+== Way out: the list on the right as a block, with its text on the left
+#align(right, block(align(left)[
+  - first item
+  #pause
+  - second item, its marker in place
+]))
+
+== Limit: a `#pause` and an `#uncover` in one paragraph
+First. #pause Second. #uncover(3)[Third.] Fourth.
+
+== Way out: one paragraph each
+First.
+
+#pause
+
+Second.
+
+#uncover(3)[Third.]
+
+Fourth.
 
 == Way out: the first number written
 3. three, written
