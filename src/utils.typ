@@ -99,6 +99,33 @@
   let ch = _children(_unstyle(x)).filter(c => not (_is-space(c) or c.func() in (linebreak, parbreak)))
   ch.len() > 0 and ch.all(c => c.func() in quiet)
 }
+/// The consecutive `+` items of a body of a slide with their numbers written in (`enum.item(n, ..)`), counted as
+/// Typst counts them (an item with its own number sets it; other content between items starts again at 1). Touying
+/// splits a list at a `#pause`, and the covered part, a list of its own under the veil, started again at 1: "1. second"
+/// on the first step, "2. second" once revealed.
+///
+/// #test(`_number-items([+ a
+/// + b]).children.filter(c => c.func() == enum.item).map(c => c.number) == (1, 2)`)
+/// -> any
+#let _number-items(
+  /// A body of the slide. -> any
+  body,
+) = {
+  if type(body) != content or body.func() != _seq { return body }
+  let (n, out) = (0, ())
+  for c in body.children {
+    if c.func() == enum.item {
+      let own = c.at("number", default: auto)
+      n = if own == auto or own == none { n + 1 } else { own }
+      out.push(if own == auto or own == none { enum.item(n, c.body) } else { c })
+    } else {
+      // a space, a paragraph break or a mark of Touying (`#pause` is a `metadata`) keeps the list going
+      if not (_is-space(c) or c.func() in (parbreak, metadata)) { n = 0 }
+      out.push(c)
+    }
+  }
+  out.join()
+}
 /// A body made of a single paragraph inside a `block`/`grid` does not become a `par` element (Typst treats it as
 /// inline content), so the `show par` rewrites (`->`, `> `, `"…"`) never run. A leading `parbreak()` forces the
 /// paragraph without adding space.
