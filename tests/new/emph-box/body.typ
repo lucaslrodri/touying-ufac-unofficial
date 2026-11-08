@@ -56,7 +56,7 @@
     #arrows(color: colors.primary)[
     -> `#arrows(color: colors.primary)`
     ]
-    #highlight(fill: colors.tertiary-lighter)[`#highlight(fill:)`] keeps its color, and #alert[`#alert`] takes the color of the box.
+    #highlight(fill: colors.tertiary-lighter)[`#highlight(fill:)`] keeps its color, and #alert[alert] takes the color of the box.
   ]
 ]
 ]

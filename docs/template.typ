@@ -16,14 +16,12 @@
 #let package = toml("../typst.toml").package
 #let body-size = 10.5pt
 #let code-size = 8.5pt
-// Touying's `alert` only works inside a deck; in the manual (prose and examples) it is the plain `primary`
-#let alert = primary
 
 // ---------- look ----------
 /// Stand-in for Touying's `self`: what `_rules` reads.
 #let _self = (
   colors: colors,
-  methods: (alert: (self: none, it) => primary(it)),
+  methods: (alert: (self: none, it) => alert(it)),
   info: (counter-prefix: [1.], title: [], subtitle: [], logo: auto),
   store: (lang: "en", region: none, exercise-name: auto, example-name: auto, part-name: auto),
 )
@@ -51,7 +49,7 @@
 
 // ---------- examples ----------
 /// What the example snippets can use (`eval` does not see the file scope).
-#let example-scope = dictionary(ufac-lib) + (alert: primary)
+#let example-scope = dictionary(ufac-lib)
 
 /// The scope of the API reference: the same, without the callout `example`, whose name is also the one of tidy's own
 /// renderer of the ```example blocks (the scope of a module overrides it); the snippets get it back through the

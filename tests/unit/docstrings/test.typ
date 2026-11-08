@@ -4,7 +4,7 @@
 #import "/src/lib.typ" as lib
 
 // the examples and tests are evaluated with `eval`, which does not see any file scope
-#let scope = dictionary(lib) + (alert: lib.primary)
+#let scope = dictionary(lib)
 // `example` is also the name of tidy's own renderer of the ```example blocks, and the scope of a module overrides it:
 // tidy gets the scope without the callout `example`, and the snippets get it back through the preamble
 #let tidy-scope = {
