@@ -699,15 +699,16 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
 of the theme, with the limits below, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
-The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside a box
-with a badge, a `#tag` or the header of a table, and its `#cols` has no `divider`.
+The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside an
+`emph-box` with a title or an icon (a callout with `style: "badge"` included), a `#tag` or the header of a table,
+and its `#cols` has no `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
 
 Between the items of a list (`-`, `+`), the `#pause` goes on its own line or in a paragraph of its own, with blank
 lines around it: the list is the same on every step, and numbered items keep their numbers under the veil, also inside
-an `emph-box` without a title, a callout in the default style or a column (in the boxes with a badge no animation
-works, see the first limit below).
+an `emph-box` without a title or an icon, a callout in the default style or a column (an `emph-box` with a title or
+an icon and a callout with `style: "badge"` take no animation: see the first limit below).
 
 #table(
   columns: (auto, 1fr),
