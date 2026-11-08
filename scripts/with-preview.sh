@@ -2,7 +2,7 @@
 # Runs a command with `@preview/touying-ufac-unofficial:<version>` linked to this working copy:
 #
 #   sh scripts/with-preview.sh tt run --use-system-fonts
-#   sh scripts/with-preview.sh typst compile example/main.typ
+#   sh scripts/with-preview.sh typst compile example/lecture.typ
 #
 # The template and the example decks import the package by that name, as Typst Universe requires of the template (a
 # deck created from it must compile untouched), and so do the tests that include them (`deck/`, Tytanic's `@template`).

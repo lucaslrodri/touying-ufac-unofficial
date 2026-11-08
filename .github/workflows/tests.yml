@@ -95,11 +95,12 @@ jobs:
         with:
           typst-version: ${{ steps.manifest.outputs.compiler }}
 
-      - name: Compile the template and the example
+      - name: Compile the template and the example decks
         run: |
           typst --version
-          sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts template/main.typ /tmp/template.pdf
-          sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts example/main.typ /tmp/example.pdf
+          for deck in template/main.typ example/*.typ; do
+            sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts "$deck" /tmp/deck.pdf
+          done
 
       # The errors raised when the deck is laid out, which `catch` in tests/unit/api cannot reach.
       - name: Check the error messages

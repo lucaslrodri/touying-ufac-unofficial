@@ -38,8 +38,8 @@ tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 
 tt run $tt_fonts --no-fail-fast
-for deck in template example; do
-  typst compile $typst_fonts "$deck/main.typ" "$tmp/$deck.pdf"
+for deck in template/main.typ example/*.typ; do
+  typst compile $typst_fonts "$deck" "$tmp/$(basename "$(dirname "$deck")")-$(basename "$deck" .typ).pdf"
 done
 out=$(sh scripts/package.sh "$tmp/dist")
 # gotpm publishes what the `exclude` of typst.toml and .gitignore leave: the same files as package.sh

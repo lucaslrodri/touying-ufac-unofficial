@@ -1,6 +1,5 @@
-// Starting deck for the touying-ufac-unofficial theme. Syntax: the manual, docs/manual.pdf; the elements at a glance:
-// example/main.typ; a whole lecture: example/lecture.typ, all at
-// https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0
+// Starting deck for the touying-ufac-unofficial theme. Syntax: the manual, docs/manual.pdf; whole decks: example/ (a
+// lecture, coursework and a final paper), both at https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 

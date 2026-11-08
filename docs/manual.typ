@@ -49,7 +49,7 @@ The theme comes after Touying, as above: both export `alert` and `cols`, and the
 From here on, most examples show the source on the left and the result on the right: a real slide when the feature
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
 deck. The repository has three complete decks to start from (@flavors): a lecture, the work of students for a course
-and a final paper; and `main.typ`, every element in a short deck
+and a final paper
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
 Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even

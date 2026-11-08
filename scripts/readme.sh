@@ -4,7 +4,8 @@
 #   template.png                   the pages of template/main.typ, under its code
 #   flavors.png                    the covers of the decks of each flavor (lecture, coursework, tcc), at the top
 #   cover-style-<style>.png        the cover of the template with each cover style, in "Choose a cover style"
-#   element-<element>.png          one slide of a deck for each row of "Elements"
+#   element-<element>.png          one slide for each row of "Elements", from the example decks or, for what they do
+#                                  not show, from docs/readme/gallery.typ
 #   deck-<deck>.png                the cover and one page of each deck, in "Examples"
 # and rewrites what README.md has between `<!-- <block>:begin ... -->` and `<!-- <block>:end -->`:
 #   template                       the source of template/main.typ, then its picture
@@ -16,8 +17,8 @@
 # `version` of typst.toml), as typst/packages recommends, so the README of a version keeps the pictures of that
 # version: on GitHub they show once the tag is pushed.
 #
-# The elements and the decks are pages of the example decks, taken by their number: each deck must have the number of
-# pages below, or the script stops, so that a deck that grows never shifts a picture to another slide unnoticed. When
+# The elements and the decks are pages of the example decks and of docs/readme/gallery.typ, taken by their number: each
+# deck must have the number of pages below, or the script stops, so that a deck that grows never shifts a picture to another slide unnoticed. When
 # a deck changes on purpose, check the pages taken from it and update the number.
 #
 # `sh scripts/readme.sh --check` writes nothing: it fails when README.md is out of date and only warns when a picture
@@ -101,12 +102,12 @@ for style in bubbles gradient plain; do
 done
 
 # the example decks: their pages, taken by number
-render example/main.typ main && expect main 13
+render docs/readme/gallery.typ gallery && expect gallery 3
 for deck in $examples; do render "example/$deck.typ" "$deck"; done
 expect lecture 13 && expect coursework 4 && expect tcc 8
 sheet flavors 3 28 lecture-1 coursework-1 tcc-1
-for element in slide:lecture-4 section:lecture-3 exercise:lecture-10 boxes:main-4 callouts:main-8 code:lecture-12 \
-  table:main-10 ending:lecture-13; do
+for element in slide:lecture-4 section:lecture-3 exercise:lecture-10 boxes:gallery-1 callouts:gallery-2 \
+  code:lecture-12 table:gallery-3 ending:lecture-13; do
   sheet "element-${element%%:*}" 1 4 "${element#*:}"
 done
 sheet deck-lecture 2 4 lecture-1 lecture-9

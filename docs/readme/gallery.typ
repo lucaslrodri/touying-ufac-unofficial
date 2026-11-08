@@ -1,0 +1,46 @@
+// Slides of the README pictures that no example deck has: scripts/readme.sh renders this deck and takes its pages, in
+// this order, for the rows of "Elements" (element-boxes.png, element-callouts.png, element-table.png). It is not an
+// example, and it is not published; the other rows come from the decks of example/.
+#import "@preview/touying:0.7.4": *
+#import "@preview/touying-ufac-unofficial:0.3.0": *
+
+#show: ufac-theme.with(
+  aspect-ratio: "16-9",
+  lang: "en",
+  config-info(
+    subject: [Subject name],
+    subject-code: [CODE or Department],
+    unit-title: [Title of the teaching unit],
+    unit: [Teaching unit I],
+    author: [Prof. Dr. Your Name],
+  ),
+)
+
+== Boxes
+
+> Box without title
+
+"A quotation in a box."
+
+> $ x = {2, 1} $
+
+== Callouts
+
+#caution[`x * y` with two lists is an error.]
+#tip[The up arrow recalls the last command.]
+#remark[A *function* is a named block of code.]
+#note[Two versions of the program differ here.]
+#cols[
+  #example[`len([1, 2, 3])` is 3.]
+][
+  #examples[Types: `int`, `str`.]
+]
+
+== A table
+
+#table(
+  columns: 3,
+  table.header([Fish], [Depth (m)], [$T$ (°C)]),
+  [Cod], [200], [4],
+  [Tuna], [50], table.cell(fill: colors.secondary-lighter)[*18*],
+)
