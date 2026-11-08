@@ -34,13 +34,13 @@ This creates a deck from the template. In the new folder, `typst watch main.typ`
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    flavor: "lecture",   // "coursework", "tcc", "dissertation" or "thesis"
+    flavor: "lecture",   // coursework or a final paper: start from example/coursework.typ or tcc.typ
     subject: [Subject name],                  // or Touying's `title:`
     subject-code: [CODE or Department],       // or `short-title:`
     unit-title: [Title of the teaching unit], // or `subtitle:`
     unit: [Teaching unit I],                  // or `short-subtitle:`
     author: [Prof. Dr. Your Name],
-    counter-prefix: [1.],   // "Exercise 1.N"; none gives "Exercise N"
+    // counter-prefix: [2.],   // "Exercise 2.N" in the second unit; the lecture gives [1.]
   ),
 )
 
@@ -57,7 +57,7 @@ Text.
 
 ## Choose a flavor
 
-`flavor` in `config-info` sets where the names go on the cover, its tag and the numbering of the exercises. The default is `"lecture"`.
+`flavor` in `config-info` sets where the authors go on the cover, the tag of a final paper and the numbering of the exercises, unless the deck sets them itself.
 
 | `flavor` | For |
 | --- | --- |
@@ -75,15 +75,15 @@ Text.
 
 ## Elements
 
-Headings make the slides, and a few shorthands, as in Markdown, make boxes, quotes and arrow lists. Every detail is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
+Headings make the slides, and a few Markdown-like shorthands make boxes, quotes and arrow lists. Every detail is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
 
 | Preview | Element |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle; `---` goes on to a new page. `->` makes a list with arrows. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle; `---` goes on to a new page. `->` at the start of a paragraph makes a list with arrows. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-section.png" width="340" alt="A section slide"> | **Sections.** `= Title` opens a section slide. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` or `#solution` opens the answer. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text` makes a box, `"A quotation."` a quote and `> $ … $` an equation box. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, remark, note and example"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note`, `#example` and `#examples`. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text` makes a box, `"A quotation."` alone in its paragraph a quote, and `> $ … $` an equation box. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, remark, note, example and examples"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note`, `#example` and `#examples`. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-code.png" width="340" alt="Python code and its output"> | **Code.** A fenced block shows its language. A `text` block is the output. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-table.png" width="340" alt="A table with a blue header"> | **Tables.** The header row is blue. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-ending.png" width="340" alt="The closing slide"> | **Closing slide.** `#ending-slide[Thank you!]`. |
@@ -95,7 +95,7 @@ Three example decks:
 | Preview | Deck |
 | --- | --- |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-lecture.png" width="400" alt="The cover and an example with its solution of the lecture deck"> | **[lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/lecture.pdf)): a lecture with an outline, step-by-step reveals, exercises and code. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-coursework.png" width="400" alt="The cover and an example with a formula of the coursework deck"> | **[coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/coursework.pdf)): the work of students, in groups on the cover. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-coursework.png" width="400" alt="The cover and an example with a formula of the coursework deck"> | **[coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/coursework.pdf)): the work of students, with the students and the teacher under their labels on the cover. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-tcc.png" width="400" alt="The cover and the slide of the problem of the tcc deck"> | **[tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/tcc.pdf)): the defense of a final paper. |
 
 <!-- examples:begin (generated from the decks of example/ by scripts/readme.sh: do not edit by hand) -->
