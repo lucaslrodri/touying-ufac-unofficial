@@ -67,3 +67,10 @@ Visible text.
 - Visible item.
 #pause
 - Covered item, veiled whole.
+
+== Covered shapes
+Visible text.
+
+#pause
+
+#circle(radius: .6em) #square(size: 1.2em) #line(length: 3em)

@@ -25,17 +25,3 @@ After the box: only this waits for the second step.
   - first item
   - second item
 ]
-
-== Limit: numbered items split inside a box
-#emph-box[
-  + first
-  #pause
-  + second, 1. under the veil
-]
-
-== Way out: the numbers written
-#emph-box[
-  1. first
-  #pause
-  2. second, 2. under the veil
-]

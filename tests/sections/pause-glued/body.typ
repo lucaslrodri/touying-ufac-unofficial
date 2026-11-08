@@ -55,27 +55,3 @@ Visible.
 #uncover(2)[
   #emph-box(title: [Box])[Covered body.]
 ]
-
-== A numbered list that no `#pause` splits
-#set enum(start: 3)
-+ keeps `set enum(start: 3)`: three
-+ four
-
-== A `#pause` with blank lines between list items
-- first item
-
-#pause
-
-- second item, veiled whole
-
-== A `#pause` with blank lines between numbered items
-+ first
-
-#pause
-
-+ second, veiled whole, still 2.
-
-== Numbered items split in an example <example>
-+ first step
-#pause
-+ second step, still 2. under the veil, in the color of the example

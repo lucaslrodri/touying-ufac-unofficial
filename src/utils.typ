@@ -99,6 +99,40 @@
   let ch = _children(_unstyle(x)).filter(c => not (_is-space(c) or c.func() in (linebreak, parbreak)))
   ch.len() > 0 and ch.all(c => c.func() in quiet)
 }
+/// `f` applied to every sequence of a body of a slide: the body itself, and the sequences inside a `styled` (a `set`
+/// or `show` rule of the slide before its content, a `#[ .. ]` with a rule), a `block` (the body of an `emph-box`
+/// without a title), a `grid` and its cells (a callout, the columns of `#cols`) and the body of a list item, at any
+/// depth.
+/// -> any
+#let _in-sequences(
+  /// A body of the slide, or a part of it. -> any
+  body,
+  /// What to do with a sequence: content to content. -> function
+  f,
+) = {
+  if type(body) != content { return body }
+  let func = body.func()
+  if func == _seq { return f(body.children.map(c => _in-sequences(c, f)).join()) }
+  if func == _styled { return _styled(_in-sequences(body.child, f), body.styles) }
+  if func in (block, list.item, grid.cell) and body.at("body", default: none) != none {
+    let fields = body.fields()
+    let inner = fields.remove("body")
+    let _ = fields.remove("label", default: none)
+    return func(..fields, _in-sequences(inner, f))
+  }
+  if func == enum.item {
+    let number = body.at("number", default: auto)
+    return if number == auto or number == none { enum.item(_in-sequences(body.body, f)) }
+      else { enum.item(number, _in-sequences(body.body, f)) }
+  }
+  if func == grid {
+    let fields = body.fields()
+    let children = fields.remove("children")
+    let _ = fields.remove("label", default: none)
+    return grid(..fields, ..children.map(c => _in-sequences(c, f)))
+  }
+  body
+}
 /// A mark of Touying (`#pause`) in a paragraph of its own between two items of a list (`-`, `+` or `/`), with blank
 /// lines around it, glued to them: the paragraph breaks around the mark become spaces. With the breaks, Typst put the
 /// covered items in the same (spaced) list as the visible ones, outside the veil, and the step showed everything; glued,
@@ -114,10 +148,12 @@
   /// A body of the slide. -> any
   body,
 ) = {
+  let one(body) = {
   if type(body) != content or body.func() != _seq { return body }
   let ch = body.children
   let item(c) = c.func() in (list.item, enum.item, terms.item)
-  let gap(c) = _is-space(c) or c.func() == parbreak
+  // marks in a row (a `#pause` and a `#speaker-note`) count as one: the gap runs through them
+  let gap(c) = _is-space(c) or c.func() in (parbreak, metadata)
   let out = ch
   for (i, c) in ch.enumerate() {
     if c.func() != metadata { continue }
@@ -130,6 +166,8 @@
     for j in range(a + 1, b) { if ch.at(j).func() == parbreak { out.at(j) = [ ] } }
   }
   out.join()
+  }
+  _in-sequences(body, one)
 }
 /// The consecutive `+` items of a body of a slide that a mark of Touying splits (`#pause` is a `metadata` between two
 /// items), with their numbers written in (`enum.item(n, ..)`), counted as Typst counts them (an item with its own
@@ -146,6 +184,7 @@
   /// A body of the slide. -> any
   body,
 ) = {
+  let one(body) = {
   if type(body) != content or body.func() != _seq { return body }
   let ch = body.children
   // the runs of consecutive items: a space, a paragraph break or a mark of Touying between two items keeps a run going
@@ -167,6 +206,8 @@
     }
   }
   out.join()
+  }
+  _in-sequences(body, one)
 }
 /// A body made of a single paragraph inside a `block`/`grid` does not become a `par` element (Typst treats it as
 /// inline content), so the `show par` rewrites (`->`, `> `, `"…"`) never run. A leading `parbreak()` forces the
@@ -415,7 +456,9 @@
 #let _veil-end = "ufac-veil-end"
 /// Element functions that make a covered chunk block-level.
 /// -> array
+// the shapes are blocks too (`circle`, `line`…): Touying's cover, for running text, read fields they do not have
 #let _block-funcs = (list.item, enum.item, terms.item, list, enum, terms, heading, table, grid, figure, block, stack, pad, align, columns, image, rect, quote,
+  circle, square, ellipse, line, polygon, curve, path,
   // a `layout` (the box with a title): its element is not the function `layout`
   [#layout(_ => none)].func())
 /// True when the content holds a block-level element (or a paragraph break).
