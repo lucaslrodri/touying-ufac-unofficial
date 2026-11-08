@@ -39,11 +39,12 @@ After the box: only this waits for the second step.
 
 #speaker-note[A note.]
 
-== Limit: a covered line glued to a visible one, then a shape
+== Limit: a covered line glued to a visible one, then a shape or an image
 Visible line.
 #pause
 Covered line, shown on the first step.
 #rect(width: 4em, height: 1.5em, fill: colors.primary)
+#image("../../logo.svg", height: 1.5em)
 
 == Way out: the `#pause` in a paragraph of its own
 Visible line.
@@ -52,6 +53,7 @@ Visible line.
 
 Covered line, veiled.
 #rect(width: 4em, height: 1.5em, fill: colors.primary)
+#image("../../logo.svg", height: 1.5em)
 
 == Limit: a `#pause` in a column, and the next column
 #cols[
@@ -64,13 +66,15 @@ Covered line, veiled.
   #image("../../logo.svg", height: 1.5em)
 ]
 
-== Way out: `#uncover` around the next column
+== Way out: `#uncover("2-")` around the next column
 #cols[
   - first item
   #pause
   - second item
+  #pause
+  - third item
 ][
-  #uncover(2)[
+  #uncover("2-")[
     #tip[A callout in the next column, veiled whole.]
     #rect(width: 4em, height: 1.5em, fill: colors.primary)
     #image("../../logo.svg", height: 1.5em)
@@ -90,26 +94,30 @@ Covered line, veiled.
   - its markers not veiled
 ]
 
-== Way out: `#uncover` around the next columns
+== Way out: `#uncover("2-")` around the next columns
 #cols[
   - first item
   #pause
   - second item
 ][
-  #uncover(2)[
+  #uncover("2-")[
     -> an arrow list,
     -> veiled whole
   ]
 ][
-  #uncover(2)[
+  #uncover("2-")[
     - a list,
     - veiled whole
   ]
 ]
 
-== Limit: `#uncover` around an item right after another
+== Limit: `#uncover` around an item after another, glued or after a blank line
 - first item
 #uncover(2)[- second item, shown on the first step]
+
+- third item
+
+#uncover(2)[- fourth item, shown on the first step]
 
 == Way out: a `#pause` between the items
 - first item
@@ -121,6 +129,13 @@ Covered line, veiled.
   - first item
   #pause
   - second item, its marker in the middle on the first step
+]
+
+== Limit: a list right inside `#align(right)`
+#align(right)[
+  - first item
+  #pause
+  - second item, its marker on the right on the first step
 ]
 
 == Way out: the list centered as a block, with its text on the left
