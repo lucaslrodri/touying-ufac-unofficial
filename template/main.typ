@@ -7,7 +7,7 @@
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    flavor: "lecture",   // or "coursework", "tcc", "dissertation", "thesis": see example/coursework.typ, tcc.typ
+    flavor: "lecture",   // or "coursework", "tcc", "dissertation", "thesis": start from example/coursework.typ, tcc.typ
     subject: [Subject name],                  // or Touying's `title:`
     subject-code: [CODE or Department],       // or `short-title:`
     unit-title: [Title of the teaching unit], // or `subtitle:`

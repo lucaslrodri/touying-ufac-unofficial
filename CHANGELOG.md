@@ -16,8 +16,9 @@ Breaking changes, and how to move a 0.2.0 deck:
 
 New:
 
-- A new cover, with three layouts (`title-slide(cover-layout:)`: `"line"`, `"stack"`, `"top"`), six positions, the tag and the rule, and three cover styles (`ufac-theme(cover-style:)`: `"bubbles"`, `"gradient"`, `"plain"`); the section slide follows it.
+- A new cover, with three layouts (`title-slide(cover-layout:)`: `"line"`, `"stack"`, `"top"`), six positions to change one by one (`header-left` … `footer-right`), a label over the authors (`author-label`), the tag and the rule, and three cover styles (`ufac-theme(cover-style:)`: `"bubbles"`, `"gradient"`, `"plain"`); the section slide follows it.
 - Aliases of a course (`subject`, `semester`, …), the flavor of the presentation (`config-info(flavor:)`: `"lecture"`, the default, `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`), which brings the layout of the cover, the tag of a final paper and the numbering, authors as free content with labels, `date`, `institution`, `contact` and `#info`. An option of the cover in the wrong place stops with the right one.
+- `#ending-slide`, the closing slide on the blue page of the cover: a title ("Thank you!" by default), a subtitle and a body.
 - Exercises and examples in a box filling the slide, as in a printed handout: the solution with `#solution` / `#answer`, over several pages.
 - Callouts: `#caution`, `#tip`, `#remark`, `#note`, `#example`, `#examples`, or `#callout(kind)`; an arrow list, a `>` box or a quote at the start of one starts on the line under the title.
 - `#tag`, the yellow tag of the cover, for the text, the titles and the tables.

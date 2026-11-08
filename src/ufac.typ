@@ -1164,7 +1164,7 @@
 /// `config-info` carries the fields of Touying: `title` (the name of the course or of the work), `short-title` (its code
 /// or a shorter name: the tag of the cover), `subtitle` (the topic), `short-subtitle` (the lecture or the unit), `author`
 /// (one, an array or free content), `date`, `institution`, `logo` and `contact`; the aliases of a course (`subject`,
-/// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `flavor` of presentation (`"lecture"` by
+/// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `flavor` of the presentation (`"lecture"` by
 /// default); and `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives
 /// "Exercise N", the default of the flavors without units: `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`).
 /// -> content
