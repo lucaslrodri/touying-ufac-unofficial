@@ -62,7 +62,8 @@ jobs:
 
   minimum-compiler:
     # `compiler` in typst.toml promises that the package works from that Typst version on: compile with it the template,
-    # the example decks and docs/readme/gallery.typ, which has the shorthands the example decks do not use.
+    # the example decks, docs/readme/gallery.typ and the tests (the catalogue, with every body.typ, and the tests with a
+    # preamble of their own), but those that need codly 2, which requires Typst 0.15.
     name: Decks on the minimum Typst version
     runs-on: ubuntu-latest
     steps:
@@ -101,6 +102,15 @@ jobs:
           typst --version
           for deck in template/main.typ example/*.typ docs/readme/gallery.typ; do
             sh scripts/with-preview.sh typst compile --font-path fonts --ignore-system-fonts "$deck" /tmp/deck.pdf
+          done
+
+      # every shorthand, continuation, reference and option that the decks do not use, through the tests
+      - name: Compile the tests
+        run: |
+          typst compile --root . --font-path fonts --ignore-system-fonts tests/tests.typ /tmp/catalogue.pdf
+          for test in tests/config/*/test.typ tests/sections/touying-packages/test.typ; do
+            case $test in *codly*) continue ;; esac
+            typst compile --root . --font-path fonts --ignore-system-fonts "$test" /tmp/test.pdf
           done
 
       # The errors raised when the deck is laid out, which `catch` in tests/unit/api cannot reach.
