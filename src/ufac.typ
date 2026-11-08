@@ -398,7 +398,7 @@
   }
   let self = utils.merge-dicts(self, _item-page(self, color, badge), config-methods(cover: cover), config)
   // as on a normal slide: every body through `_flow` and a top-level `===` repeated on the overflow pages
-  let bodies = bodies.map(_split-solution).map(_number-items).map(_flow)
+  let bodies = bodies.map(_split-solution).map(_glue-item-pauses).map(_number-items).map(_flow)
   if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
   touying-slide(self: self, repeat: repeat, composer: composer, setting: body => _in-item(color, setting(body)),
     ..bodies)
@@ -433,7 +433,7 @@
   let self = utils.merge-dicts(self, config-page(header: _header, footer: _footer), config)
   // every body goes through `_flow`: since Typst 0.12 a lone text in a container is not a paragraph, so a slide whose
   // content is only a shorthand (`-> item`, `> box`, `"quote"`) never reached the `show par` of the theme
-  let bodies = bodies.pos().map(_number-items).map(_flow)
+  let bodies = bodies.pos().map(_glue-item-pauses).map(_number-items).map(_flow)
   if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
   touying-slide(self: self, repeat: repeat, setting: setting, composer: composer, ..bodies)
 })

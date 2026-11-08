@@ -99,6 +99,38 @@
   let ch = _children(_unstyle(x)).filter(c => not (_is-space(c) or c.func() in (linebreak, parbreak)))
   ch.len() > 0 and ch.all(c => c.func() in quiet)
 }
+/// A mark of Touying (`#pause`) in a paragraph of its own between two items of a list (`-`, `+` or `/`), with blank
+/// lines around it, glued to them: the paragraph breaks around the mark become spaces. With the breaks, Typst put the
+/// covered items in the same (spaced) list as the visible ones, outside the veil, and the step showed everything; glued,
+/// the list is the same on every step, as with the mark on its own line.
+///
+/// #test(`_glue-item-pauses([- a
+///
+/// #metadata(1)
+///
+/// - b]).children.filter(c => c.func() == parbreak).len() == 0`)
+/// -> any
+#let _glue-item-pauses(
+  /// A body of the slide. -> any
+  body,
+) = {
+  if type(body) != content or body.func() != _seq { return body }
+  let ch = body.children
+  let item(c) = c.func() in (list.item, enum.item, terms.item)
+  let gap(c) = _is-space(c) or c.func() == parbreak
+  let out = ch
+  for (i, c) in ch.enumerate() {
+    if c.func() != metadata { continue }
+    // the nearest children around the mark that are not a space or a paragraph break
+    let a = i - 1
+    while a >= 0 and gap(ch.at(a)) { a -= 1 }
+    let b = i + 1
+    while b < ch.len() and gap(ch.at(b)) { b += 1 }
+    if a < 0 or b >= ch.len() or not item(ch.at(a)) or not item(ch.at(b)) { continue }
+    for j in range(a + 1, b) { if ch.at(j).func() == parbreak { out.at(j) = [ ] } }
+  }
+  out.join()
+}
 /// The consecutive `+` items of a body of a slide that a mark of Touying splits (`#pause` is a `metadata` between two
 /// items), with their numbers written in (`enum.item(n, ..)`), counted as Typst counts them (an item with its own
 /// number sets it). Touying splits a list at a `#pause`, and the covered part, a list of its own under the veil,

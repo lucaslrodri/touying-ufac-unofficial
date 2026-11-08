@@ -60,3 +60,17 @@ Visible.
 #set enum(start: 3)
 + keeps `set enum(start: 3)`: three
 + four
+
+== A `#pause` with blank lines between list items
+- first item
+
+#pause
+
+- second item, veiled whole
+
+== A `#pause` with blank lines between numbered items
++ first
+
+#pause
+
++ second, veiled whole, still 2.
