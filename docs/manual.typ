@@ -31,7 +31,7 @@ the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, o
 with `typst watch --font-path <folder> main.typ`. In the #link("https://typst.app/")[Typst web app], upload the
 `.otf` files to the project.
 
-== A first deck
+== A first deck <first-deck>
 
 `typst init @preview/touying-ufac-unofficial:0.3.0` creates a deck from the template of the package; in the new folder,
 `typst watch main.typ` compiles it on every change. A deck imports
@@ -50,14 +50,9 @@ deck. The repository has complete decks to start from: a lecture, an extension c
 students for a course
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
-Before `#title-slide`, a deck has only imports, `#let` and `set` and `show` rules: anything that makes content, even
-content that is not seen, such as `#provide-icons(..)`, opens a blank page before the cover. It goes in the first slide
-that needs it, or in the body of the cover, `#title-slide[..]`.
-
-Before a version reaches Typst Universe, its development version, the `develop` branch of the
-#link("https://github.com/lucaslrodri/touying-ufac-unofficial")[repository], can be installed as a local package (with
-#link("https://github.com/npikall/gotpm")[gotpm], or copied into the `local` folder of Typst's packages) and imported
-as `@local/touying-ufac-unofficial:0.3.0` instead of `@preview`.
+Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even
+content that is not seen, such as `#provide-icons(..)` (@icons), opens an extra page, with the footer, before the cover.
+Put it in the first slide that needs it, or in the body of the cover, `#title-slide[..]`.
 
 == Dependencies <dependencies>
 
@@ -88,6 +83,10 @@ The theme needs *Typst #package.compiler or later*. Typst fetches the packages b
 
 touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.4, which also works with Typst 0.14.
 codly is imported by the deck that wants it (@codly).
+
+Before a version reaches Typst Universe, its development version, the `develop` branch of the repository, can be
+installed as a local package and imported as `@local/touying-ufac-unofficial:0.3.0` instead of `@preview`: see
+#link("https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm")[Local installation with gotpm] in the contributing guide.
 
 = The information of the deck <information>
 
@@ -566,7 +565,7 @@ with a dark tone is like a pill, with white text.
 A figure caption shows its body only, without "Figure N", at 0.6 of the size of the text, so that it leaves room for
 the figure. A deck gives another size with `#show figure.caption: set text(size: 18pt)`, after
 `#show: ufac-theme.with(..)`: written before it, the rule gets the 0.6 of the theme on top (18pt gives 10.8pt). A size
-in `em` is a share of the caption: `0.8em` gives 0.8 × 0.6 = 0.48 of the text, which is 22pt on a slide.
+in `em` is a share of the caption: `0.8em` gives 0.8 × 0.6 = 0.48 of the 22pt text of a slide, about 10.6pt.
 
 On an ordinary slide, a large image, such as a photo, needs a height, as below: without one it can take the whole
 height of the slide, and its caption runs into the footer. A height in percent is a share of the content area of the
@@ -656,13 +655,13 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
 array or a function of `self`: the items of an array are joined by a dot, the empty ones left out, and with none left
-the rule runs on. The badge of the exercises and examples takes
+the footer line runs unbroken. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).
 
 ```typ
 #show: ufac-theme.with(
-  footer-left: [Introductory Astronomy],
+  footer-left: ([Introductory Astronomy], info("semester")),
   exercise-name: [Task], exercise-icon: "terminal",
   config-info(subject: [Astronomy]),
 )
@@ -692,7 +691,8 @@ with two imports with `*`, the later one wins silently. Import the other package
 == Touying <touying>
 
 The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
-faintly visible under a veil in the color of the page.
+faintly visible under a veil in the color of the page. One exception: an `#icon` in running text covered by a `#pause`
+stays visible; a `#block[..]` around the paragraph veils it too. A `#pause` goes outside a box, not inside it.
 
 #slide-example("pause", pages: (1, 2, 3))
 
@@ -767,7 +767,7 @@ Any other icon comes from a collection in the JSON format of #link("https://icon
 collection to `provide-icons` and writes the icon as `"collection:name"`, in `#icon` or wherever the theme takes the
 name of an icon (an `emph-box`, a callout, the badge of an exercise or example). It is then an icon like those of the
 theme, with the same size, the same place on the line and the color of its surroundings. As in the example,
-`#provide-icons` goes in a slide (or in the body of the cover), never before the cover (@start).
+`#provide-icons` goes in a slide (or in the body of the cover), never before the cover (@first-deck).
 
 #slide-example("icons-iconify", pages: (1, 2), columns: (1fr, 1fr))
 
@@ -806,7 +806,7 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
   [the theme has its own code box, which goes on to the next page by itself (no `breakable:` needed); for codly,
     `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`],
   [`#icon("rocket")` and the other Octicons], [only the icons of the theme; another one comes from its collection:
-    `#provide-icons(json("octicon.json"))` and `#icon("octicon:rocket-16")` (@icons)],
+    `#provide-icons(json("octicon.json"))` in a slide and `#icon("octicon:rocket-16")` (@icons)],
   [`ufac-logo-image(..)`], [`#info("logo", height: 2em)`, with `white: true` on a dark background; outside a deck,
     `image(bytes(ufac-logo))`],
   [another package imported with `*` before the theme, such as theorion], [the theme now exports `caution`, `tip`,

@@ -74,7 +74,7 @@ sh scripts/report.sh                                       # tests/report.pdf: e
 
 Run directly, `tt` needs the name `@preview/touying-ufac-unofficial:<version>` in the tests that include the decks: `scripts/with-preview.sh` gives it, or, for a whole terminal session, `export TYPST_PACKAGE_PATH=$(mktemp -d) && gotpm install -e -n preview`. In VS Code, the tasks of `.vscode/tasks.json` and the Testing view run `tt` through the script.
 
-`scripts/local.sh` runs the suite, compiles the template and the example deck, assembles the package, checks the error messages and checks that the README is in step with the decks. It is the pre-commit hook (`.githooks/pre-commit`): a failure aborts the commit, and `git commit --no-verify` skips it. It uses `fonts/` as the CI does when that folder exists, else the installed fonts, and it checks the working copy, not only what is staged. Git does not version its configuration, so the `git config` line above is needed once in every clone.
+`scripts/local.sh` runs the suite, compiles the template and the example deck, assembles the package and checks that gotpm would publish the same files, compiles the templates of the skills (`skills/`), checks the error messages and checks that the README is in step with the decks; it needs gotpm. It is the pre-commit hook (`.githooks/pre-commit`): a failure aborts the commit, and `git commit --no-verify` skips it. It uses `fonts/` as the CI does when that folder exists, else the installed fonts, and it checks the working copy, not only what is staged. Git does not version its configuration, so the `git config` line above is needed once in every clone.
 
 ## Building
 
