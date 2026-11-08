@@ -42,8 +42,7 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 ```
 
-The theme comes after Touying, as above: `alert` and `cols` are names of both, the later import wins, and the theme's
-are the ones this manual describes (@touying).
+The theme comes after Touying, as above: both export `alert` and `cols`, and the later import wins (@touying).
 
 #slide-example("cover", columns: (1fr, 1fr))
 
@@ -699,8 +698,8 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
 of the theme, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
-Two names are the theme's own, which is why the theme is imported after Touying: Touying's `#alert` stops the
-compilation inside a box with a title, and its `#cols` has no `divider`.
+The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside a box
+with a badge, a `#tag` or the header of a table, and its `#cols` has no `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
 

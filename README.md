@@ -58,7 +58,7 @@ Text.
 ![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/template.png)
 <!-- template:end -->
 
-The theme is imported after Touying, as here: `alert` and `cols` are names of both, and the theme's are the ones that work inside its boxes and take a `divider`.
+Import the theme after Touying, as here: both export `alert` and `cols`, and the later import wins. The theme's `alert` works inside its boxes, and its `cols` takes a `divider`.
 
 `config-info` (Touying's) fills the cover and the footer:
 
