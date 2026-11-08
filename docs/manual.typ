@@ -50,6 +50,11 @@ deck. The repository has complete decks to start from: a lecture, an extension c
 students for a course
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
+Before a version reaches Typst Universe, its development version, the `develop` branch of the
+#link("https://github.com/lucaslrodri/touying-ufac-unofficial")[repository], can be installed as a local package (with
+#link("https://github.com/npikall/gotpm")[gotpm], or copied into the `local` folder of Typst's packages) and imported
+as `@local/touying-ufac-unofficial:0.3.0` instead of `@preview`.
+
 == Dependencies <dependencies>
 
 // every `@preview/name:version` in the sources (the imports of touying and iconify, and the hint that names codly) and

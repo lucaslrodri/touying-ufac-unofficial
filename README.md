@@ -20,7 +20,7 @@ Slides with the look of UFAC for lectures, extension courses, coursework and fin
 typst init @preview/touying-ufac-unofficial:0.3.0
 ```
 
-The command creates a deck from [template/main.typ](template/main.typ): the cover and one slide. In the new folder, `typst watch main.typ` compiles it on every change.
+The command creates a deck from [template/main.typ](template/main.typ): the cover and one slide. In the new folder, `typst watch main.typ` compiles it on every change. Before a version reaches Typst Universe, its development version (the `develop` branch) can be installed as a local package and imported from `@local` instead of `@preview`.
 
 The theme uses the font *New Computer Modern Sans*, which Typst does not bundle: without it, the slides fall back to another font. It belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family: download the archive from CTAN and take the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, or keep them in a folder and compile with `typst watch --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
