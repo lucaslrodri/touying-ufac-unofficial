@@ -692,23 +692,30 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 == Touying <touying>
 
-The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
-faintly visible under a veil in the color of the page, or of the box around it; a covered list, code block or box that
-runs on to the next page is hidden instead, as the veil cannot span two pages, and so is a covered block at the foot of
-a page when the covered content after it goes on to the next. Animations work inside a box too, except
-inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` and a `#tag`: there Touying
-stops with "Unsupported mark … inside some functions like context", so a `#pause` goes before the box, and
-`#uncover`/`#only` around it. A `#pause` between the lines of a `>` box or of quotations does nothing: for a box
-revealed in steps, write `#emph-box[..]` without a title, with the `#pause` in a paragraph of its own.
+The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
+of the theme, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
 
 #slide-example("pause", pages: (1, 2, 3))
 
+The limits, each with its way out:
+
+- Inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, Touying stops
+  with "Unsupported mark … inside some functions like context": a `#pause` goes before such a box, or `#uncover`/`#only`
+  around it.
+- A `#pause` between the lines of a `>` box only holds back what follows the box; between quotations glued line to
+  line, the first step shows them as plain text between quotes. For a box revealed in steps, write `#emph-box[..]`
+  without a title, with the `#pause` in a paragraph of its own; separate the quotations by blank lines, with the
+  `#pause` between them (each one then starts the cycle of colors again).
+- A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
+  two pages, and so is a covered block at the foot of a page when the covered content after it goes on to the next.
+- Touying's `#item-by-item` shows every item from the first step: put a `#pause` between the items.
+
 #caution[
   Keep `#pause` and `#uncover`/`#only` in separate paragraphs: within one paragraph Touying reorders the covered
-  part on the first subslide. A `#pause` right before a `===` subtitle, on a slide that goes on to the next page,
+  part on the first subslide. On a slide that goes on to the next page, a `#pause` right before a `===` subtitle
   leaves blank pages or the warning "document did not converge": put the `#pause` after the `===`, or split the slide
-  with `---`. On such a slide, a `#pause` between `->` lines goes in a paragraph of its own, with blank lines around
-  it: glued to the lines, the document does not converge. Touying's `#item-by-item` does not veil the items with this theme: put a `#pause` between them.
+  with `---`; and a `#pause` between `->` lines goes in a paragraph of its own, with blank lines around it (glued to
+  the lines, the document does not converge).
 ]
 
 #table(
