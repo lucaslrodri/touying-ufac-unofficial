@@ -22,23 +22,42 @@
 
 - second item, veiled in the color of the exercise
 
-== Inside a box and a callout
+== Inside a box
+#emph-box[
+  - in a box
+
+  #pause
+
+  - veiled in the color of the box
+]
+
+== Inside a callout
+#tip[
+  - in a callout
+
+  #pause
+
+  - veiled in the color of the callout
+]
+
+== Inside a column
 #cols[
-  #emph-box[
-    - in a box
-
-    #pause
-
-    - veiled
-  ]
+  The first column, visible.
 ][
-  #tip[
-    - in a callout
+  - in the last column
 
-    #pause
+  #pause
 
-    - veiled
-  ]
+  - veiled
+]
+
+== Centered
+#align(center)[
+  - centered
+
+  #pause
+
+  - veiled
 ]
 
 == Inside a block with a `set` rule
@@ -50,3 +69,38 @@
 
   - second item, veiled
 ]
+
+== Two marks in a row
+- first item
+
+#pause
+
+#pause
+
+- third step only
+
+== Inside an item
+- outer item
+  - inner, first
+
+  #pause
+
+  - inner, veiled
+
+== A box with a label keeps it
+#show <labelled-box>: set text(fill: red)
+#block[
+  - first item, in red
+
+  #pause
+
+  - second item, in red, veiled
+] <labelled-box>
+
+== After a `set` rule of the slide (last: the rule reaches the slides after it)
+#set text(size: .9em)
+- first item
+
+#pause
+
+- second item, veiled

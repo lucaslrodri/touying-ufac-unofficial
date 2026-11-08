@@ -101,8 +101,11 @@
 }
 /// `f` applied to every sequence of a body of a slide: the body itself, and the sequences inside a `styled` (a `set`
 /// or `show` rule of the slide before its content, a `#[ .. ]` with a rule), a `block` (the body of an `emph-box`
-/// without a title), a `grid` and its cells (a callout, the columns of `#cols`) and the body of a list item, at any
-/// depth.
+/// without a title), an `align` or a `pad`, a `grid` and its cells (a callout, the columns of `#cols`) and the body of
+/// a list item, at any depth. An element that `f` leaves as it was is given back as it was, and a rebuilt one keeps its
+/// label (`#show <label>: ..`, `locate(<label>)`).
+///
+/// #test(`_in-sequences([#block[a *b*] <b>].children.first(), x => [z]).at("label", default: none) == <b>`, `_in-sequences(align(center)[a *b*], x => [z]).body == [z]`, `_in-sequences(block[a *b*], x => x) == block[a *b*]`)
 /// -> any
 #let _in-sequences(
   /// A body of the slide, or a part of it. -> any
@@ -113,25 +116,32 @@
   if type(body) != content { return body }
   let func = body.func()
   if func == _seq { return f(body.children.map(c => _in-sequences(c, f)).join()) }
-  if func == _styled { return _styled(_in-sequences(body.child, f), body.styles) }
-  if func in (block, list.item, grid.cell) and body.at("body", default: none) != none {
+  if func == _styled {
+    let inner = _in-sequences(body.child, f)
+    return if inner == body.child { body } else { _styled(inner, body.styles) }
+  }
+  let rebuilt = if func in (block, pad, list.item, grid.cell) and body.at("body", default: none) != none {
     let fields = body.fields()
     let inner = fields.remove("body")
     let _ = fields.remove("label", default: none)
-    return func(..fields, _in-sequences(inner, f))
-  }
-  if func == enum.item {
+    let new = _in-sequences(inner, f)
+    if new != inner { func(..fields, new) }
+  } else if func == align {
+    let new = _in-sequences(body.body, f)
+    if new != body.body { align(body.alignment, new) }
+  } else if func == enum.item {
+    let new = _in-sequences(body.body, f)
     let number = body.at("number", default: auto)
-    return if number == auto or number == none { enum.item(_in-sequences(body.body, f)) }
-      else { enum.item(number, _in-sequences(body.body, f)) }
-  }
-  if func == grid {
+    if new != body.body { if number == auto or number == none { enum.item(new) } else { enum.item(number, new) } }
+  } else if func == grid {
     let fields = body.fields()
     let children = fields.remove("children")
     let _ = fields.remove("label", default: none)
-    return grid(..fields, ..children.map(c => _in-sequences(c, f)))
+    let new = children.map(c => _in-sequences(c, f))
+    if new != children { grid(..fields, ..new) }
   }
-  body
+  if rebuilt == none { return body }
+  if body.has("label") { [#rebuilt#body.label] } else { rebuilt }
 }
 /// A mark of Touying (`#pause`) in a paragraph of its own between two items of a list (`-`, `+` or `/`), with blank
 /// lines around it, glued to them: the paragraph breaks around the mark become spaces. With the breaks, Typst put the
@@ -152,7 +162,7 @@
   if type(body) != content or body.func() != _seq { return body }
   let ch = body.children
   let item(c) = c.func() in (list.item, enum.item, terms.item)
-  // marks in a row (a `#pause` and a `#speaker-note`) count as one: the gap runs through them
+  // marks in a row (two `#pause`, a `#pause` and a `#meanwhile`) count as one: the gap runs through them
   let gap(c) = _is-space(c) or c.func() in (parbreak, metadata)
   let out = ch
   for (i, c) in ch.enumerate() {
