@@ -63,7 +63,7 @@ Text.
 | --- | --- |
 | `"lecture"` (default) | a lecture of a course |
 | `"coursework"` | the work of students for a course |
-| `"tcc"`, `"dissertation"`, `"thesis"` | a final paper |
+| `"tcc"`, `"dissertation"`, `"thesis"` | an undergraduate thesis, a master's dissertation, a doctoral thesis |
 
 ## Choose a cover style
 
