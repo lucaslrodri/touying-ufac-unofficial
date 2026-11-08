@@ -657,8 +657,9 @@
 /// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does
 /// not count.
 ///
-/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#info("date")`) or
-/// a function of `self`, like `footer-left` of the theme. The text of the positions is 0.7 of the size of the slide.
+/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#info("date")`), an
+/// array (its items that show something, separated by a dot) or a function of `self`, like `footer-left` of the theme.
+/// The text of the positions is 0.7 of the size of the slide.
 ///
 /// ```typ
 /// #title-slide()
@@ -675,17 +676,17 @@
   /// Label over the authors ("Instructors"); before them in `"line"`. `auto` is the one of the `kind`, or none.
   /// -> auto | none | content
   author-label: auto,
-  /// What goes at the top left. -> auto | none | content | function
+  /// What goes at the top left. -> auto | none | content | array | function
   header-left: auto,
-  /// What goes at the top center. -> auto | none | content | function
+  /// What goes at the top center. -> auto | none | content | array | function
   header-center: auto,
-  /// What goes at the top right. -> auto | none | content | function
+  /// What goes at the top right. -> auto | none | content | array | function
   header-right: auto,
-  /// What goes at the bottom left. -> auto | none | content | function
+  /// What goes at the bottom left. -> auto | none | content | array | function
   footer-left: auto,
-  /// What goes at the bottom center. -> auto | none | content | function
+  /// What goes at the bottom center. -> auto | none | content | array | function
   footer-center: auto,
-  /// What goes at the bottom right. -> auto | none | content | function
+  /// What goes at the bottom right. -> auto | none | content | array | function
   footer-right: auto,
   /// The white line at the bottom, like the one of the footer of the slides: from edge to edge, passing between what
   /// is at the bottom, at the height of the line of the footer. `auto` is the one of the style. -> auto | bool
@@ -710,7 +711,10 @@
     let slot(name, value) = {
       if value == auto { return preset.at(name, default: none) }
       if value == none { return none }
-      text(size: _slot-size, if type(value) == function { value(self) } else { value })
+      let v = if type(value) == function { value(self) } else { value }
+      // an array: the items that show something, joined by the dot of the footer
+      if type(v) == array { v = context _dot-join(v.filter(x => measure([#x]).width > 0pt)) }
+      text(size: _slot-size, v)
     }
     let header = (left: slot("header-left", header-left), center: slot("header-center", header-center),
       right: slot("header-right", header-right))
@@ -1172,7 +1176,7 @@
   /// The word of the tag of the section slides ("PART N"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
   /// Left text of the footer; a function receives `self`. An array (or a function that returns one) shows its items
-  /// separated by a dot, the empty ones left out; with none left, the rule runs on. `auto` is the `short-title`, the
+  /// separated by a dot, those that show nothing left out; with none left, the footer line runs unbroken. `auto` is the `short-title`, the
   /// `title` and, when the date is a `semester` or a `year`, the date ("AST101 • Astronomy • 2026.2").
   /// -> auto | content | array | function
   footer-left: auto,
@@ -1201,7 +1205,7 @@
   let footer-left = if footer-left != auto { footer-left } else { self => {
     let parts = (self.info.at("short-title", default: none), self.info.title)
     if self.info.at("date-short", default: false) { parts.push(_date(self)) }
-    _dot-join(parts)
+    parts
   } }
   let footer-right = if footer-right != auto { footer-right } else { self => _author-names(self) }
   let configs = _prepare-configs(l.lang, args.pos())

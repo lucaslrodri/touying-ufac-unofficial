@@ -665,10 +665,11 @@
   context layout(size => {
     let last-column-size = measure(box(text(utils.last-slide-number, size: 0.6em), inset: 0.4em)).width
     let logos = _logos(self, white: white, color: mono)
-    // a text of the footer, or what its function returns, may be an array: the items joined by the dot (`_dot-join`)
+    // a text of the footer, or what its function returns, may be an array: the items that show something (an empty
+    // `#info` has no width) joined by the dot (`_dot-join`)
     let shown(it) = {
       let v = if type(it) == function { it(self) } else { it }
-      if type(v) == array { _dot-join(v) } else { [#v] }
+      if type(v) == array { _dot-join(v.filter(x => measure([#x]).width > 0pt)) } else { [#v] }
     }
     let (left, right) = (shown(self.store.footer-left), shown(self.store.footer-right))
     // the room of the two texts: the width less the rules (1em, 1.25em, at least 2em between the texts, 2em, 1em),
