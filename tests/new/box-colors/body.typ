@@ -4,7 +4,7 @@
 == The color of the box: `emph-box`
 #let sample = [
   === Subtitle
-  *Bold*, ==highlight==, `code` and #link("https://www.ufac.br")[a link] #icon("tip")
+  *Bold*, #alert[alert], ==highlight==, `code` and #link("https://www.ufac.br")[a link] #icon("tip")
   - an item
   -> an arrow
 ]
@@ -55,3 +55,12 @@
   table.cell(fill: colors.quaternary-lighter)[*bold* and `code`],
   table.cell(fill: colors.tertiary-lightest)[*bold* and `code`],
 )
+
+== `#alert` inside a badge, a tag and a table header
+#emph-box(color: colors.quaternary, title: [A #alert[badge] title])[A body with #alert[alert].]
+
+#tip(style: "badge")[A badge callout with #alert[alert].]
+
+A tag with an alert: #tag[#alert[alert] tag].
+
+#table(columns: 2, table.header([#alert[Alert] header], [B]), [1], [2])

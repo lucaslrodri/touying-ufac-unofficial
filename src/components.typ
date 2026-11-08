@@ -7,12 +7,12 @@
 #import "icons.typ": _icon-source, _icon-svg
 
 // ---------- emphasis ----------
-/// Bold text in UFAC blue: the same as `#alert` (Touying's method) and as the `~~text~~` shorthand. Inside a pill
-/// (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow, where blue would vanish.
+/// Bold text in UFAC blue, also inside a box (unlike `#alert` and `~~text~~`, which take the color of the box around
+/// them). Inside a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow,
+/// where blue would vanish.
 ///
 /// ```example
-/// A #primary[definition], the same as
-/// ~~this shorthand~~.
+/// A #primary[definition] in blue.
 /// ```
 /// -> content
 #let primary(
@@ -21,8 +21,8 @@
 ) = context text(fill: _emph-color(colors.primary), weight: "bold", body)
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
-/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which goes through the `self` of the slide and
-/// stops the compilation inside a box with a badge, a `#tag` or the header of a table; this one works everywhere.
+/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which stopped the compilation inside a box with a
+/// badge, a `#tag` or the header of a table; this one works everywhere.
 ///
 /// ```example
 /// An #alert[important] word.

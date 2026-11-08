@@ -14,7 +14,7 @@
   [`#alert[..]`], [`~~text~~`], [`~` is Typst's non-breaking space; plain text only inside],
   [`#underline[..]`], [`~text~`], [start/space/opening bracket before, space/punctuation/end after (`Fig.~1 and Tab.~2` stay spaces)],
   [`#highlight[..]`], [`==text==`], [plain text, never at the start of the line],
-  [`#primary` (= `#alert`), `#secondary`, `#tertiary`, `#quaternary`], [(no shorthand)], [colored emphases, named after the color],
+  [`#primary` (blue, also in a box), `#secondary`, `#tertiary`, `#quaternary`], [(no shorthand)], [colored emphases, named after the color],
   [`#exercise-slide(title:, color:)[..]`], [`== Title <exercise>`], [numbered red pill],
   [`#example-slide(title:, color:)[..]`], [`== Title <example>`], [numbered green pill],
   [`#pagebreak()`], [`---` (alone on a line)], [slide continuation, `===` pill repeated],

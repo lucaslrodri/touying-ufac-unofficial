@@ -18,12 +18,11 @@
 // them with `#provide-icons(octicons)` inside a slide and writes them as `"octicon:name-16"`
 #let octicons = json("octicon.json")
 
-// `eval` does not see the file scope, hence the dictionary with everything the snippets use (`alert` is the plain
-// version, the same as `#primary`: Touying's wrapper does not work inside function arguments).
+// `eval` does not see the file scope, hence the dictionary with everything the snippets use.
 #let _demo-scope = (
   emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, cols: cols, colors: colors, icon: icon,
   ufac-logo: ufac-logo,
-  primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: primary,
+  primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: alert,
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,
   utils: utils, components: components, provide-icons: provide-icons, octicons: octicons, tag: tag, callout: callout,

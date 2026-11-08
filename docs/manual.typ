@@ -84,7 +84,8 @@ touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.
 codly is imported by the deck that wants it (@codly).
 
 Before a version reaches Typst Universe, its development version, the `develop` branch of the repository, can be
-installed as a local package and imported as `@local/touying-ufac-unofficial:0.3.0` instead of `@preview`: clone the branch
+installed as a local package and imported as `@local/touying-ufac-unofficial:<version>` (the `version` of its
+`typst.toml`) instead of `@preview`: clone the branch
 (`git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`) and, in the new folder, install it with
 #link("https://github.com/npikall/gotpm")[gotpm] (`gotpm install`); see
 #link("https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm")[Local installation with gotpm] in the contributing guide.
@@ -310,10 +311,10 @@ same function. The shorthands take plain text only (no markup inside), and none 
   table.header([Function], [Shorthand], [Result]),
   [`#strong[text]`], [`*text*`], [black bold],
   [`#emph[text]`], [`_text_`], [black italic],
-  [`#alert[text]`, `#primary[text]`], [`~~text~~`], [blue bold],
+  [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow in a pill],
   [`#highlight[text]`], [`==text==`], [light-yellow background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
-  [`#secondary`, `#tertiary`, `#quaternary`], [], [bold in yellow, red, green],
+  [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box],
   [`#arrows[..]`], [`-> item`], [arrow list],
   [`#emph-box[..]`], [`> text`], [box (@boxes)],
   [`$ #eq-box[$..$] $`], [`> $ .. $`], [equation box (@boxes)],
@@ -830,6 +831,8 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`, which win over the names of the
     package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
     (@integrations)],
+  [`config-methods(alert: ..)`], [`#alert` is now the theme's own, with the same look, and works inside every box;
+    a custom `alert` method reaches only `~~text~~`],
 )
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:
