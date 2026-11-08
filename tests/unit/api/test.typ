@@ -113,8 +113,8 @@
 #assert.eq(_resolve-aliases(config-info(semester: [2026.2])).info, (date: [2026.2], date-short: true))
 #assert(catch(() => _resolve-aliases(config-info(subject: [S], title: [T]))).contains("same field"))
 #assert(catch(() => _prepare-configs("pt", (config-info(flavor: "poster"),))).contains("unknown flavor"))
-#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "course"),))).contains("unknown flavor"))
-#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "talk"),))).contains("unknown flavor"))
+#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "course"),))).contains("the flavor \"course\" was removed"))
+#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "talk"),))).contains("the flavor \"talk\" was removed"))
 #assert.eq(_prepare-configs("en", (config-info(flavor: "tcc"),)).before.first().info.short-title, "Undergraduate Thesis")
 #assert.eq(_prepare-configs("pt", (config-info(flavor: "tcc"),)).after.first().store, (cover-layout: "top"))
 // a deck without a flavor is a lecture: the layout "line" and the prefix of the theme
@@ -122,8 +122,17 @@
 #assert.eq(_prepare-configs("pt", ()).before, ())
 // the name of 0.3.0 before the flavors fails with the new one and the value given, instead of being kept as an
 // unknown field; the flavor given to the theme instead of config-info fails too, instead of being ignored
-#assert(catch(() => ufac-theme(config-info(kind: "tcc"))[x]).contains("kind is now flavor (flavor: \"tcc\")"))
+#assert(catch(() => ufac-theme(config-info(kind: "thesis"))[x]).contains("kind is now flavor (flavor: \"thesis\")"))
 #assert(catch(() => ufac-theme(flavor: "tcc")[x]).contains("config-info(flavor:"))
+// the flavors removed, by either name, give the way to do the same
+#assert(catch(() => ufac-theme(config-info(flavor: "course"))[x]).contains("cover-layout: \"top\", author-label"))
+#assert(catch(() => ufac-theme(config-info(kind: "talk"))[x]).contains("counter-prefix: none"))
+// an option of the cover in the wrong place fails with the right one, instead of being ignored
+#assert(catch(() => ufac-theme(config-info(cover-style: "plain"))[x]).contains("ufac-theme(cover-style:"))
+#assert(catch(() => ufac-theme(config-info(cover-layout: "top"))[x]).contains("title-slide(cover-layout:"))
+#assert(catch(() => ufac-theme(cover-layout: "top")[x]).contains("title-slide(cover-layout:"))
+#assert(catch(() => ufac-theme(author-label: [A])[x]).contains("title-slide(author-label:"))
+#assert(catch(() => ufac-theme(kind: "tcc")[x]).contains("config-info(flavor:"))
 // the flavors that are not part of a course number the exercises without a prefix, before the configs of the deck
 #for flavor in ("coursework", "tcc", "dissertation", "thesis") {
   let prefix = _prepare-configs("en", (config-info(flavor: flavor),)).before.map(c => c.info).filter(i => "counter-prefix" in i)

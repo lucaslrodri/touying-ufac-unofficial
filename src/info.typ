@@ -234,7 +234,19 @@
   let infos = configs.filter(c => type(c) == dictionary and "info" in c).map(c => c.info)
   // the name before the flavors; Touying would keep it as an unknown field, and the deck would be a lecture
   let old = infos.filter(i => "kind" in i).map(i => i.kind)
+  // the flavors removed before 0.3.0 was published, by either name: the way to do the same, not a flavor that is gone
+  let removed = (
+    course: "a lecture with #title-slide(cover-layout: \"top\", author-label: [Instructors])",
+    talk: "a lecture with config-info(counter-prefix: none)",
+  )
+  for f in old + infos.filter(i => "flavor" in i).map(i => i.flavor) {
+    assert(not (type(f) == str and f in removed), message: "config-info: the flavor " + repr(f) + " was removed; use "
+      + removed.at(if type(f) == str { f } else { "" }, default: ""))
+  }
   assert(old.len() == 0, message: "config-info: kind is now flavor (flavor: " + repr(old.at(0, default: none)) + ")")
+  // the options of the cover written in config-info, which Touying would keep as unknown fields
+  assert(infos.all(i => "cover-style" not in i), message: "config-info: cover-style goes in ufac-theme(cover-style: ..)")
+  assert(infos.all(i => "cover-layout" not in i), message: "config-info: cover-layout goes in title-slide(cover-layout: ..)")
   let flavor = infos.filter(i => "flavor" in i).map(i => i.flavor).at(-1, default: "lecture")
   assert(flavor in _flavors, message: "config-info: unknown flavor " + repr(flavor) + "; use "
     + _flavors.keys().map(k => "\"" + k + "\"").join(", "))

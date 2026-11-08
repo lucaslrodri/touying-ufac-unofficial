@@ -1216,7 +1216,11 @@
   let old-style = args.named().at("background", default: none)
   assert("background" not in args.named(), message: "ufac-theme: background is now cover-style (cover-style: "
     + repr(if old-style == "circles" { "bubbles" } else { old-style }) + ")")
-  assert("flavor" not in args.named(), message: "ufac-theme: flavor goes in config-info(flavor: ..)")
+  // what goes elsewhere, which Touying would take as an unknown config and ignore
+  for (key, place) in (("flavor", "config-info(flavor: ..)"), ("kind", "config-info(flavor: ..)"),
+    ("cover-layout", "title-slide(cover-layout: ..)"), ("author-label", "title-slide(author-label: ..)")) {
+    assert(key not in args.named(), message: "ufac-theme: " + key + " goes in " + place)
+  }
   let footer-left = if footer-left != auto { footer-left } else { self => {
     let parts = (self.info.at("short-title", default: none), self.info.title)
     if self.info.at("date-short", default: false) { parts.push(_date(self)) }
