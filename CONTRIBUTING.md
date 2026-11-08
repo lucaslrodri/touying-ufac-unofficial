@@ -102,7 +102,7 @@ Two blocks of the README are generated: `scripts/readme.sh` (VS Code task **read
 
 | Workflow | Trigger | What it does |
 | --- | --- | --- |
-| [tests.yml](.github/workflows/tests.yml) | push to `main`, pull request, manual | the Tytanic suite (Tytanic 0.4.1 = Typst 0.15); the template, the example decks, `docs/readme/gallery.typ` and the tests (but those of codly 2) with the `compiler` version of `typst.toml`, and the error messages |
+| [tests.yml](.github/workflows/tests.yml) | push to `main`, pull request, manual | the Tytanic suite (Tytanic 0.4.1 = Typst 0.15); the template, the example decks, `docs/readme/gallery.typ` and the tests (except those that need codly 2) with the `compiler` version of `typst.toml`, and the error messages |
 | [release.yml](.github/workflows/release.yml) | tag `v*` | the tests, the manual, the package, `gotpm publish` to the fork of `typst/packages`, the GitHub release |
 
 Tytanic is installed by the official [setup-tytanic](https://github.com/typst-community/setup-tytanic) action, Typst by [setup-typst](https://github.com/typst-community/setup-typst) and gotpm by its installer, at a pinned version. A failed test run uploads `ref/`, `out/` and `diff/` as the artifact `tytanic-results`.

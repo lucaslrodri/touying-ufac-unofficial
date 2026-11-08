@@ -246,10 +246,11 @@ the first); a long content goes on by itself.
 #slide-example("heading", pages: (1, 2))
 
 #caution[
-  Touying takes `---` for a page break wherever it is, also in the middle of a sentence, where Typst would write an
-  em dash: `A root --- when it exists --- is unique` goes on three pages. A typed em dash (`—`) breaks the page too
-  when inline markup is next to it, as in `Text — *bold*`. For a dash in a sentence, type `—` away from markup, use an
-  en dash (`--`), or put the paragraph in a `#block[ ]`; a plain `#[ ]` does not protect it.
+  Touying takes `---` for a page break also in the middle of a sentence, where Typst would write an em dash:
+  `A root --- when it exists --- is unique` goes on three pages. A typed em dash (`—`) breaks the page too when inline
+  markup comes right after it (bold, italic, math or code), as in `Text — $x$`, also in an arrow list or a `>` box. For
+  a dash in a sentence, use an en dash (`--`), or put the paragraph in a `#block[ ]`; a plain `#[ ]` does not protect
+  it.
 ]
 
 The `===` subtitle is repeated on the pages that continue the slide, unless the continuation starts with another

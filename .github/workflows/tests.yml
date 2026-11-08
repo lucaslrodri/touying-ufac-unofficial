@@ -64,7 +64,7 @@ jobs:
     # `compiler` in typst.toml promises that the package works from that Typst version on: compile with it the template,
     # the example decks, docs/readme/gallery.typ and the tests (the catalogue, with every body.typ, and the tests with a
     # preamble of their own), but those that need codly 2, which requires Typst 0.15.
-    name: Decks on the minimum Typst version
+    name: Decks and tests on the minimum Typst version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
