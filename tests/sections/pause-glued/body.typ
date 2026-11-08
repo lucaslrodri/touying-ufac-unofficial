@@ -2,18 +2,18 @@
 #import "../../common.typ": *
 
 == A `#pause` between list items
-- first item
+- first item, gjpqy
 #pause
 - second item, veiled whole
 - third item
 
 == A `#pause` between numbered items
-+ first
++ first, gjpqy
 #pause
 + second, veiled whole
 
 == A paragraph, a `#pause`, a list
-Visible paragraph.
+Visible paragraph, gjpqy.
 #pause
 - covered item, veiled whole
 - another

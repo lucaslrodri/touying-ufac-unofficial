@@ -512,7 +512,11 @@
         // `#pause` alone before it) starts where it ends, at the left: the whole veil
         let mid = e.x < s.x - 1pt
         let skip = if mid { 0.7em.to-absolute() } else { 0pt }
-        if h > skip { place(start, dy: -h + skip, rect(width: 100%, height: h - skip, outset: (x: .5em, y: .45em), fill: veil)) }
+        // above the chunk, the room up to the descenders of a visible line right before it (0.55em of leading in a
+        // list): 0.3em reaches the accents of the covered line; 0.45em only for a `===` pill (here already the grid
+        // of the theme's subtitles), which sticks out more
+        let top = if ch.any(c => c.func() in (heading, grid)) { .45em } else { .3em }
+        if h > skip { place(start, dy: -h + skip, rect(width: 100%, height: h - skip, outset: (x: .5em, top: top, bottom: .45em), fill: veil)) }
       }
     }
     metadata(_veil-end)
