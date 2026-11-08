@@ -66,9 +66,9 @@ Letra e espaço:
 Funções (regra 3, explícito é melhor que implícito):
 - FUNCAO_NO_DECK (REVISAR): função num arquivo de slide: #let f(..), let f = (..) =>, let f = g.with(..) ou apelido
   de função (#let a = b). O código vai no slide; função só se grande, no header.typ (ou no common.typ, na aula).
-- FUNCAO_PEQUENA (REVISAR; AVISO no common.typ): função do header.typ, de figures/ ou do common.typ com corpo de
-  menos de --min-caracteres-funcao (50) caracteres sem espaço, g.with(..) curto ou apelido de função. O agente nunca
-  cria uma; ela só existe se o usuário decidir, e sai assim mesmo, para ele ver.
+- FUNCAO_PEQUENA (AVISO): função do header.typ, de figures/ ou do common.typ com corpo de
+  menos de --min-caracteres-funcao (50) caracteres sem espaço, g.with(..) curto ou apelido de função. Só informa: o
+  agente não cria função pequena, e a do usuário fica.
 - FUNCAO_USADA_UMA_VEZ (AVISO): função do header.typ ou de figures/ usada no máximo uma vez nos arquivos lidos.
 - ARGUMENTOS_ESPALHADOS (REVISAR): dicionário de argumentos (ou um apelido dele) espalhado com ..nome.
 
@@ -983,8 +983,8 @@ def verificar_funcoes(fontes, ach, min_caracteres, modo):
         if d.fonte.papel == "slide" or not d.topo:
             continue
         no_common = d.fonte.papel == "common"
-        grav = "AVISO" if no_common else "REVISAR"
-        extra = " No common.typ: proponha ao professor." if no_common else ""
+        grav = "AVISO"
+        extra = " No common.typ: é da disciplina, fica." if no_common else ""
         if d.tipo == "apelido":
             msg = f"Apelido de função ({d.nome} = {d.alvo}): use {d.alvo} direto."
         elif d.tipo == "with":
@@ -995,8 +995,8 @@ def verificar_funcoes(fontes, ach, min_caracteres, modo):
             if d.tamanho >= min_caracteres:
                 continue
             msg = (f"Função {d.nome} com {d.tamanho} caracteres no corpo (menos de {min_caracteres}): função curta "
-                   "esconde o que o slide faz. Escreva o código onde é usado; uma função pequena só fica se o usuário "
-                   "decidiu, e o agente nunca a cria.")
+                   "esconde o que o slide faz. Se foi o agente quem a criou, escreva o código onde é usado; se é do "
+                   "usuário, fica.")
         ach.add(grav, "FUNCAO_PEQUENA", d.fonte.onde(d.ln, True), msg + extra, d.fonte.trecho(d.ln))
 
     # FUNCAO_USADA_UMA_VEZ: função do header ou de figura usada no máximo uma vez

@@ -305,7 +305,9 @@ Subagente (general-purpose):
         (ou #exercise-slide), enunciado, --- e #answer; == Título <example>
         com #solution, na mesma página se couber, senão depois de ---;
         #solution ou #answer fora de item; pergunta solta; questão de marcar.
-    T6. Código explícito (regra 3): o código fica onde é usado. São achados:
+    T6. Código explícito (regra 3): o código fica onde é usado. São achados,
+        só nas funções que o agente criou neste trabalho (as do usuário,
+        que já existiam, ficam):
         função definida no arquivo do deck (no slide), mesmo grande; função
         pequena, ou que muda pouco o que se escreveria no slide, também no
         header.typ e em figures/; apelido de função (#let a = b); dicionário
@@ -419,7 +421,8 @@ Subagente (general-purpose):
     nunca letra, inset ou margem menores, nem scale; pergunta vira
     <exercise> com --- e #answer; questão de marcar vira discursiva; caso
     resolvido vira <example>; circuito vai para o zap; função pequena,
-    apelido ou ..mini sai, e o código vai escrito no slide; função grande
+    apelido ou ..mini que o agente criou sai (as funções do usuário
+    ficam), e o código vai escrito no slide; função grande
     vai para o header.typ do deck; figura escrita no slide vai para um
     arquivo em figures/<tipo>/, incluído no slide; arquivo fora do lugar vai
     para a pasta dele, com os caminhos ajustados; "Fonte:" e referência saem

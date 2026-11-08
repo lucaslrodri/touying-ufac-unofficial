@@ -304,7 +304,9 @@ Subagente (general-purpose):
         confira no PNG os números e rótulos dela. Não contam: rodapé, número
         da página, etiqueta da capa, "PARTE N", legenda de figura (0.6em,
         do tema), índices e limites de fórmulas.
-    T5. Código explícito (regra 3): o código fica onde é usado. São achados:
+    T5. Código explícito (regra 3): o código fica onde é usado. São achados,
+        só nas funções que o agente criou neste trabalho (as do usuário,
+        que já existiam, ficam):
         função definida no deck.typ (no slide), mesmo grande; função
         pequena, ou que muda pouco o que se escreveria no slide, também no
         header.typ e em figures/; apelido de função (#let a = b); dicionário
@@ -417,7 +419,8 @@ Subagente (general-purpose):
     dois ou mais slides (--- ou um == novo) ou vai para a reserva, nunca
     letra, inset ou margem menores, nem scale; gráfico colado vira lilaq com
     os dados, num arquivo em figures/graphs/; circuito vai para o zap;
-    função pequena, apelido ou ..mini sai, e o código vai escrito no slide;
+    função pequena, apelido ou ..mini que o agente criou sai (as funções do usuário
+    ficam), e o código vai escrito no slide;
     função grande vai para o header.typ; figura escrita no slide vai para um
     arquivo em figures/<tipo>/, incluído no slide; arquivo fora do lugar vai
     para a pasta dele, com os caminhos ajustados; citação e "Fonte:" saem do

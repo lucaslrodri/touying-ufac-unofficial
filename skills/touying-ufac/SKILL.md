@@ -30,9 +30,10 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `kind` do `config-info
 
    Referências, tabelas e rótulos de gráfico também ficam no tamanho do corpo. A legenda de figura é do tema (0.6em) e não se mexe. Se uma função do `common.typ` da disciplina reduz a letra, passe o tamanho no uso ou proponha ao professor ajustá-la.
 3. **Explícito é melhor que implícito.**
-   - O código fica onde é usado: os componentes do tema como estão, e uma mudança pequena escrita no próprio slide, mesmo que se repita.
-   - O agente nunca cria função pequena (até umas três linhas, cerca de 50 caracteres) nem função que muda pouco o que se escreveria no slide: ela só existe se o usuário decidir, e o verificador a aponta mesmo assim. Também nada de apelido de função (`#let a = b`) nem de dicionário de argumentos espalhado com `..mini`.
-   - Função só quando o código é grande e o tema não tem o recurso (o estilo de um gráfico, de um diagrama, de um circuito). Ela vai para o `header.typ` do deck; na aula, se vários decks da disciplina a usam, para o `common.typ` dela.
+   - O código fica onde é usado: os componentes do tema como estão, e uma mudança pequena escrita no próprio slide, mesmo que se repita. Assim o deck guarda a identidade visual do tema.
+   - O agente não cria função para tudo: nunca uma função pequena (até umas três linhas, cerca de 50 caracteres), nem uma que muda pouco o que se escreveria no slide, nem apelido de função (`#let a = b`), nem dicionário de argumentos espalhado com `..mini`.
+   - Função nova do agente só quando o código é grande e o tema não tem o recurso (o estilo de um gráfico, de um diagrama, de um circuito). Ela vai para o `header.typ` do deck; na aula, se vários decks da disciplina a usam, para o `common.typ` dela.
+   - O usuário cria as funções que quiser, e as dele ficam: o agente não as remove nem as reescreve sem pedido. O verificador aponta toda função pequena, só para informar.
 4. **Figuras:**
    - gráficos com lilaq, lendo os dados de `data/`;
    - circuitos com o pacote `zap`, nunca com CeTZ à mão nem como imagem;
