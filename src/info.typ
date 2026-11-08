@@ -1,5 +1,5 @@
 // touying-ufac-unofficial — the information of the deck: the fields of Touying's `config-info` that the theme reads, their
-// aliases in the words of a course (`subject`, `semester`, …), the kinds of presentation (`kind`) and `#info`,
+// aliases in the words of a course (`subject`, `semester`, …), the flavors of presentation (`flavor`) and `#info`,
 // which shows any of them anywhere in a slide.
 #import "@preview/touying:0.7.4": utils, config-info, config-store
 #import "utils.typ": _words, _children, _is-space, _given, _list, _logos
@@ -168,27 +168,23 @@
   config
 }
 
-/// The kinds of presentation (`config-info(kind:)`) and what each one recommends: the style of the cover, the label of
-/// the authors, the tag of the cover (the `short-title`), these two by their key in `lang.toml`, and, for the kinds
-/// without units, numbers of exercises and examples without a prefix (`counter-prefix: none`, "Exercise 1"): the
-/// prefix stands for the unit of a course. The deck can always change any of them.
+/// The flavors of presentation (`config-info(flavor:)`) and what each one recommends: the layout of the cover, the tag
+/// of the cover (the `short-title`, by its key in `lang.toml`) and, for the flavors without units, numbers of exercises
+/// and examples without a prefix (`counter-prefix: none`, "Exercise 1"): the prefix stands for the unit of a course.
+/// A deck without a `flavor` is a `"lecture"`. The deck can always change any of them.
 ///
-/// #test(`_kinds.lecture.style == "line"`, `_kinds.tcc.short-title == "tcc"`, `"counter-prefix" not in _kinds.course`,
-///   `_kinds.coursework.counter-prefix == none`)
+/// #test(`_flavors.lecture.layout == "line"`, `_flavors.tcc.short-title == "tcc"`,
+///   `"counter-prefix" not in _flavors.lecture`, `_flavors.coursework.counter-prefix == none`)
 /// -> dictionary
-#let _kinds = (
+#let _flavors = (
   // a lecture of a course: one teacher and the date on one line; the tag is the code of the course
-  lecture: (style: "line"),
-  // an extension course or a short course: several instructors at the top, the title in the center
-  course: (style: "top", author-label: "instructors"),
+  lecture: (layout: "line"),
   // a paper for a course: the students and the teacher in groups, at the bottom; no unit, so no prefix
-  coursework: (style: "stack", counter-prefix: none),
-  // a talk or a seminar: as a lecture, without the prefix of a unit
-  talk: (style: "line", counter-prefix: none),
+  coursework: (layout: "stack", counter-prefix: none),
   // final papers: the student, the advisor and the co-advisor at the top; the tag says what the work is
-  tcc: (style: "top", short-title: "tcc", counter-prefix: none),
-  dissertation: (style: "top", short-title: "dissertation", counter-prefix: none),
-  thesis: (style: "top", short-title: "thesis", counter-prefix: none),
+  tcc: (layout: "top", short-title: "tcc", counter-prefix: none),
+  dissertation: (layout: "top", short-title: "dissertation", counter-prefix: none),
+  thesis: (layout: "top", short-title: "thesis", counter-prefix: none),
 )
 
 /// An author written as free content (lines broken with `\`, a line only in emphasis is a label, `_Advisor_`) is kept
@@ -222,11 +218,11 @@
   config
 }
 
-/// The configs of a deck ready for Touying: the aliases replaced, the authors fixed and, for a `kind`, its
-/// recommendations. The priority, from the highest: what the deck writes (the arguments of `title-slide` and the
-/// fields of `config-info`, by Touying's name or by an alias), then the `kind`, then the theme. The tag and the prefix
-/// of the kind go in a `config-info` before those of the deck, which replace them; the style and the label go in the
-/// store, where `title-slide` reads them only for `auto`.
+/// The configs of a deck ready for Touying: the aliases replaced, the authors fixed and the recommendations of the
+/// `flavor` (`"lecture"` when the deck gives none). The priority, from the highest: what the deck writes (the arguments
+/// of `title-slide` and the fields of `config-info`, by Touying's name or by an alias), then the `flavor`, then the
+/// theme. The tag and the prefix of the flavor go in a `config-info` before those of the deck, which replace them; the
+/// layout goes in the store, where `title-slide` reads it only for `auto`.
 /// -> dictionary
 #let _prepare-configs(
   /// Language code of the deck. -> str
@@ -235,19 +231,18 @@
   configs,
 ) = {
   let configs = configs.map(_resolve-aliases).map(_fix-author)
-  let kinds = configs.filter(c => type(c) == dictionary and "kind" in c.at("info", default: (:))).map(c => c.info.kind)
-  let kind = kinds.at(-1, default: none)
-  assert(kind == none or kind in _kinds, message: "config-info: unknown kind " + repr(kind) + "; use "
-    + _kinds.keys().map(k => "\"" + k + "\"").join(", "))
-  let (before, after) = ((), ())
-  if kind != none {
-    let k = _kinds.at(kind)
-    let w = _words(lang)
-    if "short-title" in k { before.push(config-info(short-title: w.at(k.short-title))) }
-    if "counter-prefix" in k { before.push(config-info(counter-prefix: k.counter-prefix)) }
-    after.push(config-store(cover-style: k.style, ..if "author-label" in k { (author-label: w.at(k.author-label)) }))
-  }
-  (before: before, configs: configs, after: after)
+  let infos = configs.filter(c => type(c) == dictionary and "info" in c).map(c => c.info)
+  // the name before the flavors; Touying would keep it as an unknown field, and the deck would be a lecture
+  assert(infos.all(i => "kind" not in i), message: "config-info: kind is now flavor (flavor: \"tcc\")")
+  let flavor = infos.filter(i => "flavor" in i).map(i => i.flavor).at(-1, default: "lecture")
+  assert(flavor in _flavors, message: "config-info: unknown flavor " + repr(flavor) + "; use "
+    + _flavors.keys().map(k => "\"" + k + "\"").join(", "))
+  let f = _flavors.at(flavor)
+  let w = _words(lang)
+  let before = ()
+  if "short-title" in f { before.push(config-info(short-title: w.at(f.short-title))) }
+  if "counter-prefix" in f { before.push(config-info(counter-prefix: f.counter-prefix)) }
+  (before: before, configs: configs, after: (config-store(cover-layout: f.layout),))
 }
 
 // ---------- #info ----------

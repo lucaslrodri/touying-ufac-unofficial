@@ -55,7 +55,7 @@ The copy holds what goes to Typst Universe: the `exclude` of `typst.toml` and wh
 | [`src/`](src/) | the theme; `src/lib.typ` is the entrypoint |
 | [`assets/`](assets/) | the UFAC logo, the icons the theme ships and the syntax theme of the code blocks |
 | [`template/`](template/) | the starting deck of `typst init` |
-| [`example/`](example/) | the example deck of the README and one deck for each kind of work |
+| [`example/`](example/) | one deck for each flavor (`lecture`, `coursework`, `tcc`), shown in the README with its code, and `main.typ`, every element in a short deck |
 | [`docs/`](docs/) | the manual (`manual.typ`, `template.typ`, `build.sh`, the decks of its examples in `examples/`), the PDFs of the example decks (`decks/`) and the pictures of the README (`readme/`) |
 | [`tests/`](tests/) | the Tytanic suite ([tests/README.md](tests/README.md)) |
 | [`scripts/`](scripts/) | the scripts for linking, building and checking |
@@ -83,7 +83,7 @@ Run directly, `tt` needs the name `@preview/touying-ufac-unofficial:<version>` i
 | Script | What it builds |
 | ------ | -------------- |
 | `sh docs/build.sh` | the pictures of the examples of the manual and `docs/manual.pdf` |
-| `sh scripts/readme.sh` | the sections *Basic usage* and *Example* of the README, `docs/readme/*.png` and `thumbnail.png`, from the decks |
+| `sh scripts/readme.sh` | the generated blocks of the README (the template and the code of the example decks), `docs/readme/*.png` and `thumbnail.png`, from the decks |
 | `sh scripts/examples.sh` | `docs/decks/*.pdf`: the PDF of every example deck (`example/*.typ`), linked from the README |
 | `sh scripts/icons.sh` | `assets/icons/*.json`: the icons the theme ships, from the Iconify API (only when the list changes) |
 | `sh scripts/package.sh` | the files published on Typst Universe, in `dist/preview/touying-ufac-unofficial/<version>/` |
@@ -92,7 +92,9 @@ The manual, the PDFs of the example decks, the pictures of the README and `thumb
 
 ### README
 
-The sections *Basic usage* and *Example* of the README are generated: `scripts/readme.sh` (VS Code task **readme: update from the decks**) copies `template/main.typ` and `example/main.typ` between the `<!-- template:begin -->`/`<!-- example:begin -->` markers and renders each deck into one picture, `docs/readme/<deck>.png` (the layout is `docs/readme/sheet.typ`); it also renders `thumbnail.png`, the cover of the template, which Typst Universe wants as the template is initialized. Edit the decks, never those blocks; `scripts/local.sh` refuses a commit whose README does not match the decks (`sh scripts/readme.sh --check`) and warns when a picture is out of date.
+The README is a page to take in at a glance: short sentences, pictures and tables, no longer than the README of 0.2.0. It says what the theme is, how to start, what a deck can choose and where the details are; the full syntax, the options, the integrations, the limits and the migration go in the manual, and the changes in [CHANGELOG.md](CHANGELOG.md).
+
+Two blocks of the README are generated: `scripts/readme.sh` (VS Code task **readme: update from the decks**) copies `template/main.typ` between the `<!-- template:begin -->` markers, with a picture of its pages, and the decks of the flavors (`example/lecture.typ`, `coursework.typ`, `tcc.typ`), each in a closed `<details>`, between the `<!-- examples:begin -->` markers. It also renders the other pictures of the README, from pages of the template and of the example decks taken by their number (the list is in the script, which stops when a deck has another number of pages), into `docs/readme/<picture>.png` (the layout is `docs/readme/sheet.typ`), and `thumbnail.png`, the cover of the template, which Typst Universe wants as the template is initialized. Edit the decks, never those blocks; `scripts/local.sh` refuses a commit whose README does not match the decks (`sh scripts/readme.sh --check`) and warns when a picture is out of date.
 
 `docs/` and `example/` are not published, so the README reaches the pictures, the manual and the example decks by their GitHub URL, never by a relative path, which would be broken on Typst Universe. The URL is the one of the tag `v<version>` (built from `repository` and `version` of `typst.toml`), as `typst/packages` recommends: the README of a version keeps the manual and the pictures of that version. On GitHub they therefore show only once the tag is pushed. `scripts/package.sh` refuses a README with a link into the repository that is not at the tag of the version.
 
@@ -122,7 +124,7 @@ act push -W .github/workflows/release.yml -e .github/act/release.json    # dry r
 All of the publishing goes through gotpm: `gotpm bump` changes the version, and `gotpm publish` takes the package to Typst Universe. For a new version:
 
 1. `gotpm bump patch` (or `minor`, `major`, or the version, as `gotpm bump 0.4.0`) changes the version of `typst.toml`, and only it;
-2. rename the section `### Unreleased` of the changelog in the README, where each change a deck can see goes while it is developed, to `### <version>`, and change the version in the imports (`@preview/touying-ufac-unofficial:<version>`) of the template, the example decks, the manual and the README, and in the links of the README (`blob/v<version>/`, `raw.githubusercontent.com/…/v<version>/`): `git grep -n "touying-ufac-unofficial:<previous version>\|v<previous version>"` shows the places;
+2. rename the section `## Unreleased` of [CHANGELOG.md](CHANGELOG.md), where each change a deck can see goes while it is developed, to `## <version>`, and change the version in the imports (`@preview/touying-ufac-unofficial:<version>`) of the template, the example decks, the manual and the README, and in the links of the README (`blob/v<version>/`, `raw.githubusercontent.com/…/v<version>/`): `git grep -n "touying-ufac-unofficial:<previous version>\|v<previous version>"` shows the places;
 3. run `gotpm install -e` (the `@local` of the new version), `sh docs/build.sh`, `sh scripts/examples.sh` and `sh scripts/readme.sh`;
 4. commit, then create and push the tag: `git tag v<version> && git push origin main v<version>`. The tag makes the links and the pictures of the README work and starts [`release.yml`](.github/workflows/release.yml), which runs the tests, publishes through `gotpm publish` (below) and creates the GitHub release, with the zip of the package and the manual;
 5. open the pull request `touying-ufac-unofficial:<version>` in typst/packages from the link in the summary of the workflow, with the checklist of its template filled in (`gotpm publish` suggests another title, `release: touying-ufac-unofficial <version>`; typst/packages asks for `touying-ufac-unofficial:<version>`). After the merge, the version is on [Typst Universe](https://typst.app/universe/) within minutes. Published versions are immutable: a fix is a new version.

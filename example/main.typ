@@ -1,4 +1,4 @@
-// Example deck of the touying-ufac-unofficial theme: the elements of the syntax at a glance (details: package README).
+// Example deck of the touying-ufac-unofficial theme: the elements of the syntax at a glance (details: the manual).
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 

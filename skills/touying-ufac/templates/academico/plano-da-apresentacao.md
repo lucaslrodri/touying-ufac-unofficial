@@ -3,7 +3,7 @@
 <!--
 Modelo da skill touying-ufac (modo acadêmico). Salve ao lado do deck (<apresentacao>/plano-da-apresentacao.md) e mostre ao autor antes dos slides. Troque cada <campo> pelo valor e apague os comentários e as linhas "ex.:" (do TCC fictício de templates/academico/deck.typ).
 
-- Tudo vem das fontes: o texto do trabalho, os dados, o .bib, as regras do programa ou do evento e, se houver, o parecer da qualificação. O que não está nelas vira pergunta ao autor.
+- Tudo vem das fontes: o texto do trabalho, os dados, o .bib, as regras do programa e, se houver, o parecer da qualificação. O que não está nelas vira pergunta ao autor.
 - Todo número que vai a um slide foi conferido com o texto (página ou tabela) antes de entrar aqui.
 - Os slides não citam: toda obra de que vem um dado, uma equação, uma frase ou uma figura refeita vai para a tabela "Referências do slide final".
 -->
@@ -12,17 +12,17 @@ Modelo da skill touying-ufac (modo acadêmico). Salve ao lado do deck (<apresent
 
 | Campo | Valor |
 |---|---|
-| Trabalho | <TCC, dissertação, tese, qualificação, trabalho de disciplina, comunicação em congresso> (`kind: "<tipo>"`) |
+| Trabalho | <TCC, dissertação, tese, qualificação, trabalho de disciplina> (`flavor: "<tipo>"`) |
 | Título | <o título, igual ao da capa do texto> |
 | Autor e orientação | <quem apresenta; orientador e coorientador> |
-| Curso, programa ou evento | <nome> |
-| Banca ou público | <membros da banca, ou o público do evento> |
+| Curso ou programa | <nome> |
+| Banca | <membros da banca, ou o professor da disciplina> |
 | Data e tempo | <data>; <N> minutos de fala, pelo <regimento, edital, professor> |
 | Texto do trabalho | <caminho do .typ, .tex, .pdf ou .docx; versão ou data> |
 | Dados e bibliografia do trabalho | <caminho dos CSV e do .bib> |
 | Deck | `<apresentacao>/deck.typ`; compilar da pasta do deck: `typst compile deck.typ` |
 
-<!-- ex.: TCC (`kind: "tcc"`) · Estimação do estado de carga de baterias de lítio · 20 min, pelo regulamento do TCC -->
+<!-- ex.: TCC (`flavor: "tcc"`) · Estimação do estado de carga de baterias de lítio · 20 min, pelo regulamento do TCC -->
 
 ## Mensagem central
 

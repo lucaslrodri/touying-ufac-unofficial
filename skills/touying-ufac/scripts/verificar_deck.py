@@ -8,9 +8,9 @@ biblioteca padrão; chama pdftotext, pdfinfo e typst.
 
 Uso: python3 verificar_deck.py --modo {aula,academico} <pasta-do-deck> <deck.pdf> [--minutos N] [--json]
 
---modo é obrigatório, e o script nunca adivinha o modo (só avisa se ele não bate com o kind do config-info):
-  aula       um deck de aula (kind "lecture"). A raiz da compilação é a pasta da disciplina, acima da do deck.
-  academico  a apresentação de um trabalho (kind "tcc", "dissertation", "thesis", "coursework" ou "talk"); aceita
+--modo é obrigatório, e o script nunca adivinha o modo (só avisa se ele não bate com o flavor do config-info):
+  aula       um deck de aula (flavor "lecture", o padrão). A raiz da compilação é a pasta da disciplina, acima da do deck.
+  academico  a apresentação de um trabalho (flavor "tcc", "dissertation", "thesis" ou "coursework"); aceita
              também "acadêmico". A raiz da compilação é a própria pasta do deck. Só neste modo vale --minutos N,
              que confere o número de slides de conteúdo com o tempo.
 --min-caracteres-funcao N (padrão: 50, umas três linhas): o corpo mínimo, em caracteres sem espaço, de uma função do header.typ, de
@@ -44,8 +44,8 @@ existir). Os locais dos achados são relativos à pasta do deck: slide-01.typ:40
 Verificações: CÓDIGO (gravidade) e o que dispara.
 
 Modo e pastas:
-- MODO_E_KIND (AVISO): o --modo não bate com o kind do config-info ("lecture" é aula; "tcc", "dissertation",
-  "thesis", "coursework" e "talk" são acadêmico).
+- MODO_E_FLAVOR (AVISO): o --modo não bate com o flavor do config-info ("lecture" é aula; "tcc", "dissertation",
+  "thesis" e "coursework" são acadêmico).
 - NOME_DO_COMMON (AVISO) [aula]: a pasta da disciplina tem comum.typ e não common.typ: renomeie.
 - COMMON_NO_ACADEMICO (REVISAR) [acadêmico]: há common.typ ou comum.typ na pasta do deck, ou um .typ importa um
   deles. No acadêmico não há common.typ: as funções grandes vão para o header.typ.
@@ -189,8 +189,8 @@ class Incompleta(Exception):
 
 MODOS = {"aula": "aula", "academico": "academico", "acadêmico": "academico"}
 NOME_DO_MODO = {"aula": "aula", "academico": "acadêmico"}
-KINDS = {"lecture": "aula", "tcc": "academico", "dissertation": "academico", "thesis": "academico",
-         "coursework": "academico", "talk": "academico"}
+FLAVORS = {"lecture": "aula", "tcc": "academico", "dissertation": "academico", "thesis": "academico",
+           "coursework": "academico"}
 TIPOS_DE_FIGURA = ("graphs", "diagrams", "drawings", "circuits")
 NOMES_DO_COMMON = ("common.typ", "comum.typ")
 EXTENSOES_RASTER = (".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".tif", ".tiff")
@@ -1174,20 +1174,20 @@ def verificar_exercicios(fonte, slides, ach):
                         "No exercício, a resposta vem depois de ---.", fonte.trecho(ln))
 
 
-RE_KIND = re.compile(r'(?<![\w-])kind\s*:\s*"([\w-]+)"')
+RE_FLAVOR = re.compile(r'(?<![\w-])flavor\s*:\s*"([\w-]+)"')
 
 
-def verificar_modo_e_kind(slides_f, modo, ach):
+def verificar_modo_e_flavor(slides_f, modo, ach):
     for f in slides_f:
-        m = RE_KIND.search(f.texto)
+        m = RE_FLAVOR.search(f.texto)
         if not m:
             continue
-        do_kind = KINDS.get(m.group(1))
-        if do_kind and do_kind != modo:
+        do_flavor = FLAVORS.get(m.group(1))
+        if do_flavor and do_flavor != modo:
             ln = f.linha(m.start())
-            ach.add("AVISO", "MODO_E_KIND", f.onde(ln, True),
-                    f'kind: "{m.group(1)}" é do modo {NOME_DO_MODO[do_kind]}, e a verificação rodou com --modo '
-                    f"{modo}. Confira o modo (as regras de cada um são outras) ou o kind do config-info.",
+            ach.add("AVISO", "MODO_E_FLAVOR", f.onde(ln, True),
+                    f'flavor: "{m.group(1)}" é do modo {NOME_DO_MODO[do_flavor]}, e a verificação rodou com --modo '
+                    f"{modo}. Confira o modo (as regras de cada um são outras) ou o flavor do config-info.",
                     f.trecho(ln))
         return
 
@@ -1862,8 +1862,8 @@ def main():
     ap.add_argument("pdf", help="o PDF compilado do deck")
     ap.add_argument("-h", "--help", action="help", help="mostra esta ajuda e sai")
     ap.add_argument("--modo", choices=tuple(MODOS), metavar="{aula,academico}",
-                    help="obrigatório: aula (kind \"lecture\") ou academico, também acadêmico (kind \"tcc\", "
-                    "\"dissertation\", \"thesis\", \"coursework\" ou \"talk\"); o script nunca adivinha o modo")
+                    help="obrigatório: aula (flavor \"lecture\") ou academico, também acadêmico (flavor \"tcc\", "
+                    "\"dissertation\", \"thesis\" ou \"coursework\"); o script nunca adivinha o modo")
     ap.add_argument("--json", action="store_true", help="saída em JSON (achados, resumo e palavras por página)")
     ap.add_argument("--root", metavar="PASTA",
                     help="raiz do typst compile (padrão: na aula, a pasta acima da do deck, a da disciplina; no "
@@ -1891,8 +1891,8 @@ def main():
     ap.add_argument("--paginas", action="store_true", help="imprime também as palavras de texto de cada página")
     args = ap.parse_args()
     if args.modo is None:
-        ap.error("falta --modo aula ou --modo academico. O script não adivinha o modo: veja o kind do config-info "
-                 '("lecture" é aula; "tcc", "dissertation", "thesis", "coursework" e "talk" são acadêmico).')
+        ap.error("falta --modo aula ou --modo academico. O script não adivinha o modo: veja o flavor do config-info "
+                 '("lecture" é aula; "tcc", "dissertation", "thesis" e "coursework" são acadêmico).')
     args.modo = MODOS[args.modo]
     if args.modo == "aula" and args.minutos is not None:
         ap.error("--minutos só vale com --modo academico: a aula não tem tempo de apresentação para conferir.")
@@ -1917,7 +1917,7 @@ def main():
         raiz = os.path.abspath(args.root) if args.root else (os.path.dirname(pasta) if modo == "aula" else pasta)
         rotulos = rotulos_do_deck(fontes)
 
-        verificar_modo_e_kind(slides_f, modo, ach)
+        verificar_modo_e_flavor(slides_f, modo, ach)
         for f in fontes:
             slides = slides_da_fonte(f) if f.papel == "slide" else []
             verificar_letra(f, ach, args.corpo)

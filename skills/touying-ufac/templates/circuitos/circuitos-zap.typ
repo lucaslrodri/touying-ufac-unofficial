@@ -26,7 +26,6 @@
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    kind: "talk",
     title: [Circuitos com o zap],
     subtitle: [Estilo de circuito para o tema],
     author: [touying-ufac],

@@ -4,7 +4,7 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    kind: "coursework",
+    flavor: "coursework",
     subject: [Introduction to Economics],
     subject-code: [ECO101],
     unit-title: [The price of a cup of

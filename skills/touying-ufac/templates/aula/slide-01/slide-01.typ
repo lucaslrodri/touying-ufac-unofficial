@@ -13,7 +13,7 @@
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    kind: "lecture",
+    flavor: "lecture",
     subject: [Sinais e Sistemas],
     subject-code: [CCET488],
     unit: [Unidade I],

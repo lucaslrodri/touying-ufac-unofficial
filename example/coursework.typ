@@ -1,4 +1,4 @@
-// Example deck of the touying-ufac-unofficial theme: a paper for a course (`kind: "coursework"`), with the students and
+// Example deck of the touying-ufac-unofficial theme: a paper for a course (`flavor: "coursework"`), with the students and
 // the teacher in groups on the cover (the style "stack") and `#info` inside the slides.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
@@ -6,7 +6,7 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    kind: "coursework",
+    flavor: "coursework",
     subject: [Applied Statistics],
     subject-code: [STA210],
     unit-title: [How long does it take to get to class?],

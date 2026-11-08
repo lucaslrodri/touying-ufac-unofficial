@@ -53,8 +53,8 @@ Nos resultados e na discussão, o título é uma frase curta com o achado, e o c
 ## 4. O tempo
 
 - **Cerca de um slide de conteúdo por minuto** (regra Acadêmico 4). Slide de conteúdo é cada `==` e cada página de `---` entre a capa e o encerramento, menos Roteiro, Agradecimentos, Referências e Créditos das imagens; a página de cada Parte e a reserva não contam. O verificador conta com `--minutos N`.
-- **O tempo vem da regra:** o regimento do programa, o edital do evento ou o professor da disciplina. Se as fontes não dizem, pergunte; não suponha.
-- **Referência comum**, só para o plano antes de saber o tempo dado: comunicação em congresso, de 10 a 15 min; TCC e trabalho de disciplina, de 15 a 20 min; mestrado, de 30 a 40 min; doutorado, de 40 a 50 min.
+- **O tempo vem da regra:** o regimento do programa ou o professor da disciplina. Se as fontes não dizem, pergunte; não suponha.
+- **Referência comum**, só para o plano antes de saber o tempo dado: TCC e trabalho de disciplina, de 15 a 20 min; mestrado, de 30 a 40 min; doutorado, de 40 a 50 min.
 - **Passou do tempo:** o slide sai para a reserva, ou dois slides viram um sem juntar ideias. Nunca letra menor, nunca "falo mais rápido".
 - **`#pause`:** cada pausa é uma página a mais e custa tempo de fala; numa defesa, use pouco.
 

@@ -4,16 +4,16 @@ version = "0.3.0"
 entrypoint = "src/lib.typ"
 authors = ["Lucas Lima Rodrigues <https://github.com/lucaslrodri>"]
 license = "MIT AND MIT-0"
-description = "Slides for the Federal University of Acre (UFAC): lectures, courses, coursework and theses."
+description = "Slides for the Federal University of Acre (UFAC): lectures, coursework and theses."
 repository = "https://github.com/lucaslrodri/touying-ufac-unofficial"
 keywords = ["touying", "slide", "theme", "ufac", "universidade federal do acre", "university", "lecture", "acre"]
 categories = ["presentation"]
 compiler = "0.14.0"
 # Not part of the package on Typst Universe: the example decks, the tests, the manual and its sources, the scripts, the
-# skill for AI agents, the development guide and the configuration of git, the CI, act and VS Code. gotpm (install,
+# skill for AI agents, the development guide, the changelog and the configuration of git, the CI, act and VS Code. gotpm (install,
 # publish) leaves out these and what .gitignore ignores; scripts/package.sh assembles the same files.
-exclude = [".actrc", ".gitattributes", ".githooks", ".github", ".vscode", "CONTRIBUTING.md", "docs", "example", "scripts",
-  "skills", "tests"]
+exclude = [".actrc", ".gitattributes", ".githooks", ".github", ".vscode", "CHANGELOG.md", "CONTRIBUTING.md", "docs", "example",
+  "scripts", "skills", "tests"]
 
 [template]
 path = "template"

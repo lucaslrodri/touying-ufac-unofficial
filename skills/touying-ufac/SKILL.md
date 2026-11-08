@@ -1,6 +1,6 @@
 ---
 name: touying-ufac
-description: Use ao preparar, escrever, revisar ou reorganizar slides com o tema Typst touying-ufac-unofficial (Touying) da UFAC, em dois modos. Aula, os slides e o plano de aula de uma disciplina, inclusive a apresentação do curso na primeira aula (ementa, avaliações, bibliografia), sempre que o professor pedir "aula", "slides", "deck" ou "plano de aula". Acadêmico, os slides da apresentação de um trabalho, como defesa de TCC, de dissertação ou de tese, exame de qualificação, trabalho de disciplina, seminário ou comunicação em congresso, sempre que pedirem "slides da defesa", "apresentação do TCC", "slides da qualificação" ou "apresentação no congresso".
+description: Use ao preparar, escrever, revisar ou reorganizar slides com o tema Typst touying-ufac-unofficial (Touying) da UFAC, em dois modos. Aula, os slides e o plano de aula de uma disciplina, inclusive a apresentação do curso na primeira aula (ementa, avaliações, bibliografia), sempre que o professor pedir "aula", "slides", "deck" ou "plano de aula". Acadêmico, os slides da apresentação de um trabalho, como defesa de TCC, de dissertação ou de tese, exame de qualificação ou trabalho de disciplina, sempre que pedirem "slides da defesa", "apresentação do TCC" ou "slides da qualificação".
 ---
 
 # Slides com o touying-ufac
@@ -11,12 +11,12 @@ description: Use ao preparar, escrever, revisar ou reorganizar slides com o tema
 
 ## Os modos
 
-| Modo | Para | Quem decide o conteúdo | `kind` do deck |
+| Modo | Para | Quem decide o conteúdo | `flavor` do deck |
 |---|---|---|---|
 | **Aula** | as aulas de uma disciplina e a apresentação do curso | o professor e o plano de curso | `"lecture"` |
-| **Acadêmico** | a apresentação de um trabalho: TCC, dissertação, tese, qualificação, trabalho de disciplina, seminário, congresso | o texto do trabalho e os dados dele | `"tcc"`, `"dissertation"`, `"thesis"`, `"coursework"`, `"talk"` |
+| **Acadêmico** | a apresentação de um trabalho: TCC, dissertação, tese, qualificação, trabalho de disciplina | o texto do trabalho e os dados dele | `"tcc"`, `"dissertation"`, `"thesis"`, `"coursework"` |
 
-Escolha o modo pelo pedido; num deck que já existe, pelo `kind` do `config-info`. Se ainda não estiver claro, pergunte. As regras comuns valem nos dois modos; cada modo soma as suas. Nas referências e nos revisores, "regra 3" é uma regra comum, "regra Aula 2" e "regra Acadêmico 4" são regras do modo.
+Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-info` (sem ele, o deck é uma aula). Se ainda não estiver claro, pergunte. As regras comuns valem nos dois modos; cada modo soma as suas. Nas referências e nos revisores, "regra 3" é uma regra comum, "regra Aula 2" e "regra Acadêmico 4" são regras do modo.
 
 ## Regras comuns
 
@@ -170,7 +170,7 @@ Crie uma tarefa para cada passo.
    - Toda obra de que vem um dado, uma equação, uma frase ou uma figura refeita entra no `referencias.bib` e no slide "Referências" (regra 7), não no slide em que é usada.
 2. **Segue o argumento, não o sumário.** A sequência é contexto e lacuna, objetivo, método, resultados e conclusões. A revisão de literatura vira contexto em poucos slides; capítulo do texto não vira Parte por ser capítulo. Cada objetivo específico tem uma conclusão.
 3. **O título diz a mensagem.** Nos resultados e na discussão, o título é o achado, até 60 caracteres ("O filtro de Kalman fica a menos de 1% da referência"), e o corpo traz a evidência: gráfico, tabela reduzida ou equação. Nunca "Resultados", "Tabela 3" ou "Gráfico".
-4. **O tempo manda.** Cerca de um slide de conteúdo por minuto do tempo dado pelo regimento, pelo evento ou pelo professor. O que passa do tempo vai para a reserva, depois do encerramento; nunca letra menor, nunca fala corrida.
+4. **O tempo manda.** Cerca de um slide de conteúdo por minuto do tempo dado pelo regimento ou pelo professor. O que passa do tempo vai para a reserva, depois do encerramento; nunca letra menor, nunca fala corrida.
 5. **Encerramento e reserva.** Depois das Conclusões: "Agradecimentos" (o fomento, quando houver), "Referências", "Créditos das imagens" (se houver imagem de fora) e `#ending-slide[Obrigado!][Perguntas?][#info("contact")]`, sem meme. Depois, `#show: appendix` e os slides de reserva, um por pergunta prevista da banca.
 
 ### Fluxo do acadêmico
@@ -181,7 +181,7 @@ Crie uma tarefa para cada passo.
    - o texto do trabalho (o `.typ`, o `.tex`, o PDF ou o `.docx`), do resumo às conclusões;
    - os dados e os scripts das figuras;
    - a bibliografia (`.bib`);
-   - as regras da apresentação: tempo, banca ou público, normas do programa ou do evento;
+   - as regras da apresentação: tempo, banca, normas do programa;
    - o parecer da qualificação e apresentações anteriores do trabalho, se houver.
 2. **Plano da apresentação.** Preencha `templates/academico/plano-da-apresentacao.md` e salve ao lado do deck. Ele traz:
    - a mensagem central, numa frase;

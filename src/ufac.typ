@@ -496,23 +496,23 @@
 ) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <example> #body]
 
 // ---------- cover ----------
-/// The backgrounds of the cover and of the closing slide (`ufac-theme(background:)`): the fill of the page and whether
-/// it has the circles. `"circles"`, the default, is the solid UFAC blue with two translucent white circles leaving the
-/// corners; `"gradient"`, a blue gradient (the blue darkened 35% to the blue, at 60°), with the
-/// circles; `"plain"`, the blue alone.
+/// The cover styles, the background of the cover and of the closing slide (`ufac-theme(cover-style:)`): the fill of the
+/// page and whether it has the bubbles. `"bubbles"`, the default, is the solid UFAC blue with two translucent white
+/// bubbles leaving the corners; `"gradient"`, a blue gradient (the blue darkened 35% to the blue, at 60°), with the
+/// bubbles; `"plain"`, the blue alone.
 ///
-/// #test(`_backgrounds.keys() == ("circles", "gradient", "plain")`, `not _backgrounds.plain.circles`)
+/// #test(`_cover-styles.keys() == ("bubbles", "gradient", "plain")`, `not _cover-styles.plain.bubbles`)
 /// -> dictionary
-#let _backgrounds = (
-  circles: (fill: colors.primary, circles: true),
-  gradient: (fill: gradient.linear(colors.primary.darken(35%), colors.primary, angle: 60deg), circles: true),
-  plain: (fill: colors.primary, circles: false),
+#let _cover-styles = (
+  bubbles: (fill: colors.primary, bubbles: true),
+  gradient: (fill: gradient.linear(colors.primary.darken(35%), colors.primary, angle: 60deg), bubbles: true),
+  plain: (fill: colors.primary, bubbles: false),
 )
 
-/// The translucent white circles of the background: a large one leaving the top right corner and a smaller one the
+/// The translucent white bubbles of the cover style: a large one leaving the top right corner and a smaller one the
 /// bottom left; for the `background` of the page, which has its size.
 /// -> content
-#let _circles() = {
+#let _bubbles() = {
   place(top + right, dx: 3cm, dy: -4.2cm, circle(radius: 8.5cm, fill: white.transparentize(94%)))
   place(bottom + left, dx: -2.6cm, dy: 2.8cm, circle(radius: 5.5cm, fill: white.transparentize(95%)))
 }
@@ -524,7 +524,7 @@
   self,
 ) = config-page(fill: self.store.at("cover-fill", default: self.colors.primary), header: none, footer: none,
   margin: (x: 1.8em, top: 1.2em, bottom: 1.1em),
-  background: if self.store.at("cover-circles", default: true) { _circles() })
+  background: if self.store.at("cover-bubbles", default: true) { _bubbles() })
 
 /// White content on the blue page, with the convention of the pills (`*bold*`, code and icons readable).
 /// -> content
@@ -608,10 +608,10 @@
   text(size: _slot-size, _author-names(self))
 }
 
-/// Whether each style of the cover has the white line at the bottom.
+/// Whether each layout of the cover has the white line at the bottom.
 #let _preset-lines = (stack: false, line: true, top: false)
 
-/// What each style puts in each position of the cover.
+/// What each layout puts in each position of the cover.
 /// -> dictionary
 #let _presets(
   /// Touying's `self`. -> dictionary
@@ -652,31 +652,31 @@
   }
 }
 
-/// Cover: the blue page (`ufac-theme(background:)`) with the logos large at the top left; in the center, the tag
+/// Cover: the blue page (`ufac-theme(cover-style:)`) with the logos large at the top left; in the center, the tag
 /// (`short-title`), the `title`, the yellow rule, the `short-subtitle` in yellow, the `subtitle` and the content given
-/// to it, centered both ways in the room between the top and the bottom; the authors and the date where the `style`
-/// puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does
+/// to it, centered both ways in the room between the top and the bottom; the authors and the date where the
+/// `cover-layout` puts them. The institution does not appear (it is for `#info`). The slide counter is frozen, so the cover does
 /// not count.
 ///
-/// Each position takes `auto` (what the style puts there), `none` (nothing), content (such as `#info("date")`), an
+/// Each position takes `auto` (what the layout puts there), `none` (nothing), content (such as `#info("date")`), an
 /// array (its items that show something, separated by a dot) or a function of `self`, like `footer-left` of the theme.
 /// The text of the positions is 0.7 of the size of the slide.
 ///
 /// ```typ
 /// #title-slide()
-/// #title-slide(style: "top", footer-center: none, footer-right: info("date"))
+/// #title-slide(cover-layout: "top", footer-center: none, footer-right: info("date"))
 /// #title-slide[Slides at #link("https://example.com/slides")[example.com/slides]]
 /// ```
 /// -> content
 #let title-slide(
-  /// The logos are at the top left in every style. `"line"`: the authors on one line at the bottom left, the white
-  /// line and the date on the right. `"stack"`: the authors on several lines at the bottom left and the date on the right,
-  /// without the line. `"top"`: the authors at the top right and the date in the center of the bottom, without the
-  /// line. `auto` is the one of the `kind` of the deck, or `"line"`. -> auto | str
-  style: auto,
-  /// Label over the authors ("Instructors"); before them in `"line"`. `auto` is the one of the `kind`, or none.
-  /// -> auto | none | content
-  author-label: auto,
+  /// Where the authors and the date go; the logos are at the top left in every layout. `"line"`: the authors on one
+  /// line at the bottom left, the white line and the date on the right. `"stack"`: the authors on several lines at the
+  /// bottom left and the date on the right, without the line. `"top"`: the authors at the top right and the date in the
+  /// center of the bottom, without the line. `auto` is the one of the `flavor` of the deck (`"line"` for a lecture).
+  /// -> auto | str
+  cover-layout: auto,
+  /// Label over the authors ("Instructors"); before them in `"line"`. -> none | content
+  author-label: none,
   /// What goes at the top left. -> auto | none | content | array | function
   header-left: auto,
   /// What goes at the top center. -> auto | none | content | array | function
@@ -690,14 +690,16 @@
   /// What goes at the bottom right. -> auto | none | content | array | function
   footer-right: auto,
   /// The white line at the bottom, like the one of the footer of the slides: from edge to edge, passing between what
-  /// is at the bottom, at the height of the line of the footer. `auto` is the one of the style. -> auto | bool
+  /// is at the bottom, at the height of the line of the footer. `auto` is the one of the layout. -> auto | bool
   footer-line: auto,
   /// Content in the center, below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
   ..body,
 ) = {
+  assert("style" not in body.named(), message: "title-slide: style is now cover-layout (cover-layout: \"top\")")
   assert(body.named().len() == 0, message: "title-slide: unknown argument " + repr(body.named().keys().at(0, default: "")))
   assert(body.pos().len() <= 1, message: "title-slide: takes one optional content, `#title-slide[..]`")
-  assert(style == auto or style in _preset-lines, message: "title-slide: style is auto (\"line\"), \"line\", \"stack\" or \"top\"")
+  assert(cover-layout == auto or cover-layout in _preset-lines,
+    message: "title-slide: cover-layout is auto (the one of the flavor), \"line\", \"stack\" or \"top\"")
   let body = body.pos().at(0, default: none)
   // a body that shows nothing (`#title-slide[#provide-icons(..)]`, or `#title-slide[]`) stays on the slide, out of the
   // stack: as an item it added a gap that lifted the titles, and a cover with a body is not scaled down when it does
@@ -705,14 +707,13 @@
   let unseen = none
   if body != none and (_unseen(body) or _blank(body)) { unseen = body; body = none }
   touying-slide-wrapper(self => {
-    // `auto`: what the `kind` of the deck recommends (in the store), else the default of the theme ("line", no label)
-    let style = if style == auto { self.store.at("cover-style", default: "line") } else { style }
-    let author-label = if author-label == auto { self.store.at("author-label", default: none) } else { author-label }
+    // `auto`: what the `flavor` of the deck recommends (in the store)
+    let preset-name = if cover-layout == auto { self.store.at("cover-layout", default: "line") } else { cover-layout }
     let self = utils.merge-dicts(self, _blue-page(self), config-common(freeze-slide-counter: true))
     let i = self.info
-    let with-line = if footer-line == auto { _preset-lines.at(style) } else { footer-line }
-    let preset = _presets(self, author-label).at(style)
-    // the value of a position: the one of the style, nothing, or the given content (or function of `self`) at the
+    let with-line = if footer-line == auto { _preset-lines.at(preset-name) } else { footer-line }
+    let preset = _presets(self, author-label).at(preset-name)
+    // the value of a position: the one of the layout, nothing, or the given content (or function of `self`) at the
     // size of the positions
     let slot(name, value) = {
       if value == auto { return preset.at(name, default: none) }
@@ -1160,9 +1161,9 @@
 /// `config-info` carries the fields of Touying: `title` (the name of the course or of the work), `short-title` (its code
 /// or a shorter name: the tag of the cover), `subtitle` (the topic), `short-subtitle` (the lecture or the unit), `author`
 /// (one, an array or free content), `date`, `institution`, `logo` and `contact`; the aliases of a course (`subject`,
-/// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `kind` of presentation; and
-/// `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives "Exercise N", the
-/// default of the kinds without units: `"coursework"`, `"talk"`, `"tcc"`, `"dissertation"`, `"thesis"`).
+/// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `flavor` of presentation (`"lecture"` by
+/// default); and `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives
+/// "Exercise N", the default of the flavors without units: `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`).
 /// -> content
 #let ufac-theme(
   /// Any ratio accepted by Touying's `utils.page-args-from-aspect-ratio`: `"16-9"`, `"4-3"`, … -> str
@@ -1191,9 +1192,9 @@
   /// is the authors in running text ("A, B and C"); of an author written as free content, the names of its first
   /// group. -> auto | content | array | function
   footer-right: auto,
-  /// Background of the cover and of the closing slide: `"circles"` (the solid UFAC blue with two translucent circles),
-  /// `"gradient"` (a blue gradient, with the circles) or `"plain"` (the blue alone). -> str
-  background: "circles",
+  /// The background of the cover and of the closing slide: `"bubbles"` (the solid UFAC blue with two translucent
+  /// bubbles), `"gradient"` (a blue gradient, with the bubbles) or `"plain"` (the blue alone). -> str
+  cover-style: "bubbles",
   /// The codly 2 module, when the deck imports it (`#import "@preview/codly:2.0.0" as codly`): the code blocks then go
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
   /// codly. -> none | module
@@ -1209,6 +1210,7 @@
 ) = {
   let l = _lang-parse(lang)
   assert("logos" not in args.named(), message: "ufac-theme: logos moved to config-info(logo: ..) in 0.3.0")
+  assert("background" not in args.named(), message: "ufac-theme: background is now cover-style (cover-style: \"plain\")")
   let footer-left = if footer-left != auto { footer-left } else { self => {
     let parts = (self.info.at("short-title", default: none), self.info.title)
     if self.info.at("date-short", default: false) { parts.push(_date(self)) }
@@ -1216,9 +1218,9 @@
   } }
   let footer-right = if footer-right != auto { footer-right } else { self => _author-names(self) }
   let configs = _prepare-configs(l.lang, args.pos())
-  assert(background in _backgrounds, message: "ufac-theme: background is "
-    + _backgrounds.keys().map(k => "\"" + k + "\"").join(", "))
-  let bg = _backgrounds.at(background)
+  assert(cover-style in _cover-styles, message: "ufac-theme: cover-style is "
+    + _cover-styles.keys().map(k => "\"" + k + "\"").join(", "))
+  let bg = _cover-styles.at(cover-style)
   assert("section-margin" not in args.named(), message: "ufac-theme: section-margin moved to new-section-slide(margin:)"
     + " in 0.3.0: config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))")
   for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
@@ -1244,7 +1246,7 @@
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
       exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
       footer-right: footer-right, codly: codly, code-languages: code-languages,
-      cover-fill: bg.fill, cover-circles: bg.circles),
+      cover-fill: bg.fill, cover-bubbles: bg.bubbles),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty
     // content gives `none` there, so a deck without `config-info(author:)` failed to compile
     _info-defaults,

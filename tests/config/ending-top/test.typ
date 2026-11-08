@@ -1,14 +1,13 @@
-/// Synopsis: after a cover in the style `"top"` (`kind: "course"`), the closing slide in Portuguese ("Obrigado!"), without logos at the top (they are in its footer) and without the contact of `config-info`, which a second one puts in the body with `#info("contact")`; with the `"plain"` background of the cover.
+/// Synopsis: after a cover in the layout `"top"` (`title-slide(cover-layout: "top")`, with the label "Ministrantes"), the closing slide in Portuguese ("Obrigado!"), without logos at the top (they are in its footer) and without the contact of `config-info`, which a second one puts in the body with `#info("contact")`; with the cover style `"plain"`.
 #import "../../common.typ": *
-#show: ufac-theme.with(background: "plain", config-info(
-  kind: "course",
+#show: ufac-theme.with(cover-style: "plain", config-info(
   title: [Fotografia para Iniciantes],
   short-title: [Curso de extensão],
   author: ([Nome do Primeiro Autor], [Nome do Segundo Autor]),
   contact: ([`primeiro.autor@example.com`], [`segundo.autor@example.com`]),
 ))
 
-#title-slide()
+#title-slide(cover-layout: "top", author-label: [Ministrantes])
 
 == Um slide
 Texto.

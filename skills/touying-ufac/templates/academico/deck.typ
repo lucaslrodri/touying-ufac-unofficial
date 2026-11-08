@@ -14,8 +14,8 @@
   aspect-ratio: "16-9",
   config-info(
     // "tcc", "dissertation" ou "thesis" (defesa ou qualificação: a etiqueta da capa vem do tipo, e short-title: [..]
-    // a troca); "coursework" (trabalho de disciplina); "talk" (congresso, seminário)
-    kind: "tcc",
+    // a troca); "coursework" (trabalho de disciplina)
+    flavor: "tcc",
     title: [Estimação do estado de carga de baterias de lítio],
     course: [Bacharelado em Engenharia Elétrica],
     // quem apresenta no primeiro grupo; cada rótulo em itálico abre um grupo

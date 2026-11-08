@@ -9,8 +9,7 @@
 #   thanks                      the title of `#ending-slide` without a title
 #   and                         the last separator of a list of names ("A, B e C")
 #   months, date                the date in full; in `date`, {day}, {month} and {year} are replaced
-#   instructors                 the author label of `kind: "course"`
-#   tcc, dissertation, thesis   the tag of the cover of those kinds
+#   tcc, dissertation, thesis   the tag of the cover of those flavors
 
 [lang.pt]
 exercise = "Exercício"
@@ -28,7 +27,6 @@ thanks = "Obrigado!"
 and = "e"
 months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
 date = "{day} de {month} de {year}"
-instructors = "Ministrantes"
 tcc = "Trabalho de Conclusão de Curso"
 dissertation = "Dissertação de Mestrado"
 thesis = "Tese de Doutorado"
@@ -57,7 +55,6 @@ thanks = "Thank you!"
 and = "and"
 months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 date = "{month} {day}, {year}"
-instructors = "Instructors"
 tcc = "Undergraduate Thesis"
 dissertation = "Master's Dissertation"
 thesis = "Doctoral Thesis"
@@ -86,7 +83,6 @@ thanks = "¡Gracias!"
 and = "y"
 months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 date = "{day} de {month} de {year}"
-instructors = "Instructores"
 tcc = "Trabajo de Fin de Grado"
 dissertation = "Tesis de Maestría"
 thesis = "Tesis Doctoral"

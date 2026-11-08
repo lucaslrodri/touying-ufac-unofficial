@@ -92,7 +92,7 @@ A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), 
 
 | `config-info(..)` | Onde aparece |
 |---|---|
-| `kind: "lecture"` | capa de aula |
+| `flavor: "lecture"` (o padrão) | capa de aula |
 | `subject`, `subject-code` | título e etiqueta amarela da capa; rodapé |
 | `unit`, `unit-title` | linha amarela ("Unidade I") e linha branca (o assunto) da capa |
 | `semester`, `author` | capa e rodapé |
@@ -104,17 +104,16 @@ A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), 
 
 | Trabalho | `config-info(..)` | O que a capa mostra |
 |---|---|---|
-| defesa de TCC | `kind: "tcc"`, `title`, `course` (o curso), `author`, `date`, `contact` | a etiqueta "Trabalho de Conclusão de Curso", o título, o curso e, no alto à direita, o discente e os orientadores |
-| defesa de mestrado ou de doutorado | `kind: "dissertation"` ou `"thesis"`, com `course` sendo o programa | a etiqueta "Dissertação de Mestrado" ou "Tese de Doutorado" |
-| qualificação | o `kind` da defesa e `short-title: [Exame de qualificação]` | a etiqueta trocada |
-| trabalho de disciplina | `kind: "coursework"`, `subject`, `subject-code`, `unit-title` (o título do trabalho), `author`, `semester` ou `year` | os alunos e o professor em grupos, embaixo à esquerda |
-| congresso, seminário, palestra | `kind: "talk"`, `title`, `subtitle` (o evento), `author`, `date`, `contact` | os autores e a data numa linha, embaixo |
+| defesa de TCC | `flavor: "tcc"`, `title`, `course` (o curso), `author`, `date`, `contact` | a etiqueta "Trabalho de Conclusão de Curso", o título, o curso e, no alto à direita, o discente e os orientadores |
+| defesa de mestrado ou de doutorado | `flavor: "dissertation"` ou `"thesis"`, com `course` sendo o programa | a etiqueta "Dissertação de Mestrado" ou "Tese de Doutorado" |
+| qualificação | o `flavor` da defesa e `short-title: [Exame de qualificação]` | a etiqueta trocada |
+| trabalho de disciplina | `flavor: "coursework"`, `subject`, `subject-code`, `unit-title` (o título do trabalho), `author`, `semester` ou `year` | os alunos e o professor em grupos, embaixo à esquerda |
 
 ```typ
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
   config-info(
-    kind: "dissertation",
+    flavor: "dissertation",
     short-title: [Exame de qualificação],
     title: [Um título de dissertação],
     course: [Programa de Pós-Graduação em Exemplo],
@@ -128,7 +127,7 @@ A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), 
 ```
 
 - **Autores:** em conteúdo livre, cada linha só em itálico é um rótulo de grupo (`_Discente_`, `_Orientador_`, `_Coorientadora_`). O rodapé e os metadados do PDF levam só o primeiro grupo, quem apresenta.
-- **Fundo:** `ufac-theme.with(background: "plain")` (ou `"gradient"`) tira os círculos da capa e do encerramento, se o programa pedir sobriedade.
+- **Estilo da capa:** `ufac-theme.with(cover-style: "plain")` (ou `"gradient"`) tira as bolhas da capa e do encerramento, se o programa pedir sobriedade.
 - **Roteiro:** numa fala de até 10 minutos, ele pode sair.
 
 ### Nos dois modos

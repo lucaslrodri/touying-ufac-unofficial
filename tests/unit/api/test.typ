@@ -106,29 +106,33 @@
 #assert.eq(type(ufac-theme(config-common(new-section-slide-fn: new-section-slide.with(margin: 2em)))[= Part]), content)
 
 
-// config-info: the aliases are their fields; two names of one field, an unknown kind, an unknown key of `#info` and
+// config-info: the aliases are their fields; two names of one field, an unknown flavor, an unknown key of `#info` and
 // the `logos:` of 0.2.0 fail with a message that names the problem
 #assert.eq(_resolve-aliases(config-info(subject: [S], subject-code: [C], unit: [U], unit-title: [T])).info,
   (title: [S], short-title: [C], short-subtitle: [U], subtitle: [T]))
 #assert.eq(_resolve-aliases(config-info(semester: [2026.2])).info, (date: [2026.2], date-short: true))
 #assert(catch(() => _resolve-aliases(config-info(subject: [S], title: [T]))).contains("same field"))
-#assert(catch(() => _prepare-configs("pt", (config-info(kind: "poster"),))).contains("unknown kind"))
-#assert.eq(_prepare-configs("en", (config-info(kind: "tcc"),)).before.first().info.short-title, "Undergraduate Thesis")
-#assert.eq(_prepare-configs("pt", (config-info(kind: "course"),)).after.first().store,
-  (cover-style: "top", author-label: "Ministrantes"))
-// the kinds that are not part of a course number the exercises without a prefix, before the configs of the deck
-#for kind in ("coursework", "talk", "tcc", "dissertation", "thesis") {
-  let prefix = _prepare-configs("en", (config-info(kind: kind),)).before.map(c => c.info).filter(i => "counter-prefix" in i)
-  assert.eq(prefix, ((counter-prefix: none),), message: kind + " has no units: no prefix")
+#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "poster"),))).contains("unknown flavor"))
+#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "course"),))).contains("unknown flavor"))
+#assert(catch(() => _prepare-configs("pt", (config-info(flavor: "talk"),))).contains("unknown flavor"))
+#assert.eq(_prepare-configs("en", (config-info(flavor: "tcc"),)).before.first().info.short-title, "Undergraduate Thesis")
+#assert.eq(_prepare-configs("pt", (config-info(flavor: "tcc"),)).after.first().store, (cover-layout: "top"))
+// a deck without a flavor is a lecture: the layout "line" and the prefix of the theme
+#assert.eq(_prepare-configs("pt", (config-info(title: [T]),)).after.first().store, (cover-layout: "line"))
+#assert.eq(_prepare-configs("pt", ()).before, ())
+// the name of 0.3.0 before the flavors fails with the new one, instead of being kept as an unknown field
+#assert(catch(() => _prepare-configs("pt", (config-info(kind: "tcc"),))).contains("kind is now flavor"))
+// the flavors that are not part of a course number the exercises without a prefix, before the configs of the deck
+#for flavor in ("coursework", "tcc", "dissertation", "thesis") {
+  let prefix = _prepare-configs("en", (config-info(flavor: flavor),)).before.map(c => c.info).filter(i => "counter-prefix" in i)
+  assert.eq(prefix, ((counter-prefix: none),), message: flavor + " has no units: no prefix")
 }
-#for kind in ("lecture", "course") {
-  let infos = _prepare-configs("en", (config-info(kind: kind),)).before.map(c => c.info)
-  assert(infos.all(i => "counter-prefix" not in i), message: kind + " keeps the prefix of the theme")
-}
+#assert(_prepare-configs("en", (config-info(flavor: "lecture"),)).before.all(c => "counter-prefix" not in c.info),
+  message: "lecture keeps the prefix of the theme")
 #assert(catch(() => info("nope")).contains("unknown key"))
-// `counter-prefix` and `kind` are not information to show
+// `counter-prefix` and `flavor` are not information to show
 #assert(catch(() => info("counter-prefix")).contains("unknown key"))
-#assert(catch(() => info("kind")).contains("unknown key"))
+#assert(catch(() => info("flavor")).contains("unknown key"))
 #assert(catch(() => ufac-theme(logos: (auto,))[x]).contains("config-info(logo:"))
 // authors: an array becomes texts (Touying's `set document(author:)` takes only strings); free content keeps its form
 // for the cover and gives the names of its first group
@@ -141,9 +145,12 @@
 #assert(catch(() => _resolve-aliases(config-info(subject: [S], title: [T]))).contains("rename title to unit-title"))
 
 
-// cover: an unknown style or background fails with the names that exist
-#assert(catch(() => title-slide(style: "left")).contains("\"stack\""))
-#assert(catch(() => ufac-theme(background: "dark")[x]).contains("\"gradient\""))
+// cover: an unknown layout or cover style fails with the names that exist; the names of 0.3.0 (`style`,
+// `background`) fail with the new ones
+#assert(catch(() => title-slide(cover-layout: "left")).contains("\"stack\""))
+#assert(catch(() => ufac-theme(cover-style: "circles")[x]).contains("\"bubbles\""))
+#assert(catch(() => title-slide(style: "top")).contains("style is now cover-layout"))
+#assert(catch(() => ufac-theme(background: "plain")[x]).contains("background is now cover-style"))
 
 // closing slide: up to three contents, or the body alone with the named title/subtitle; checked at the call
 #assert.eq(type(ending-slide()), content)

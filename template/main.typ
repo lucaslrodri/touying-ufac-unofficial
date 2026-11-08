@@ -1,4 +1,4 @@
-// Starting deck for the touying-ufac-unofficial theme. Syntax: package README; the elements at a glance:
+// Starting deck for the touying-ufac-unofficial theme. Syntax: the manual; the elements at a glance:
 // example/main.typ; a whole lecture: example/lecture.typ, both at
 // https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example
 #import "@preview/touying:0.7.4": *
@@ -8,6 +8,7 @@
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
+    flavor: "lecture",   // "coursework", "tcc", "dissertation" or "thesis"
     subject: [Subject name],                  // or Touying's `title:`
     subject-code: [CODE or Department],       // or `short-title:`
     unit-title: [Title of the teaching unit], // or `subtitle:`

@@ -7,7 +7,7 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    kind: "lecture",
+    flavor: "lecture",
     subject: [Introductory Astronomy],
     subject-code: [AST101],
     unit: [Unit II],

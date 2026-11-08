@@ -125,7 +125,7 @@ config-info(author: [
 ])
 ```
 
-== The kind of work and the aliases <kinds>
+== The flavor and the aliases <flavors>
 
 In a course, the fields have names of their own, which are aliases of the fields above; giving one field under two
 names (`subject` and `title`) is an error. A date given as `semester` or `year` is short, and also goes to the footer, after the title.
@@ -137,29 +137,26 @@ names (`subject` and `title`) is an error. A date given as `semester` or `year` 
   [`course` (the program, in a final paper)], [`short-subtitle`], [`semester`, `year`], [`date`],
 )
 
-`kind` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes wins
-over it. The prefix of the exercises and examples ("Exercise 1.1") stands for the unit of a course, so the kinds
-without units number them without it ("Exercise 1"). Without a `kind`, the cover has the style `"line"` and the
-numbers have the prefix `[1.]`.
+`flavor` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes
+wins over it. The default is `"lecture"`. The prefix of the exercises and examples ("Exercise 1.1") stands for the unit
+of a course, so the flavors without units number them without it ("Exercise 1").
 
 #table(
   columns: (auto, 1fr),
-  table.header([`kind`], [Recommends]),
-  [`"lecture"`], [the style `"line"`: the authors and the date on one line at the bottom],
-  [`"course"`], [the style `"top"` and the label "Instructors" ("Ministrantes") over the authors],
-  [`"talk"`], [the style `"line"`; no units: exercises without a prefix],
-  [`"coursework"`], [the style `"stack"`: the authors in groups at the bottom left; no units: exercises without a
+  table.header([`flavor`], [Recommends]),
+  [`"lecture"` (the default)], [the layout `"line"`: the authors and the date on one line at the bottom],
+  [`"coursework"`], [the layout `"stack"`: the authors in groups at the bottom left; no units: exercises without a
     prefix],
-  [`"tcc"`, `"dissertation"`, `"thesis"`], [the style `"top"` and the tag of the work ("Undergraduate Thesis", …); no
-    units: exercises without a prefix],
+  [`"tcc"`, `"dissertation"`, `"thesis"`], [the layout `"top"` and the tag of the work ("Undergraduate Thesis", …);
+    no units: exercises without a prefix],
 )
 
-The work of students for a course keeps the names of the course and takes `kind: "coursework"`: the students and the
+The work of students for a course keeps the names of the course and takes `flavor: "coursework"`: the students and the
 teacher stack at the bottom left, each group under its label, and the top right is free, for the name of the group.
 
 #slide-example("cover-coursework", pages: (1, 2), columns: (1fr, 1fr))
 
-A final paper takes `kind: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
+A final paper takes `flavor: "tcc"`: the tag of the work over the title, the program as `course`, and the student and the
 advisors at the top right. `"dissertation"` and `"thesis"` do the same with their own tag.
 
 #see("ufac", "ufac-theme()")
@@ -171,18 +168,18 @@ advisors at the top right. `"dissertation"` and `"thesis"` do the same with thei
 == The cover
 
 `#title-slide()` draws the cover in three bands: the logos at the top left, the titles in the center, and the authors
-and the date. The `style` decides where the authors and the date go: `"line"` (the default) puts them on one line at
-the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
+and the date. The `cover-layout` decides where the authors and the date go: `"line"` (the one of a lecture) puts them on
+one line at the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
 `"top"` puts them at the top right and the date in the center of the bottom. Each of the six positions can be changed
 on its own, with content, an array (as `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying keeps of the deck
 (`self => self.info.title`).
 
-#slide-example("cover-styles", pages: (1, 2, 3, 4), columns: (1fr, 1fr))
+#slide-example("cover-layouts", pages: (1, 2, 3, 4), columns: (1fr, 1fr))
 
-The background of the cover and of the closing slide is an option of the theme: `"circles"` (the default),
-`"gradient"` or `"plain"`; here, on the cover of a master's dissertation.
+The background of the cover and of the closing slide is the `cover-style`, an option of the theme: `"bubbles"` (the
+default), `"gradient"` or `"plain"`; here, on the cover of a master's dissertation.
 
-#slide-example("cover-background", columns: (1fr, 1fr))
+#slide-example("cover-style", columns: (1fr, 1fr))
 
 Content given to the cover goes below the titles, in white: a message, where to find the slides, a contact.
 
@@ -277,7 +274,7 @@ A short example inside an ordinary slide, without a number, is the callout `#exa
 
 Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
 gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
-"Exercise 1", the default of the kinds without units (@kinds).
+"Exercise 1", the default of the flavors without units (@flavors).
 
 ```typ
 #show: ufac-theme.with(config-info(

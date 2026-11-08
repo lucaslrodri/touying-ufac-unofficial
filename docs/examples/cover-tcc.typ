@@ -4,7 +4,7 @@
 #show: ufac-theme.with(
   lang: "en",
   config-info(
-    kind: "tcc",
+    flavor: "tcc",
     title: [A low-cost weather station
       for schools],
     course: [Bachelor's in Physics],
