@@ -233,7 +233,8 @@
   let configs = configs.map(_resolve-aliases).map(_fix-author)
   let infos = configs.filter(c => type(c) == dictionary and "info" in c).map(c => c.info)
   // the name before the flavors; Touying would keep it as an unknown field, and the deck would be a lecture
-  assert(infos.all(i => "kind" not in i), message: "config-info: kind is now flavor (flavor: \"tcc\")")
+  let old = infos.filter(i => "kind" in i).map(i => i.kind)
+  assert(old.len() == 0, message: "config-info: kind is now flavor (flavor: " + repr(old.at(0, default: none)) + ")")
   let flavor = infos.filter(i => "flavor" in i).map(i => i.flavor).at(-1, default: "lecture")
   assert(flavor in _flavors, message: "config-info: unknown flavor " + repr(flavor) + "; use "
     + _flavors.keys().map(k => "\"" + k + "\"").join(", "))

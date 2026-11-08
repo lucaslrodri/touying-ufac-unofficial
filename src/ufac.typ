@@ -675,7 +675,7 @@
   /// center of the bottom, without the line. `auto` is the one of the `flavor` of the deck (`"line"` for a lecture).
   /// -> auto | str
   cover-layout: auto,
-  /// Label over the authors ("Instructors"); before them in `"line"`. -> none | content
+  /// Label over the authors ("Instructors"); before them in `"line"`. `auto` is `none`. -> none | auto | content
   author-label: none,
   /// What goes at the top left. -> auto | none | content | array | function
   header-left: auto,
@@ -695,12 +695,14 @@
   /// Content in the center, below the titles, `#title-slide[..]`; `#title-slide()` has none. -> content
   ..body,
 ) = {
-  assert("style" not in body.named(), message: "title-slide: style is now cover-layout (cover-layout: \"top\")")
+  assert("style" not in body.named(),
+    message: "title-slide: style is now cover-layout (cover-layout: " + repr(body.named().at("style", default: none)) + ")")
   assert(body.named().len() == 0, message: "title-slide: unknown argument " + repr(body.named().keys().at(0, default: "")))
   assert(body.pos().len() <= 1, message: "title-slide: takes one optional content, `#title-slide[..]`")
   assert(cover-layout == auto or cover-layout in _preset-lines,
     message: "title-slide: cover-layout is auto (the one of the flavor), \"line\", \"stack\" or \"top\"")
   let body = body.pos().at(0, default: none)
+  let author-label = if author-label == auto { none } else { author-label }
   // a body that shows nothing (`#title-slide[#provide-icons(..)]`, or `#title-slide[]`) stays on the slide, out of the
   // stack: as an item it added a gap that lifted the titles, and a cover with a body is not scaled down when it does
   // not fit
@@ -1210,7 +1212,11 @@
 ) = {
   let l = _lang-parse(lang)
   assert("logos" not in args.named(), message: "ufac-theme: logos moved to config-info(logo: ..) in 0.3.0")
-  assert("background" not in args.named(), message: "ufac-theme: background is now cover-style (cover-style: \"plain\")")
+  // the names before 0.3.0 was published, and the flavor, which goes in config-info
+  let old-style = args.named().at("background", default: none)
+  assert("background" not in args.named(), message: "ufac-theme: background is now cover-style (cover-style: "
+    + repr(if old-style == "circles" { "bubbles" } else { old-style }) + ")")
+  assert("flavor" not in args.named(), message: "ufac-theme: flavor goes in config-info(flavor: ..)")
   let footer-left = if footer-left != auto { footer-left } else { self => {
     let parts = (self.info.at("short-title", default: none), self.info.title)
     if self.info.at("date-short", default: false) { parts.push(_date(self)) }
@@ -1218,6 +1224,7 @@
   } }
   let footer-right = if footer-right != auto { footer-right } else { self => _author-names(self) }
   let configs = _prepare-configs(l.lang, args.pos())
+  assert(cover-style != "circles", message: "ufac-theme: the cover style \"circles\" is now \"bubbles\"")
   assert(cover-style in _cover-styles, message: "ufac-theme: cover-style is "
     + _cover-styles.keys().map(k => "\"" + k + "\"").join(", "))
   let bg = _cover-styles.at(cover-style)

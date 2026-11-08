@@ -120,8 +120,10 @@
 // a deck without a flavor is a lecture: the layout "line" and the prefix of the theme
 #assert.eq(_prepare-configs("pt", (config-info(title: [T]),)).after.first().store, (cover-layout: "line"))
 #assert.eq(_prepare-configs("pt", ()).before, ())
-// the name of 0.3.0 before the flavors fails with the new one, instead of being kept as an unknown field
-#assert(catch(() => _prepare-configs("pt", (config-info(kind: "tcc"),))).contains("kind is now flavor"))
+// the name of 0.3.0 before the flavors fails with the new one and the value given, instead of being kept as an
+// unknown field; the flavor given to the theme instead of config-info fails too, instead of being ignored
+#assert(catch(() => ufac-theme(config-info(kind: "tcc"))[x]).contains("kind is now flavor (flavor: \"tcc\")"))
+#assert(catch(() => ufac-theme(flavor: "tcc")[x]).contains("config-info(flavor:"))
 // the flavors that are not part of a course number the exercises without a prefix, before the configs of the deck
 #for flavor in ("coursework", "tcc", "dissertation", "thesis") {
   let prefix = _prepare-configs("en", (config-info(flavor: flavor),)).before.map(c => c.info).filter(i => "counter-prefix" in i)
@@ -148,9 +150,10 @@
 // cover: an unknown layout or cover style fails with the names that exist; the names of 0.3.0 (`style`,
 // `background`) fail with the new ones
 #assert(catch(() => title-slide(cover-layout: "left")).contains("\"stack\""))
-#assert(catch(() => ufac-theme(cover-style: "circles")[x]).contains("\"bubbles\""))
-#assert(catch(() => title-slide(style: "top")).contains("style is now cover-layout"))
-#assert(catch(() => ufac-theme(background: "plain")[x]).contains("background is now cover-style"))
+#assert(catch(() => ufac-theme(cover-style: "circles")[x]).contains("\"circles\" is now \"bubbles\""))
+#assert(catch(() => title-slide(style: "stack")).contains("style is now cover-layout (cover-layout: \"stack\")"))
+#assert(catch(() => ufac-theme(background: "plain")[x]).contains("background is now cover-style (cover-style: \"plain\")"))
+#assert(catch(() => ufac-theme(background: "circles")[x]).contains("(cover-style: \"bubbles\")"))
 
 // closing slide: up to three contents, or the body alone with the named title/subtitle; checked at the call
 #assert.eq(type(ending-slide()), content)
