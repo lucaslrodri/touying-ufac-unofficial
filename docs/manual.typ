@@ -247,10 +247,10 @@ the first); a long content goes on by itself.
 
 #caution[
   Touying takes `---` for a page break also in the middle of a sentence, where Typst would write an em dash:
-  `A root --- when it exists --- is unique` goes on three pages. A typed em dash (`—`) breaks the page too when inline
-  markup comes right after it (bold, italic, math or code), as in `Text — $x$`, also in an arrow list or a `>` box. For
-  a dash in a sentence, use an en dash (`--`), or put the paragraph in a `#block[ ]`; a plain `#[ ]` does not protect
-  it.
+  `A root --- when it exists --- is unique` goes on three pages. A typed em dash (`—`) can break the page too, also in an
+  arrow list or a `>` box: before bold, italic, math, code, a link, a quotation or a `#` call (`Text — $x$`), and at
+  the end of a paragraph; only a plain word right after it is safe. For a dash in a sentence, type an en dash (`--`),
+  which is safe everywhere.
 ]
 
 The `===` subtitle is repeated on the pages that continue the slide, unless the continuation starts with another
