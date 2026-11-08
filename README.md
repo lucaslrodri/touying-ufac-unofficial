@@ -386,19 +386,19 @@ The theme sits on Touying and works with the packages a deck usually takes along
 
 ### Touying
 
-Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simple) (`#pause`, `#meanwhile`, and [`#uncover`, `#only`, `#alternatives`](https://touying-typ.github.io/docs/tutorials/dynamic/complex)), `#speaker-note`, `#slide(composer:)` etc. work as usual on the elements of the theme, and so do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex). Covered content stays faintly visible under a veil in the color of the page, or of the box around it. The limits, each with its way out (more in the section "Touying" of the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf)):
+Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simple) (`#pause`, `#meanwhile`, and [`#uncover`, `#only`, `#alternatives`](https://touying-typ.github.io/docs/tutorials/dynamic/complex)), `#speaker-note`, `#slide(composer:)` etc. work as usual on the elements of the theme, and so do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex). Covered content stays faintly visible under a veil in the color of the page, or of the box around it. The limits, each with its way out:
 
 - inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, any animation (`#pause`, `#meanwhile`, `#uncover`, `#only`, `#alternatives`) makes Touying stop with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
 - a covered list, code block or box that runs on to the next page is hidden instead of veiled: split the slide with `---`;
 - on a slide that goes on to the next page, put a `#pause` after a `===`, not right before it (otherwise it leaves blank pages), and give a `#pause` between `->` lines a paragraph of its own (glued to the lines, the document does not converge);
-- more cases, each with its way out in the manual:
-  - a `#pause` between the lines of a `>` box or of quotations;
-  - a `#pause` and an `#uncover`/`#only` in one paragraph;
-  - a line glued to a `#pause`, with an image or a shape after it, which shows on the first step;
-  - a `#speaker-note` glued to the items of a list;
-  - an `#uncover` around an item right after another item of a list, which does not veil it;
-  - a list right inside an `#align(center)`, whose covered markers move;
-  - what is in the columns after a `#pause` in a column;
+- more cases, each with its way out in the section "Touying" of the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf):
+  - a `#pause` between the lines of a `>` box or of quotations, which shows them on the first step;
+  - a `#pause` and an `#uncover`/`#only` in one paragraph, which Touying reorders on the first step;
+  - a covered line glued to a `#pause` and followed by an image or a shape, which leaves the line visible on the first step;
+  - a `#speaker-note` glued to the items of a list, which shows the covered items on the first step;
+  - an `#uncover` around an item after another item, glued or after a blank line, which leaves that item visible;
+  - a list right inside an `#align(center)` or an `#align(right)`, whose covered markers move;
+  - the columns after a `#pause` in a column, which are only partly veiled;
   - a list split by a `#pause` under a `#set enum(start: ..)`, which counts from 1;
   - Touying's `#item-by-item`, which shows every item at once with this theme.
 

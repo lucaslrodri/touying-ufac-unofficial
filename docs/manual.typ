@@ -742,15 +742,16 @@ The limits of the animations, each with its way out:
 - A `#pause` on its own line between two lines of text, with an image or a shape after the covered line, leaves that
   line visible on the first step (only the image or the shape is veiled): give the `#pause` a paragraph of its own.
 - A `#pause` in a column covers the next columns too, but badly: a callout there is veiled in bands, an image or a
-  shape not at all, and a list alone in a column shows on the first step as plain text (`->`) or with its markers
-  unveiled (`-`): put `#uncover(2)[..]` (the step the `#pause` opens) around the content of the next columns.
+  shape not at all, a `->` list alone in a column is veiled but written as plain text, with its lines run together,
+  and a `-` list alone keeps its markers unveiled: put `#uncover("2-")[..]` (from the step the `#pause` opens on)
+  around the content of the next columns.
 - A `#speaker-note` glued to the items of a list, between them or right after them, shows the covered items on the
   first step: write the note at the start of the slide, or at its end after a blank line.
-- An `#uncover` around an item right after another item of a list does not veil it: put a `#pause` between the
-  items.
-- In a list right inside an `#align(center)`, the marker of a covered item stands in the middle on the first step and
-  goes to the margin on the next, as in Touying's own themes: center the list as a block,
-  `#align(center, block(align(left)[..]))`.
+- An `#uncover` around an item that follows another item of a list, glued to it or after a blank line, does not veil
+  it: put a `#pause` between the items.
+- In a list right inside an `#align(center)` or an `#align(right)`, the marker of a covered item stands next to its
+  text on the first step and goes to the left margin on the next, as in Touying's own themes: center the list as a
+  block, `#align(center, block(align(left)[..]))`.
 - A numbered list split by a `#pause` counts from 1, whatever the `#set enum(start: ..)`: write the first number
   (`3.`), and the next items follow it.
 - A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
