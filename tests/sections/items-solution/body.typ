@@ -83,7 +83,7 @@ A bare `#solution` on a slide of another kind opens nothing and shows nothing:
 The text goes on, without a line nor a word.
 
 == The separator after a pause <exercise>
-`#pause` and then `#answer(sep: ":")`: the line and "Answer:" open the next subslide.
+`#pause` and then `#answer(sep: ":")`: the line stays, and "Answer:" with the text appears on the next subslide.
 
 #pause
 #answer(sep: ":")
