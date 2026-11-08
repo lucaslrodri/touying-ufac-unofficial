@@ -75,6 +75,15 @@ Covered line, veiled.
   ]
 ]
 
+== Limit: `#uncover` around an item right after another
+- first item
+#uncover(2)[- second item, shown on the first step]
+
+== Way out: a `#pause` between the items
+- first item
+#pause
+- second item, veiled
+
 == Limit: a list right inside `#align(center)`
 #align(center)[
   - first item
