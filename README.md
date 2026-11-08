@@ -33,13 +33,13 @@ This creates a deck from the template. In the new folder, `typst watch main.typ`
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    flavor: "lecture",   // coursework or a final paper: start from example/coursework.typ or tcc.typ
+    flavor: "lecture",   // or "coursework", "tcc", "dissertation", "thesis": see example/coursework.typ, tcc.typ
     subject: [Subject name],                  // or Touying's `title:`
     subject-code: [CODE or Department],       // or `short-title:`
     unit-title: [Title of the teaching unit], // or `subtitle:`
     unit: [Teaching unit I],                  // or `short-subtitle:`
     author: [Prof. Dr. Your Name],
-    // counter-prefix: [2.],   // "Exercise 2.N" in the second unit; the lecture gives [1.]
+    // counter-prefix: [2.],   // "Exercise 2.N" in the second unit; the flavor "lecture" gives [1.]
   ),
 )
 
@@ -103,7 +103,7 @@ Three example decks:
 
 ````typst
 // Example deck of the touying-ufac-unofficial theme: a lecture of a course, with the aliases of a course (`subject`,
-// `subject-code`, `unit`, `unit-title`, `semester`), a slide revealed step by step, exercises and examples with their
+// `subject-code`, `unit`, `unit-title`, `semester`) and the prefix of its unit (`counter-prefix`), a slide revealed step by step, exercises and examples with their
 // solutions, callouts and the closing slide.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
@@ -118,6 +118,7 @@ Three example decks:
     unit-title: [The solar system],
     semester: [2026.2],
     author: [Prof. Dr. Your Name],
+    counter-prefix: [2.],   // the second unit: "Exercise 2.1"
   ),
 )
 

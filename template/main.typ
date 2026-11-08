@@ -7,13 +7,13 @@
   aspect-ratio: "16-9",
   lang: "en",   // "pt-br" (default), "en" or "es"
   config-info(
-    flavor: "lecture",   // coursework or a final paper: start from example/coursework.typ or tcc.typ
+    flavor: "lecture",   // or "coursework", "tcc", "dissertation", "thesis": see example/coursework.typ, tcc.typ
     subject: [Subject name],                  // or Touying's `title:`
     subject-code: [CODE or Department],       // or `short-title:`
     unit-title: [Title of the teaching unit], // or `subtitle:`
     unit: [Teaching unit I],                  // or `short-subtitle:`
     author: [Prof. Dr. Your Name],
-    // counter-prefix: [2.],   // "Exercise 2.N" in the second unit; the lecture gives [1.]
+    // counter-prefix: [2.],   // "Exercise 2.N" in the second unit; the flavor "lecture" gives [1.]
   ),
 )
 
