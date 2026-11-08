@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-- Names, before 0.3.0 is published again with them: `config-info(kind:)` is now `flavor`; `ufac-theme(background:)` is now `cover-style`, and its default `"circles"` is `"bubbles"`; `title-slide(style:)` is now `cover-layout`. The old names stop with an error that gives the new one.
-- The flavors `"course"` and `"talk"` are removed, and so is the example deck of an extension course. A deck without a `flavor` is a `"lecture"`: it already looked like one.
+- Names: `config-info(kind:)` is now `flavor`; `ufac-theme(background:)` is now `cover-style`, and its default `"circles"` is `"bubbles"`; `title-slide(style:)` is now `cover-layout`. The old names stop with an error that gives the new one.
+- The flavors `"course"` and `"talk"` are removed, and so is the example deck of an extension course. A talk is a lecture with `config-info(counter-prefix: none)`; an extension course, a lecture with `#title-slide(cover-layout: "top", author-label: [Instructors])`. A deck without a `flavor` is a `"lecture"`: it already looked like one. `title-slide(author-label:)` is `none` by default, and `auto` is `none` too.
 - The example deck of a final paper has the cover style `"gradient"`.
 - The README is short: what the theme is, how to start, what to choose, and the example decks with their code. The details are in the manual, and the changelog is this file.
 - A `#pause` in a paragraph of its own, with blank lines around it, between two items of a list, reveals the next item, as a `#pause` on its own line does; also inside an `emph-box` without a title or an icon, a callout in the default style, a column, an `align` (with the list in a block: see the limits), a `pad` or an item, and after a `set` rule. The list then has the spacing of a list without blank lines.
