@@ -56,3 +56,14 @@ Visible #tag[tag] and #eq-box[$x = 2$].
 #emph-box(title: [With an icon], icon: "tip")[Body of a box with an icon.]
 
 Covered #tag[tag], #tag(size: 1em)[big tag], #eq-box[$x = 2$] and #info("logo", height: 2em) in running text.
+
+== A `#pause` alone on its line before one covered line
+Visible text.
+
+#pause
+-> A single covered arrow line, veiled whole.
+
+== A `#pause` between two list items
+- Visible item.
+#pause
+- Covered item, veiled whole.

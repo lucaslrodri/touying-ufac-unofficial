@@ -466,9 +466,6 @@
   if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) {
     return context _cover-text(self, _veil-color(page), args, body)
   }
-  // a chunk that starts inside a paragraph (a `#pause` on its own line between two `-> item` lines) starts on the
-  // visible line, at its baseline: the veil starts below that line (its descenders), not with the outset above it
-  let mid = _is-space(_children(_unstyle(body)).first())
   context {
     let veil = _veil-color(page)
     let s = here().position()
@@ -480,7 +477,13 @@
       body
       parbreak()
       context {
-        let h = here().position().y - s.y
+        let e = here().position()
+        let h = e.y - s.y
+        // a chunk that starts inside a paragraph (a `#pause` on its own line between two `-> item` lines) starts on
+        // the visible line, at its baseline, to the right of where the chunk ends (the start of a block): the veil
+        // starts below that line (its descenders), not with the outset above it. A chunk that opens its paragraph (a
+        // `#pause` alone before it) starts where it ends, at the left: the whole veil
+        let mid = e.x < s.x - 1pt
         let skip = if mid { 0.7em.to-absolute() } else { 0pt }
         if h > skip { place(start, dy: -h + skip, rect(width: 100%, height: h - skip, outset: (x: .5em, y: .45em), fill: veil)) }
       }
