@@ -707,7 +707,8 @@ revealed in steps, write `#emph-box[..]` without a title, with the `#pause` in a
   Keep `#pause` and `#uncover`/`#only` in separate paragraphs: within one paragraph Touying reorders the covered
   part on the first subslide. A `#pause` right before a `===` subtitle, on a slide that goes on to the next page,
   leaves blank pages or the warning "document did not converge": put the `#pause` after the `===`, or split the slide
-  with `---`. Touying's `#item-by-item` does not veil the items with this theme: put a `#pause` between them.
+  with `---`. On such a slide, a `#pause` between `->` lines goes in a paragraph of its own, with blank lines around
+  it: glued to the lines, the document does not converge. Touying's `#item-by-item` does not veil the items with this theme: put a `#pause` between them.
 ]
 
 #table(

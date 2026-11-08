@@ -532,7 +532,8 @@
   let slide = query(metadata.where(value: (kind: "touying-new-slide")).before(here()))
   if subslide.len() == 0 or slide.len() == 0 { return utils.slide-counter.display() }
   let first = utils.slide-counter.at(slide.last().location()).first()
-  str(first + here().page() - subslide.last().location().page())
+  // never below the first page of the slide, even in a layout pass that has not settled yet
+  str(calc.max(first, first + here().page() - subslide.last().location().page()))
 }
 /// Separator of the default `footer-left` ("CODE · SUBJECT"): a drawn disc (radius 0.18em of the 0.4em footer text,
 /// centered on the cap height, filled with the current `text.fill`, so it is white on the cover). The font's middle dot
