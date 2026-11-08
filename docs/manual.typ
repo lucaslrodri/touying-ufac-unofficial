@@ -706,7 +706,8 @@ compilation inside a box with a title, and its `#cols` has no `divider`.
 
 Between the items of a list (`-`, `+`), the `#pause` goes on its own line or in a paragraph of its own, with blank
 lines around it: the list is the same on every step, and numbered items keep their numbers under the veil, also inside
-a box, a callout or a column.
+an `emph-box` without a title, a callout in the default style or a column (in the boxes with a badge no animation
+works, see the first limit below).
 
 #table(
   columns: (auto, 1fr),
