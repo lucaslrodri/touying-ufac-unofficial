@@ -693,7 +693,8 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 The theme leaves the features of Touying alone. Animations work on every element of the theme: covered content stays
 faintly visible under a veil in the color of the page, or of the box around it; a covered list, code block or box that
-runs on to the next page is hidden instead, as the veil cannot span two pages. Animations work inside a box too, except
+runs on to the next page is hidden instead, as the veil cannot span two pages, and so is a covered block at the foot of
+a page when the covered content after it goes on to the next. Animations work inside a box too, except
 inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` and a `#tag`: there Touying
 stops with "Unsupported mark … inside some functions like context", so a `#pause` goes before the box, and
 `#uncover`/`#only` around it. A `#pause` between the lines of a `>` box or of quotations does nothing: for a box
@@ -705,13 +706,13 @@ revealed in steps, write `#emph-box[..]` without a title, with the `#pause` in a
   Keep `#pause` and `#uncover`/`#only` in separate paragraphs: within one paragraph Touying reorders the covered
   part on the first subslide. A `#pause` right before a `===` subtitle, on a slide that goes on to the next page,
   leaves blank pages or the warning "document did not converge": put the `#pause` after the `===`, or split the slide
-  with `---`.
+  with `---`. Touying's `#item-by-item` does not veil the items with this theme: put a `#pause` between them.
 ]
 
 #table(
   columns: (auto, 1fr),
   table.header([Feature], [Functions]),
-  [Animations], [`#pause`, `#meanwhile`, `#jump`, `#uncover`, `#only`, `#alternatives`, `#item-by-item`, `#effect`, `#touying-raw`],
+  [Animations], [`#pause`, `#meanwhile`, `#jump`, `#uncover`, `#only`, `#alternatives`, `#effect`, `#touying-raw`],
   [Notes and handouts], [`#speaker-note` (it attaches to the previous slide), `#handout-only`, `config-common(handout: true)`],
   [Layout], [`#slide(composer: (1fr, 2fr))`, `#cols`, `components.adaptive-columns`, `components.full-width-block`, `utils.fit-to-width`, `utils.fit-to-height`],
   [Overflow], [`config-common(breakable: false, clip:, detect-overflow:)`],
