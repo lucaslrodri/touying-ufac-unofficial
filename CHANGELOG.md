@@ -1,10 +1,5 @@
 # Changelog
 
-## Unreleased
-
-- The manual no longer suggests a `#block[ ]` around a paragraph with an em dash: it turns an arrow list or a `>` box into plain text. Type an en dash (`--`); the manual lists when a typed `—` breaks the page.
-- The limits of the animations are a section of their own in the manual, *Known limitations*.
-
 ## 0.3.0
 
 Breaking changes, and how to move a 0.2.0 deck:

@@ -1,4 +1,0 @@
-/// Synopsis: the dashes on a slide (manual, "Slides and continuations"). Touying takes `---` for a page break also in a sentence (slide 1, three pages). A typed `—` breaks the page too when no plain word follows it on the same line: before italic, math, code, a link, quotation marks, a parenthesis or a function written with `#`, and at the end of a line or of a paragraph (slide 2, nine breaks: ten pages); in an arrow list, where the items after it lose their arrows, a `>` box and a quotation, which loses its box (slides 3 to 5, two pages each). The en dash `--` is safe in all those places, and so is a `—` before a plain word, also after markup; inside a `-` item or a callout, a `—` before markup stays on the page too (slide 6, one page).
-#import "../../common.typ": *
-#show: setup
-#include "body.typ"

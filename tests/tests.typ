@@ -75,7 +75,6 @@
 #include "./sections/ending/body.typ"
 
 #include "./sections/edge-cases/body.typ"
-#include "./sections/dashes/body.typ"
 
 // =====================================================================================================================
 // Variants of the section slide and of its figure, one after the other, close the catalogue.
