@@ -20,6 +20,20 @@
   body,
 ) = context text(fill: _emph-color(colors.primary), weight: "bold", body)
 
+/// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
+/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which goes through the `self` of the slide and
+/// stops the compilation inside a box with a badge, a `#tag` or the header of a table; this one works everywhere.
+///
+/// ```example
+/// An #alert[important] word.
+/// ```
+/// -> content
+#let alert(
+  /// Text to emphasize. -> content
+  body,
+) = context text(weight: "bold", fill: if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) },
+  body)
+
 /// Bold text in UFAC yellow. It is weak on white: meant for short labels and dark backgrounds.
 ///
 /// ```example

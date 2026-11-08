@@ -343,7 +343,7 @@ A ~strong underline~ and
 #underline[the function form].
 ````
 
-#see("components", "primary()", "secondary()", "tertiary()", "quaternary()")
+#see("components", "alert()", "primary()", "secondary()", "tertiary()", "quaternary()")
 
 == Code chips
 
@@ -858,7 +858,7 @@ chapters above show how to use them.
 == Boxes and emphases
 
 #reference("components", "emph-box", "eq-box", "callout", "caution", "tip", "remark", "note", "example", "examples",
-  "tag", "quote-box", "primary", "secondary", "tertiary", "quaternary")
+  "tag", "quote-box", "alert", "primary", "secondary", "tertiary", "quaternary")
 
 == Lists, columns and the outline
 
