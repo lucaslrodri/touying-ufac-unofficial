@@ -420,7 +420,7 @@
 /// Callout: a box with the color, the icon and the title of its kind, the title in the language of the deck. The
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
 /// bold opening the text ("*Tip.* …", "*Caution!* …"; a text that opens with a list (`-`, `+` or `->`), a `>` box, a
-/// quote or a lone `>` before an equation starts on the line under it); `"badge"` is an @emph-box with the title on a badge over the
+/// quote or a `>` before an equation starts on the line under it); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its color; a code block keeps its
 /// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark, @note, @example and
 /// @examples.
