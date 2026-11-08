@@ -120,8 +120,8 @@
 }
 
 /// Gives the deck more icons: one or more collections in the JSON format of Iconify (`json("mdi.json")`), whose icons
-/// are then written `#icon("mdi:home")`. It is the `provide-icons` of the iconify package. It goes in a slide, or in the
-/// body of the cover (`#title-slide[#provide-icons(..)]`): before the cover, it would open an extra page.
+/// are then written `#icon("mdi:home")`. It is the `provide-icons` of the iconify package. It goes in any slide after the
+/// cover, and its icons serve the whole deck, the cover included: before the cover, it would open an extra page.
 ///
 /// ```typ
 /// #provide-icons(json("octicon.json"))

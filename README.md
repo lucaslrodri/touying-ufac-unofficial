@@ -24,7 +24,7 @@ The command creates a deck from [template/main.typ](template/main.typ): the cove
 
 The theme uses the font *New Computer Modern Sans*, which Typst does not bundle: without it, the slides fall back to another font. It belongs to the [New Computer Modern](https://ctan.org/pkg/newcomputermodern) family: download the archive from CTAN and take the `NewCMSans10-*.otf` files of its `otf` folder. Install them on the system, or keep them in a folder and compile with `typst watch --font-path <folder> main.typ`. In the [Typst web app](https://typst.app/), upload the `.otf` files to the project: fonts inside the project are found automatically.
 
-Before a version reaches Typst Universe, its development version (the `develop` branch) can be installed as a local package and imported from `@local` instead of `@preview`: see [Local installation with gotpm](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm).
+Before a version reaches Typst Universe, its development version (the `develop` branch) can be installed as a local package and imported from `@local` instead of `@preview`: with [gotpm](https://github.com/npikall/gotpm), `git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`, then `gotpm install` in the new folder (see [Local installation with gotpm](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm)).
 
 <!-- template:begin (generated from template/main.typ by scripts/readme.sh: do not edit by hand) -->
 ````typst
@@ -302,7 +302,7 @@ The deck above as a PDF: [main.pdf](https://github.com/lucaslrodri/touying-ufac-
 
 Touying breaks the page at a top-level em dash next to inline markup, so `Text — *bold*` starts a new page: use an en dash (`–`) or put the paragraph in a `#block[ ]` (a plain `#[ ]` does not protect it).
 
-Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, each a link to its section slide), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`.
+Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-left` … `footer-right` change each position, with content, an array or `self => ...`, as `footer-left`; `#title-slide[...]` puts content below the titles: a message, a contact, a logo), `#outline()` (the parts of the deck, each a link to its section slide), `#slide[...]`, `#ending-slide[title][subtitle][body]` (the closing slide, on the blue page of the cover; without a title, "Thank you!"), `#exercise-slide(title:, color:, icon:)[...]`, `#example-slide(title:, color:, icon:)[...]`.
 
 ### Inline formatting
 
@@ -384,7 +384,7 @@ The theme sits on Touying and works with the packages a deck usually takes along
 
 ### Touying
 
-Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual, on every element of the theme; covered content stays faintly visible under a veil in the color of the page, or of the box around it (a `#pause` goes outside a box, not inside it; on a slide that goes on to the next page, put it after a `===`, not right before it). So do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex).
+Touying's `#pause`, `#uncover`, `#only`, `#alternatives`, `#speaker-note`, `#slide(composer:)` etc. work as usual, on every element of the theme, and so do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex). Covered content stays faintly visible under a veil in the color of the page, or of the box around it; a covered part that runs on to the next page is hidden instead. The animations also work inside a box, except an `emph-box` with a title or an icon, a callout with `style: "badge"` and an `eq-box`, where Touying stops with "Unsupported mark": put them before such a box. On a slide that goes on to the next page, put a `#pause` after a `===`, not right before it, or split the slide with `---`.
 
 ### Code blocks with codly
 
@@ -406,7 +406,7 @@ The theme draws its own code box and does not need [codly](https://typst.app/uni
 
 ### Icons
 
-`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the color of its surroundings: black in the text, the color of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name (`"caution"`, `"tip"`, `"remark"`, `"note"`, `"exercise"`, `"example"`, `"python"`, …; the full list is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf), with a picture of each). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/): give it to `provide-icons`, in a slide or in the body of the cover (before `#title-slide` it opens an extra page), and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes an icon (an `emph-box`, a callout, the badge of an exercise or example), where it behaves like an icon of the theme.
+`#icon("name", color: auto, size: 1em)` draws an icon on the line of text, in the color of its surroundings: black in the text, the color of a box inside it, white in a pill. The theme ships only the icons it uses, each with a role that is also its name (`"caution"`, `"tip"`, `"remark"`, `"note"`, `"exercise"`, `"example"`, `"python"`, …; the full list is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf), with a picture of each). Any other icon comes from a collection in the JSON format of [Iconify](https://iconify.design/): give it to `provide-icons`, in any slide after the cover (its icons serve the whole deck, the cover included; before `#title-slide` it opens an extra page), and write the icon as `"collection:name"`, in `#icon` or wherever the theme takes an icon (an `emph-box`, a callout, the badge of an exercise or example), where it behaves like an icon of the theme.
 
 ```typst
 == Field trip
@@ -472,7 +472,6 @@ New:
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer. `footer-left` and `footer-right` also take an array: its items joined by a dot, those that show nothing left out (with none left, the footer line runs unbroken).
 - `provide-icons` gives the deck the icons of any collection of Iconify.
 - Inside a box, the alert, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
-- Figure captions are at 0.6 of the size of the text, which leaves more room for the figure.
 - The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.
 - Four more example decks: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [course](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/course.typ), [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ) and [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ).
 
