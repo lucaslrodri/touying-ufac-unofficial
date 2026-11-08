@@ -300,7 +300,7 @@
 /// (arrays): `#info(i => [#i.short-title: #i.title])`.
 ///
 /// ```typ
-/// The course #info("title"), taught by #info("author").
+/// The course #info("subject"), taught by #info("author").
 /// ```
 /// -> content
 #let info(
