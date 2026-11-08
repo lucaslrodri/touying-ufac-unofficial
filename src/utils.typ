@@ -493,6 +493,20 @@
 }
 
 // ---------- footer (ported from 0.0.1) ----------
+/// The number of the page in the footer (in `context`): the number of the first page of the slide plus the place of the
+/// page in the current subslide. Touying steps its slide counter on every page of the first subslide only (the
+/// `page-preamble`, in Touying 0.7.4 and 0.8.0), so on a slide that goes on to a second page the later subslides
+/// repeated the number of its last page (7, 8, 8, 8 instead of 7, 8, 7, 8). The markers Touying leaves at the start
+/// of each slide and subslide give the first page of both; the footer comes after the body of its page, so they are
+/// found before it.
+/// -> content
+#let _slide-number() = context {
+  let subslide = query(metadata.where(value: (kind: "touying-new-subslide")).before(here()))
+  let slide = query(metadata.where(value: (kind: "touying-new-slide")).before(here()))
+  if subslide.len() == 0 or slide.len() == 0 { return utils.slide-counter.display() }
+  let first = utils.slide-counter.at(slide.last().location()).first()
+  str(first + here().page() - subslide.last().location().page())
+}
 /// Separator of the default `footer-left` ("CODE · SUBJECT"): a drawn disc (radius 0.18em of the 0.4em footer text,
 /// centered on the cap height, filled with the current `text.fill`, so it is white on the cover). The font's middle dot
 /// was too small and its bullet (U+2022) is a square (2026-09-18).
@@ -737,7 +751,7 @@
       _cell(self, pad-left: 1.25em, pos: "left", grow: false, white: white, max: left-max, left),
       rule,
       right-cell,
-      _cell(self, pos: "center", size: 0.6em, white: white, utils.slide-counter.display()),
+      _cell(self, pos: "center", size: 0.6em, white: white, _slide-number()),
       rule,
     ), dy: if lift { -0.05em } else { 0pt })
   })
