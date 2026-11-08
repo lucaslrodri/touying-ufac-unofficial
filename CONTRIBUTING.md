@@ -76,7 +76,7 @@ sh scripts/report.sh                                       # tests/report.pdf: e
 
 Run directly, `tt` needs the name `@preview/touying-ufac-unofficial:<version>` in the tests that include the decks: `scripts/with-preview.sh` gives it, or, for a whole terminal session, `export TYPST_PACKAGE_PATH=$(mktemp -d) && gotpm install -e -n preview`. In VS Code, the tasks of `.vscode/tasks.json` and the Testing view run `tt` through the script.
 
-`scripts/local.sh` runs the suite, compiles the template and the example decks, assembles the package and checks that gotpm would publish the same files, compiles the templates of the skill (`skills/touying-ufac/templates/`), checks the error messages and checks that the README is in step with the decks; it needs gotpm. It is the pre-commit hook (`.githooks/pre-commit`): a failure aborts the commit, and `git commit --no-verify` skips it. It uses `fonts/` as the CI does when that folder exists, else the installed fonts, and it checks the working copy, not only what is staged. Git does not version its configuration, so the `git config` line above is needed once in every clone.
+`scripts/local.sh` runs the suite, compiles the template, the example decks and `docs/readme/gallery.typ`, assembles the package and checks that gotpm would publish the same files, compiles the templates of the skill (`skills/touying-ufac/templates/`), checks the error messages and checks that the README is in step with the decks; it needs gotpm. It is the pre-commit hook (`.githooks/pre-commit`): a failure aborts the commit, and `git commit --no-verify` skips it. It uses `fonts/` as the CI does when that folder exists, else the installed fonts, and it checks the working copy, not only what is staged. Git does not version its configuration, so the `git config` line above is needed once in every clone.
 
 ## Building
 
@@ -102,7 +102,7 @@ Two blocks of the README are generated: `scripts/readme.sh` (VS Code task **read
 
 | Workflow | Trigger | What it does |
 | --- | --- | --- |
-| [tests.yml](.github/workflows/tests.yml) | push to `main`, pull request, manual | the Tytanic suite (Tytanic 0.4.1 = Typst 0.15); the template and the example decks with the `compiler` version of `typst.toml`, and the error messages |
+| [tests.yml](.github/workflows/tests.yml) | push to `main`, pull request, manual | the Tytanic suite (Tytanic 0.4.1 = Typst 0.15); the template, the example decks and `docs/readme/gallery.typ` with the `compiler` version of `typst.toml`, and the error messages |
 | [release.yml](.github/workflows/release.yml) | tag `v*` | the tests, the manual, the package, `gotpm publish` to the fork of `typst/packages`, the GitHub release |
 
 Tytanic is installed by the official [setup-tytanic](https://github.com/typst-community/setup-tytanic) action, Typst by [setup-typst](https://github.com/typst-community/setup-typst) and gotpm by its installer, at a pinned version. A failed test run uploads `ref/`, `out/` and `diff/` as the artifact `tytanic-results`.

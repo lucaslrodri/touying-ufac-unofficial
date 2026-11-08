@@ -1,11 +1,10 @@
 #!/bin/sh
 # Runs on this machine, without Docker, what .github/workflows/tests.yml runs on the CI (act, in CONTRIBUTING.md, runs
-# the workflows themselves): the Tytanic suite, the template, the example decks and the deck of the README pictures
-# (docs/readme/gallery.typ), and the packaging into a temporary folder, which checks
-# the list of published files and the version of every import, and that gotpm would publish the same files (the
-# offline part of `package.sh --check`); the templates of the skill (skills/touying-ufac/templates/); the error
-# messages raised at layout
-# (scripts/errors.sh); then that README.md is in step with the decks (scripts/readme.sh).
+# the workflows themselves): the Tytanic suite; the template, the example decks and the deck of the README pictures
+# (docs/readme/gallery.typ); the packaging into a temporary folder, which checks the list of published files and the
+# version of every import, and that gotpm would publish the same files (the offline part of `package.sh --check`); the
+# templates of the skill (skills/touying-ufac/templates/); the error messages raised at layout (scripts/errors.sh);
+# then that README.md is in step with the decks (scripts/readme.sh).
 #
 # The template, the example decks and the tests that include them import `@preview/touying-ufac-unofficial:<version>`:
 # the script runs itself through scripts/with-preview.sh, which links that name to this working copy with gotpm while

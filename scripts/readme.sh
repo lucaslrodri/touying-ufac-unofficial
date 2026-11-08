@@ -101,7 +101,7 @@ for style in bubbles gradient plain; do
   sheet "cover-style-$style" 1 4 "cover-$style-1"
 done
 
-# the example decks: their pages, taken by number
+# the deck of the README pictures and the example decks: their pages, taken by number
 render docs/readme/gallery.typ gallery && expect gallery 5
 for deck in $examples; do render "example/$deck.typ" "$deck"; done
 expect lecture 13 && expect coursework 4 && expect tcc 8

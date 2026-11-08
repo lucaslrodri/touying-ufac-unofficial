@@ -96,7 +96,7 @@ jobs:
         with:
           typst-version: ${{ steps.manifest.outputs.compiler }}
 
-      - name: Compile the template and the example decks
+      - name: Compile the template, the example decks and the deck of the README pictures
         run: |
           typst --version
           for deck in template/main.typ example/*.typ docs/readme/gallery.typ; do
