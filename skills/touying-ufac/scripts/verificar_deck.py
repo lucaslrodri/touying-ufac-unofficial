@@ -13,7 +13,7 @@ Uso: python3 verificar_deck.py --modo {aula,academico} <pasta-do-deck> <deck.pdf
   academico  a apresentação de um trabalho (kind "tcc", "dissertation", "thesis", "coursework" ou "talk"); aceita
              também "acadêmico". A raiz da compilação é a própria pasta do deck. Só neste modo vale --minutos N,
              que confere o número de slides de conteúdo com o tempo.
---min-caracteres-funcao N (padrão: 200): o corpo mínimo, em caracteres sem espaço, de uma função do header.typ, de
+--min-caracteres-funcao N (padrão: 50, umas três linhas): o corpo mínimo, em caracteres sem espaço, de uma função do header.typ, de
   figures/ ou do common.typ; uma função menor que isso, ou um apelido de função, sai como FUNCAO_PEQUENA.
 """
 import argparse
@@ -67,7 +67,8 @@ Funções (regra 3, explícito é melhor que implícito):
 - FUNCAO_NO_DECK (REVISAR): função num arquivo de slide: #let f(..), let f = (..) =>, let f = g.with(..) ou apelido
   de função (#let a = b). O código vai no slide; função só se grande, no header.typ (ou no common.typ, na aula).
 - FUNCAO_PEQUENA (REVISAR; AVISO no common.typ): função do header.typ, de figures/ ou do common.typ com corpo de
-  menos de --min-caracteres-funcao (200) caracteres sem espaço, g.with(..) curto ou apelido de função.
+  menos de --min-caracteres-funcao (50) caracteres sem espaço, g.with(..) curto ou apelido de função. O agente nunca
+  cria uma; ela só existe se o usuário decidir, e sai assim mesmo, para ele ver.
 - FUNCAO_USADA_UMA_VEZ (AVISO): função do header.typ ou de figures/ usada no máximo uma vez nos arquivos lidos.
 - ARGUMENTOS_ESPALHADOS (REVISAR): dicionário de argumentos (ou um apelido dele) espalhado com ..nome.
 
@@ -994,7 +995,8 @@ def verificar_funcoes(fontes, ach, min_caracteres, modo):
             if d.tamanho >= min_caracteres:
                 continue
             msg = (f"Função {d.nome} com {d.tamanho} caracteres no corpo (menos de {min_caracteres}): função curta "
-                   "esconde o que o slide faz. Escreva o código onde é usado; função só se o código é grande.")
+                   "esconde o que o slide faz. Escreva o código onde é usado; uma função pequena só fica se o usuário "
+                   "decidiu, e o agente nunca a cria.")
         ach.add(grav, "FUNCAO_PEQUENA", d.fonte.onde(d.ln, True), msg + extra, d.fonte.trecho(d.ln))
 
     # FUNCAO_USADA_UMA_VEZ: função do header ou de figura usada no máximo uma vez
@@ -1870,9 +1872,9 @@ def main():
     ap.add_argument("--sem-compilar", action="store_true", help="não compila; só lê os .typ e o PDF dado")
     ap.add_argument("--minutos", type=int, metavar="N",
                     help="só no modo acadêmico: tempo da apresentação, para a verificação TEMPO")
-    ap.add_argument("--min-caracteres-funcao", type=int, default=200, metavar="N",
+    ap.add_argument("--min-caracteres-funcao", type=int, default=50, metavar="N",
                     help="corpo mínimo, em caracteres sem espaço, de uma função do header.typ, de figures/ ou do "
-                    "common.typ; abaixo disso, FUNCAO_PEQUENA (padrão: 200)")
+                    "common.typ; abaixo disso, FUNCAO_PEQUENA (padrão: 50, umas três linhas)")
     ap.add_argument("--corpo", type=float, default=22.0, metavar="PT", help="corpo do tema em pt (padrão: 22)")
     ap.add_argument("--limiar", type=float, default=0.8, metavar="FRAÇÃO",
                     help="fração do corpo abaixo da qual o texto é letra pequena (padrão: 0.8)")
