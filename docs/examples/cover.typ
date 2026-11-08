@@ -10,7 +10,7 @@
     unit-title: [Tides and waves],
     unit: [Unit III],
     author: [Prof. Author Name],
-    counter-prefix: [3.],   // "Exercise 3.1"
+    counter-prefix: [3.],
   ),
 )
 
