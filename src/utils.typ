@@ -454,7 +454,10 @@
     let veil = _veil-color(page)
     let s = here().position()
     let ends = query(metadata.where(value: _veil-end).after(here()))
-    if ends.len() > 0 and ends.first().location().page() != s.page { hide(body) } else {
+    // hidden, the chunk keeps the `parbreak()` inside `hide`, so a lone shorthand paragraph (`"quote"`, `> box`) is
+    // rewritten as when it is veiled and takes the same room: hidden smaller, a chunk at the bottom of the page fitted
+    // in one layout pass and not in the next, and the choice never settled (the document did not converge)
+    if ends.len() > 0 and ends.first().location().page() != s.page { hide({ body; parbreak() }) } else {
       body
       parbreak()
       context { let h = here().position().y - s.y; if h > 0pt { place(start, dy: -h, rect(width: 100%, height: h, outset: (x: .5em, y: .45em), fill: veil)) } }

@@ -698,7 +698,8 @@ inside it.
 
 #caution[
   Keep `#pause` and `#uncover`/`#only` in separate paragraphs: within one paragraph Touying reorders the covered
-  part on the first subslide.
+  part on the first subslide. A `#pause` right before a `===` subtitle, on a slide that goes on to the next page,
+  leaves blank pages: put the `#pause` after the `===`, or split the slide with `---`.
 ]
 
 #table(

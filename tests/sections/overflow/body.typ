@@ -53,3 +53,18 @@ With `style: "badge"` the callout continues on the next page, as an `emph-box`. 
 #cols[#example[Um carro a 72 km/h anda a 20 m/s.]][#examples[Unidades: m/s, km/h, nós.]]
 
 #emph-box(color: colors.quaternary, icon: "tip", title: [Homework])[Read chapter 2 of the textbook, alone at the top of the next page.]
+
+== Covered content that reaches the next page
+Antes.
+
+#pause
+
+#tip[Dica com ~~alerta~~ e ~sublinhado~ e *negrito*.]
+
+#emph-box(color: colors.tertiary, title: [Caixa])[Caixa com ~~alerta~~ e ~sublinhado~.]
+
+#table(columns: 2, table.header([A], [~~B~~]), [~sub~], [~~alerta~~])
+
+"Citação com ~~alerta~~ e ~sublinhado~."
+
+Texto com #alert[alerta] e #underline[sublinhado] e #highlight[destaque] e `código`.
