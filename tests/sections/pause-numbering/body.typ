@@ -48,7 +48,7 @@
 + four
 
 == Numbered items split after a `set` rule
-#set enum(numbering: "a)")
+#set enum(numbering: "a)", start: 1)
 + first
 #pause
 + second, still b) under the veil
