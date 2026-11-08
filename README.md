@@ -20,13 +20,13 @@ Slides for the [Federal University of Acre (UFAC)](https://www.ufac.br/), Brazil
 typst init @preview/touying-ufac-unofficial:0.3.0
 ```
 
-This creates a deck from the template. In its folder, `typst watch main.typ` compiles it.
+This creates a deck from the template. In the new folder, `typst watch main.typ` compiles it. The theme needs the font *New Computer Modern Sans*, which Typst does not bundle: see *Install the font* in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
 
 <!-- template:begin (generated from template/main.typ by scripts/readme.sh: do not edit by hand) -->
 ````typst
-// Starting deck for the touying-ufac-unofficial theme. Syntax: the manual; the elements at a glance:
-// example/main.typ; a whole lecture: example/lecture.typ, both at
-// https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example
+// Starting deck for the touying-ufac-unofficial theme. Syntax: the manual, docs/manual.pdf; the elements at a glance:
+// example/main.typ; a whole lecture: example/lecture.typ, all at
+// https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -55,11 +55,9 @@ Text.
 ![The 2 pages of template/main.typ](https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/template.png)
 <!-- template:end -->
 
-The theme uses the font *New Computer Modern Sans*. Typst does not bundle it: see *Install the font* in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
-
 ## Choose a flavor
 
-`flavor` sets the cover and the numbering of the exercises. The default is `"lecture"`.
+`flavor` in `config-info` sets where the names go on the cover, its tag and the numbering of the exercises. The default is `"lecture"`.
 
 | `flavor` | For |
 | --- | --- |
@@ -77,27 +75,27 @@ The theme uses the font *New Computer Modern Sans*. Typst does not bundle it: se
 
 ## Elements
 
-Write the slides as in Markdown. The manual has every detail.
+Headings make the slides, and a few shorthands, as in Markdown, make boxes, quotes and arrow lists. Every detail is in the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf).
 
 | Preview | Element |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle. `->` makes a list with arrows. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-section.png" width="340" alt="A section slide"> | **Sections.** `= Title` opens a section slide. An image after it goes on the right. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` and `#solution` open the answer. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text`, `#emph-box(title: [Title])[..]` and `"A quotation."` |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, remark, note and example"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note` and `#example`. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-slide.png" width="340" alt="A slide with a subtitle, arrows, a box and a tip"> | **Slides.** `==` opens a slide and `===` adds a subtitle; `---` goes on to a new page. `->` makes a list with arrows. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-section.png" width="340" alt="A section slide"> | **Sections.** `= Title` opens a section slide. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-exercise.png" width="340" alt="An exercise with its answer"> | **Exercises and examples.** `== Title <exercise>` or `<example>`, numbered. `#answer` or `#solution` opens the answer. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-boxes.png" width="340" alt="A box, a quotation and an equation box"> | **Boxes.** `> text` makes a box, `"A quotation."` a quote and `> $ … $` an equation box. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-callouts.png" width="340" alt="Callouts: caution, tip, remark, note and example"> | **Callouts.** `#caution`, `#tip`, `#remark`, `#note`, `#example` and `#examples`. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-code.png" width="340" alt="Python code and its output"> | **Code.** A fenced block shows its language. A `text` block is the output. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-table.png" width="340" alt="A table with a blue header"> | **Tables.** The header row is blue. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/element-ending.png" width="340" alt="The closing slide"> | **Closing slide.** `#ending-slide[Thank you!]`. |
 
 ## Examples
 
-One deck for each flavor:
+Three example decks:
 
 | Preview | Deck |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-lecture.png" width="400" alt="The cover and an example with its solution of the lecture deck"> | **[lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/lecture.pdf)): a lecture: outline, steps, exercises and code. |
-| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-coursework.png" width="400" alt="The cover and an example with a formula of the coursework deck"> | **[coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/coursework.pdf)): the work of students for a course. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-lecture.png" width="400" alt="The cover and an example with its solution of the lecture deck"> | **[lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/lecture.pdf)): a lecture with an outline, step-by-step reveals, exercises and code. |
+| <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-coursework.png" width="400" alt="The cover and an example with a formula of the coursework deck"> | **[coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/coursework.pdf)): the work of students, in groups on the cover. |
 | <img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/deck-tcc.png" width="400" alt="The cover and the slide of the problem of the tcc deck"> | **[tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ)** ([PDF](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/decks/tcc.pdf)): the defense of a final paper. |
 
 <!-- examples:begin (generated from the decks of example/ by scripts/readme.sh: do not edit by hand) -->
@@ -201,7 +199,7 @@ Mars 1.87
 
 ````typst
 // Example deck of the touying-ufac-unofficial theme: a paper for a course (`flavor: "coursework"`), with the students and
-// the teacher in groups on the cover (the style "stack") and `#info` inside the slides.
+// the teacher in groups on the cover (the cover layout "stack", which the flavor brings) and `#info` inside the slides.
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 
@@ -314,6 +312,6 @@ $ overline(x) = 20 "min", quad s = sqrt((100 + 25 + 0 + 25 + 100) / 4) approx 7.
 
 The theme is [MIT](LICENSE). The [template](template/) is [MIT-0](LICENSE-MIT-0): a deck made from it needs no attribution.
 
-The icons in [assets/icons/](assets/icons/) come from [Octicons](https://primer.style/octicons/) (© GitHub Inc., MIT License), [Phosphor](https://phosphoricons.com/) (MIT License), [Devicon](https://devicon.dev/) (MIT License), [Simple Icons](https://simpleicons.org/) (CC0), [Material Icon Theme](https://github.com/material-extensions/vscode-material-icon-theme) (MIT License) and [VSCode Icons](https://github.com/vscode-icons/vscode-icons) (MIT License), in the format of [Iconify](https://iconify.design/).
+The icons in [assets/icons/](assets/icons/) come from [Octicons](https://primer.style/octicons/) (© GitHub Inc., MIT License), [Phosphor](https://phosphoricons.com/) (MIT License), [Devicon](https://devicon.dev/) (MIT License), [Simple Icons](https://simpleicons.org/) (CC0), [Material Icon Theme](https://github.com/material-extensions/vscode-material-icon-theme) (MIT License) and [VSCode Icons](https://github.com/vscode-icons/vscode-icons) (MIT License), in [Iconify](https://iconify.design/) format.
 
 The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) belongs to the [Federal University of Acre](https://www.ufac.br/). This theme is unofficial: the university does not endorse it.
