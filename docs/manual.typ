@@ -42,6 +42,9 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 ```
 
+The theme comes after Touying: for the names both export, such as `alert`, `slide` and `cols`, the later import wins,
+and the theme's own are the ones that work inside its boxes.
+
 #slide-example("cover", columns: (1fr, 1fr))
 
 From here on, most examples show the source on the left and the result on the right: a real slide when the feature
@@ -706,10 +709,8 @@ The limits, each with its way out:
 - A `#pause` between the lines of a `>` box only holds back what follows the box, and the bottom edge of the box is
   lightly veiled on the first step: for a box revealed in steps, write `#emph-box[..]` without a title, with the
   `#pause` in a paragraph of its own.
-- Numbered items (`+`) split by a `#pause` inside a box or a column start again at 1 under the veil: write the numbers
-  (`1.`, `2.`), which they keep, or put the list outside the box.
-- Quotations on consecutive lines, without a blank line between them, show on the first step as plain text in
-  quotation marks: separate them by blank lines, with the `#pause` between them (each one is then yellow, the first
+- A `#pause` between quotations on consecutive lines, without a blank line between them, makes them show on the
+  first step as plain text in quotation marks: separate them by blank lines, with the `#pause` between them (each one is then yellow, the first
   color of the cycle).
 - A covered list, code block or box that runs on to the next page is hidden instead of veiled, as the veil cannot span
   two pages, and so is a covered block at the foot of a page when the covered content after it goes on to the next:
@@ -720,7 +721,7 @@ The limits, each with its way out:
   own, with blank lines around it.
 - `#pause` and `#uncover`/`#only` in one paragraph: Touying reorders the covered part on the first subslide; keep them
   in separate paragraphs.
-- Touying's `#item-by-item` shows every item from the first step: put a `#pause` between the items.
+- With this theme, Touying's `#item-by-item` shows every item from the first step: put a `#pause` between the items.
 
 #table(
   columns: (auto, 1fr),

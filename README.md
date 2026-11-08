@@ -312,7 +312,7 @@ Functions: `#title-slide()` (`style:` `"line"`, `"stack"` or `"top"`; `header-le
 | `#alert[text]`, `~~text~~` | blue bold (the box color inside a box, UFAC yellow inside pills)                         |
 | `==text==`, `#highlight[...]` | light-yellow background (`#highlight(fill: colors.quaternary-lighter)` for other tones) |
 | `~text~`, `#underline[...]` | strong yellow underline (box color inside a box)                                   |
-| `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green                       |
+| `#primary`, `#secondary`, `#tertiary`, `#quaternary` | bold text in blue / yellow / red / green, the same inside a box |
 | `` `code` ``               | gray chip; inside titles, boxes, pills and table cells it follows the container color (inverted in the blue header and in cells of a dark palette tone, light tones in cells of a light one) |
 | `#tag[text]`               | the yellow tag of the cover, for the text, the titles and the tables; `color:` for another one |
 | `#icon("tip")`             | an icon on the line, in the color of its surroundings (see [Icons](#icons)) |
@@ -386,10 +386,10 @@ The theme sits on Touying and works with the packages a deck usually takes along
 
 Touying's [animations](https://touying-typ.github.io/docs/tutorials/dynamic/simple) (`#pause`, `#meanwhile`, and [`#uncover`, `#only`, `#alternatives`](https://touying-typ.github.io/docs/tutorials/dynamic/complex)), `#speaker-note`, `#slide(composer:)` etc. work as usual on the elements of the theme, and so do the packages Touying integrates: [CeTZ](https://touying-typ.github.io/docs/integration/cetz) and [Fletcher](https://touying-typ.github.io/docs/integration/fletcher) (whose diagrams reveal their parts with `#pause` through `touying-reduce`), [pinit](https://touying-typ.github.io/docs/integration/pinit) and [MiTeX](https://touying-typ.github.io/docs/integration/mitex). Covered content stays faintly visible under a veil in the color of the page, or of the box around it. The limits, each with its way out (more in the section "Touying" of the [manual](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf)):
 
-- inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag`, Touying stops with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
+- a `#pause` or `#meanwhile` inside an `emph-box` with a title or an icon, a callout with `style: "badge"`, an `eq-box` or a `#tag` makes Touying stop with "Unsupported mark": put a `#pause` before such a box, or `#uncover`/`#only` around it;
 - a covered list, code block or box that runs on to the next page is hidden instead of veiled: split the slide with `---`;
 - on a slide that goes on to the next page, put a `#pause` after a `===`, not right before it (otherwise it leaves blank pages), and give a `#pause` between `->` lines a paragraph of its own (glued to the lines, the document does not converge);
-- a `#pause` between the lines of a `>` box or of quotations, numbered items split inside a box, Touying's `#item-by-item`, and `#pause` with `#uncover` in one paragraph have their own limits, with their way out, in the manual.
+- a `#pause` between the lines of a `>` box or of quotations, Touying's `#item-by-item` (with this theme) and `#pause` with `#uncover`/`#only` in one paragraph have their own limits, with their ways out, in the manual.
 
 ### Code blocks with codly
 
@@ -455,6 +455,14 @@ The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) is the property of 
 
 ## Changelog
 
+### Unreleased
+
+- A `#pause` with blank lines around it, between two items of a list, reveals the next item, as when glued to the lines; also inside a box, a callout, a column or after a `set` rule.
+- Numbered items split by a `#pause` keep their numbers under the veil, also inside a box; a `#set enum(start: ..)` applies again to a list that no `#pause` splits.
+- The veil no longer reaches the descenders of the visible line right before a covered block, and covers shapes (`#circle`, `#line`…) after a `#pause`, which no longer stops the compilation.
+- On a slide with animations that goes on to a second page, the footer number never goes below the first page of the slide.
+- The skill for AI agents is one skill with two modes (`skills/touying-ufac/`).
+
 ### 0.3.0
 
 Breaking changes, and how to move a 0.2.0 deck:
@@ -465,7 +473,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The theme ships only its own icons: `#icon("rocket")` of 0.2.0 needs the Octicons collection, `#provide-icons(json("octicon.json"))` in any slide after the cover, and `#icon("octicon:rocket-16")` (see [Icons](#icons)); the Octicons the theme ships keep their own names (`"alert"`, `"pencil"`, `"beaker"`, …).
 - The content of the section slides keeps the page margin by default, and the margin is the `margin` of `new-section-slide`, no longer `ufac-theme(section-margin:)`: for the old look, `config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))`.
 - The theme exports new names: `caution`, `tip`, `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`. A package imported with `*` before the theme loses those it shares, such as theorion's `example`, `remark` and `solution`: import it by its name (see [Integrations](#integrations)).
-- `#alert` is now the theme's own, so the theme is imported after Touying, as in the template. Inside a box it takes the color of the box, where 0.2.0 kept it blue: for the blue, write `#primary`. A `config-methods(alert: ..)` of the deck now reaches only `~~text~~`; to restyle `#alert` too, define `#let alert(body) = ..` after the imports.
+- `#alert` is now the theme's own, so import the theme after Touying, as in the template. Inside a box, `#alert` and `~~text~~` take the color of the box, where 0.2.0 kept them blue: for the blue, write `#primary`. A `config-methods(alert: ..)` of the deck now reaches only `~~text~~`; to restyle `#alert` too, define `#let alert(body) = ..` after the imports.
 - `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
 - Figure captions are at 0.6 of the size of the text: a deck that made them smaller by hand with a size in `em` removes that, or they get smaller twice; `#show figure.caption: set text(size: 18pt)`, after `#show: ufac-theme.with(..)`, gives another size.
 
