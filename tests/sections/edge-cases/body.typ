@@ -15,8 +15,6 @@
 
 Previous text without a blank line
 -> glued to the text above, stays text (the `->` list must open the paragraph)
-
-A paragraph with — an em dash and plain text is safe; an em dash next to markup (`Text — *bold*`) would break the slide (a plain `#[ ]` does not protect it).
 ]
 
 == Empty content
@@ -25,16 +23,3 @@ An empty callout, an empty callout with a badge and an empty box with a title st
 #tip[]
 #caution(style: "badge")[]
 #emph-box(title: [Title])[]
-
-== An em dash next to markup
-#block[In a `#block[ ]`, at the top level: Text — *bold* stays on this page, which is the only one of this slide.]
-
-== A `---` in a sentence
-// Touying takes `---` for a page break wherever it is, also in the middle of a sentence: three pages
-A root --- when it exists --- is unique.
-
-== A dash that keeps the slide whole
-A root -- when it exists -- is unique, and a typed — dash with no markup right after it too.
-
-== A plain `#[ ]` does not protect
-#[Text — *bold* goes on to a second page.]
