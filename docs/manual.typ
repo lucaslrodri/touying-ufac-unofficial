@@ -50,6 +50,10 @@ deck. The repository has complete decks to start from: a lecture, an extension c
 students for a course
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
+Before `#title-slide`, a deck has only imports, `#let` and `set` and `show` rules: anything that makes content, even
+content that is not seen, such as `#provide-icons(..)`, opens a blank page before the cover. It goes in the first slide
+that needs it, or in the body of the cover, `#title-slide[..]`.
+
 Before a version reaches Typst Universe, its development version, the `develop` branch of the
 #link("https://github.com/lucaslrodri/touying-ufac-unofficial")[repository], can be installed as a local package (with
 #link("https://github.com/npikall/gotpm")[gotpm], or copied into the `local` folder of Typst's packages) and imported
@@ -761,7 +765,8 @@ Any other icon comes from a collection in the JSON format of #link("https://icon
 #link("https://typst.app/universe/package/iconify")[iconify] package, which the theme imports: the deck gives the
 collection to `provide-icons` and writes the icon as `"collection:name"`, in `#icon` or wherever the theme takes the
 name of an icon (an `emph-box`, a callout, the badge of an exercise or example). It is then an icon like those of the
-theme, with the same size, the same place on the line and the color of its surroundings.
+theme, with the same size, the same place on the line and the color of its surroundings. As in the example,
+`#provide-icons` goes in a slide (or in the body of the cover), never before the cover (@start).
 
 #slide-example("icons-iconify", pages: (1, 2), columns: (1fr, 1fr))
 
