@@ -120,8 +120,8 @@
     highlight-colors: (colors.secondary, colors.quaternary, colors.tertiary, colors.primary, colors.neutral),
     highlight: (radius: 0pt),
     number: (text: (size: 0.8em)),
-    // the language pill; the theme draws its own (`_label`, through `lang-show_`), this one is for a codly that does
-    // not expose its elembic module
+    // the language pill that codly draws, for a language the theme does not know; the theme draws the pill of the
+    // others (`_label`, through `lang-show_`)
     lang: (fill: _ => white, stroke: _ => 0.6pt + c.lighten(55%), radius: 0.42em,
       inset: (x: 0.45em, y: 0.15em), text: (size: 0.72em, weight: "bold", fill: c)),
     file: (fill: none, stroke: none, radius: 0pt, text: (size: 0.8em, weight: "bold", fill: c.darken(30%))),
@@ -165,29 +165,24 @@
   }).to-dict()
   show: codly.lang-set_(languages: languages)
   // the language pill drawn by `_label`, as without codly: the key of the language comes in the `body` of codly's
-  // element, read through the elembic module codly exposes (`codly.e`); without it, codly's own pill (the theme above)
-  let pill = if "e" in names {
-    codly.lang-show_(it => {
-      let lang = codly.e.fields(it).at("body", default: none)
-      let label = _label(langs, lang, _box-colors(lang).bar)
-      if label == none { it } else { label }
-    })
-  } else { b => b }
+  // element, read through the elembic module codly exposes (`codly.e`)
+  let pill = codly.lang-show_(it => {
+    let lang = codly.e.fields(it).at("body", default: none)
+    let label = _label(langs, lang, _box-colors(lang).bar)
+    if label == none { it } else { label }
+  })
   show: pill
   // the file name with the file icon before it
   show: codly.file-show_(it => [#_centered(s => icon("file", size: s, color: colors.primary, baseline: 0pt), 1em) #it])
   // the bar on the left, by a rule on codly's element (also for a `codly.new(..)` written in the deck). codly's `diff`
   // builds inner passes, which have the field `__diff-pass` and get no bar
-  let with-bar = if "e" in names {
-    codly.show_(it => {
-      let f = codly.e.fields(it)
-      if f.at("__diff-pass", default: none) != none { return it }
-      let lang = f.at("lang", default: auto)
-      let lang = if lang == auto and type(f.body) == content and f.body.has("lang") { f.body.lang } else { lang }
-      block(width: 100%, stroke: (left: 2.5pt + _box-colors(lang).bar), clip: true, it)
-    })
-  } else { b => b }
-  show: with-bar
+  show: codly.show_(it => {
+    let f = codly.e.fields(it)
+    if f.at("__diff-pass", default: none) != none { return it }
+    let lang = f.at("lang", default: auto)
+    let lang = if lang == auto and type(f.body) == content and f.body.has("lang") { f.body.lang } else { lang }
+    block(width: 100%, stroke: (left: 2.5pt + _box-colors(lang).bar), clip: true, it)
+  })
   // the syntax colors on the plain blocks too: the `syntax` of codly's theme only reaches a `codly.new(..)` written in
   // the deck, and a plain block reaches the rule below with Typst's default colors already set
   show raw.where(block: true): set raw(theme: ufac-syntax)
