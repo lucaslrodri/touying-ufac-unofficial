@@ -20,21 +20,6 @@
   body,
 ) = context text(fill: _emph-color(colors.primary), weight: "bold", body)
 
-/// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
-/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which stops the compilation inside an `emph-box`
-/// with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header of a table;
-/// this one works inside every box, with the theme imported after Touying.
-///
-/// ```example
-/// An #alert[important] word.
-/// ```
-/// -> content
-#let alert(
-  /// Text to emphasize. -> content
-  body,
-) = context text(weight: "bold", fill: if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) },
-  body)
-
 /// Bold text in UFAC yellow. It is weak on white: meant for short labels and dark backgrounds.
 ///
 /// ```example

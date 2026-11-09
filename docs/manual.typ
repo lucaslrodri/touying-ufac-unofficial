@@ -42,7 +42,7 @@ Touying and the theme, applies `ufac-theme` with the information of the deck, an
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 ```
 
-The theme comes after Touying, as above: both export `alert` and `cols`, and the later import wins (@touying).
+The theme comes after Touying, as above: both export `cols`, and the later import wins (@touying).
 
 #slide-example("cover", columns: (1fr, 1fr))
 
@@ -344,7 +344,7 @@ A ~strong underline~ and
 #underline[the function form].
 ````
 
-#see("components", "alert()", "primary()", "secondary()", "tertiary()", "quaternary()")
+#see("components", "primary()", "secondary()", "tertiary()", "quaternary()")
 
 == Code chips
 
@@ -695,9 +695,7 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
 of the theme, and covered content is hidden until its step, with Touying's cover (`hide`).
-The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside an
-`emph-box` with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header
-of a table, and its `#cols` has no `divider`.
+The theme is imported after Touying for its `#cols`, which has a `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
 
@@ -813,9 +811,7 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`, which win over the names of the
     package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
     (@integrations)],
-  [`#alert` inside a box, `config-methods(alert: ..)`], [`#alert` is now the theme's own: inside a box it takes the
-    color of the box, as `~~text~~` does (for the blue of 0.2.0, `#primary`), and a custom `alert` method reaches only `~~text~~`; to
-    restyle `#alert` too, `#let alert(body) = ..` after the imports],
+  [`#alert` inside a box], [it takes the color of the box, as `~~text~~` does; for the blue of 0.2.0, `#primary`],
 )
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:
@@ -856,7 +852,7 @@ chapters above show how to use them.
 == Boxes and emphases
 
 #reference("components", "emph-box", "eq-box", "callout", "caution", "tip", "remark", "note", "example", "examples",
-  "tag", "quote-box", "alert", "primary", "secondary", "tertiary", "quaternary")
+  "tag", "quote-box", "primary", "secondary", "tertiary", "quaternary")
 
 == Lists, columns and the outline
 

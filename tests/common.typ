@@ -22,7 +22,7 @@
 #let _demo-scope = (
   emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, cols: cols, colors: colors, icon: icon,
   ufac-logo: ufac-logo,
-  primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: alert,
+  primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary,
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,
   pause: pause, meanwhile: meanwhile, uncover: uncover, only: only, speaker-note: speaker-note,
   utils: utils, components: components, provide-icons: provide-icons, octicons: octicons, tag: tag, callout: callout,

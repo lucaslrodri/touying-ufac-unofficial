@@ -292,7 +292,7 @@ $ P = #eq-box[$1 / N sum_n |x[n]|^2$] $
 |---|---|---|
 | `*termo*` | negrito (na cor da caixa, dentro dela) | um termo novo |
 | `_texto_` | itálico | ênfase leve, título de obra, termo estrangeiro |
-| `~~texto~~` ou `#alert[..]` | negrito azul | **o** termo-chave do slide |
+| `~~texto~~` | negrito azul | **o** termo-chave do slide |
 | `==texto==` ou `#highlight[..]` | fundo amarelo-claro | o que olhar primeiro |
 | `#primary[..]`, `#tertiary[..]`, `#quaternary[..]` | negrito na cor | rótulo ligado a uma cor ("#tertiary[Problema:]") |
 
