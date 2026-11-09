@@ -603,7 +603,10 @@
   context {
     let room = calc.min((0.5 * size).to-absolute(), 0.35em.to-absolute())
     box(fill: color, radius: 3pt, inset: (x: 0.7 * size), outset: (y: room), text(size: size, weight: "bold", fill: ink,
-      tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline", upper(body)))
+      tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline",
+      // what is inside follows the convention of a pill: on a dark tag a yellow alert and a yellow highlight with blue
+      // text, on a light one (the yellow) the blue of a light box
+      if ink == white { _in-box(color, upper(body), kind: "pill") } else { _in-box(colors.primary, upper(body)) }))
   }
 }
 

@@ -23,3 +23,7 @@ In a line of text the tag does not change the height of the line: #tag[a tag] he
   [Plots], tag[new], [`plot3`],
   [Files], tag(color: colors.tertiary)[late], [lab 4],
 )
+
+== Alerts and highlights inside a tag
+A dark tag: #tag(color: colors.primary)[blue with ~~alert~~ and ==highlight==], and a light one:
+#tag[yellow with ~~alert~~ and ==highlight==]. Inside, they follow a pill: yellow on the dark tag, blue on the light.
