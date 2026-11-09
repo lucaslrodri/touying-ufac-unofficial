@@ -11,7 +11,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/lucaslrodri/touying-ufac-unofficial/v0.3.0/docs/readme/flavors.png" alt="The covers of a lecture, the work of students for a course and a thesis defense" width="760"></p>
 
-Slides for the [Federal University of Acre (UFAC)](https://www.ufac.br/), Brazil, in [Typst](https://typst.app/) with [Touying](https://touying-typ.github.io/). For lectures and academic presentations: coursework and thesis defenses.
+Slides for the [Federal University of Acre (UFAC)](https://www.ufac.br/), Brazil, in [Typst](https://typst.app/) with [Touying](https://touying-typ.github.io/). For lectures and academic presentations, from coursework to thesis defenses.
 
 [Manual (PDF)](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/docs/manual.pdf) · [Example decks](https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example) · [Skill for AI agents](https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/skills) · [Changelog](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CHANGELOG.md)
 
