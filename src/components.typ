@@ -7,8 +7,8 @@
 #import "icons.typ": _icon-source, _icon-svg
 
 // ---------- emphasis ----------
-/// Bold text in UFAC blue, also inside a box (unlike `#alert` and `~~text~~`, which take the color of the box around
-/// them). Inside a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow,
+/// Bold text in UFAC blue, also inside a box (unlike `~~text~~`, which takes the color of the box around
+/// it). Inside a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow,
 /// where blue would vanish.
 ///
 /// ```example
@@ -66,7 +66,7 @@
   move(circle(stroke: color + 1.2pt, radius: 0.13em), dy: 0.4em),
 )
 /// Rounded label with white bold text on `color` (subtitles `===`/`====`, exercise/example header). Pushes
-/// `kind: "pill"` on the color stack so `*bold*`, `#alert`, `raw` and `#icon` inside it pick readable colors.
+/// `kind: "pill"` on the color stack so `*bold*`, `~~text~~`, `raw` and `#icon` inside it pick readable colors.
 /// -> content
 #let _pill(
   /// Text of the label. -> content

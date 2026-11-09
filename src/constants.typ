@@ -43,7 +43,7 @@
 /// #table(
 ///   columns: 3,
 ///   table.header([Family], [Base], [Role]),
-///   [`primary`], [`#0C4DA2`], [titles, `->` markers, tables, `#alert`/`#primary`, pills],
+///   [`primary`], [`#0C4DA2`], [titles, `->` markers, tables, `~~text~~`/`#primary`, pills],
 ///   [`secondary`], [`#FFBF14`], [`-` markers, `#secondary`, quotes; `-lighter` is the highlight],
 ///   [`tertiary`], [`#BE1E2D`], [`#tertiary`, exercises],
 ///   [`quaternary`], [`#09B081`], [`#quaternary`, examples],
