@@ -157,8 +157,8 @@
   if family == none { color.darken(40%) } else { colors.at(family + "-dark") }
 }
 
-#let _in-box(color, body, kind: "box") = {
-  _box-color.update(s => s + ((color: color, kind: kind),))
+#let _in-box(color, body, kind: "box", fill: none) = {
+  _box-color.update(s => s + ((color: color, kind: kind, fill: fill),))
   body
   _box-color.update(s => s.slice(0, -1))
 }
@@ -174,13 +174,17 @@
   body,
 ) = {
   let ink = _pill-ink(color)
-  text(fill: ink, weight: "bold", if ink == white { _in-box(color, body, kind: "pill") } else { _in-box(colors.primary, body) })
+  text(fill: ink, weight: "bold", if ink == white { _in-box(color, body, kind: "pill") } else {
+    _in-box(colors.primary, body, fill: color)
+  })
 }
 /// Emphasis color readable in the current context: inside a pill (white text on the color) the blue of
 /// `#alert`/`#primary` would vanish, so it becomes UFAC yellow, or, on a fill where the yellow does not read (a
 /// contrast under 3:1, as on `quaternary`, `neutral` and `secondary-dark`), the dark blue of the light pills; elsewhere the
 /// requested color. With `keep` (`#secondary`, `#tertiary`, `#quaternary`) the requested color stays inside a pill where
-/// it reads (a contrast of 3:1 or more with it), and only where it does not becomes the yellow or the dark blue.
+/// it reads (a contrast of 3:1 or more with it), and only where it does not becomes the yellow or the dark blue; inside
+/// a light pill or a light cell (an entry of the stack with a `fill`), where it does not read, it becomes the color of
+/// the box there, that of an alert.
 ///
 /// #test(`_contrast(colors.secondary, colors.primary) >= 3`, `_contrast(colors.secondary, colors.quaternary) < 3`,
 ///   `_contrast(colors.primary.darken(45%), colors.quaternary) >= 3`, `_contrast(colors.primary.darken(45%), colors.neutral) >= 3`,
@@ -192,11 +196,15 @@
   c,
   /// Keep `c` inside a pill where it reads. -> bool
   keep: false,
-) = if not _in-pill() { c } else {
-  let fill = _current-box-color(colors.primary)
-  if keep and _contrast(c, fill) >= 3 { c } else if _contrast(colors.secondary, fill) >= 3 { colors.secondary } else {
-    colors.primary.darken(45%)
-  }
+) = {
+  let s = _box-color.get()
+  if s.len() == 0 { return c }
+  let top = s.last()
+  if top.kind == "pill" {
+    if keep and _contrast(c, top.color) >= 3 { c } else if _contrast(colors.secondary, top.color) >= 3 {
+      colors.secondary
+    } else { colors.primary.darken(45%) }
+  } else if keep and top.at("fill", default: none) != none and _contrast(c, top.fill) < 3 { top.color } else { c }
 }
 
 // ---------- raw gate and code box ----------

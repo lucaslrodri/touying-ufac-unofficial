@@ -1139,7 +1139,7 @@
     let tones = ("", "-light", "-lighter", "-lightest", "-dark", "-darker", "-darkest")
     let family = ("primary", "secondary", "tertiary", "quaternary", "neutral").find(f =>
       tones.any(t => self.colors.at(f + t, default: none) == it.fill))
-    if family == none { it } else if _is-light(it.fill) { _in-box(self.colors.at(family + "-dark"), it) } else {
+    if family == none { it } else if _is-light(it.fill) { _in-box(self.colors.at(family + "-dark"), it, fill: it.fill) } else {
       set text(fill: self.colors.neutral-lightest)
       _in-box(it.fill, it, kind: "pill")
     }

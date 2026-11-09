@@ -54,7 +54,7 @@
 
 /// Bold text in UFAC yellow, with the bold and the italic inside it in yellow too. It is weak on white: meant for
 /// short labels and dark backgrounds. On a dark background where the yellow does not read (a contrast under 3:1, as
-/// on `quaternary`) it turns dark blue.
+/// on `quaternary`) it turns dark blue, and on a light pill or tag (the yellow badge) the blue of an alert there.
 ///
 /// ```example
 /// A #secondary[side note] in yellow.

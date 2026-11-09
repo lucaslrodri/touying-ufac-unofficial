@@ -381,7 +381,8 @@ the blue (the cover, a table header, a `===` pill) only `#secondary` keeps its c
 turn yellow, and so does a `#tertiary` word in a red badge.
 
 A pill, a badge or a tag (@tags) in a light color has dark blue text, and inside it alerts are blue and highlights
-light blue, as in a blue box. A box, a callout, an exercise or an example in a light color uses the dark tone of its
+light blue, as in a blue box; `#secondary`, `#tertiary` and `#quaternary` keep their color where it reads (3:1) and
+otherwise take that blue, as a `#secondary` word in a yellow badge, or, in a light cell, the dark tone of the cell. A box, a callout, an exercise or an example in a light color uses the dark tone of its
 color (`secondary-dark`, for the yellow) for what takes its color.
 
 #slide-example("pills", columns: (1fr, 1fr))
@@ -676,7 +677,8 @@ The footer shows the short title and the title on the left and the authors on th
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). The texts
 are in capitals, but for inline code, which keeps its letters as written. `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
 array or a function of `self`, whose `self.colors.primary` is the color of the footer text (blue on the slides, white on
-the closing slide, the color of the box in an exercise or example). The items of an array are joined by a dot, those that show nothing left out (as
+the closing slide, the color of the box in an exercise or example). A colored emphasis in it (`#alert`, `#tertiary`, …)
+is not cut inside: it is kept or left out whole. The items of an array are joined by a dot, those that show nothing left out (as
 `info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).

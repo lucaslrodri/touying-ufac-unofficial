@@ -63,3 +63,12 @@
   #solution
   The solution in the dark tone too.
 ]
+
+#exercise-slide(title: [A #secondary[yellow] word in a yellow badge], color: colors.secondary)[
+  === A #quaternary[green] word in the dark yellow pill
+  Tags: #tag[#secondary[yellow] and #tertiary[red] in yellow] and #tag(color: colors.quaternary-light)[#quaternary[green] in light green].
+
+  #emph-box(color: colors.secondary, title: [#secondary[Yellow] in a yellow badge])[The words that do not read on the light pill take the blue of an alert there.]
+
+  #table(columns: 2, table.header([Cell], [Body]), [A light cell:], table.cell(fill: colors.secondary-lighter)[#secondary[yellow] and #tertiary[red]])
+]
