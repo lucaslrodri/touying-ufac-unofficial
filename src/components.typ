@@ -21,9 +21,8 @@
 ) = context text(fill: _emph-color(colors.primary), weight: "bold", body)
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
-/// `~~text~~` shorthand. It takes the place of Touying's `#alert`, which stops the compilation inside an `emph-box`
-/// with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header of a table;
-/// this one works inside every box, with the theme imported after Touying.
+/// `~~text~~` shorthand, which takes plain text only; this one takes any markup, and its bold and italic take its
+/// color. It works inside every box of the theme, which is imported after Touying, whose `#alert` it replaces.
 ///
 /// ```example
 /// An #alert[important] word.
@@ -423,7 +422,7 @@
 
 /// Callout: a box with the color, the icon and the title of its kind, the title in the language of the deck. The
 /// default style, `"bar"`, is the box of a printed handout: a bar on the left, a light fill, the icon and the title in
-/// bold opening the text ("*Tip.* …", "*Caution!* …"; a text that opens with a list (`-`, `+` or `->`), a `>` box, a
+/// bold opening the text ("*Tip.* …", "*Caution!* …"; a text that opens with a list (`-`, `+`, `->` or an @arrow-list), a `>` box, a
 /// quote or a `>` before an equation starts on the line under it); `"badge"` is an @emph-box with the title on a badge over the
 /// border. Inside it, as in a box, the bold text, the markers and the arrows take its color; a code block keeps its
 /// own look. Each kind has a function of its own, with the same options: @caution, @tip, @remark, @note, @example and
@@ -761,7 +760,8 @@
 }
 /// Arrow lists with the arrow in another color, for everything inside the body. The `-> item` shorthand itself
 /// needs no function: consecutive lines starting with `->` become one list with a blue arrow (the box color inside an
-/// @emph-box). The list must start the paragraph, and `-\> item` escapes it. Its function form is @arrow-list.
+/// @emph-box). The list must start the paragraph, and `-\> item` escapes it. The function form of `-> item` is
+/// @arrow-list, which takes its own `color:`.
 ///
 /// ```example
 /// #arrows(color: colors.quaternary)[

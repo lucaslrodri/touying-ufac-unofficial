@@ -266,7 +266,8 @@ A label on the `==` heading turns the slide into the box of an exercise (red) or
 handout. The box fills the slide; the title goes on a badge over its top border, with the icon of the kind (a pencil, a
 beaker), the name, the number and the title; the footer of the slide closes the box. A suffix makes the label unique,
 as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", linked to the slide.
-The same label lets `#touying-recall(<exercise-tides>)` show the slide again, with its number.
+The same label lets `#touying-recall(<exercise-tides>)`, outside a slide, show the slide again with its number,
+without counting it again.
 A short example inside an ordinary slide, without a number, is the callout `#example` (@callouts).
 
 Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
@@ -362,13 +363,13 @@ Call `fit(x, y)` first.
 Bold text, alerts, highlights, underlines, arrows, the markers of the lists (and, in an exercise or example, their
 numbers), chips, links, icons (@icons) and the `===` pills read the color of what
 contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
-(@tables); white or yellow inside a pill, where the color of the pill would hide them. What has a style of its own keeps it: a code
-block, a box inside another box, which brings its own color, and a reference to an exercise or example, in the
-color of its kind.
+(@tables); white or yellow inside a pill, on the cover and on the closing slide, where the color would hide them.
+What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and a
+reference to an exercise or example, in the color of its kind.
 
-Bold and italic are black on a slide, and in a light box bold takes the color of the box. Where the text has a
-color of its own, both take it: white in a pill, on the cover, in the header of a table and on the closing slide,
-blue in the title and the footer, and the color of an alert inside it. An alert on blue is yellow.
+Italic is black on a slide and in a box, as bold is on a slide. Where the text has a color of its own, both take
+it: in a pill, on the cover, in the header of a table, on the closing slide, in the slide header and the footer, and
+inside an alert, the color of the alert.
 
 #slide-example("pills", columns: (1fr, 1fr))
 
@@ -376,7 +377,8 @@ blue in the title and the footer, and the color of an alert inside it. An alert 
 
 Consecutive lines starting with `->` become one list with a blue arrow. The list has to start the paragraph, after a
 blank line; an arrow in the middle of a line and the math arrow are left alone. `#arrow-list[..]` is its function
-form, for items that hold a block or a nested list: the `-` items of its body get the arrow. `#arrows(color: ..)[..]` gives another color to the `->` lines inside. Bullet lists have three levels of
+form, for items that hold a block or a nested list: the `-` items of its body get the arrow. `#arrow-list(color: ..)` gives the arrows another color, and so does `#arrows(color: ..)[..]` for the
+`->` lines inside it. Bullet lists have three levels of
 yellow markers, and numbered lists are blue and bold: `1.`, `a)`, `i.` by level. `#set enum(numbering: "a)")` starts
 at `a)`.
 
@@ -491,7 +493,7 @@ kind has a function of its own, short for `#callout(kind)`: `#tip[..]` is `#call
 ))
 
 The default style is the box of a printed handout, with a bar on the left and the title opening the text; a text that
-opens with a list (`-`, `+` or `->`), a `>` box, a quote or a `>` before an equation starts on the line under the
+opens with a list (`-`, `+`, `->` or `#arrow-list`), a `>` box, a quote or a `>` before an equation starts on the line under the
 title. `style: "badge"` gives an emphasis box with the title on a badge, without the punctuation. `title:` and `icon:`
 change the title and the icon of one callout; `example-name` and `example-icon` of the theme change only the example
 slides, not `#example` and `#examples`.

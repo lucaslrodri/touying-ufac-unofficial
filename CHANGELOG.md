@@ -27,7 +27,7 @@ New:
 - The code blocks in a box of their own, with the language and its logo, which go on to the next page when they are long; `code-languages` adds languages, and the output has its pill in the language of the deck.
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer. `footer-left` and `footer-right` also take an array: its items joined by a dot, those that show nothing left out (with none left, the footer line runs unbroken).
 - `provide-icons` gives the deck the icons of any collection of Iconify.
-- Bold and italic take the color of the text around them where it has one (white in a pill, on the cover, in the header of a table and on the closing slide, blue in the footer, the color of an alert inside it), and an alert on blue is yellow; on a slide they stay black.
+- Bold and italic take the color of the text around them where it has one: in a pill, on the cover, in the header of a table, on the closing slide, in the footer and, inside an alert, the color of the alert; an alert is yellow in a pill, on the cover and on the closing slide. On a slide they stay black.
 - Inside a box, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
 - What a `#pause` covers is hidden until its step, where 0.2.0 left it faintly visible under a veil.
 - The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.
