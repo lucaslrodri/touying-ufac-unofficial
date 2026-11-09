@@ -688,9 +688,12 @@
 ) = {
   let mono = color
   let self = self
-  let ink = if color != auto { color } else { self.colors.primary }
+  if color != auto { self.colors.primary = color }
+  let ink = self.colors.primary
+  // a function of `footer-left`/`footer-right` gets the color of the text as the primary color
+  let text-self = self
   // the rules are drawn from `self.colors.primary`, here and in `_cell`
-  if color != auto { self.colors.primary = if rule-color != auto { rule-color } else { color } }
+  if rule-color != auto { self.colors.primary = rule-color }
   set text(if white { self.colors.neutral-lightest } else { ink })
   set std.align(bottom)
   let rule = if white { _line-white(self) } else { _line(self) }
@@ -700,7 +703,7 @@
     // a text of the footer, or what its function returns, may be an array: the items that show something (an empty
     // `#info` has no width) joined by the dot (`_dot-join`)
     let shown(it) = {
-      let v = if type(it) == function { it(self) } else { it }
+      let v = if type(it) == function { it(text-self) } else { it }
       if type(v) == array { _dot-join(v.filter(x => measure([#x]).width > 0pt)) } else { [#v] }
     }
     let (left, right) = (shown(self.store.footer-left), shown(self.store.footer-right))
