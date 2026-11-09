@@ -690,9 +690,10 @@
   let self = self
   if color != auto { self.colors.primary = color }
   let ink = self.colors.primary
-  // a function of `footer-left`/`footer-right` gets the color of the text as the primary color (on the closing slide,
-  // `white`, the primary color is still the blue)
+  // a function of `footer-left`/`footer-right` gets the color of the text as the primary color, white on the closing
+  // slide, as the function of the logo on the cover
   let text-self = self
+  if white { text-self.colors.primary = self.colors.neutral-lightest }
   // the rules are drawn from `self.colors.primary`, here and in `_cell`
   if rule-color != auto { self.colors.primary = rule-color }
   set text(if white { self.colors.neutral-lightest } else { ink })
