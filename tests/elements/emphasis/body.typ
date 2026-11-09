@@ -23,3 +23,8 @@ Outside the box, bold is *black* again and the #underline[underline, yellow]. `#
 
 === Inside a pill: white *bold*, yellow ~~alert~~ and #primary[primary], dark `raw`
 Normal text below the pill.
+
+== Bold and italic inside a colored emphasis
+#primary[Blue with *bold* and _italic_], #secondary[yellow with *bold* and _italic_],
+#tertiary[red with *bold* and _italic_], #quaternary[green with *bold* and _italic_] and #alert[an alert with *bold* and
+_italic_]: the bold and the italic take the color of the emphasis around them.

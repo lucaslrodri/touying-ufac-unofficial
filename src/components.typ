@@ -7,6 +7,21 @@
 #import "icons.typ": _icon-source, _icon-svg
 
 // ---------- emphasis ----------
+
+/// Bold text in `c`, with the bold and the italic inside it in `c` too: they become text in that color before the
+/// rules of the theme for bold and italic see them. The body of @alert and of the colored emphases.
+/// -> content
+#let _colored(
+  /// Color of the text. -> color
+  c,
+  /// Text to emphasize. -> content
+  body,
+) = {
+  show strong: it => text(fill: c, it.body)
+  show emph: it => text(fill: c, style: "italic", it.body)
+  text(fill: c, weight: "bold", body)
+}
+
 /// Bold text in UFAC blue, also inside a box (unlike `#alert` and `~~text~~`, which take the color of the box around
 /// them). Inside a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow,
 /// where blue would vanish.
@@ -18,7 +33,7 @@
 #let primary(
   /// Text to emphasize. -> content
   body,
-) = context text(fill: _emph-color(colors.primary), weight: "bold", body)
+) = context _colored(_emph-color(colors.primary), body)
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
 /// `~~text~~` shorthand, which takes plain text only; this one takes any markup, and its bold and italic take its
@@ -32,12 +47,7 @@
   /// Text to emphasize. -> content
   body,
 ) = context {
-  let c = if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) }
-  // the bold and the italic inside it take its color: they become text in its color, before the rules of the theme
-  // for bold and italic see them
-  show strong: it => text(fill: c, it.body)
-  show emph: it => text(fill: c, style: "italic", it.body)
-  text(weight: "bold", fill: c, body)
+  _colored(if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) }, body)
 }
 
 /// Bold text in UFAC yellow. It is weak on white: meant for short labels and dark backgrounds.
@@ -49,7 +59,7 @@
 #let secondary(
   /// Text to emphasize. -> content
   body,
-) = text(fill: colors.secondary, weight: "bold", body)
+) = _colored(colors.secondary, body)
 
 /// Bold text in red, for warnings and problems.
 ///
@@ -60,7 +70,7 @@
 #let tertiary(
   /// Text to emphasize. -> content
   body,
-) = text(fill: colors.tertiary, weight: "bold", body)
+) = _colored(colors.tertiary, body)
 
 /// Bold text in green, for advantages and correct answers.
 ///
@@ -72,7 +82,7 @@
 #let quaternary(
   /// Text to emphasize. -> content
   body,
-) = text(fill: colors.quaternary, weight: "bold", body)
+) = _colored(colors.quaternary, body)
 
 // ---------- list markers and pills ----------
 /// Markers of `-` lists by level: filled square, rotated hollow square, smaller hollow circle.
