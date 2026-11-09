@@ -1,4 +1,0 @@
-/// Synopsis: the documented limits of the animations in lists, each next to its way out: an `#uncover` around an item after another item of a list, glued to it or after a blank line, does not veil it (a `#pause` between the items does); in a list right inside an `#align(center)` or an `#align(right)` the marker of the covered item stands next to its text on the first step and goes to the left margin on the next, as in Touying's own themes (the list as a block, `#align(center, block(align(left)[..]))` or `#align(right, block(align(left)[..]))`, keeps it in place). The other documented limits are in the other `sections/pause-limits-*` tests; "Unsupported mark" in `tests/errors/`; the covered content that runs on to the next page in `sections/pause-overflow`.
-#import "../../common.typ": *
-#show: setup
-#include "body.typ"

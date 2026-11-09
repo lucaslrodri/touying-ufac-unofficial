@@ -694,7 +694,7 @@ with two imports with `*`, the later one wins silently. Import the other package
 == Touying <touying>
 
 The theme leaves the features of Touying alone: its animations (`#pause`, `#uncover`, `#only`, …) work on the elements
-of the theme, and covered content stays faintly visible under a veil in the color of the page, or of the box around it.
+of the theme, and covered content is hidden until its step, with Touying's cover (`hide`).
 The theme is imported after Touying for its `alert` and `cols`: Touying's `#alert` stops the compilation inside an
 `emph-box` with a title or an icon (a callout with `style: "badge"` included), an `eq-box`, a `#tag` or the header
 of a table, and its `#cols` has no `divider`.

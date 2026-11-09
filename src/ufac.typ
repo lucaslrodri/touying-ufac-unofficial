@@ -121,8 +121,8 @@
 // ---------- exercises and examples ----------
 /// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
 /// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." /
-/// "Solución." in bold. With a `#pause` right before or right after it, the word and the solution appear on the next
-/// step; the dashed line stays, closing the statement.
+/// "Solución." in bold. With a `#pause` right before or right after it, the line, the word and the solution appear on
+/// the next step.
 /// Written alone, `#solution`, the word ends with a period; `#solution(sep: ":")` ends it with another separator.
 ///
 /// ```typ
@@ -171,8 +171,7 @@
   /// What follows the word. -> str | content
   sep: ".",
 ) = {
-  // the line goes 0.5em past the text (1em from the border) on each side: almost from border to border, and whole under
-  // the veil of `#pause` (which goes 0.5em past the text)
+  // the line goes 0.5em past the text (1em from the border) on each side: almost from border to border
   if line {
     context block(above: 0.65em, below: 0.65em, move(dx: -0.5em, std.line(length: 100% + 1em,
       stroke: (paint: _current-box-color(colors.primary), thickness: 0.4pt, dash: "dashed"))))
@@ -365,8 +364,7 @@
 }
 
 /// The slide of an exercise or example: the box of the item on the page, without the header (the badge carries the
-/// title) and without the footer of the page (it goes into the box, in the color of the item). The veil of `#pause`
-/// takes the fill of the box.
+/// title) and without the footer of the page (it goes into the box, in the color of the item).
 /// -> content
 #let _item-slide(
   /// Touying's `self`. -> dictionary
@@ -388,15 +386,7 @@
     if sup.value.icon != auto { ic = sup.value.icon }
   }
   let badge = context [#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ — #h.body]]
-  // the veil of `#pause` in the fill of the box: the one of the theme takes the color of the page (white), which would
-  // show as a patch on the box
-  let fill = color.lighten(95%)
-  let cover(self: none, ..args, body) = {
-    let s = self
-    if type(s) == dictionary { s.page = s.at("page", default: (:)) + (fill: fill) }
-    _cover(self: s, ..args, body)
-  }
-  let self = utils.merge-dicts(self, _item-page(self, color, badge), config-methods(cover: cover), config)
+  let self = utils.merge-dicts(self, _item-page(self, color, badge), config)
   // as on a normal slide: every body through `_flow` and a top-level `===` repeated on the overflow pages
   let bodies = bodies.map(_split-solution).map(_flow)
   if bodies.len() > 0 { bodies.at(0) = _with-running-subtitles(bodies.first()) }
@@ -1131,9 +1121,9 @@
     let tones = ("", "-light", "-lighter", "-lightest", "-dark", "-darker", "-darkest")
     let family = ("primary", "secondary", "tertiary", "quaternary", "neutral").find(f =>
       tones.any(t => self.colors.at(f + t, default: none) == it.fill))
-    if family == none { it } else if _is-light(it.fill) { _in-box(self.colors.at(family + "-dark"), it, fill: it.fill) } else {
+    if family == none { it } else if _is-light(it.fill) { _in-box(self.colors.at(family + "-dark"), it) } else {
       set text(fill: self.colors.neutral-lightest)
-      _in-box(it.fill, it, kind: "pill", fill: it.fill)
+      _in-box(it.fill, it, kind: "pill")
     }
   }
   // the caption is its body alone, without "Figure N", at 0.6 of the size of the text, so that a figure and its caption
@@ -1252,7 +1242,6 @@
       },
       // in the color of the box around it, like bold text (blue elsewhere); yellow in a pill
       alert: (self: none, it) => alert(it),
-      cover: _cover,   // veil in the page color at 85% over the laid-out content (see `_cover` in utils.typ)
     ),
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,

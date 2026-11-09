@@ -7,7 +7,7 @@
 
   #pause
 
-  Covered line, under a veil on the box.
+  Covered line, hidden until the next step.
 ]
 
 == A `#pause` inside a quote box and a column

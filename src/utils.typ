@@ -109,31 +109,19 @@
 ) = { parbreak(); body }
 
 // ---------- context color stack ----------
-/// Stack of `(color:, kind:, fill:)` entries, `kind` ∈ "box" | "pill" | "title", pushed by `emph-box` (body: "box";
+/// Stack of `(color:, kind:)` entries, `kind` ∈ "box" | "pill" | "title", pushed by `emph-box` (body: "box";
 /// title badge: "pill"), `_pill`, the slide header ("title"), the section title ("title") and the content of the
 /// cover ("pill": white on blue). `*bold*`,
 /// `==highlight==`, the `->` arrow, `#underline`, `#icon` and inline `raw` read the color at layout time (in
 /// `context`): in the `> box` form the paragraph reaches `show par` already realized (strong/highlight become
 /// `styled(...)` with black/yellow baked in), so set/show rules inside the box cannot reach them anymore; a `state`
 /// resolves at the right place. Inline `raw` uses light tones in boxes and titles and dark tones with light text in pills.
-/// `fill` is the background of a box that has one (a callout, a light cell of a table, a pill), for the veil of `#pause`.
 /// -> state
 #let _box-color = state("ufac-box-color", ())
-#let _in-box(color, body, kind: "box", fill: none) = {
-  _box-color.update(s => s + ((color: color, kind: kind, fill: fill),))
+#let _in-box(color, body, kind: "box") = {
+  _box-color.update(s => s + ((color: color, kind: kind),))
   body
   _box-color.update(s => s.slice(0, -1))
-}
-/// The color of the veil of `#pause` at this place (in `context`): the background of the nearest box around that has
-/// one (a callout, a light cell of a table), else the page; at 85% opacity, so the covered content stays faintly
-/// visible. A white veil over a callout left white bands over its color.
-/// -> color
-#let _veil-color(
-  /// The fill of the page. -> any
-  page,
-) = {
-  let boxed = _box-color.get().rev().find(e => e.at("fill", default: none) != none)
-  (if boxed != none { boxed.fill } else if type(page) == color { page } else { white }).transparentize(15%)
 }
 #let _current-box-color(fallback) = { let s = _box-color.get(); if s.len() == 0 { fallback } else { s.last().color } }
 #let _in-pill() = { let s = _box-color.get(); s.len() > 0 and s.last().kind == "pill" }
@@ -372,164 +360,6 @@
   // come before `here()` and would otherwise be taken for a subtitle carried over from a previous `---` page.
   let h3s = query(heading.where(level: 3).after(start).before(here())).filter(h => h.body not in skip)
   if h3s.len() > 0 { h3s.last() }
-}
-
-// ---------- cover (`#pause`, `#uncover`) ----------
-/// Value of the `metadata` marker left after a covered chunk (see @_cover).
-/// -> str
-#let _veil-end = "ufac-veil-end"
-/// Element functions that make a covered chunk block-level.
-/// -> array
-// the shapes are blocks too (`circle`, `line`…): Touying's cover, for running text, read fields they do not have
-#let _block-funcs = (list.item, enum.item, terms.item, list, enum, terms, heading, table, grid, figure, block, stack, pad, align, columns, image, rect, quote,
-  circle, square, ellipse, line, polygon, curve, path,
-  // a `layout` (the box with a title): its element is not the function `layout`
-  [#layout(_ => none)].func())
-/// True when the content holds a block-level element (or a paragraph break).
-///
-/// #test(`_is-blocky([- item])`, `_is-blocky([a #parbreak() b])`, `not _is-blocky([plain *text*])`)
-/// -> bool
-#let _is-blocky(
-  /// Any content. -> content
-  c,
-) = {
-  let c = _unstyle(c)
-  if c.func() == _seq { c.children.any(_is-blocky) }
-  else if c.func() == parbreak { true }
-  else if c.func() in (raw, math.equation) { c.at("block", default: false) }
-  else { c.func() in _block-funcs }
-}
-/// True when the children are those of a lone shorthand paragraph: `> box`, `"quote"` or `-> item`.
-///
-/// #test(`_is-shorthand-par(([> box],))`, `_is-shorthand-par(([-], [> item]))`, `not _is-shorthand-par(([text],))`)
-/// -> bool
-#let _is-shorthand-par(
-  /// Trimmed children of the covered body. -> array
-  ch,
-) = {
-  let first = ch.first()
-  ((_is-text(first) and first.text.starts-with(">")) or (_is-dq(first) and _is-dq(ch.last()))
-    or (_is-text(first) and first.text == "-" and ch.len() > 1 and _is-text(ch.at(1)) and ch.at(1).text.starts-with(">")))
-}
-/// Covered running text (a paragraph after `#pause`, or the rest of one). Touying's `cover-with-rect` covers each child
-/// of a sequence on its own, a `strike` over each piece of text: the text of the line no longer merges, so the rules
-/// that match the merged text no longer saw `~underline~` and `~~alert~~` (made of non-breaking spaces, wide spaces in
-/// the covered line), and the bar, as tall as the letters, left the sides of a code chip, the edge of a highlight and an
-/// icon uncovered. Here each run of inline text stays whole, under one `strike` a little taller than Touying's (it
-/// reaches the background of a highlight); a chip, an icon or another inline box gets a rectangle of its measured size
-/// and the room the chip paints around it; the rest (an equation, a styled part) goes to `cover-with-rect`.
-/// -> content
-#let _cover-text(
-  /// Touying's `self`. -> dictionary | none
-  self,
-  /// The color of the veil. -> color
-  veil,
-  /// Arguments forwarded to `cover-with-rect`. -> arguments
-  args,
-  /// The covered running text. -> content
-  body,
-) = {
-  let styled = text(red)[].func()
-  if body.func() == styled { return styled(_cover-text(self, veil, args, body.child), body.styles) }
-  let ch = if body.func() == [].func() { body.children } else { (body,) }
-  // in markup, `~` is a `symbol` element, not text
-  // a `context` element in running text is text (the word of a solution, `#info`); an icon is a `box`
-  let inline = (text, [~].func(), [ ].func(), strong, emph, smartquote, highlight, underline, overline, sub, super, link,
-    linebreak, [#context none].func())
-  // the bar of `cover-with-rect` (1.6 times the height of the capitals, 0.35 of it above the baseline), taller upwards
-  let veil-run(run) = context {
-    let h = measure(par[Xg]).height
-    strike(stroke: 1.9 * h + veil, offset: -0.5 * h, extent: 0.05 * h, run.join())
-  }
-  // a chip (with its outset of 0.2em and its border), a tag (outset up to 0.35em), an icon: a rectangle over the box,
-  // which keeps its place
-  let veil-box(c) = context {
-    let size = measure(c)
-    let room = 0.35em + 0.5pt
-    box({ c; place(top + left, dx: -0.5pt, dy: -room, rect(width: size.width + 1pt, height: size.height + 2 * room,
-      fill: veil)) })
-  }
-  let (out, run) = ((), ())
-  for c in ch {
-    if c.func() in inline { run.push(c) } else {
-      if run.len() > 0 { out.push(veil-run(run)); run = () }
-      out.push(if (c.func() == raw and not c.block) or c.func() == box { veil-box(c) } else {
-        utils.cover-with-rect(self: self, ..args, fill: veil, c)
-      })
-    }
-  }
-  if run.len() > 0 { out.push(veil-run(run)) }
-  out.join()
-}
-
-/// Covered content stays faintly visible under a veil in the page color at 85% opacity, as in 0.0.1. Touying's own
-/// covers cannot do that for this theme (checked with 0.7.4 and 0.8.0, 2026-09-18): `alpha-changing-cover` (0.8) fades `fill`/`stroke` fields
-/// by rebuilding the content tree before layout and `cover-with-rect` splits the content into leaves (a thick `strike`
-/// over text runs), while the theme colors almost everything later, in show rules and element layout (bold, chips,
-/// `===` pills, `> ` boxes, list markers, icons), so those stayed fully visible and a lone shorthand paragraph (`-> item`,
-/// `> box`, `"quote"`) was left as literal text.
-///
-/// `_cover` leaves a block-level chunk in the normal flow, so the layout is identical covered or not, and paints the
-/// veil over it afterwards with a `place`d rectangle whose height is the distance between two real positions (the
-/// start of the chunk and the point after it): no `measure`, hence no second layout. The `parbreak()` after the chunk
-/// forces block mode inside the `context`, which turns a lone shorthand paragraph into a real `par`, so the show rules of
-/// the shorthands (`_flow`) see it.
-/// The rectangle's outset reaches what the theme paints outside the layout box (pill outset, quote bar, box stroke).
-/// A chunk that breaks across pages cannot be veiled by one rectangle: it is hidden instead (same space, breakable),
-/// decided from the end marker of the previous layout pass. Plain running text (no block element, no shorthand) goes to
-/// `_cover-text`, which veils it line by line, so a `#pause` in the middle of a paragraph still works. The veil takes
-/// the background of the box around (`_veil-color`), not always the page.
-/// -> content
-#let _cover(
-  /// Touying's `self`; in Touying 0.8 the sentinel `utils.cover-kind-query` asks for the kind of cover. -> dictionary | none
-  self: none,
-  /// Arguments forwarded to Touying's `cover-with-rect` (the fallback). -> any
-  ..args,
-  /// The content to cover. -> content | none
-  body,
-) = {
-  // Touying 0.8 asks the cover for its kind through a sentinel that 0.7.4 does not have: looked up, not referenced
-  let kind-query = dictionary(utils).at("cover-kind-query", default: none)
-  if kind-query != none and self == kind-query { return "paint" }
-  if body == none { return [] }
-  let page = if type(self) == dictionary { self.at("page", default: (:)).at("fill", default: white) } else { white }
-  // Touying's cover, built only when it is used: it reads fields that some elements do not have yet at this point (a
-  // `quote` without `block:`, which the theme veils itself)
-  if type(body) != content { return context utils.cover-with-rect(self: self, ..args, fill: _veil-color(page), body) }
-  let ch = _trim(_children(_unstyle(body)))
-  if ch.len() == 0 { return body }
-  let lone-context = ch.len() == 1 and ch.first().func() == [#context none].func()
-  if not (_is-blocky(body) or lone-context or _is-shorthand-par(ch)) {
-    return context _cover-text(self, _veil-color(page), args, body)
-  }
-  context {
-    let veil = _veil-color(page)
-    let s = here().position()
-    let ends = query(metadata.where(value: _veil-end).after(here()))
-    // hidden, the chunk keeps the `parbreak()` inside `hide`, so a lone shorthand paragraph (`"quote"`, `> box`) is
-    // rewritten as when it is veiled and takes the same room: hidden smaller, a chunk at the bottom of the page fitted
-    // in one layout pass and not in the next, and the choice never settled (the document did not converge)
-    if ends.len() > 0 and ends.first().location().page() != s.page { hide({ body; parbreak() }) } else {
-      body
-      parbreak()
-      context {
-        let e = here().position()
-        let h = e.y - s.y
-        // a chunk that starts inside a paragraph (a `#pause` on its own line between two `-> item` lines) starts on
-        // the visible line, at its baseline, to the right of where the chunk ends (the start of a block): the veil
-        // starts below that line (its descenders), not with the outset above it. A chunk that opens its paragraph (a
-        // `#pause` alone before it) starts where it ends, at the left: the whole veil
-        let mid = e.x < s.x - 1pt
-        let skip = if mid { 0.7em.to-absolute() } else { 0pt }
-        // above the chunk, the room up to the descenders of a visible line right before it (0.55em of leading in a
-        // list): 0.3em reaches the accents of the covered line; 0.45em only for a `===` pill (here already the grid
-        // of the theme's subtitles), which sticks out more
-        let top = if ch.any(c => c.func() in (heading, grid)) { .45em } else { .3em }
-        if h > skip { place(start, dy: -h + skip, rect(width: 100%, height: h - skip, outset: (x: .5em, top: top, bottom: .45em), fill: veil)) }
-      }
-    }
-    metadata(_veil-end)
-  }
 }
 
 // ---------- footer (ported from 0.0.1) ----------

@@ -315,9 +315,8 @@
   assert(type(key) == function or key in _info-keys, message: "info: unknown key " + repr(key) + "; use "
     + _info-keys.map(k => "\"" + k + "\"").join(", ") + " or a function of the dictionary")
   // a `context` on the state and not a `touying-fn-wrapper`: Touying's mark does not go through `context` nor `layout`,
-  // which the boxes and the tables use. The logos come inside a `box`: the veil of `#pause` covers a box whole, and a
-  // bare `context` as running text
-  let shown = context {
+  // which the boxes and the tables use
+  context {
     let self = _deck.get()
     assert(self != none, message: "info: only inside a deck of the theme")
     if type(key) == function { return key(_normalized(self)) }
@@ -333,5 +332,4 @@
     }
     _normalized(self).at(key)
   }
-  if key == "logo" { box(shown) } else { shown }
 }

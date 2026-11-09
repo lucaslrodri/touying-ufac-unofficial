@@ -89,7 +89,7 @@
   /// Fill of the label. -> color
   color: colors.primary,
 ) = box(fill: color, radius: 5pt, inset: (x: .7em), outset: (y: .4em),
-  text(fill: white, weight: "bold", _in-box(color, body, kind: "pill", fill: color)))
+  text(fill: white, weight: "bold", _in-box(color, body, kind: "pill")))
 
 /// Pill of a subtitle (`===`, `====`): in the color of the box around it, the color of the item inside an exercise
 /// (red) or an example (green), and blue elsewhere.
@@ -127,11 +127,10 @@
 ) = {
   // the name is checked at the call: an unknown one fails here, not deep in the layout
   let source = _icon-source(name)
-  // a `box` around the `context`, of the same size: the veil of `#pause` (`_cover-text`) knows the icon as a box
-  box(context {
+  context {
     let c = if color != auto { color } else if _in-pill() { white } else { _current-box-color(colors.neutral-darkest) }
     box(baseline: baseline, image(bytes(_icon-svg(source, c)), width: auto, height: size, alt: name, format: "svg"))
-  })
+  }
 }
 /// Icon at the start of a pill (the header of an exercise or example, the badge of an @emph-box), followed by a small
 /// space and centered on the height of the capitals of the text, whatever its height: the name of an @icon (white in
@@ -310,8 +309,7 @@
     + ch.map(c => if _is-text(c) { c.text } else { " " }).join() + "$]")
   let eq = _only-eq(body)
   _eq-mark   // tells the shorthand rule that this equation is already boxed (see `_eq-mark`)
-  // the `context` inside a `box`: the veil of `#pause` covers a box whole, and a bare `context` as running text
-  box(context {
+  context {
     let where = _eq-ctx.get()   // "whole" | "part" of a block equation, or `none`: running text or inline math
     let c = if color == auto { _current-box-color(colors.primary) } else { color }
     // The content of a `box` inside an equation is not laid out as math, so it becomes an equation of its own: in
@@ -333,7 +331,7 @@
       else if where == "part" { (inset: (x: 0.35em, y: 0.3em)) }
       else { (inset: (x: 0.3em), outset: (y: 0.2em)) }
     box(fill: c.lighten(92%), stroke: 0.8pt + c.lighten(35%), radius: if where == none { 0.3em } else { 0.4em }, ..padding, inner)
-  })
+  }
 }
 
 /// Quotation box: a vertical bar on the left. Typst's `#quote(attribution: [Author])[…]` is shown as a `quote-box`
@@ -402,7 +400,7 @@
     set text(fill: colors.neutral-darkest)
     // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
     // closing slide), the icon stays on the first line and the text on the left
-    _in-box(c, fill: c.lighten(92%), grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
+    _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
       // the icon (0.9em) centered on the capitals of the first line: the line starts at the top of the cell, at the
       // height of the capitals, and the icon goes up half of what it has more than them
       if ic != none { context {
@@ -605,13 +603,12 @@
   let dark = colors.primary.darken(45%)
   let ink = if _contrast(dark, color) >= _contrast(white, color) { dark } else { white }
   // the room above and below is half the size of the tag, up to 0.35em of the text around it (the tag of the section
-  // slides, at 0.7em): a bigger tag in running text does not reach the line above. The `context` goes inside a `box`:
-  // the veil of `#pause` covers a box whole, and a bare `context` as running text
-  box(context {
+  // slides, at 0.7em): a bigger tag in running text does not reach the line above
+  context {
     let room = calc.min((0.5 * size).to-absolute(), 0.35em.to-absolute())
     box(fill: color, radius: 3pt, inset: (x: 0.7 * size), outset: (y: room), text(size: size, weight: "bold", fill: ink,
       tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline", upper(body)))
-  })
+  }
 }
 
 // ---------- columns ----------

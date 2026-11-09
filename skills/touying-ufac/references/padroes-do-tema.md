@@ -184,7 +184,7 @@ $ x(t) = cases(t + 1\, quad & -1 <= t < 0, 1 - t\, quad & 0 <= t < 1, 0\, quad &
 - `<example>` dá a caixa verde com "Exemplo 1.N" e o título. `<exercise>` dá a caixa vermelha com "Exercício 1.N". Cada um tem seu contador.
 - Com sufixo no rótulo (`<exercise-rampa>`), o slide pode ser citado: `#remark[No @exercise-rampa, três rampas formaram um triângulo.]` mostra "Exercício 1.1", com link.
 - `#solution` e `#answer` ficam sozinhos na linha. Fora de um exemplo ou exercício, não aparecem.
-- **Exemplo:** a solução fica no mesmo slide. Um `#pause` antes dela deixa a turma tentar primeiro, mas o conteúdo coberto fica sob um véu claro, ainda visível. Se a solução não couber, `---` antes do `#solution`.
+- **Exemplo:** a solução fica no mesmo slide. Um `#pause` antes dela deixa a turma tentar primeiro: o que vem depois dele fica escondido até o passo seguinte. Se a solução não couber, `---` antes do `#solution`.
 - **Exercício:** sempre `---` antes do `#answer`, e a resposta mostra o desenvolvimento.
 - A forma de função, `#exercise-slide(title: [..])[..]` ou `#example-slide(..)[..]`, troca a cor ou o ícone (`color:`, `icon:`). Dentro do corpo, `---` e `#answer` funcionam igual, mas o slide não pode ser citado com `@`.
 
@@ -497,7 +497,6 @@ Esses números são o teto. O alvo é a regra 1: até ~40 palavras ou 5 itens; c
 | Texto à direita do slide de Parte | Tudo entre `=` e `==` vai para o quadro da Parte | Só a imagem depois do `=` |
 | `== realce==` abriu um slide | `==` com espaço no começo da linha é título | `==realce==` sem espaço, ou `#highlight[..]` |
 | `#solution` ou `#answer` não aparece | Está fora de `<example>` ou `<exercise>` | Ponha-o dentro do item |
-| A solução aparece de leve antes da hora | O `#pause` cobre com um véu claro | `---` antes do `#solution` |
 | O `(t)` foi para o subscrito | `$v_s(t)$` | `$v_s (t)$` |
 | Erro "file not found" num arquivo de `figures/` | Caminho sem `/` parte da pasta do arquivo: `"data/soc.csv"` vira `figures/graphs/data/soc.csv` | `/data/soc.csv`; na aula, os arquivos do deck por `../../` (seção 1) |
 | Erro "unknown variable: colors" (ou `grafico`, `lq`) num arquivo de `figures/` | O arquivo não importou o que usa | O import no próprio arquivo: `#import "@preview/touying-ufac-unofficial:0.3.0": colors` |

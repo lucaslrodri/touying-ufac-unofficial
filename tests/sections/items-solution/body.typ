@@ -45,7 +45,7 @@ The same, with `#solution` right before `#pause`.
 
 #solution
 #pause
-The word appears with the solution, on the next subslide; the line stays.
+The line and the word appear with the solution, on the next subslide.
 
 == The answer in a paragraph of its own <exercise>
 A blank line after `#answer`: "Answer." stays alone on its line.
@@ -83,7 +83,7 @@ A bare `#solution` on a slide of another kind opens nothing and shows nothing:
 The text goes on, without a line nor a word.
 
 == The separator after a pause <exercise>
-`#pause` and then `#answer(sep: ":")`: the line stays, and "Answer:" with the text appears on the next subslide.
+`#pause` and then `#answer(sep: ":")`: the line and "Answer:" with the text appear on the next subslide.
 
 #pause
 #answer(sep: ":")
