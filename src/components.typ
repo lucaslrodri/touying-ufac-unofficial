@@ -401,7 +401,7 @@
     // a text that opens with a shorthand (`-> item`, `> box`, `"quote"`, a lone `>` before an equation) gets a paragraph
     // of its own, as a list does: on the line of the label the paragraph would start with the label, and `show par`
     // would leave the shorthand as text
-    let after-label = if _shorthand(ch) != none { parbreak() } else { h(0.35em) }
+    let after-label = if _shorthand(ch) != none or (ch.len() > 0 and ch.first().at("label", default: none) == <ufac-arrow-list>) { parbreak() } else { h(0.35em) }
     set list(marker: _markers(c))
     set text(fill: colors.neutral-darkest)
     // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
@@ -796,8 +796,9 @@
   /// A `-` list. -> content
   body,
 ) = {
-  set list(marker: _arrow-marker(color))
-  body
+  let l = { set list(marker: _arrow-marker(color)); body }
+  // the label lets a callout tell it from a `-` list: at its start it goes on the line under the title, as `->` does
+  [#l<ufac-arrow-list>]
 }
 
 // ---------- outline ----------

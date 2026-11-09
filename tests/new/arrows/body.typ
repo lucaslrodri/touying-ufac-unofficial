@@ -57,3 +57,17 @@
   #pause
   - second, from the second step
 ]
+
+== `#arrow-list` at the start of a callout
+#cols[
+  #tip[-> the shorthand
+  -> on the line under the title]
+][
+  #tip[#arrow-list[
+    - the function
+    - on the same line as `->`
+  ]]
+][
+  #tip[- a `-` list
+  - closer to the title]
+]
