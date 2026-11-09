@@ -71,8 +71,8 @@
 // title-slide: one optional content and no named argument, checked at the call
 #assert.eq(type(title-slide()), content)
 #assert.eq(type(title-slide[Partner]), content)
-#assert-panic(() => title-slide[a][b])
-#assert(catch(() => title-slide(color: red)).contains("title-slide"))
+#assert(catch(() => title-slide[a][b]).contains("takes one optional content"))
+#assert(catch(() => title-slide(color: red)).contains("unknown argument \"color\""))
 
 // slides by function: level-2 heading with the kind's label
 #assert.eq(type(exercise-slide(title: [T])[body]), content)
@@ -87,7 +87,7 @@
 #assert.eq(_lang-parse("es"), (lang: "es", region: none))
 #assert-panic(() => _lang-parse("de"))
 #assert(catch(() => _lang-parse("de")).contains("unknown lang"))
-#assert-panic(() => _lang-parse(none))
+#assert(catch(() => _lang-parse(none)).contains("lang must be a string"))
 
 // the UFAC logo: the SVG (blue `#0c4da2` lettering, yellow `#fdb813` shield) and the internal `_ufac-logo-image`,
 // which replaces each color only when it is given
