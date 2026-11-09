@@ -422,6 +422,15 @@
   (it,)
 }
 
+/// Text in capitals, as the texts of the footer, but for its code (`raw`), which keeps the letters as written.
+/// -> content | str
+#let _upper-but-raw(
+  /// The text. -> content | str
+  t,
+) = if type(t) == content and t.func() == raw { t } else if (
+  type(t) == content and t.has("children") and t.children.any(c => c.func() == raw)
+) { t.children.map(_upper-but-raw).join(default: []) } else { upper(t) }
+
 /// The text of a footer cell on one line: `h(0.4em) + upper(it) + h(0.4em)`, and when that passes `max`, the longest
 /// start of the text that fits with "…" after it, cut between its characters (@_atoms). In `context`, with the size of
 /// the cell set.
@@ -432,7 +441,7 @@
   /// The widest the text can be, or `none` for any width. -> none | length
   max,
 ) = {
-  let shown(t) = h(0.4em) + box(upper(t)) + h(0.4em)
+  let shown(t) = h(0.4em) + box(_upper-but-raw(t)) + h(0.4em)
   if max == none or measure(shown(it)).width <= max { return shown(it) }
   let cs = _atoms(it)
   // what is left before the "…": no space, punctuation or separator (a typed "•" or the dot of the theme) at the end
