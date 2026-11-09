@@ -49,7 +49,7 @@
 = Conclusion
 
 == Contributions
-- A set of 1800 labelled recordings of 25 species
+- A set of 1800 labeled recordings of 25 species
 - A classifier with an accuracy of 0.86 on the test set
 - The code, open
 
