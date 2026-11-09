@@ -313,7 +313,7 @@ inside `raw`.
   [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow on a dark background (@context-colors)],
   [`#highlight[text]`], [`==text==`], [light-yellow background; yellow with blue text on a dark background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
-  [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box],
+  [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box; `#primary` yellow on a dark background (@context-colors)],
   [`#arrow-list[- item]`], [`-> item`], [arrow list],
   [`#emph-box[..]`], [`> text`], [box (@boxes)],
   [`$ #eq-box[$..$] $`], [`> $ .. $`], [equation box (@boxes)],
@@ -364,7 +364,8 @@ Call `fit(x, y)` first.
 In a box (an `emph-box`, a callout, an exercise or an example, a light cell of a table: @tables), bold text, alerts,
 highlights, underlines, arrows, the markers of the lists (and, in an exercise or example slide, their numbers), chips,
 links, icons (@icons) and the `===` pills take the color of the box; italic stays black, as bold and italic are on a
-slide. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
+slide. In the slide header, the footer and inside an alert or a colored emphasis such as `#primary`, bold and italic
+take the color of the text around them. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
 a reference to an exercise or example, in the color of its kind.
 
 A light color is `secondary` and `secondary-light`, the `-lighter` and `-lightest` tones and `quaternary-light` (a
@@ -373,8 +374,7 @@ luma of 70% or more); the others are dark.
 On a dark background (a dark pill or badge, a tag with white text, the cover, the closing slide, the header of a
 table, a dark cell), the text, bold and italic are white, and a highlight is yellow with the text in blue. An alert
 and `#primary` are yellow, or dark blue where the yellow does not read (a contrast under 3:1), as on `quaternary`,
-`neutral` and `secondary-dark`. In the slide header, the footer and inside an alert or a colored emphasis such as
-`#primary`, bold and italic take the color of the text around them.
+`neutral` and `secondary-dark`.
 
 A pill or a badge in a light color has dark blue text, and inside it alerts are blue and highlights light blue, as in
 a blue box. A box, a callout, an exercise or an example in a light color uses the dark tone of its color

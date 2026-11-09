@@ -690,7 +690,8 @@
   let self = self
   if color != auto { self.colors.primary = color }
   let ink = self.colors.primary
-  // a function of `footer-left`/`footer-right` gets the color of the text as the primary color
+  // a function of `footer-left`/`footer-right` gets the color of the text as the primary color (on the closing slide,
+  // `white`, the primary color is still the blue)
   let text-self = self
   // the rules are drawn from `self.colors.primary`, here and in `_cell`
   if rule-color != auto { self.colors.primary = rule-color }

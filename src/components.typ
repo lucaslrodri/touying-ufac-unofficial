@@ -37,7 +37,7 @@
 ) = context _colored(_emph-color(colors.primary), body)
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow on a dark background (dark blue
-/// where the yellow does not read, a contrast under 3:1, as on `quaternary`): the same
+/// where the yellow does not read, a contrast under 3:1, as on `quaternary`, `neutral` and `secondary-dark`): the same
 /// as the `~~text~~` shorthand, which takes plain text only; this one takes any markup, and its bold and italic take
 /// its color. It replaces Touying's `#alert`, so the theme is imported after Touying.
 ///
