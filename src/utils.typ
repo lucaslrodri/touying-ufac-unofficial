@@ -467,14 +467,34 @@
   (it,)
 }
 
-/// Text in capitals, as the texts of the footer, but for its code (`raw`), which keeps the letters as written.
+/// True when the content holds code (`raw`), also inside bold, a link or another element with a body.
+/// -> bool
+#let _has-raw(
+  /// The content. -> any
+  t,
+) = type(t) == content and (t.func() == raw or (t.has("children") and t.children.any(_has-raw))
+  or (t.has("body") and _has-raw(t.body)) or (t.has("child") and _has-raw(t.child)))
+/// Text in capitals, as the texts of the footer, but for its code (`raw`), which keeps the letters as written, also
+/// inside bold, italic, a link and the other elements with a body. A text without code is `upper` as it is.
+///
+/// #test(
+///   `_has-raw(strong[a #raw("b_C")])`,
+///   `_has-raw(link("https://example.com")[#raw("b_C")])`,
+///   `not _has-raw([a b])`,
+///   `_upper-but-raw([a b]) == upper([a b])`,
+///   `_upper-but-raw(raw("b_C")) == raw("b_C")`,
+/// )
 /// -> content | str
 #let _upper-but-raw(
   /// The text. -> content | str
   t,
-) = if type(t) == content and t.func() == raw { t } else if (
-  type(t) == content and t.has("children") and t.children.any(c => c.func() == raw)
-) { t.children.map(_upper-but-raw).join(default: []) } else { upper(t) }
+) = if not _has-raw(t) { upper(t) } else if t.func() == raw { t } else if t.has("children") {
+  t.children.map(_upper-but-raw).join(default: [])
+} else if t.func() == link { link(t.dest, _upper-but-raw(t.body)) } else if t.has("body") {
+  let f = t.fields()
+  let body = f.remove("body")
+  (t.func())(..f, _upper-but-raw(body))
+} else { upper(t) }
 
 /// The text of a footer cell on one line: `h(0.4em) + upper(it) + h(0.4em)`, and when that passes `max`, the longest
 /// start of the text that fits with "…" after it, cut between its characters (@_atoms). In `context`, with the size of
