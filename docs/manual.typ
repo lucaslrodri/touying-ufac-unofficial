@@ -299,7 +299,8 @@ box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. 
 = Writing on a slide <writing>
 
 Most emphases have two forms: a function and a *shorthand*, a short piece of markup that the theme rewrites into the
-same function. These shorthands take plain text only (no markup inside), and none of them applies inside `raw`.
+same function. `~~text~~`, `==text==` and `~text~` take plain text only (no markup inside), and no shorthand applies
+inside `raw`.
 
 #table(
   columns: (auto, auto, 1fr),
@@ -688,8 +689,7 @@ with two imports with `*`, the later one wins silently. Import the other package
 
 == Touying <touying>
 
-The theme leaves the features of Touying alone (the table below), and what a `#pause` covers is hidden until its
-step.
+The theme leaves the features of Touying alone, and what a `#pause` covers is hidden until its step.
 The theme is imported after Touying for its `#cols`, which has a `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
@@ -798,7 +798,6 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     splits],
   [the theme has its own code box, which goes on to the next page by itself (no `breakable:` needed); for codly,
     `#import "@preview/codly:2.0.0" as codly` and `ufac-theme(codly: codly)`],
-  [what a `#pause` covers, faintly visible under a veil], [hidden until its step; the deck needs no change],
   [`#icon("rocket")` and the other Octicons], [only the icons of the theme; another one comes from its collection:
     `#provide-icons(json("octicon.json"))` in a slide and `#icon("octicon:rocket-16")` (@icons)],
   [`ufac-logo-image(..)`], [`#info("logo", height: 2em)`, with `white: true` on a dark background; outside a deck,
@@ -826,6 +825,9 @@ A `==` without text gives a slide without a title, with the footer.
 
 The figure of a section, which 0.2.0 cropped to fill 12em × 66% of the slide, now fits whole in that frame; a deck
 needs no change for it.
+
+What a `#pause` covers, which 0.2.0 left faintly visible under a veil, is now hidden until its step; a deck needs no
+change for it either.
 
 A figure caption, at the size of the text in 0.2.0, is now 0.6 of it. A deck that made its captions smaller by hand
 with a size in `em`, as `#show figure.caption: set text(size: 0.6em)` or a `text(size: 0.6em)[..]` in the caption,

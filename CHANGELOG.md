@@ -12,7 +12,6 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The theme exports new names: `caution`, `tip`, `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`. A package imported with `*` before the theme loses those it shares, such as theorion's `example`, `remark` and `solution`: import it by its name (see *Integrations* in the manual).
 - Inside a box, `#alert` and `~~text~~` take the color of the box, where 0.2.0 kept them blue: for the blue, write `#primary`.
 - `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
-- What a `#pause` covers is hidden until its step, where 0.2.0 left it faintly visible under a veil; the deck needs no change.
 - Figure captions are at 0.6 of the size of the text: a deck that made them smaller by hand with a size in `em` removes that, or they get smaller twice; `#show figure.caption: set text(size: 18pt)`, after `#show: ufac-theme.with(..)`, gives another size.
 
 New:
@@ -28,6 +27,7 @@ New:
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer. `footer-left` and `footer-right` also take an array: its items joined by a dot, those that show nothing left out (with none left, the footer line runs unbroken).
 - `provide-icons` gives the deck the icons of any collection of Iconify.
 - Inside a box, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
+- What a `#pause` covers is hidden until its step, where 0.2.0 left it faintly visible under a veil.
 - The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.
 - Three example decks, one for a lecture, one for the work of students for a course and one for a thesis defense: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ) and [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ), shown in the README with their code; the example deck of 0.2.0 (`example/main.typ`) is gone.
 - A short README, with the details in the manual and the changes in this file.
