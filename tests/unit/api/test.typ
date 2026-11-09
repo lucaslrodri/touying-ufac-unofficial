@@ -185,7 +185,7 @@
 #assert.eq(type(ending-slide(title: [T])[B]), content)
 #assert(catch(() => ending-slide[a][b][c][d]).contains("at most three"))
 #assert(catch(() => ending-slide(title: [T])[a][b]).contains("the body"))
-#assert(catch(() => ending-slide(color: red)).contains("unknown argument"))
+#assert(catch(() => ending-slide(color: red)).contains("unknown argument \"color\""))
 
 
 // exercises and examples: the markers of the solution are functions that give a metadata, with the separator;
@@ -197,8 +197,8 @@
 
 // the callouts, the icons and the closing slide refuse what they do not know, with a message that says so
 #assert(catch(() => callout("x")[a]).contains("unknown kind"))
-#assert(catch(() => callout("tip", style: "x")[a]).contains("style"))
-#assert(catch(() => icon(5)).contains("string"))
+#assert(catch(() => callout("tip", style: "x")[a]).contains("style is \"bar\" or \"badge\""))
+#assert(catch(() => icon(5)).contains("the name is a string"))
 // the icons of the badges are checked when the theme is applied
 #assert(catch(() => ufac-theme(exercise-icon: 5)[x]).contains("exercise-icon is the name of an icon"))
 #assert(catch(() => ufac-theme(example-icon: 5)[x]).contains("example-icon"))
