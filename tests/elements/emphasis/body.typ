@@ -21,6 +21,5 @@
 #cols[#emph-box(color: colors.quaternary)[Green box with *green bold* and #underline[green underline]. #alert[alert] takes the green of the box, #tertiary[tertiary] keeps its red and #primary[primary] its blue.]][#emph-box(color: colors.tertiary)[Red box with *red bold*, _black italic_ and #underline(stroke: .14em + colors.secondary)[explicit stroke equal to the default, so still red].]]
 Outside the box, bold is *black* again and the #underline[underline, yellow]. `#alert` is still #alert[blue].
 
-
 === Inside a pill: white *bold*, yellow ~~alert~~ and #primary[primary], dark `raw`
 Normal text below the pill.
