@@ -52,9 +52,6 @@ deck. The repository has three complete decks to start from (@flavors): a lectur
 and a thesis defense
 (#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
 
-Before `#title-slide`, put only imports, `#let` bindings and `set`/`show` rules: anything that makes content, even
-content that is not seen, such as `#provide-icons(..)` (@icons), opens an extra page, with the footer, before the cover.
-
 == Dependencies <dependencies>
 
 // every `@preview/name:version` in the sources (the imports of touying and iconify, and the hint that names codly) and
@@ -374,7 +371,7 @@ color of its kind.
 Consecutive lines starting with `->` become one list with a blue arrow. The list has to start the paragraph, after a
 blank line; an arrow in the middle of a line and the math arrow are left alone. Bullet lists have three levels of
 yellow markers, and numbered lists are blue and bold: `1.`, `a)`, `i.` by level. `#set enum(numbering: "a)")` starts
-at `a)`; Typst only knows `+` and `1.` as markers, so `a)` at the start of a line is text.
+at `a)`.
 
 ```example
 -> consequence
@@ -572,9 +569,7 @@ in `em` is a share of the caption: `0.8em` gives 0.8 × 0.6 = 0.48 of the 22pt t
 On an ordinary slide, a large image, such as a photo, needs a height, as below: without one it can take the whole
 height of the slide, and its caption runs into the footer. A height in percent is a share of the content area of the
 slide, not of the room left under the text: `height: 60%` leaves room for a line or two above the figure; with more
-text, the figure goes next to it, in `#cols`. A reference to a figure (`@label`) says "Figure 1" in the language of the
-deck, a number the slide does not show (the figure of a section slide counts too), so a figure is better cited in
-words.
+text, the figure goes next to it, in `#cols`.
 
 #slide-example("figure")
 
@@ -702,7 +697,7 @@ The theme is imported after Touying for its `#cols`, which has a `divider`.
   columns: (auto, 1fr),
   table.header([Feature], [Functions]),
   [Animations], [`#pause`, `#meanwhile`, `#jump`, `#uncover`, `#only`, `#alternatives`, `#effect`, `#touying-raw`],
-  [Notes and handouts], [`#speaker-note` (it attaches to the previous slide), `#handout-only`, `config-common(handout: true)`],
+  [Notes and handouts], [`#speaker-note`, `#handout-only`, `config-common(handout: true)`],
   [Layout], [`#slide(composer: (1fr, 2fr))`, `#cols`, `components.adaptive-columns`, `components.full-width-block`, `utils.fit-to-width`, `utils.fit-to-height`],
   [Overflow], [`config-common(breakable: false, clip:, detect-overflow:)`],
   [Reuse], [`#touying-recall`, `touying-get-config`, `components.progressive-outline`],
@@ -763,8 +758,8 @@ Any other icon comes from a collection in the JSON format of #link("https://icon
 #link("https://typst.app/universe/package/iconify")[iconify] package, which the theme imports: the deck gives the
 collection to `provide-icons` and writes the icon as `"collection:name"`, in `#icon` or wherever the theme takes the
 name of an icon (an `emph-box`, a callout, the badge of an exercise or example). It is then an icon like those of the
-theme, with the same size, the same place on the line and the color of its surroundings. `#provide-icons` goes in any
-slide after the cover, never before it (@first-deck); its icons serve the whole deck, the cover included.
+theme, with the same size, the same place on the line and the color of its surroundings. `#provide-icons` goes in a
+slide, and its icons serve the whole deck, the cover included.
 
 #slide-example("icons-iconify", pages: (1, 2), columns: (1fr, 1fr))
 
