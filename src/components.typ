@@ -375,7 +375,7 @@
 ) = block(width: 100%, fill: c.lighten(92%), stroke: (left: 3pt + c), radius: (left: 0pt, right: 4pt),
   inset: (left: 0.8em, right: 1em, y: 0.65em), breakable: false, {
     // a body that starts on a new line (`#tip[\n  text]`) starts with a space, which would add to the one after the label
-    let ch = _trim(_children(body))
+    let ch = utils.trim(_children(body))
     let body = ch.join()
     // a text that opens with a shorthand (`-> item`, `> box`, `"quote"`, a lone `>` before an equation) gets a paragraph
     // of its own, as a list does: on the line of the label the paragraph would start with the label, and `show par`

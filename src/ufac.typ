@@ -99,7 +99,7 @@
   for seg in segments {
     let items = { for c in seg.items { c } }
     if seg.head == none {
-      if _trim(seg.items).len() > 0 {
+      if utils.trim(seg.items).len() > 0 {
         let current() = { let h = _current-subtitle(skip: own); if h != none { h.body } }
         _subtitle-grid(current, { context { let h = _current-subtitle(skip: own); if h != none { block(below: 1em, _subtitle-pill(h.body)) } }; items })
       }

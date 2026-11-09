@@ -28,28 +28,7 @@
   /// Any content. -> content
   c,
 ) = c.func() == heading and (c.at("depth", default: none) == 3 or c.at("level", default: none) == 3)
-/// Strips empty contents (`[]`, `[ ]`, `parbreak()`, `linebreak()`) from both ends of an array of children
-/// (the theme's own, so that it does not depend on where Touying keeps its `trim`: 0.7.4 exports `utils.trim`, 0.8 moved it
-/// to `core.tree`, which is not exported).
-///
-/// #test(
-///   `_trim(([ ], [a], parbreak(), [b], [ ], [])) == ([a], parbreak(), [b])`,
-///   `_trim(([ ], parbreak())) == ()`,
-///   `_trim(()) == ()`,
-/// )
-/// -> array
-#let _trim(
-  /// Children of a sequence. -> array
-  arr,
-  /// What counts as empty. -> array
-  empty: ([], [ ], parbreak(), linebreak()),
-) = {
-  let i = 0; let j = arr.len()
-  while i < j and arr.at(i) in empty { i += 1 }
-  while j > i and arr.at(j - 1) in empty { j -= 1 }
-  arr.slice(i, j)
-}
-#let _first-child(body) = { let ch = _trim(_children(body)); if ch.len() > 0 { ch.first() } else { none } }
+#let _first-child(body) = { let ch = utils.trim(_children(body)); if ch.len() > 0 { ch.first() } else { none } }
 /// A `metadata` of a given kind (`value.kind`): a marker of the theme or a `#pause` of Touying.
 ///
 /// #test(`_is-meta(metadata((kind: "k")), "k")`, `not _is-meta(metadata("k"), "k")`, `not _is-meta([x], "k")`)
