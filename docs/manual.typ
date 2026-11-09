@@ -244,8 +244,7 @@ of its own, right after the cover.
 == Slides and continuations <slides>
 
 A `===` subtitle opens a pill without a new slide. A `---` alone on a line goes on to the next page of the same slide,
-with the same header (the number in the footer counts the pages, and each step of an animation repeats the numbers of
-the first); a long content goes on by itself.
+with the same header (the number in the footer counts the pages); a long content goes on by itself.
 
 #slide-example("heading", pages: (1, 2))
 
