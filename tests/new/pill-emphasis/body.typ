@@ -1,13 +1,14 @@
 // Body of the `new/pill-emphasis` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 #import "../../common.typ": *
-== `#alert` inside a badge, a tag and a table header
-#emph-box(color: colors.quaternary, title: [A #alert[badge] title])[A body with #alert[alert].]
+== Alert and `#primary` in a badge, a tag and a table header
+#emph-box(color: colors.quaternary, title: [A #alert[badge] and #primary[primary] title])[A body with #alert[alert].]
 
-#tip(style: "badge")[A badge callout with #alert[alert].]
+#tip(style: "badge", title: [A ~~badge~~ #primary[callout]])[The alert of the body takes the color of the box: #alert[alert].]
 
-A tag with an alert: #tag[#alert[alert] tag].
+Tags with white text: #tag(color: colors.tertiary)[~~alert~~ #primary[primary]] (yellow) and
+#tag(color: colors.neutral)[~~alert~~ #primary[primary]] (dark blue).
 
-#table(columns: 2, table.header([#alert[Alert] header], [B]), [1], [2])
+#table(columns: 2, table.header([#alert[Alert] and #primary[primary]], [B]), [1], [2])
 
 == Alert and `#primary` on dark pills
 // yellow where it reads (a contrast of 3:1 or more with the pill), dark blue under it; the names are the colors of the boxes
