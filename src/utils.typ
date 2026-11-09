@@ -97,6 +97,39 @@
 /// resolves at the right place. Inline `raw` uses light tones in boxes and titles and dark tones with light text in pills.
 /// -> state
 #let _box-color = state("ufac-box-color", ())
+/// Relative luminance of a color (WCAG 2), to choose the color of the text of a pill or a tag by the contrast.
+///
+/// #test(`calc.abs(_luminance(white) - 1) < 0.001`, `_luminance(black) == 0`)
+/// -> float
+#let _luminance(
+  /// Any color. -> color
+  c,
+) = {
+  let lin(x) = if x <= 0.04045 { x / 12.92 } else { calc.pow((x + 0.055) / 1.055, 2.4) }
+  let (r, g, b, ..) = rgb(c).components().map(x => x / 100%)
+  0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+}
+/// Contrast ratio between two colors (WCAG 2), from 1 to 21.
+///
+/// #test(`calc.abs(_contrast(white, black) - 21) < 0.01`)
+/// -> float
+#let _contrast(
+  /// A color. -> color
+  a,
+  /// Another color. -> color
+  b,
+) = {
+  let (x, y) = (_luminance(a), _luminance(b))
+  (calc.max(x, y) + 0.05) / (calc.min(x, y) + 0.05)
+}
+/// The ink of a pill or a badge on `color`: the dark blue of the tags on a light color (luma of 70% or more, the
+/// threshold of the light cells of a table: the yellow and the light tones), white on the others.
+/// -> color
+#let _pill-ink(
+  /// Fill of the pill. -> color
+  color,
+) = if luma(color).components().first() >= 70% { colors.primary.darken(45%) } else { white }
+
 #let _in-box(color, body, kind: "box") = {
   _box-color.update(s => s + ((color: color, kind: kind),))
   body
@@ -104,6 +137,18 @@
 }
 #let _current-box-color(fallback) = { let s = _box-color.get(); if s.len() == 0 { fallback } else { s.last().color } }
 #let _in-pill() = { let s = _box-color.get(); s.len() > 0 and s.last().kind == "pill" }
+/// Bold text of a pill on `color`, in its ink (`_pill-ink`): on a dark color, white, with `kind: "pill"` on the color
+/// stack (yellow alerts, white bold); on a light one (the yellow), dark blue, and the inside follows a light box in blue.
+/// -> content
+#let _pill-text(
+  /// Fill of the pill. -> color
+  color,
+  /// Text of the pill. -> content
+  body,
+) = {
+  let ink = _pill-ink(color)
+  text(fill: ink, weight: "bold", if ink == white { _in-box(color, body, kind: "pill") } else { _in-box(colors.primary, body) })
+}
 /// Emphasis color readable in the current context: inside a pill (white text on the color) the blue of
 /// `#alert`/`#primary` would vanish, so it becomes UFAC yellow (like the underline, already yellow in pills);
 /// elsewhere the requested color.

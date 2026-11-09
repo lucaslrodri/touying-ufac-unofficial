@@ -97,7 +97,8 @@
   move(circle(stroke: color + 1.2pt, radius: 0.13em), dy: 0.4em),
 )
 /// Rounded label with white bold text on `color` (subtitles `===`/`====`, exercise/example header). Pushes
-/// `kind: "pill"` on the color stack so `*bold*`, `#alert`, `raw` and `#icon` inside it pick readable colors.
+/// `kind: "pill"` on the color stack so `*bold*`, `#alert`, `raw` and `#icon` inside it pick readable colors; on a light
+/// color (yellow) the text is dark and the inside follows the convention of a light box (`_pill-text`).
 /// -> content
 #let _pill(
   /// Text of the label. -> content
@@ -105,7 +106,7 @@
   /// Fill of the label. -> color
   color: colors.primary,
 ) = box(fill: color, radius: 5pt, inset: (x: .7em), outset: (y: .4em),
-  text(fill: white, weight: "bold", _in-box(color, body, kind: "pill")))
+  _pill-text(color, body))
 
 /// Pill of a subtitle (`===`, `====`): in the color of the box around it, the color of the item inside an exercise
 /// (red) or an example (green), and blue elsewhere.
@@ -212,7 +213,7 @@
   body,
 ) = {
   // the badge is a pill: `*x*` white, `~~x~~`/`#primary` yellow and `raw` inverted, as in `_pill` (kind "pill")
-  let badge = box(fill: color, radius: 5pt, inset: (x: .8em, y: .3em), text(fill: white, weight: "bold", _in-box(color, _pill-line(title), kind: "pill")))
+  let badge = box(fill: color, radius: 5pt, inset: (x: .8em, y: .3em), _pill-text(color, _pill-line(title)))
   // the badge is measured in the width it has inside the box (the container minus the side insets), so that a title
   // that wraps pushes the body down instead of covering it
   layout(size => {
@@ -570,31 +571,6 @@
 ) = callout("examples", ..args)
 
 // ---------- tag ----------
-/// Relative luminance of a color (WCAG 2), to choose the color of the text of a @tag by the contrast.
-///
-/// #test(`calc.abs(_luminance(white) - 1) < 0.001`, `_luminance(black) == 0`)
-/// -> float
-#let _luminance(
-  /// Any color. -> color
-  c,
-) = {
-  let lin(x) = if x <= 0.04045 { x / 12.92 } else { calc.pow((x + 0.055) / 1.055, 2.4) }
-  let (r, g, b, ..) = rgb(c).components().map(x => x / 100%)
-  0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
-}
-/// Contrast ratio between two colors (WCAG 2), from 1 to 21.
-///
-/// #test(`calc.abs(_contrast(white, black) - 21) < 0.01`)
-/// -> float
-#let _contrast(
-  /// A color. -> color
-  a,
-  /// Another color. -> color
-  b,
-) = {
-  let (x, y) = (_luminance(a), _luminance(b))
-  (calc.max(x, y) + 0.05) / (calc.min(x, y) + 0.05)
-}
 
 /// Tag: capitals, spaced and bold, on a color, with rounded corners; by default UFAC yellow with the text in dark blue,
 /// as on the cover ("UNDERGRADUATE THESIS") and on the section slides ("PART 2"). The text is dark blue or white,

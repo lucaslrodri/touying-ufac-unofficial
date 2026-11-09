@@ -370,7 +370,8 @@ On a dark background (a pill, the cover, the closing slide, the header of a tabl
 italic are white, an alert and `#primary` yellow, and a highlight yellow with the text in blue. In the slide header
 and the footer, and inside an alert or a colored emphasis (`#primary`, …), bold and italic take the color of the
 text around them. What has a style of its own keeps it: a code block, a box inside another box, which brings its own
-color, and a reference to an exercise or example, in the color of its kind.
+color, and a reference to an exercise or example, in the color of its kind. A pill or a badge in a light color, such
+as the yellow, has dark blue text, and inside it alerts and highlights are blue, as in a light box.
 
 #slide-example("pills", columns: (1fr, 1fr))
 

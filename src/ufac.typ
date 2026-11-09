@@ -271,8 +271,7 @@
       place(_box-outline(bw, bh, r, thick + c))
     })
     place(top + left, dx: mx + 0.8 * em, dy: badge-top, box(fill: c, radius: 3pt, inset: (x: 0.7 * em, y: 0.38 * em),
-      text(size: em, fill: white, weight: "bold", _in-box(c, utils.fit-to-width(grow: false, bw - 3.2 * em,
-        _pill-line(badge)), kind: "pill"))))
+      text(size: em, _pill-text(c, utils.fit-to-width(grow: false, bw - 3.2 * em, _pill-line(badge))))))
   }
   // the footer centered on the bottom border, between the curves of the corners: its lines close the box. It is the
   // footer of the page, not part of the background, which is laid out before the slide counter steps. Touying lays
