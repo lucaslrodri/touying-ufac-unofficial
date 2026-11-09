@@ -13,7 +13,7 @@
 "And another one."
 
 == An arrow list with a pause
--> first, with descenders: gjpqy
+-> first
 #pause
 -> second
 

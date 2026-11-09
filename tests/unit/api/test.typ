@@ -8,6 +8,15 @@
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
+// the `alert` of a deck is Touying's (the theme has only the method), and the names of 0.2.0 are gone
+#import "../../../src/lib.typ" as lib
+#import "@preview/touying:0.7.4" as touying
+#assert(lib.alert == touying.alert, message: "the theme exports an alert of its own again")
+#for name in ("empty-slide", "ufac-logo-image", "local", "codly-range", "no-codly") {
+  assert(name not in dictionary(lib) or dictionary(lib).at(name) == dictionary(touying).at(name, default: none),
+    message: name + " is exported again")
+}
+
 // palette: 5 families × (base + 6 tones) = 35 keys, derived with darken/lighten
 #assert.eq(colors.len(), 35)
 #for fam in ("primary", "secondary", "tertiary", "quaternary", "neutral") {

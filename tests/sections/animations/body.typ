@@ -2,7 +2,7 @@
 #import "../../common.typ": *
 == Touying animations <example>
 === Pill, header and number must persist on the subpages
-First step (always visible). Each step is a paragraph: `#pause` and `#uncover` in the *same* paragraph reorder the covered text (Touying).
+First step (always visible). Each step is a paragraph.
 
 #pause
 
