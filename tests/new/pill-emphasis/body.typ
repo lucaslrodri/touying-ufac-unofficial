@@ -23,8 +23,8 @@ Tags with white text: #tag(color: colors.tertiary)[red ~~alert~~ #primary[primar
 #grid(columns: 3, gutter: 0.6em,
   ..("primary", "tertiary", "quaternary", "secondary-dark", "neutral-dark").map(n =>
     emph-box(color: colors.at(n), title: [#secondary[sec] #tertiary[ter] #quaternary[qua]])[#raw(n):
-      #(("primary": "yellow, yellow, yellow", "tertiary": "yellow, yellow, yellow", "quaternary": "dark blue ×3",
-        "secondary-dark": "dark blue ×3", "neutral-dark": "yellow, yellow, yellow").at(n))]))
+      #(("primary": "yellow, yellow, yellow", "tertiary": "yellow, yellow, yellow", "quaternary": "dark blue, dark blue, dark blue",
+        "secondary-dark": "dark blue, dark blue, dark blue", "neutral-dark": "yellow, yellow, yellow").at(n))]))
 
 #exercise-slide(title: [A #tertiary[red] word in a red badge], color: colors.tertiary)[
   === A #tertiary[red] word in a red pill

@@ -88,7 +88,8 @@
 ) = { parbreak(); body }
 
 // ---------- context color stack ----------
-/// Stack of `(color:, kind:)` entries, `kind` ∈ "box" | "pill" | "title", pushed by `emph-box` (body: "box";
+/// Stack of `(color:, kind:, fill:)` entries, `kind` ∈ "box" | "pill" | "title", and `fill` the background of a light
+/// pill or a light cell (`none` elsewhere), for the contrast of a colored emphasis (`_emph-color`), pushed by `emph-box` (body: "box";
 /// title badge: "pill"), `_pill`, the slide header ("title"), the section title ("title") and the content of the
 /// cover ("pill": white on blue). `*bold*`,
 /// `==highlight==`, the `->` arrow, `#underline`, `#icon` and inline `raw` read the color at layout time (in
