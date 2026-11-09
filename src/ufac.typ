@@ -1226,8 +1226,7 @@
         _slide-rules(self, _rules(self, body))
       },
       // in the color of the box around it, like bold text (blue elsewhere); yellow in a pill
-      alert: (self: none, it) => context text(weight: "bold",
-        fill: if _in-pill() { self.colors.secondary } else { _current-box-color(self.colors.primary) }, it),
+      alert: (self: none, it) => alert(it),
     ),
     config-colors(..colors),
     config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,

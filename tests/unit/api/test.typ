@@ -3,15 +3,15 @@
 
 // public functions exist
 #for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, arrow-list, cols,
-  primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, caution, tip, remark, note, example, examples, tag,
+  alert, primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, caution, tip, remark, note, example, examples, tag,
   info, solution, answer) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
 
-// the `alert` of a deck is Touying's (the theme has only the method), and the names of 0.2.0 are gone
+// the `alert` of a deck is the theme's (it shadows Touying's), and the names of 0.2.0 are gone
 #import "../../../src/lib.typ" as lib
 #import "@preview/touying:0.7.4" as touying
-#assert(lib.alert == touying.alert, message: "the theme exports an alert of its own again")
+#assert(lib.alert != touying.alert, message: "the alert of the theme is gone: a deck gets Touying's")
 #for name in ("empty-slide", "ufac-logo-image", "local", "codly-range", "no-codly") {
   assert(name not in dictionary(lib) or dictionary(lib).at(name) == dictionary(touying).at(name, default: none),
     message: name + " is exported again")
