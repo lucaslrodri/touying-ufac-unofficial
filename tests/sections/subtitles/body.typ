@@ -27,3 +27,10 @@ Text below the new subtitle.
 
 == Slide without subtitle
 Nothing is repeated here.
+
+== Same title
+=== The pill of this slide
+Text below the pill.
+
+== Same title
+A new slide with the title of the slide before: the pill of that slide is not repeated, as on any new slide.

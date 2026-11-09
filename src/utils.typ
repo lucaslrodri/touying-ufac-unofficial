@@ -413,8 +413,8 @@
 }
 
 // ---------- current subtitle (level-3 heading, repeated after `---`) ----------
-/// Last level-3 heading between the current `==` and `here()`, or `none`. Touying re-emits the `==` at every
-/// continuation, so the group of consecutive identical level-2 headings is walked back to its first member.
+/// Last level-3 heading between the current `==` and `here()`, or `none`. A `---` continuation has no `==` of its own,
+/// so its current `==` is the one of the slide it continues; a new `==` with the same title is a new slide.
 /// -> content | none
 #let _current-subtitle(
   /// Subtitle bodies declared by the slide that is asking, to be ignored. -> array
@@ -422,9 +422,7 @@
 ) = {
   let h2s = query(heading.where(level: 2).before(here()))
   if h2s.len() == 0 { return none }
-  let i = h2s.len() - 1
-  while i > 0 and h2s.at(i - 1).body == h2s.at(i).body { i -= 1 }
-  let start = h2s.at(i).location()
+  let start = h2s.last().location()
   // `skip`: subtitles declared by the slide that is asking. With `#pause`, the earlier subpages of the same slide
   // come before `here()` and would otherwise be taken for a subtitle carried over from a previous `---` page.
   let h3s = query(heading.where(level: 3).after(start).before(here())).filter(h => h.body not in skip)
