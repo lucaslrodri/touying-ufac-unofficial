@@ -9,5 +9,5 @@
 
 #title-slide()
 
-== The tag of the flavor
-`#info("short-title")`: #info("short-title"). The year (`year: 2026`) is a short date: the footer gets it too.
+== La etiqueta del flavor
+`#info("short-title")`: #info("short-title"). El año (`year: 2026`) es una fecha corta: el pie de página también la recibe.

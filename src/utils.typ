@@ -184,7 +184,8 @@
 ///
 /// #test(`_contrast(colors.secondary, colors.primary) >= 3`, `_contrast(colors.secondary, colors.quaternary) < 3`,
 ///   `_contrast(colors.primary.darken(45%), colors.quaternary) >= 3`, `_contrast(colors.primary.darken(45%), colors.neutral) >= 3`,
-///   `_contrast(colors.primary.darken(45%), colors.secondary-dark) >= 3`)
+///   `_contrast(colors.primary.darken(45%), colors.secondary-dark) >= 3`, `_contrast(colors.quaternary, colors.primary) < 3`,
+///   `_contrast(colors.quaternary, colors.primary-dark) >= 3`)
 /// -> color
 #let _emph-color(
   /// Requested color. -> color

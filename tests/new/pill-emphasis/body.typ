@@ -22,9 +22,20 @@ Tags with white text: #tag(color: colors.tertiary)[red ~~alert~~ #primary[primar
 // each keeps its color where it reads on the pill (3:1 or more) and otherwise turns yellow, or dark blue where the yellow does not read either
 #grid(columns: 3, gutter: 0.6em,
   ..("primary", "tertiary", "quaternary", "secondary-dark", "neutral-dark").map(n =>
-    emph-box(color: colors.at(n), title: [#secondary[sec] #tertiary[ter] #quaternary[qua]])[#raw(n)]))
+    emph-box(color: colors.at(n), title: [#secondary[sec] #tertiary[ter] #quaternary[qua]])[#raw(n):
+      #(("primary": "yellow, yellow, yellow", "tertiary": "yellow, yellow, yellow", "quaternary": "dark blue ×3",
+        "secondary-dark": "dark blue ×3", "neutral-dark": "yellow, yellow, yellow").at(n))]))
 
 #exercise-slide(title: [A #tertiary[red] word in a red badge], color: colors.tertiary)[
   === A #tertiary[red] word in a red pill
   Tags: #tag(color: colors.tertiary)[#tertiary[red] in red] and #tag(color: colors.quaternary)[#quaternary[green] in green].
 ]
+
+== Where the color of the emphasis reads
+// the color of the word stays on a pill where it has a contrast of 3:1 or more with it; the expected colors in each box
+#grid(columns: 3, gutter: 0.6em,
+  ..(("neutral-darkest", "yellow, red, green"), ("primary-dark", "yellow, yellow, green"), ("tertiary-dark", "yellow, yellow, green"),
+    ("quaternary-darker", "yellow, yellow, green")).map(((n, e)) =>
+    emph-box(color: colors.at(n), title: [#secondary[sec] #tertiary[ter] #quaternary[qua]])[#raw(n): #e]))
+
+#table(columns: 2, table.header([Cell], [Body]), [A `primary-dark` cell:], table.cell(fill: colors.primary-dark)[#quaternary[green] stays])
