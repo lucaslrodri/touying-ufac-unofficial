@@ -511,8 +511,7 @@ kind has a function of its own, short for `#callout(kind)`: `#tip[..]` is `#call
 The default style is the box of a printed handout, with a bar on the left and the title opening the text; a text that
 opens with a list (`-`, `+`, `->` or `#arrow-list`), a `>` box, a quote or a `>` before an equation starts on the line under the
 title. `style: "badge"` gives an emphasis box with the title on a badge, without the punctuation. `title:` and `icon:`
-change the title and the icon of one callout; `example-name` and `example-icon` of the theme change only the example
-slides, not `#example` and `#examples`.
+change the title and the icon of one callout.
 
 In the default style a callout does not split: one that does not fit what is left of the page goes whole to the next
 one, so a text longer than a page goes outside it. With `style: "badge"` it continues on the next page, as an
@@ -676,15 +675,16 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 
 == The footer and the badges <footer>
 
-The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
-two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room); `#alert`
-or a colored emphasis (`#tertiary`, …) in a footer text is not cut inside, but kept or left out whole. The texts are in
-capitals, but for inline code, which keeps its letters as written. `ufac-theme(footer-left:, footer-right:)` replaces
-either with content, an array or a function of `self`, whose `self.colors.primary` is the color of the footer text,
-the one a logo gets in the same footer (@logos). The items of an array are joined by a dot, those that show nothing
-left out (as `info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken.
-Besides its name (@language), the badge of the exercises and examples takes another icon (`exercise-icon`,
-`example-icon`); the callouts `#example` and `#examples` keep their names and icons (@callouts).
+The footer shows the short title, the title and a short date (`semester`, `year`) on the left and the authors on the
+right, each on one line: when the two do not fit, they are cut with "…" at the end of a word (the authors keep at least
+a third of the room); `#alert` or a colored emphasis (`#tertiary`, …) in a footer text is not cut inside, but kept or
+left out whole. The texts are in capitals, but for inline code, which keeps its letters as written.
+`ufac-theme(footer-left:, footer-right:)` replaces either with content, an array or a function of `self`, whose
+`self.colors.primary` is the color of the footer text, the one a logo gets in the same footer (@logos). The items of an
+array are joined by a dot, those that show nothing left out (as `info("semester")` below, in a deck without a date), and
+with none left the footer line runs unbroken. The badge of the exercises and examples takes another name (@language) and
+another icon (`exercise-icon`, `example-icon`); the callouts `#example` and `#examples` keep their names and icons
+(@callouts).
 
 ```typ
 #show: ufac-theme.with(
