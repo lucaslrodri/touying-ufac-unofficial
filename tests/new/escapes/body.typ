@@ -49,5 +49,11 @@ No shorthand applies inside `raw`: `==x==`, `> a`, `-> b`, `~~c~~`, `~d~`. For a
   \"quote\" stays text
 
   Limits: `\> == T`, `\> *x*` and `\-> item` do not escape (the escaped `>` must be followed by a word or a number).
+
+  In math the sign is never a shorthand, at the start of a paragraph too:
+
+  $a > b$ stays text
+
+  $>$ *x* stays text
 ]
 ]
