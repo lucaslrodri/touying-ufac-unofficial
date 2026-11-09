@@ -230,6 +230,17 @@
   )
 }
 
+/// The size of one slide (in `context`): the page, or half of it with the notes of the speaker on a second screen, to
+/// the right or below (`config-common(show-notes-on-second-screen:)`).
+/// -> array
+#let _slide-size(
+  /// Touying's `self`. -> dictionary
+  self,
+) = {
+  let notes = self.at("show-notes-on-second-screen", default: none)
+  (if notes == right { page.width / 2 } else { page.width }, if notes == bottom { page.height / 2 } else { page.height })
+}
+
 /// The box of an exercise or example, as in a printed handout, drawn on the page: the fill in the color
 /// lightened 95%, the badge with the title over the top border and the footer of the slide over the bottom one, in the
 /// color of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
@@ -252,7 +263,7 @@
   // one line: the strut of `_pill-line` (1em) and the vertical inset (2 × 0.38em); a long title shrinks to fit
   let badge-h = 1.76 * em
   let background = context {
-    let (w, h) = (page.width, page.height)
+    let (w, h) = _slide-size(self)
     let (y-top, y-bottom) = (badge-top + badge-h / 2, h - below - foot-h / 2)
     let (bw, bh) = (w - 2 * mx, y-bottom - y-top)
     place(top + left, dx: mx, dy: y-top, {
@@ -266,7 +277,7 @@
   // the footer centered on the bottom border, between the curves of the corners: its lines close the box. It is the
   // footer of the page, not part of the background, which is laid out before the slide counter steps. Touying lays
   // the footer out across the whole width of the page, down to its bottom
-  let footer = context place(bottom + left, dx: mx + r, dy: -below, block(width: page.width - 2 * (mx + r),
+  let footer = context place(bottom + left, dx: mx + r, dy: -below, block(width: _slide-size(self).first() - 2 * (mx + r),
     height: foot-h, text(size: 20pt, _footer(self, color: c, lift: false))))
   // the body inside the box: 1em from the sides, 0.75em under the badge, 0.6em above the footer
   config-page(header: none, footer: footer, background: background,
@@ -485,11 +496,25 @@
 )
 
 /// The translucent white bubbles of the cover style: a large one leaving the top right corner and a smaller one the
-/// bottom left; for the `background` of the page, which has its size.
+/// bottom left; for the `background` of the page, in the size of one slide (the page is twice as large with the notes
+/// on a second screen).
 /// -> content
-#let _bubbles() = {
-  place(top + right, dx: 3cm, dy: -4.2cm, circle(radius: 8.5cm, fill: white.transparentize(94%)))
-  place(bottom + left, dx: -2.6cm, dy: 2.8cm, circle(radius: 5.5cm, fill: white.transparentize(95%)))
+#let _bubbles(
+  /// Touying's `self`. -> dictionary
+  self,
+) = {
+  let (big, small) = (circle(radius: 8.5cm, fill: white.transparentize(94%)), circle(radius: 5.5cm, fill: white.transparentize(95%)))
+  if self.at("show-notes-on-second-screen", default: none) == none {
+    place(top + right, dx: 3cm, dy: -4.2cm, big)
+    place(bottom + left, dx: -2.6cm, dy: 2.8cm, small)
+  } else {
+    // from the top left corner: the top right and the bottom left corners of the slide, not of the page
+    context {
+      let (w, h) = _slide-size(self)
+      place(top + left, dx: w - 17cm + 3cm, dy: -4.2cm, big)
+      place(top + left, dx: -2.6cm, dy: h - 11cm + 2.8cm, small)
+    }
+  }
 }
 
 /// The blue page of the cover and of the closing slide, with the background of the theme, without header nor footer.
@@ -499,7 +524,7 @@
   self,
 ) = config-page(fill: self.store.at("cover-fill", default: self.colors.primary), header: none, footer: none,
   margin: (x: 1.8em, top: 1.2em, bottom: 1.1em),
-  background: if self.store.at("cover-bubbles", default: true) { _bubbles() })
+  background: if self.store.at("cover-bubbles", default: true) { _bubbles(self) })
 
 /// White content on the blue page, with the convention of the pills (`*bold*`, code and icons readable).
 /// -> content
