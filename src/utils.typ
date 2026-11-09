@@ -105,7 +105,7 @@
 #let _current-box-color(fallback) = { let s = _box-color.get(); if s.len() == 0 { fallback } else { s.last().color } }
 #let _in-pill() = { let s = _box-color.get(); s.len() > 0 and s.last().kind == "pill" }
 /// Emphasis color readable in the current context: inside a pill (white text on the color) the blue of
-/// `~~text~~`/`#primary` would vanish, so it becomes UFAC yellow (like the underline, already yellow in pills);
+/// `#alert`/`#primary` would vanish, so it becomes UFAC yellow (like the underline, already yellow in pills);
 /// elsewhere the requested color.
 /// -> color
 #let _emph-color(

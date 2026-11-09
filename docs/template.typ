@@ -18,14 +18,14 @@
 #let code-size = 8.5pt
 
 // ---------- look ----------
-/// The `alert` method of the theme for `~~text~~` in the examples of the manual, which has no Touying: bold in the
-/// color of the box around it (blue elsewhere) and yellow in a pill.
-#let _alert(body) = context text(weight: "bold", fill: if _in-pill() { colors.secondary } else {
+/// `#alert` for the examples of the manual, which has no Touying: what the `alert` method of the theme gives, bold in
+/// the color of the box around it (blue elsewhere) and yellow in a pill.
+#let alert(body) = context text(weight: "bold", fill: if _in-pill() { colors.secondary } else {
   _current-box-color(colors.primary) }, body)
 /// Stand-in for Touying's `self`: what `_rules` reads.
 #let _self = (
   colors: colors,
-  methods: (alert: (self: none, it) => _alert(it)),
+  methods: (alert: (self: none, it) => alert(it)),
   info: (counter-prefix: [1.], title: [], subtitle: [], logo: auto),
   store: (lang: "en", region: none, exercise-name: auto, example-name: auto, part-name: auto),
 )
@@ -52,8 +52,8 @@
 }
 
 // ---------- examples ----------
-/// What the example snippets can use (`eval` does not see the file scope).
-#let example-scope = dictionary(ufac-lib)
+/// What the example snippets can use (`eval` does not see the file scope), with the stand-in of `#alert`.
+#let example-scope = dictionary(ufac-lib) + (alert: alert)
 
 /// The scope of the API reference: the same, without the callout `example`, whose name is also the one of tidy's own
 /// renderer of the ```example blocks (the scope of a module overrides it); the snippets get it back through the

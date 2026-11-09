@@ -306,7 +306,7 @@ same function. These shorthands take plain text only (no markup inside), and non
   table.header([Function], [Shorthand], [Result]),
   [`#strong[text]`], [`*text*`], [black bold],
   [`#emph[text]`], [`_text_`], [black italic],
-  [--], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow in a pill],
+  [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow in a pill],
   [`#highlight[text]`], [`==text==`], [light-yellow background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
   [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box],
@@ -321,7 +321,8 @@ same function. These shorthands take plain text only (no markup inside), and non
 ```example
 Black *bold* and _italic_.
 
-Blue ~~alert~~.
+Blue #alert[alert], the same as
+~~this shorthand~~.
 
 #tertiary[Problem:] a colored label.
 ```
@@ -805,7 +806,7 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`, which win over the names of the
     package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
     (@integrations)],
-  [`~~text~~` inside a box], [it takes the color of the box; for the blue of 0.2.0, `#primary`],
+  [`#alert` inside a box], [it takes the color of the box, as `~~text~~` does; for the blue of 0.2.0, `#primary`],
 )
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:
