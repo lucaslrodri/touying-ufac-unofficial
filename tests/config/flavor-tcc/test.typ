@@ -2,8 +2,8 @@
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "es", config-info(
   flavor: "tcc",
-  title: [Cantos de aves em parques urbanos],
-  author: [Nome do Autor],
+  title: [Cantos de aves en parques urbanos],
+  author: [Nombre del Autor],
   year: 2026,
 ))
 

@@ -5,8 +5,8 @@
 
 #tip(style: "badge", title: [A ~~badge~~ #primary[callout]])[The alert of the body takes the color of the box: #alert[alert].]
 
-Tags with white text: #tag(color: colors.tertiary)[~~alert~~ #primary[primary]] (yellow) and
-#tag(color: colors.neutral)[~~alert~~ #primary[primary]] (dark blue).
+Tags with white text: #tag(color: colors.tertiary)[red ~~alert~~ #primary[primary]] (yellow) and
+#tag(color: colors.quaternary)[green ~~alert~~ #primary[primary]] (dark blue).
 
 #table(columns: 2, table.header([#alert[Alert] and #primary[primary]], [B]), [1], [2])
 

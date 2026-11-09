@@ -32,7 +32,7 @@ def mean(values, digits=2):
 === Inline code in every context: pill with `code` (dark fill, light text)
 In running text the chip is gray: `x = 1`, and the shorthands are off inside it: `==x==`, `> a`, `-> b`, `~~c~~`, `~d~`. In boxes, light tones of the container color (fill `-lightest`, a light border, text `-dark`):
 #cols[#emph-box(color: colors.primary)[`primary`]][#emph-box(color: colors.secondary)[`secondary`]][#emph-box(color: colors.tertiary)[`tertiary`]][#emph-box(color: colors.quaternary)[`quaternary`]][#emph-box(color: colors.neutral-dark)[`neutral`]]
-In the `==` header (next slide) and in the `=` title the chip uses the `primary` tones.
+In the `==` header (page 4) the chip uses the `primary` tones; in the title of a section, see `config/outline`.
 
 == Code blocks in a box, and unknown languages
 #cols[
