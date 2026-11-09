@@ -122,13 +122,38 @@
   let (x, y) = (_luminance(a), _luminance(b))
   (calc.max(x, y) + 0.05) / (calc.min(x, y) + 0.05)
 }
-/// The ink of a pill or a badge on `color`: the dark blue of the tags on a light color (luma of 70% or more, the
-/// threshold of the light cells of a table: the yellow and the light tones), white on the others.
+/// True for a light color, on which white text does not read: a luma of 70% or more (the yellow, the `-lighter` and
+/// `-lightest` tones, `quaternary-light`). The threshold of the light cells of a table, the pills and the boxes.
+///
+/// #test(`_is-light(colors.secondary)`, `not _is-light(colors.primary)`, `not _is-light(colors.quaternary)`,
+///   `_is-light(colors.secondary-lighter)`)
+/// -> bool
+#let _is-light(
+  /// Background color. -> color
+  c,
+) = luma(c).components().first() >= 70%
+/// The ink of a pill or a badge on `color`: the dark blue of the tags on a light color (`_is-light`), white on the others.
+///
+/// #test(`_pill-ink(colors.secondary) != white`, `_pill-ink(colors.primary) == white`, `_pill-ink(colors.quaternary) == white`)
 /// -> color
 #let _pill-ink(
   /// Fill of the pill. -> color
   color,
-) = if luma(color).components().first() >= 70% { colors.primary.darken(45%) } else { white }
+) = if _is-light(color) { colors.primary.darken(45%) } else { white }
+/// The color of what takes the color of a box (bold, alerts, markers, the footer of an item) on a box of `color`: the
+/// color itself, or, for a light one (`_is-light`, the yellow), the `-dark` tone of its family, readable on its fill.
+///
+/// #test(`_box-ink(colors.secondary) == colors.secondary-dark`, `_box-ink(colors.tertiary) == colors.tertiary`)
+/// -> color
+#let _box-ink(
+  /// Color of the box. -> color
+  color,
+) = if not _is-light(color) { color } else {
+  let tones = ("", "-light", "-lighter", "-lightest", "-dark", "-darker", "-darkest")
+  let family = ("primary", "secondary", "tertiary", "quaternary", "neutral").find(f =>
+    tones.any(t => colors.at(f + t, default: none) == color))
+  if family == none { color.darken(40%) } else { colors.at(family + "-dark") }
+}
 
 #let _in-box(color, body, kind: "box") = {
   _box-color.update(s => s + ((color: color, kind: kind),))

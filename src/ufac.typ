@@ -94,15 +94,6 @@
     }
   }
 }
-// ---------- light colors ----------
-/// True for a light background (a luma of 70% or more: `secondary`, `secondary-light`, `quaternary-light` and the
-/// `-lighter` and `-lightest` tones), where the text stays dark and the footer blue; on a darker one (`primary`,
-/// `tertiary`, `quaternary`, `neutral`, the other `-light` tones and the `-dark` ones) they turn white, as in the pills.
-/// -> bool
-#let _is-light(
-  /// Background color. -> color
-  c,
-) = luma(c).components().first() >= 70%
 // ---------- exercises and examples ----------
 /// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
 /// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." /
@@ -277,7 +268,7 @@
   // footer of the page, not part of the background, which is laid out before the slide counter steps. Touying lays
   // the footer out across the whole width of the page, down to its bottom
   let footer = context place(bottom + left, dx: mx + r, dy: -below, block(width: _slide-size(self).first() - 2 * (mx + r),
-    height: foot-h, text(size: 20pt, _footer(self, color: c, lift: false))))
+    height: foot-h, text(size: 20pt, _footer(self, color: _box-ink(c), lift: false))))
   // the body inside the box: 1em from the sides, 0.75em under the badge, 0.6em above the footer
   config-page(header: none, footer: footer, background: background,
     margin: (top: badge-top + badge-h + 0.75 * em, bottom: below + foot-h + 0.6 * em, x: mx + em))
@@ -293,13 +284,13 @@
   /// The body. -> content
   body,
 ) = {
-  set list(marker: _markers(c))
+  set list(marker: _markers(_box-ink(c)))
   let num(patterns) = (..nums) => {
     let d = nums.pos().len()
     text(fill: c, weight: "bold", numbering(patterns.at(calc.min(d, patterns.len()) - 1), nums.at(-1)))
   }
   set enum(full: true, numbering: num(("1.", "a)", "i.")))
-  _in-box(c, body)
+  _in-box(_box-ink(c), body)
 }
 
 /// The marker of the continuation of an exercise or example after a `---`, with the heading of the item.

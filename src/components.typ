@@ -276,13 +276,13 @@
   /// Content of the box. -> content
   body,
 ) = {
-  set list(marker: _markers(color))
+  set list(marker: _markers(_box-ink(color)))
   set text(fill: colors.neutral-darkest)
   let title = if title == [] { none } else { title }   // an empty title is no title (no empty badge)
   let badge = if icon == none { title } else if title == none { _pill-icon(icon, gap: 0pt) } else {
     [#_pill-icon(icon)#title]
   }
-  _in-box(color, if badge == none { _note-box(color, body) } else { _fancy-box(color, badge, body) })
+  _in-box(_box-ink(color), if badge == none { _note-box(color, body) } else { _fancy-box(color, badge, body) })
 }
 /// Equation box: a light frame around a key equation. It goes *inside*
 /// the equation, like the `boxeq` of the bookly package, so the equation keeps its centering, spacing and numbering,
@@ -414,22 +414,25 @@
     // of the label the paragraph would start with the label, and `show par` would leave the shorthand as text
     let opens-list = ch.len() > 0 and (ch.first().func() in (list.item, enum.item) or ch.first().at("label", default: none) == <ufac-arrow-list>)
     let after-label = if _shorthand(ch) != none or opens-list { parbreak() } else { h(0.35em) }
-    set list(marker: _markers(c))
+    // on a light color (the yellow) the markers, the icon, the label and what takes the color of the box are in its
+    // dark tone, readable on the fill
+    let k = _box-ink(c)
+    set list(marker: _markers(k))
     set text(fill: colors.neutral-darkest)
     // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
     // closing slide), the icon stays on the first line and the text on the left
-    _in-box(c, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
+    _in-box(k, grid(columns: (auto, 1fr), column-gutter: if ic == none { 0pt } else { 0.55em }, align: left + top,
       // the icon (0.9em) centered on the capitals of the first line: the line starts at the top of the cell, at the
       // height of the capitals, and the icon goes up half of what it has more than them
       if ic != none { context {
         let cap = measure(text(top-edge: "cap-height", bottom-edge: "baseline")[X]).height
         let size = 0.9em.to-absolute()
-        move(dy: -(size - cap) / 2, if type(ic) == str { icon(ic, color: c, size: size, baseline: 0pt) } else {
+        move(dy: -(size - cap) / 2, if type(ic) == str { icon(ic, color: k, size: size, baseline: 0pt) } else {
           // content that takes the color of the text (an icon of the iconify package): the callout's
-          text(fill: c, box(height: size, ic))
+          text(fill: k, box(height: size, ic))
         })
       } },
-      _flow[#if label != none [#text(weight: "bold", fill: c.darken(25%), label)#after-label]#body],
+      _flow[#if label != none [#text(weight: "bold", fill: if k == c { c.darken(25%) } else { k }, label)#after-label]#body],
     ))
   })
 
