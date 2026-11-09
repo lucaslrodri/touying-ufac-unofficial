@@ -65,9 +65,9 @@
 ][
   #tip[#arrow-list[
     - the function
-    - on the same line as `->`
+    - under the title, as `->`
   ]]
 ][
   #tip[- a `-` list
-  - closer to the title]
+  - under the title too]
 ]

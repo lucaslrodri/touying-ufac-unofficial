@@ -407,10 +407,11 @@
     // a body that starts on a new line (`#tip[\n  text]`) starts with a space, which would add to the one after the label
     let ch = utils.trim(_children(body))
     let body = ch.join()
-    // a text that opens with a shorthand (`-> item`, `> box`, `"quote"`, a lone `>` before an equation) gets a paragraph
-    // of its own, as a list does: on the line of the label the paragraph would start with the label, and `show par`
-    // would leave the shorthand as text
-    let after-label = if _shorthand(ch) != none or (ch.len() > 0 and ch.first().at("label", default: none) == <ufac-arrow-list>) { parbreak() } else { h(0.35em) }
+    // a text that opens with a shorthand (`-> item`, `> box`, `"quote"`, a lone `>` before an equation), a list (`-`, `+`)
+    // or an `#arrow-list` gets a paragraph of its own, on the line under the label, all with the same room: on the line
+    // of the label the paragraph would start with the label, and `show par` would leave the shorthand as text
+    let opens-list = ch.len() > 0 and (ch.first().func() in (list.item, enum.item) or ch.first().at("label", default: none) == <ufac-arrow-list>)
+    let after-label = if _shorthand(ch) != none or opens-list { parbreak() } else { h(0.35em) }
     set list(marker: _markers(c))
     set text(fill: colors.neutral-darkest)
     // top and left: in a layout centered vertically (`grid(align: horizon)`, a section slide) or horizontally (the
