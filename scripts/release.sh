@@ -377,13 +377,15 @@ gotpm install -e -f > /dev/null 2>&1 || echo "note: \`gotpm install -e\` failed;
 
 # 6. ------------------------------------------------------------------------------------------------------------------
 step "Waiting for release.yml (tests, gotpm publish, GitHub release)"
+# The run of this tag's commit: a release redone (see CONTRIBUTING) leaves the run of the old tag under the same name.
+sha=$(git rev-parse "v$next^{commit}")
 run=
 tries=0
 while [ -z "$run" ]; do
   [ "$tries" -lt 30 ] || fail "release.yml did not start for v$next: https://github.com/$repository/actions"
   sleep 3
   tries=$((tries + 1))
-  run=$(gh run list -R "$repository" --workflow release.yml --branch "v$next" --event push --limit 1 \
+  run=$(gh run list -R "$repository" --workflow release.yml --branch "v$next" --commit "$sha" --event push --limit 1 \
     --json databaseId --jq '.[0].databaseId // empty' 2> /dev/null || true)
 done
 gh run watch "$run" -R "$repository" --exit-status --compact ||
