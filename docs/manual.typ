@@ -369,7 +369,8 @@ reference to an exercise or example, in the color of its kind.
 
 Italic is black on a slide and in a box, as bold is on a slide. Where the text has a color of its own, both take
 it: in a pill, on the cover, in the header of a table, on the closing slide, in the slide header and the footer, and
-inside an alert or a colored emphasis (`#primary`, …), the color of that emphasis.
+inside an alert or a colored emphasis (`#primary`, …), the color of that emphasis. On a dark background a
+highlight is yellow, with the text in blue.
 
 #slide-example("pills", columns: (1fr, 1fr))
 

@@ -1001,10 +1001,13 @@
     if s.len() == 0 or s.last().kind != "box" or it.stroke != ul-stroke { it } else { underline(stroke: .14em + s.last().color, it.body) }
   }
   set highlight(fill: self.colors.secondary-lighter)
-  // inside a box the default highlight becomes `color.lighten(80%)`; an explicit fill is kept (this also avoids recursion)
+  // inside a light box the default highlight becomes `color.lighten(80%)`; on a dark one (a pill, the blue page, a
+  // dark cell) the yellow of UFAC, with the text in its blue; an explicit fill is kept (this also avoids recursion)
   show highlight: it => context {
     let s = _box-color.get()
-    if s.len() == 0 or it.fill != self.colors.secondary-lighter { it } else { highlight(fill: s.last().color.lighten(80%), it.body) }
+    if s.len() == 0 or it.fill != self.colors.secondary-lighter { it }
+    else if s.last().kind == "pill" { highlight(fill: self.colors.secondary, text(fill: self.colors.primary, it.body)) }
+    else { highlight(fill: s.last().color.lighten(80%), it.body) }
   }
   // `==x==` → highlight, except inside `raw` (state `_in-raw`, set by the `show raw` gate below `codly-init`).
   // The inner text neither starts nor ends with a space, so the `==` left over by an escape (`=\=x== … ==z==`)
