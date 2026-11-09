@@ -27,3 +27,4 @@ In a line of text the tag does not change the height of the line: #tag[a tag] he
 == Alerts and highlights inside a tag
 A dark tag: #tag(color: colors.primary)[blue with ~~alert~~ and ==highlight==], and a light one:
 #tag[yellow with ~~alert~~ and ==highlight==]. Inside, they follow a pill: yellow on the dark tag, blue on the light.
+A gray tag has white text, but the yellow does not read on it: #tag(color: colors.neutral)[gray with ~~alert~~ and ==highlight==].

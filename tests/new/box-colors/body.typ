@@ -56,15 +56,6 @@
   table.cell(fill: colors.tertiary-lightest)[*bold* and `code`],
 )
 
-== `#alert` inside a badge, a tag and a table header
-#emph-box(color: colors.quaternary, title: [A #alert[badge] title])[A body with #alert[alert].]
-
-#tip(style: "badge")[A badge callout with #alert[alert].]
-
-A tag with an alert: #tag[#alert[alert] tag].
-
-#table(columns: 2, table.header([#alert[Alert] header], [B]), [1], [2])
-
 == `#alert` inside an equation box
 // the `#alert` of the theme takes the color of the box around the equation, not that of the `eq-box`: blue on a slide, also in a green `eq-box`, and red in a red `emph-box`
 

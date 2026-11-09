@@ -45,6 +45,7 @@
 #include "./new/callout/body.typ"
 #include "./new/box-colors/body.typ"
 #include "./new/light-colors/body.typ"
+#include "./new/pill-emphasis/body.typ"
 #include "./new/arrows/body.typ"
 #include "./new/cols/body.typ"
 
