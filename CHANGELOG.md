@@ -12,7 +12,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 - The theme exports new names: `caution`, `tip`, `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`. A package imported with `*` before the theme loses those it shares, such as theorion's `example`, `remark` and `solution`: import it by its name (see *Integrations* in the manual).
 - Inside a box, `~~text~~` takes the color of the box, where 0.2.0 kept it blue: for the blue, write `#primary`.
 - `ufac-logo-image` is gone: in a slide, `#info("logo", height: 2em)` (`white: true` on a dark background); outside a deck, as in a handout, `#image(bytes(ufac-logo), height: 2em)`.
-- What a `#pause` covers is hidden until its step, with Touying's cover; 0.2.0 left it faintly visible under a veil.
+- What a `#pause` covers is hidden until its step, where 0.2.0 left it faintly visible under a veil; the deck needs no change.
 - Figure captions are at 0.6 of the size of the text: a deck that made them smaller by hand with a size in `em` removes that, or they get smaller twice; `#show figure.caption: set text(size: 18pt)`, after `#show: ufac-theme.with(..)`, gives another size.
 
 New:
