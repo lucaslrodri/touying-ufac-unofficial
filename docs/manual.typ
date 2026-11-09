@@ -812,9 +812,9 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
     `remark`, `note`, `example`, `examples`, `solution`, `answer`, `info` and `tag`, which win over the names of the
     package it shares (theorion's `example`, `remark`, `solution`): import that package by its name
     (@integrations)],
-  [`#alert` inside a box, `config-methods(alert: ..)`], [`#alert` is now the theme's own: inside a box it takes the
-    color of the box, as `~~text~~` does (for the blue of 0.2.0, `#primary`), and a custom `alert` method reaches only `~~text~~`; to
-    restyle `#alert` too, `#let alert(body) = ..` after the imports],
+  [`#alert` and `~~text~~` inside a box, `config-methods(alert: ..)`], [both take the color of the box (for the blue of
+    0.2.0, `#primary`); `#alert` is now the theme's own, so a custom `alert` method reaches only `~~text~~`; to restyle
+    `#alert` too, `#let alert(body) = ..` after the imports],
 )
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:

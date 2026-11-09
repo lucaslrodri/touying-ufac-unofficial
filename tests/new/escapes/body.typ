@@ -10,7 +10,7 @@
   [`#emph-box(title: [T])[..]`], [`> == T` + `> text`], [the 1st line `> == T` is the title],
   [`$ #eq-box[$…$] $`], [`> $ … $`], [equation box (the `key-eq`), inside the equation; inline `> $x$` does not count (Edge cases)],
   [`#quote-box(color:)[..]`], [`"text"` (whole line)], [several lines → several boxes, alternating colors],
-  [`#arrows(color:)[..]` / `#list(marker:)`], [`-> item`], [consecutive `->` lines = one list; blank line before],
+  [`#arrow-list(color:)[- ..]`], [`-> item`], [consecutive `->` lines = one list; blank line before; `#arrows(color:)[..]` colors the `->` lines inside],
   [`#alert[..]`], [`~~text~~`], [`~` is Typst's non-breaking space; plain text only inside],
   [`#underline[..]`], [`~text~`], [start/space/opening bracket before, space/punctuation/end after (`Fig.~1 and Tab.~2` stay spaces)],
   [`#highlight[..]`], [`==text==`], [plain text, never at the start of the line],
