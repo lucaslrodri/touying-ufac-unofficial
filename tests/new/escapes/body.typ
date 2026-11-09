@@ -32,9 +32,11 @@ No shorthand applies inside `raw`: `==x==`, `> a`, `-> b`, `~~c~~`, `~d~`. For a
 #cols(divider: true)[
   `\==x==` and `=\=x==`: \==x== and =\=x== stay literal; ==z== is still a highlight, also in *\==bold==*.
 
-  `\> box` (followed by a word):
+  `\> box` and `\> 3 items` (followed by a word or a number):
 
   \> box stays text
+
+  \> 3 items stays text
 
   `-\> item` (the backslash goes on the `>`):
 
@@ -46,6 +48,6 @@ No shorthand applies inside `raw`: `==x==`, `> a`, `-> b`, `~~c~~`, `~d~`. For a
 
   \"quote\" stays text
 
-  Limits: `\> == T`, `\> *x*` and `\-> item` do not escape (the escaped `>` must be followed by a word).
+  Limits: `\> == T`, `\> *x*` and `\-> item` do not escape (the escaped `>` must be followed by a word or a number).
 ]
 ]
