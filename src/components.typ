@@ -53,7 +53,8 @@
 }
 
 /// Bold text in UFAC yellow, with the bold and the italic inside it in yellow too. It is weak on white: meant for
-/// short labels and dark backgrounds.
+/// short labels and dark backgrounds. On a dark background where the yellow does not read (a contrast under 3:1, as
+/// on `quaternary`) it turns dark blue.
 ///
 /// ```example
 /// A #secondary[side note] in yellow.
@@ -62,9 +63,11 @@
 #let secondary(
   /// Text to emphasize. -> content
   body,
-) = _colored(colors.secondary, body)
+) = context _colored(_emph-color(colors.secondary, keep: true), body)
 
-/// Bold text in red, with the bold and the italic inside it in red too, for warnings and problems.
+/// Bold text in red, with the bold and the italic inside it in red too, for warnings and problems. On a dark
+/// background where the red does not read (a contrast under 3:1, as in a red badge) it turns yellow, or dark blue
+/// where the yellow does not read either.
 ///
 /// ```example
 /// #tertiary[Caution:] the ice is thin.
@@ -73,9 +76,11 @@
 #let tertiary(
   /// Text to emphasize. -> content
   body,
-) = _colored(colors.tertiary, body)
+) = context _colored(_emph-color(colors.tertiary, keep: true), body)
 
-/// Bold text in green, with the bold and the italic inside it in green too, for advantages and correct answers.
+/// Bold text in green, with the bold and the italic inside it in green too, for advantages and correct answers. On a
+/// dark background where the green does not read (a contrast under 3:1, as in a green badge) it turns yellow, or dark
+/// blue where the yellow does not read either.
 ///
 /// ```example
 /// #quaternary[Correct:] the series
@@ -85,7 +90,7 @@
 #let quaternary(
   /// Text to emphasize. -> content
   body,
-) = _colored(colors.quaternary, body)
+) = context _colored(_emph-color(colors.quaternary, keep: true), body)
 
 // ---------- list markers and pills ----------
 /// Markers of `-` lists by level: filled square, rotated hollow square, smaller hollow circle.

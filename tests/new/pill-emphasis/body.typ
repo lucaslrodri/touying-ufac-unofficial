@@ -17,3 +17,14 @@ Tags with white text: #tag(color: colors.tertiary)[red ~~alert~~ #primary[primar
     emph-box(color: colors.at(n), title: [~~alert~~ and #primary[primary]])[#raw(n)]))
 
 #table(columns: 2, table.header([Cell], [Body]), [A dark cell:], table.cell(fill: colors.quaternary)[~~alert~~ and #primary[primary]])
+
+== `#secondary`, `#tertiary` and `#quaternary` on dark pills
+// each keeps its color where it reads on the pill (3:1 or more) and otherwise turns yellow, or dark blue where the yellow does not read either
+#grid(columns: 3, gutter: 0.6em,
+  ..("primary", "tertiary", "quaternary", "secondary-dark", "neutral-dark").map(n =>
+    emph-box(color: colors.at(n), title: [#secondary[sec] #tertiary[ter] #quaternary[qua]])[#raw(n)]))
+
+#exercise-slide(title: [A #tertiary[red] word in a red badge], color: colors.tertiary)[
+  === A #tertiary[red] word in a red pill
+  Tags: #tag(color: colors.tertiary)[#tertiary[red] in red] and #tag(color: colors.quaternary)[#quaternary[green] in green].
+]
