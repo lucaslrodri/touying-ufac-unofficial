@@ -577,10 +577,10 @@
 
 // ---------- tag ----------
 
-/// Tag: capitals, spaced and bold, on a color, with rounded corners; by default UFAC yellow with the text in dark blue,
-/// as on the cover ("UNDERGRADUATE THESIS") and on the section slides ("PART 2"). As in a pill, the text is dark blue
-/// on a light color (the yellow, the light tones) and white on the others. The vertical padding is an `outset`, as in @eq-box: in a line of text the
-/// tag does not change the height of the line.
+/// Tag: capitals, spaced and bold, on a color, with rounded corners; by default UFAC yellow, as on the cover
+/// ("UNDERGRADUATE THESIS") and on the section slides ("PART 2"). As in a pill, the text is dark blue on a light color
+/// (a luma of 70% or more: the yellow, the `-lighter` and `-lightest` tones, `quaternary-light`) and white on the others.
+/// The vertical padding is an `outset`, as in @eq-box: in a line of text the tag does not change the height of the line.
 ///
 /// ```example
 /// -> `plot3` #tag[new]

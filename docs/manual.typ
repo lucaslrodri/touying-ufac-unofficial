@@ -364,9 +364,9 @@ Call `fit(x, y)` first.
 In a box (an `emph-box`, a callout, an exercise or an example, a light cell of a table: @tables), bold text, alerts,
 highlights, underlines, arrows, the markers of the lists (and, in an exercise or example slide, their numbers), chips,
 links, icons (@icons) and the `===` pills take the color of the box; italic stays black, as bold and italic are on a
-slide. In the slide header, the footer and inside an alert or a colored emphasis such as `#primary`, bold and italic
-take the color of the text around them. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
-a reference to an exercise or example, in the color of its kind.
+slide. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
+a reference to an exercise or example, in the color of its kind. In the slide header, the footer and inside an alert or
+a colored emphasis such as `#primary`, bold and italic take the color of the text around them.
 
 A light color is `secondary` and `secondary-light`, the `-lighter` and `-lightest` tones and `quaternary-light` (a
 luma of 70% or more); the others are dark.
@@ -539,8 +539,9 @@ one, so a text longer than a page goes outside it. With `style: "badge"` it cont
 == Tags and quotations <tags>
 
 `#tag` is the yellow tag of the cover and of the section slides, for the text, the titles and the tables: a short label
-in spaced capitals, on any color, with dark blue text on a light color and white on the others, as a pill
-(@context-colors). A paragraph made only of quoted lines becomes one quotation per line, a `#quote-box`; Typst's `#quote(attribution:)` is a `#quote-box` too, with the attribution on the right.
+in spaced capitals, on any color, with dark blue text on a light color and white on the others, as on a pill
+(@context-colors). A paragraph made only of quoted lines becomes one quotation per line, a `#quote-box`; Typst's
+`#quote(attribution:)` is a `#quote-box` too, with the attribution on the right.
 
 ```example
 #tag[Optional]
