@@ -42,3 +42,24 @@
   #note(color: colors.quaternary-light)[A light green callout, *bold* and ~~alert~~ in `quaternary-dark`.]
 ]
 #emph-box(color: rgb("#eeeeee"), title: [Out of the palette])[*Bold* and ~~alert~~ in the color darkened by 40%.]
+
+#exercise-slide(title: [A yellow exercise that goes on], color: colors.secondary)[
+  === A subtitle with ~~alert~~
+  The pill is dark yellow and the alert in it dark blue.
+
+  #answer
+  The dashed rule and the word in the dark yellow.
+
+  ---
+
+  The pill is repeated on the continuation.
+]
+
+#example-slide(title: [A light green example], color: colors.quaternary-light)[
+  *Bold*, ~~alert~~ and the markers in `quaternary-dark`:
+  + a number
+  - a bullet
+
+  #solution
+  The solution in the dark tone too.
+]
