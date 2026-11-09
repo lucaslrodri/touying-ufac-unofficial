@@ -234,8 +234,8 @@
   if ch.len() == 1 and ch.first().func() == math.equation { ch.first() } else { none }
 }
 /// Emphasis box. Without a title it has a thin border; with a title, a badge sits over the top border. Inside the
-/// box the `-` markers, the `->` arrow, `*bold*`, `==highlight==` and `#underline` take the box color; an explicit
-/// `#arrows(color:)`, `#highlight(fill:)` or `#underline(stroke:)` wins. Colors by convention: primary for
+/// box the `-` markers, the `->` arrow, `*bold*`, `~~text~~` and `#alert`, `==highlight==` and `#underline` take the
+/// box color; an explicit `#arrows(color:)`, `#arrow-list(color:)`, `#highlight(fill:)` or `#underline(stroke:)` wins. Colors by convention: primary for
 /// definitions and what is recalled, quaternary for advantages, tertiary for problems, secondary for side notes.
 ///
 /// ```example
@@ -761,7 +761,7 @@
 }
 /// Arrow lists with the arrow in another color, for everything inside the body. The `-> item` shorthand itself
 /// needs no function: consecutive lines starting with `->` become one list with a blue arrow (the box color inside an
-/// @emph-box). The list must start the paragraph, and `-\> item` escapes it.
+/// @emph-box). The list must start the paragraph, and `-\> item` escapes it. Its function form is @arrow-list.
 ///
 /// ```example
 /// #arrows(color: colors.quaternary)[
@@ -780,8 +780,8 @@
   show par: _rewrite-par.with(arrow-color: color)
   body
 }
-/// The function form of the `-> item` shorthand: the `-` items of the body get the arrow of `->`, blue, in the color
-/// of the box around it or white in a pill. It takes a `-` list, so its items can hold any markup.
+/// The function form of the `-> item` shorthand: the `-` items of the body get the arrow of `->`, blue, or the color
+/// of the box around it, or white in a pill. It takes a `-` list, so an item can hold a block or a nested list.
 ///
 /// ```example
 /// #arrow-list[

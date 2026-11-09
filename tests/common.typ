@@ -20,7 +20,7 @@
 
 // `eval` does not see the file scope, hence the dictionary with everything the snippets use.
 #let _demo-scope = (
-  emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, cols: cols, colors: colors, icon: icon,
+  emph-box: emph-box, eq-box: eq-box, quote-box: quote-box, arrows: arrows, arrow-list: arrow-list, cols: cols, colors: colors, icon: icon,
   ufac-logo: ufac-logo,
   primary: primary, secondary: secondary, tertiary: tertiary, quaternary: quaternary, alert: alert,
   slide: slide, empty-slide: empty-slide, ending-slide: ending-slide, exercise-slide: exercise-slide, example-slide: example-slide,

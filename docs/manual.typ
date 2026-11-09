@@ -9,8 +9,8 @@
   authors: ("Lucas Lima Rodrigues",),
   abstract: [
     A #link("https://touying-typ.github.io/")[Touying] theme for the slides of the
-    #link("https://www.ufac.br/")[Federal University of Acre]: lectures and academic presentations, the work of students
-    for a course and thesis defenses. Slides are written with headings and a few Markdown-like shorthands for boxes,
+    #link("https://www.ufac.br/")[Federal University of Acre]: lectures and academic presentations, from coursework to
+    thesis defenses. Slides are written with headings and a few Markdown-like shorthands for boxes,
     quotations, arrow lists and emphases. This manual is set with the rules of the theme itself.
   ],
   url: package.repository,
@@ -376,7 +376,7 @@ blue in the title and the footer, and the color of an alert inside it. An alert 
 
 Consecutive lines starting with `->` become one list with a blue arrow. The list has to start the paragraph, after a
 blank line; an arrow in the middle of a line and the math arrow are left alone. `#arrow-list[..]` is its function
-form: the `-` items of its body get the arrow. `#arrows(color: ..)[..]` gives another color to the `->` lines inside. Bullet lists have three levels of
+form, for items that hold a block or a nested list: the `-` items of its body get the arrow. `#arrows(color: ..)[..]` gives another color to the `->` lines inside. Bullet lists have three levels of
 yellow markers, and numbered lists are blue and bold: `1.`, `a)`, `i.` by level. `#set enum(numbering: "a)")` starts
 at `a)`.
 
