@@ -371,16 +371,14 @@ a reference to an exercise or example, in the color of its kind.
 A light color is `secondary` and `secondary-light`, the `-lighter` and `-lightest` tones and `quaternary-light` (a
 luma of 70% or more); the others are dark.
 
-On a dark background (a dark pill or badge, a tag with white text, the cover, the closing slide, the header of a
+On a dark background (a dark pill, badge or tag, the cover, the closing slide, the header of a
 table, a dark cell), the text, bold and italic are white, and a highlight is yellow with the text in blue. An alert
 and `#primary` are yellow, or dark blue where the yellow does not read (a contrast under 3:1), as on `quaternary`,
 `neutral` and `secondary-dark`.
 
-A pill or a badge in a light color has dark blue text, and inside it alerts are blue and highlights light blue, as in
-a blue box. A box, a callout, an exercise or an example in a light color uses the dark tone of its color
-(`secondary-dark`, for the yellow) for what takes its color. A tag (@tags) chooses its text by contrast instead, dark
-blue or white, so in `quaternary` or `secondary-dark` it has dark blue text; inside a tag with dark blue text, alerts
-are blue and highlights light blue too.
+A pill, a badge or a tag (@tags) in a light color has dark blue text, and inside it alerts are blue and highlights
+light blue, as in a blue box. A box, a callout, an exercise or an example in a light color uses the dark tone of its
+color (`secondary-dark`, for the yellow) for what takes its color.
 
 #slide-example("pills", columns: (1fr, 1fr))
 
@@ -541,8 +539,8 @@ one, so a text longer than a page goes outside it. With `style: "badge"` it cont
 == Tags and quotations <tags>
 
 `#tag` is the yellow tag of the cover and of the section slides, for the text, the titles and the tables: a short label
-in spaced capitals, on any color, with dark blue or white text, whichever contrasts more with it. A paragraph made only of quoted lines becomes one quotation per line, a
-`#quote-box`; Typst's `#quote(attribution:)` is a `#quote-box` too, with the attribution on the right.
+in spaced capitals, on any color, with dark blue text on a light color and white on the others, as a pill
+(@context-colors). A paragraph made only of quoted lines becomes one quotation per line, a `#quote-box`; Typst's `#quote(attribution:)` is a `#quote-box` too, with the attribution on the right.
 
 ```example
 #tag[Optional]

@@ -578,8 +578,8 @@
 // ---------- tag ----------
 
 /// Tag: capitals, spaced and bold, on a color, with rounded corners; by default UFAC yellow with the text in dark blue,
-/// as on the cover ("UNDERGRADUATE THESIS") and on the section slides ("PART 2"). The text is dark blue or white,
-/// whichever contrasts more with the color. The vertical padding is an `outset`, as in @eq-box: in a line of text the
+/// as on the cover ("UNDERGRADUATE THESIS") and on the section slides ("PART 2"). As in a pill, the text is dark blue
+/// on a light color (the yellow, the light tones) and white on the others. The vertical padding is an `outset`, as in @eq-box: in a line of text the
 /// tag does not change the height of the line.
 ///
 /// ```example
@@ -598,17 +598,12 @@
   /// The text, in capitals. -> content
   body,
 ) = {
-  let dark = colors.primary.darken(45%)
-  let ink = if _contrast(dark, color) >= _contrast(white, color) { dark } else { white }
   // the room above and below is half the size of the tag, up to 0.35em of the text around it (the tag of the section
   // slides, at 0.7em): a bigger tag in running text does not reach the line above
   context {
     let room = calc.min((0.5 * size).to-absolute(), 0.35em.to-absolute())
-    box(fill: color, radius: 3pt, inset: (x: 0.7 * size), outset: (y: room), text(size: size, weight: "bold", fill: ink,
-      tracking: 0.06em, top-edge: "cap-height", bottom-edge: "baseline",
-      // what is inside follows the convention of a pill: on a dark tag a yellow alert and a yellow highlight with blue
-      // text, on a light one (the yellow) the blue of a light box
-      if ink == white { _in-box(color, upper(body), kind: "pill") } else { _in-box(colors.primary, upper(body)) }))
+    box(fill: color, radius: 3pt, inset: (x: 0.7 * size), outset: (y: room), text(size: size, tracking: 0.06em,
+      top-edge: "cap-height", bottom-edge: "baseline", _pill-text(color, upper(body))))
   }
 }
 
