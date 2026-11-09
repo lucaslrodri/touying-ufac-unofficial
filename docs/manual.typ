@@ -144,7 +144,7 @@ of a course, so the flavors without units number them without it ("Exercise 1").
 #table(
   columns: (auto, 1fr),
   table.header([`flavor`], [Recommends]),
-  [`"lecture"` (the default)], [the cover layout `"line"` (`cover-layout`, @cover): the authors and the date on one line
+  [`"lecture"` (the default)], [the cover layout `"line"` (`cover-layout`, @cover-page): the authors and the date on one line
     at the bottom],
   [`"coursework"`], [the layout `"stack"`: the authors in groups at the bottom left; no units: exercises without a
     prefix],
@@ -167,7 +167,7 @@ The defense of an undergraduate thesis takes `flavor: "tcc"`: the tag of the wor
 
 = The cover and the closing slide <cover>
 
-== The cover
+== The cover <cover-page>
 
 `#title-slide()` draws the cover in three bands: the logos at the top left, the titles in the center, and the authors
 and the date. The `cover-layout` of `title-slide` decides where the authors and the date go, and the flavor gives its
@@ -191,7 +191,7 @@ Content given to the cover goes below the titles, in white: a message, where to 
 
 #slide-example("cover-body", columns: (1fr, 1fr))
 
-== The closing slide
+== The closing slide <closing-slide>
 
 `#ending-slide` closes the deck on the blue page of the cover: a large title with the yellow rule, a subtitle in yellow
 and a free body, with the footer of the slides in white. Without a title it says "Thank you!" in the language of the
@@ -843,7 +843,7 @@ A deck of 0.2.0 needs the changes of this table and, in some cases, those of the
 
 A label `<empty-slide…>` of 0.2.0 is now an ordinary label, so its slide becomes an ordinary one, with its header:
 look for these labels in the deck. The blue page of the cover, with the footer, is `#ending-slide(title: none)[..]`
-(@cover); a page without header or footer is Touying's `#empty-slide[..]` (the deck imports Touying), which takes
+(@closing-slide); a page without header or footer is Touying's `#empty-slide[..]` (the deck imports Touying), which takes
 neither `color:` nor `title:`, so a page of another color sets its fill and the color of its text:
 
 ```typ
