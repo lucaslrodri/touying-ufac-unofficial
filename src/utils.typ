@@ -93,11 +93,12 @@
 /// `emph-box` (body: "box"; title badge: "pill"), the callouts, the boxes of the exercises and examples, `_pill-text`
 /// (a dark pill: "pill"; a light one: "box" in blue, with its `fill`), the slide header ("title"), the section title
 /// ("title"), the cells of a table (the header and a dark cell: "pill"; a light cell: "box" with its `fill`), the
-/// footer ("title", or "pill" on the closing slide) and the content of the cover ("pill": white on blue). `*bold*`,
-/// `==highlight==`, the `->` arrow, `#underline`, `#icon` and inline `raw` read the color at layout time (in
-/// `context`): in the `> box` form the paragraph reaches `show par` already realized (strong/highlight become
-/// `styled(...)` with black/yellow baked in), so set/show rules inside the box cannot reach them anymore; a `state`
-/// resolves at the right place. Inline `raw` uses light tones in boxes and titles and dark tones with light text in pills.
+/// footer ("title", or "pill" on the closing slide), the content of the cover and of the closing slide ("pill": white
+/// on blue) and the titles of `#outline()` ("title"). `*bold*`, `==highlight==`, the `->` arrow, `#underline`, `#icon`
+/// and inline `raw` read the color at layout time (in `context`): in the `> box` form the paragraph reaches `show par`
+/// already realized (strong/highlight become `styled(...)` with black/yellow baked in), so set/show rules inside the
+/// box cannot reach them anymore; a `state` resolves at the right place. Inline `raw` uses light tones in boxes and
+/// titles and dark tones with light text in pills.
 /// -> state
 #let _box-color = state("ufac-box-color", ())
 /// Relative luminance of a color (WCAG 2), for the contrast of an alert or a colored emphasis with a dark pill (`_emph-color`).

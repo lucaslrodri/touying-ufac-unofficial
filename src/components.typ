@@ -68,8 +68,9 @@
 
 /// Bold text in red, with the bold and the italic inside it in red too, for warnings and problems. On a dark
 /// background where the red does not read (a contrast under 3:1, as in a red badge or on the blue of the cover) it
-/// turns yellow, or dark blue where the yellow does not read either. On a light pill, badge or tag it keeps its color
-/// where it reads and otherwise takes the blue of an alert (in a light cell, the dark tone of the cell).
+/// turns yellow, or dark blue where the yellow does not read either. On a light pill, badge or tag, such as the yellow
+/// tag, it keeps its color where it reads and otherwise takes the blue of an alert (in a light cell, the dark tone of
+/// the cell).
 ///
 /// ```example
 /// #tertiary[Caution:] the ice is thin.
