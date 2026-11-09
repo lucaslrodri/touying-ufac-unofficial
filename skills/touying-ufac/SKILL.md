@@ -49,7 +49,7 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - `#note`: secundário, ou o que vem adiante;
    - `#example` e `#examples`: exemplo curto.
 
-   Destaques (`~~ ~~`, `== ==`) com parcimônia, nunca em item curto nem em tópico. Nada de travessão "—" no texto, que quebra a página no tema.
+   Destaques (`~~ ~~`, `== ==`) com parcimônia, nunca em item curto nem em tópico. Nada de travessão "—" no texto: o Touying o toma pelo `---` e quebra a página.
 6. **Cada coisa na sua pasta** (a árvore está em "Pastas", abaixo):
    - toda figura feita em Typst num arquivo seu, em `figures/<tipo>/<nome>.typ`: `graphs/` (lilaq), `diagrams/` (fletcher), `drawings/` (CeTZ), `circuits/` (zap);
    - os dados em `data/` (CSV e JSON);
