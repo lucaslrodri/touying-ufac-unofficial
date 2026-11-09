@@ -268,7 +268,7 @@
   // footer of the page, not part of the background, which is laid out before the slide counter steps. Touying lays
   // the footer out across the whole width of the page, down to its bottom
   let footer = context place(bottom + left, dx: mx + r, dy: -below, block(width: _slide-size(self).first() - 2 * (mx + r),
-    height: foot-h, text(size: 20pt, _footer(self, color: _box-ink(c), lift: false))))
+    height: foot-h, text(size: 20pt, _footer(self, color: _box-ink(c), rule-color: c, lift: false))))
   // the body inside the box: 1em from the sides, 0.75em under the badge, 0.6em above the footer
   config-page(header: none, footer: footer, background: background,
     margin: (top: badge-top + badge-h + 0.75 * em, bottom: below + foot-h + 0.6 * em, x: mx + em))

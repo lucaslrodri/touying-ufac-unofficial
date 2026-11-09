@@ -665,14 +665,19 @@
   white: false,
   /// Color of the text, the rules and the logos, instead of the primary color. -> auto | color
   color: auto,
+  /// Color of the rules alone, instead of `color`: in the box of an exercise in a light color they are its bottom
+  /// border, in the color of the box, and the text and the logo in its dark tone. -> auto | color
+  rule-color: auto,
   /// Lift the footer by 0.05em, as on the page. The box of an exercise has its border at the exact middle of the
   /// footer, so its footer is not lifted. -> bool
   lift: true,
 ) = {
   let mono = color
   let self = self
-  if color != auto { self.colors.primary = color }
-  set text(if white { self.colors.neutral-lightest } else { self.colors.primary })
+  let ink = if color != auto { color } else { self.colors.primary }
+  // the rules are drawn from `self.colors.primary`, here and in `_cell`
+  if color != auto { self.colors.primary = if rule-color != auto { rule-color } else { color } }
+  set text(if white { self.colors.neutral-lightest } else { ink })
   set std.align(bottom)
   let rule = if white { _line-white(self) } else { _line(self) }
   let footer = context layout(size => {
@@ -709,5 +714,5 @@
   })
   // the footer is a context of its own, so that its bold and italic take its color: on the blue page a pill, as the
   // rest of the page (an alert in it is yellow), elsewhere a title in the color of its text
-  _in-box(self.colors.primary, footer, kind: if white { "pill" } else { "title" })
+  _in-box(ink, footer, kind: if white { "pill" } else { "title" })
 }
