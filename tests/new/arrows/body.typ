@@ -32,3 +32,28 @@
   ]
 ]
 ]
+
+== `#arrow-list`, the function form of `->`
+#cols(divider: true)[
+  -> the shorthand, with *bold*
+  -> another item with $x -> y$
+][
+  #arrow-list[
+    - the function, with *bold*
+    - another item with $x -> y$
+  ]
+]
+#emph-box(color: colors.quaternary)[
+  #arrow-list[
+    - green arrow, as `->` in the box
+    - `#arrow-list(color: ..)` gives another one:
+  ]
+  #arrow-list(color: colors.tertiary)[- red arrow]
+]
+
+== `#arrow-list` with a `#pause`
+#arrow-list[
+  - first, on every step
+  #pause
+  - second, from the second step
+]

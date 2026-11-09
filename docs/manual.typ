@@ -310,7 +310,7 @@ same function. These shorthands take plain text only (no markup inside), and non
   [`#highlight[text]`], [`==text==`], [light-yellow background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
   [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box],
-  [`#arrows[..]`], [`-> item`], [arrow list],
+  [`#arrow-list[- item]`], [`-> item`], [arrow list],
   [`#emph-box[..]`], [`> text`], [box (@boxes)],
   [`$ #eq-box[$..$] $`], [`> $ .. $`], [equation box (@boxes)],
   [`#quote-box[..]`], [`"text"`], [quotation (@boxes)],
@@ -369,7 +369,8 @@ color of its kind.
 == Lists and terms
 
 Consecutive lines starting with `->` become one list with a blue arrow. The list has to start the paragraph, after a
-blank line; an arrow in the middle of a line and the math arrow are left alone. Bullet lists have three levels of
+blank line; an arrow in the middle of a line and the math arrow are left alone. `#arrow-list[..]` is its function
+form: the `-` items of its body get the arrow. `#arrows(color: ..)[..]` gives another color to the `->` lines inside. Bullet lists have three levels of
 yellow markers, and numbered lists are blue and bold: `1.`, `a)`, `i.` by level. `#set enum(numbering: "a)")` starts
 at `a)`.
 
@@ -387,7 +388,7 @@ at `a)`.
 / Tide: the rise and fall of the sea.
 ```
 
-#see("components", "arrows()")
+#see("components", "arrows()", "arrow-list()")
 
 == Columns
 
@@ -851,7 +852,7 @@ chapters above show how to use them.
 
 == Lists, columns and the outline
 
-#reference("components", "arrows", "cols", "outline")
+#reference("components", "arrows", "arrow-list", "cols", "outline")
 
 == Code
 

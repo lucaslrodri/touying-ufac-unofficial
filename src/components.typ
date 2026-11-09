@@ -680,6 +680,15 @@
   let palette = (colors.secondary, colors.primary, colors.quaternary, colors.tertiary)
   items.enumerate().map(((i, it)) => quote-box(color: palette.at(calc.rem(i, palette.len())), it.sum(default: []))).join()
 }
+/// The `→` marker of the arrow lists: `auto` is the color of the box around it (blue outside one), or white inside a
+/// pill (white text on a color), like bold text.
+/// -> content
+#let _arrow-marker(
+  /// Color of the arrow. -> auto | color
+  color,
+) = if color == auto {
+  context text(fill: if _in-pill() { white } else { _current-box-color(colors.primary) }, sym.arrow.r)
+} else { text(fill: color, sym.arrow.r) }
 /// Consecutive `-> item` lines → a `list` with a `→` marker (blue, the box color inside `emph-box`, or `color`).
 /// In markup `->` is not the arrow: Typst emits the text nodes `[-]` and `[> item]` when `-` opens the line
 /// without a space; the pair is what is detected here.
@@ -702,11 +711,7 @@
     }
   }
   if cur != () { items.push(cur) }
-  // `auto`: the color of the box around it, or white inside a pill (white text on a color), like bold text
-  let marker = if color == auto {
-    context text(fill: if _in-pill() { white } else { _current-box-color(colors.primary) }, sym.arrow.r)
-  } else { text(fill: color, sym.arrow.r) }
-  list(marker: marker, ..items.map(it => it.sum(default: [])))
+  list(marker: _arrow-marker(color), ..items.map(it => it.sum(default: [])))
 }
 /// The `show par` rule of the theme. It inspects `it.body.children` (which shorthand they are is `_shorthand`, which the
 /// default callout also asks): a lone `>` → signal for the next block
@@ -752,6 +757,25 @@
 ) = {
   // the inner `show par` replaces the global one and returns a `list`, so nothing is processed twice
   show par: _rewrite-par.with(arrow-color: color)
+  body
+}
+/// The function form of the `-> item` shorthand: the `-` items of the body get the arrow of `->`, blue, in the color
+/// of the box around it or white in a pill. It takes a `-` list, so its items can hold any markup.
+///
+/// ```example
+/// #arrow-list[
+///   - the tide rises
+///   - and falls
+/// ]
+/// ```
+/// -> content
+#let arrow-list(
+  /// Color of the arrows; `auto` follows the box around it, as `->` does. -> auto | color
+  color: auto,
+  /// A `-` list. -> content
+  body,
+) = {
+  set list(marker: _arrow-marker(color))
   body
 }
 
