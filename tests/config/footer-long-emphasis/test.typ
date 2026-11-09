@@ -8,7 +8,7 @@
 )
 
 == A footer with colored emphases
-The red "Tides" and the green "Lab 4" fit and are kept whole, right before the "…".
+The red "Tides" is kept whole right before the "…" on the left, and the green "Lab 4" before the authors cut with "…" on the right.
 
 #exercise-slide(title: [An exercise], color: colors.neutral-dark)[The same footer in the box of a gray exercise: the footer takes the gray, and the red and the green show.]
 

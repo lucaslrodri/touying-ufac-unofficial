@@ -1,4 +1,4 @@
-/// Synopsis: a short left text and many authors (an array): the authors take the room the left text leaves and are cut with "…" at the end of a name, on a slide and in the box of an exercise.
+/// Synopsis: a short left text and many authors (an array): the authors take the room the left text leaves and are cut with "…" at the end of a word, which may fall inside a name ("SEVENTH…"), on a slide and in the box of an exercise.
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", config-info(
   title: [Tides],
