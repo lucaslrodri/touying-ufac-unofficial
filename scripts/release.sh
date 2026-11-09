@@ -2,6 +2,7 @@
 # Releases a version of the package with one command:
 #
 #   sh scripts/release.sh patch              # or minor, major, or the version itself, as 0.2.0
+#   sh scripts/release.sh 0.2.0              # the version typst.toml already has, when it has no tag yet
 #   sh scripts/release.sh --dry-run patch    # shows what it would do, and changes nothing
 #
 # While a version is developed, typst.toml keeps the version published last, and every change an author can see goes
@@ -22,6 +23,11 @@
 #     tests, publishes with gotpm to the fork of typst/packages and creates the GitHub release;
 #  6. it waits for release.yml and opens in the browser the pull request to typst/packages, with its title and its
 #     body (the checklist of an update and the changelog of the version) filled in. Its button creates it.
+#
+# A version is also released by the number typst.toml already has, as it is, when it has no tag yet: typst.toml was
+# changed by hand, or the release of the version is redone after a failure (see "New version" in CONTRIBUTING). Step 2
+# then changes nothing, the changelog may already have the heading of the version (kept as it is), and a commit is made
+# only when step 3 or the build changes something.
 #
 # The same script releases abntly and touying-ufac-unofficial: only the block below differs between them.
 set -eu
@@ -89,16 +95,31 @@ case $increment in
   major | minor | patch | [0-9]*.[0-9]*.[0-9]*) ;;
   *) fail "unknown increment $increment: patch, minor, major or a version, as 0.2.0" ;;
 esac
-next=$(gotpm bump -n "$increment") || fail "gotpm bump -n $increment failed"
-# gotpm takes any version, also an older one
-awk -v a="$next" -v b="$prev" 'BEGIN {
-  split(a, x, "."); split(b, y, ".")
-  for (i = 1; i <= 3; i++) { if (x[i] + 0 > y[i] + 0) exit 0; if (x[i] + 0 < y[i] + 0) exit 1 }
-  exit 1
-}' || fail "the new version ($next) must come after $prev"
+# the version of typst.toml, asked for by its number, is released as it is
+if [ "$increment" = "$prev" ]; then
+  as_is=true
+  next=$prev
+else
+  as_is=false
+  next=$(gotpm bump -n "$increment") || fail "gotpm bump -n $increment failed"
+  # gotpm takes any version, also an older one
+  awk -v a="$next" -v b="$prev" 'BEGIN {
+    split(a, x, "."); split(b, y, ".")
+    for (i = 1; i <= 3; i++) { if (x[i] + 0 > y[i] + 0) exit 0; if (x[i] + 0 < y[i] + 0) exit 1 }
+    exit 1
+  }' || fail "the new version ($next) must come after $prev"
+fi
 
 # The heading of the changelog of the next version, at any level.
 unreleased='^#+ (Próxima versão|Unreleased)[[:blank:]]*$'
+# The heading of the section of the version: the one above, or, for a version released as it is, also the version
+# itself, with or without its date.
+version_heading=$unreleased
+names='"Próxima versão" or "Unreleased"'
+if $as_is; then
+  version_heading="$unreleased|^#+ $(echo "$next" | sed 's/\./\\./g')([[:blank:]].*)?\$"
+  names="\"Próxima versão\", \"Unreleased\" or \"$next\""
+fi
 
 # section FILE PATTERN: the body of the section whose heading matches PATTERN, up to the next heading of the same or
 # of a higher level, without the blank lines around it.
@@ -121,7 +142,7 @@ section() {
 # point to the tags of their own versions. The section of the next version is changed like the rest: a link written
 # while it was developed points to the tag of the version before.
 replace() {
-  OLD_IMPORT="$name:$prev" NEW_IMPORT="$name:$next" OLD_TAG="v$prev" NEW_TAG="v$next" PATTERN=$unreleased SKIP=$2 awk '
+  OLD_IMPORT="$name:$prev" NEW_IMPORT="$name:$next" OLD_TAG="v$prev" NEW_TAG="v$next" PATTERN=$version_heading SKIP=$2 awk '
     function level(s) { match(s, /^#+/); return RLENGTH }
     # every FROM in S becomes TO; with BOUNDED, not when a digit follows (pkg:1.0.1 is not in pkg:1.0.10)
     function swap(s, from, to, bounded,   out, i, rest) {
@@ -146,6 +167,12 @@ replace() {
       $0 = swap($0, "`" ENVIRON["OLD_TAG"] "`", "`" ENVIRON["NEW_TAG"] "`", 0)
     }
     { print }' "$1"
+}
+
+# tagged TAG: whether TAG exists, here or on origin
+tagged() {
+  git rev-parse -q --verify "refs/tags/$1" > /dev/null ||
+    git ls-remote --exit-code --tags origin "refs/tags/$1" > /dev/null 2>&1
 }
 
 is_changelog() {
@@ -205,7 +232,11 @@ trap finish EXIT
 trap 'exit 130' INT TERM
 
 # 1. ------------------------------------------------------------------------------------------------------------------
-step "$name $prev -> $next"
+if $as_is; then
+  step "$name $next, the version of typst.toml"
+else
+  step "$name $prev -> $next"
+fi
 branch=$(git rev-parse --abbrev-ref HEAD)
 [ "$branch" = "$dev_branch" ] || problem "a release is made on $dev_branch, not on $branch"
 [ -z "$(git status --porcelain)" ] || problem "the working tree is not clean: commit or stash the changes first"
@@ -218,35 +249,40 @@ if [ "$dev_branch" != main ]; then
   git merge-base --is-ancestor origin/main HEAD ||
     problem "origin/main is not in $dev_branch, so main cannot be fast-forwarded to it"
 fi
-if git rev-parse -q --verify "refs/tags/v$next" > /dev/null ||
-  git ls-remote --exit-code --tags origin "refs/tags/v$next" > /dev/null 2>&1; then
-  problem "the tag v$next already exists"
+if tagged "v$next"; then problem "the tag v$next already exists"; fi
+if ! $as_is && ! tagged "v$prev"; then
+  problem "typst.toml has $prev, which has no tag v$prev, so it was never released: release it as it is, with \`sh scripts/release.sh $prev\`"
 fi
 gh auth status > /dev/null 2>&1 || problem "gh is not logged in: run \`gh auth login\`"
 [ -d fonts ] || problem "fonts/ is missing: run \`sh scripts/fonts.sh\`"
 for f in $changelogs; do
-  count=$(grep -cE "$unreleased" "$f" || true)
+  count=$(grep -cE "$version_heading" "$f" || true)
   if [ "$count" -ne 1 ]; then
-    problem "$f needs one section \"Próxima versão\" or \"Unreleased\" with the changes of the version (it has $count)"
-  elif [ -z "$(section "$f" "$unreleased")" ]; then
-    problem "the section \"Próxima versão\" / \"Unreleased\" of $f is empty"
+    problem "$f needs one section $names with the changes of the version (it has $count)"
+  elif [ -z "$(section "$f" "$version_heading")" ]; then
+    problem "the section of the version in $f is empty"
+  elif $dated && grep -E "$version_heading" "$f" | grep -vE "$unreleased" | grep -qv '('; then
+    problem "the heading of $next in $f has no date: write it as \"Próxima versão\" / \"Unreleased\", and the release dates it"
   fi
 done
 # the changelog of the version for the pull request, with its links already on the new tag
 replace "$pr_changelog" 1 > "$tmp/pr-changelog"
-section "$tmp/pr-changelog" "$unreleased" > "$tmp/changes.md"
+section "$tmp/pr-changelog" "$version_heading" > "$tmp/changes.md"
 pr_heading=$next
 
 # 2. ------------------------------------------------------------------------------------------------------------------
 step "The version in typst.toml, the imports and the links"
-if ! $dry_run; then
-  changed=true
-  gotpm bump "$increment" > /dev/null
+if ! $dry_run; then changed=true; fi
+files=
+if $as_is; then
+  echo "  typst.toml has $next already: the imports and the links stay as they are (the gate checks them)"
+else
+  if ! $dry_run; then gotpm bump "$increment" > /dev/null; fi
+  echo "  typst.toml: version = \"$next\""
+  # the pictures and the PDFs are built again below; this script is left out, as the same file serves every version
+  files=$(git grep -lIF -e "$name:$prev" -e "/v$prev/" -e "\`v$prev\`" -- . \
+    ':(exclude)*.pdf' ':(exclude)*.svg' ':(exclude)*.png' ':(exclude)scripts/release.sh' || true)
 fi
-echo "  typst.toml: version = \"$next\""
-# the pictures and the PDFs are built again below; this script is left out, as the same file serves every version
-files=$(git grep -lIF -e "$name:$prev" -e "/v$prev/" -e "\`v$prev\`" -- . \
-  ':(exclude)*.pdf' ':(exclude)*.svg' ':(exclude)*.png' ':(exclude)scripts/release.sh' || true)
 while IFS= read -r f; do
   [ -n "$f" ] || continue
   skip=0
@@ -263,8 +299,13 @@ EOF
 # 3. ------------------------------------------------------------------------------------------------------------------
 step "The changelog"
 for f in $changelogs; do
-  old=$(grep -E "$unreleased" "$f" | head -n 1 || true)
+  old=$(grep -E "$version_heading" "$f" | head -n 1 || true)
   [ -n "$old" ] || continue
+  if ! echo "$old" | grep -qE "$unreleased"; then
+    echo "  $f: $old (as it is)"
+    if [ "$f" = "$pr_changelog" ]; then pr_heading=${old#* }; fi
+    continue
+  fi
   new=$(heading "$old")
   echo "  $f: $old -> $new"
   if [ "$f" = "$pr_changelog" ]; then pr_heading=${new#* }; fi
@@ -291,17 +332,26 @@ step "The gate of gotpm publish (scripts/package.sh --check)"
 RELEASE_TAG="v$next" sh scripts/package.sh --check
 
 # 5. ------------------------------------------------------------------------------------------------------------------
-step "The release commit"
-git status --short
-git diff --stat | tail -n 1
-printf '\nChangelog of %s:\n\n' "$next"
-cat "$tmp/changes.md"
+step "The release"
 if [ "$dev_branch" = main ]; then
   refs="main v$next"
 else
   refs="$dev_branch $dev_branch:main v$next"
 fi
-printf '\nCommit "Release %s", tag v%s and push (%s)? [y/N] ' "$next" "$next" "$refs"
+if [ -n "$(git status --porcelain)" ]; then
+  commit=true
+  git status --short
+  git diff --stat | tail -n 1
+  question="Commit \"Release $next\", tag v$next and push ($refs)?"
+else
+  # a version released as it is, with nothing built again
+  commit=false
+  echo "Nothing changed: the tag goes on $(git log -1 --format='%h %s' | cut -c 1-100)"
+  question="Tag v$next and push ($refs)?"
+fi
+printf '\nChangelog of %s:\n\n' "$next"
+cat "$tmp/changes.md"
+printf '\n%s [y/N] ' "$question"
 read -r answer || answer=
 case $answer in
   y | Y | yes | s | S | sim) ;;
@@ -310,8 +360,10 @@ case $answer in
     exit 0
     ;;
 esac
-git add -A
-git commit -q -m "Release $next"
+if $commit; then
+  git add -A
+  git commit -q -m "Release $next"
+fi
 git tag "v$next"
 committed=true
 # shellcheck disable=SC2086 # $refs is a list of refs
