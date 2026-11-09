@@ -18,7 +18,7 @@ Breaking changes, and how to move a 0.2.0 deck:
 New:
 
 - A new cover, with three layouts (`title-slide(cover-layout:)`: `"line"`, `"stack"`, `"top"`), six positions to change one by one (`header-left` … `footer-right`), a label over the authors (`author-label`), the tag and the rule, and three cover styles (`ufac-theme(cover-style:)`: `"bubbles"`, `"gradient"`, `"plain"`); the section slide follows it.
-- Aliases of a course (`subject`, `semester`, …), the flavor of the presentation (`config-info(flavor:)`: `"lecture"`, the default, `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`), which brings the layout of the cover, the tag of a final paper and the numbering, authors as free content with labels, `date`, `institution`, `contact` and `#info`. An option of the cover in the wrong place stops with the right one.
+- Aliases of a course (`subject`, `semester`, …), the flavor of the presentation (`config-info(flavor:)`: `"lecture"`, the default, `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`), which brings the layout of the cover, the tag of a thesis defense and the numbering, authors as free content with labels, `date`, `institution`, `contact` and `#info`. An option of the cover in the wrong place stops with the right one.
 - `#ending-slide`, the closing slide on the blue page of the cover: a title ("Thank you!" by default), a subtitle and a body.
 - Exercises and examples in a box filling the slide, as in a printed handout: the solution with `#solution` / `#answer`, over several pages.
 - Callouts: `#caution`, `#tip`, `#remark`, `#note`, `#example`, `#examples`, or `#callout(kind)`; an arrow list, a `>` box or a quote at the start of one starts on the line under the title.
@@ -28,7 +28,7 @@ New:
 - `provide-icons` gives the deck the icons of any collection of Iconify.
 - Inside a box, the subtitles and the links follow its color too (a reference to an exercise or example keeps the color of its kind); a slide whose content is only a shorthand (`-> item`, `> box`) is now rewritten too.
 - The figure of a section fits whole in a frame of 12em × 66% of the height, neither cropped nor stretched: an image without a size fills it, one with a size shrinks when it is larger than the frame.
-- Three example decks, one for a lecture, one for the work of students for a course and one for a final paper: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ) and [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ), shown in the README with their code; the example deck of 0.2.0 (`example/main.typ`) is gone.
+- Three example decks, one for a lecture, one for the work of students for a course and one for a thesis defense: [lecture](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/lecture.typ), [coursework](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/coursework.typ) and [tcc](https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/example/tcc.typ), shown in the README with their code; the example deck of 0.2.0 (`example/main.typ`) is gone.
 - A short README, with the details in the manual and the changes in this file.
 - A skill for AI agents, in Portuguese, in two modes, the lectures of a course and the presentation of an academic work (`skills/touying-ufac/`).
 
