@@ -314,8 +314,9 @@
 /// Index of an "Exercise"/"Example": position among the level-2 headings of the same kind whose page is ≤ the given
 /// page (page based, like `utils.current-heading`, because the header is laid out before the body). The headings
 /// re-emitted by Touying on `---` continuations do not show up in `query`, only the original, which keeps the count simple.
-/// A `#touying-recall` shows the slide again, its heading and label included: a named label (`<example-tides>`, the one
-/// a recall needs) counts once, at its first heading, and the slide shown again takes the number of that one.
+/// A `#touying-recall` shows the slide again, its heading and label included: a heading with a named label
+/// (`<example-tides>`, the one a recall needs) and the same title as an earlier one counts once, and the slide shown
+/// again takes the number of the first. Two slides with the same label by mistake but other titles count twice.
 /// -> int
 #let _kind-index(
   /// `"exercise"` or `"example"`. -> str
@@ -324,15 +325,18 @@
   page,
   /// Label of the heading of the slide, for the number of a slide shown again. -> none | label
   label: none,
+  /// Title of the heading of the slide, with the label. -> none | content
+  body: none,
 ) = {
   let firsts = (); let seen = ()
   for x in query(heading.where(level: 2)) {
     let l = x.at("label", default: none)
     if _label-kind(l) != kind { continue }
-    if str(l) == kind { firsts.push(x) } else if str(l) not in seen { seen.push(str(l)); firsts.push(x) }
+    let key = str(l) + repr(x.body)
+    if str(l) == kind { firsts.push(x) } else if key not in seen { seen.push(key); firsts.push(x) }
   }
   let page = if label != none and str(label) != kind {
-    let first = firsts.find(x => x.label == label)
+    let first = firsts.find(x => x.label == label and repr(x.body) == repr(body))
     if first == none { page } else { first.location().page() }
   } else { page }
   firsts.filter(x => x.location().page() <= page).len()

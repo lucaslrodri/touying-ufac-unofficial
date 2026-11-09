@@ -19,3 +19,9 @@ After the recalls: @example-tides and @exercise-waves.
 
 == Another exercise <exercise>
 The second exercise.
+
+== One by mistake <exercise-dup>
+The same named label on two slides with other titles, without a recall.
+
+== Another by mistake <exercise-dup>
+Each keeps a number of its own.
