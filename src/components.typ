@@ -134,8 +134,8 @@
   /// Name of the icon. -> str
   name,
   /// Fill color (multicolor logos keep their colors). With `auto` it follows the context like bold text: white inside
-  /// a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box), the box or title color inside @emph-box
-  /// and `==`, black elsewhere. -> auto | color
+  /// a dark pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box), the box or title color inside
+  /// @emph-box and `==`, black elsewhere. -> auto | color
   color: auto,
   /// Height of the icon; the width follows its proportions (square for the icons of the theme). -> length
   size: 1em,
@@ -775,7 +775,7 @@
   body
 }
 /// The function form of the `-> item` shorthand: the `-` items of the body get the arrow of `->`, blue, or the color
-/// of the box around it, or white in a pill. It takes a `-` list, so an item can hold a block or a nested list.
+/// of the box around it, or white in a dark pill. It takes a `-` list, so an item can hold a block or a nested list.
 ///
 /// ```example
 /// #arrow-list[

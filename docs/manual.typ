@@ -348,8 +348,8 @@ A ~strong underline~ and
 
 == Code chips
 
-Inline `raw` is a gray chip. Inside a title or a box it follows the color of the container, and inside a pill it is
-inverted.
+Inline `raw` is a gray chip. Inside a title or a box it follows the color of the container, and inside a dark pill it
+is inverted.
 
 ````example
 Call `fit(x, y)` first.
@@ -361,17 +361,21 @@ Call `fit(x, y)` first.
 
 == Colors by context <context-colors>
 
-On a light background (an `emph-box`, a callout, an exercise or an example, a light cell of a table, @tables), bold
-text, alerts, highlights, underlines, arrows, the markers of the lists (and, in an exercise or example slide, their
-numbers), chips, links, icons (@icons) and the `===` pills take the color of the box; italic stays black, as bold
-and italic are on a slide.
+In a box (an `emph-box`, a callout, an exercise or an example, a light cell of a table: @tables), bold text, alerts,
+highlights, underlines, arrows, the markers of the lists (and, in an exercise or example slide, their numbers), chips,
+links, icons (@icons) and the `===` pills take the color of the box; italic stays black, as bold and italic are on a
+slide. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
+a reference to an exercise or example, in the color of its kind.
 
-On a dark background (a pill, the cover, the closing slide, the header of a table, a dark cell), the text, bold and
-italic are white, an alert and `#primary` yellow, and a highlight yellow with the text in blue. In the slide header
-and the footer, and inside an alert or a colored emphasis (`#primary`, …), bold and italic take the color of the
-text around them. What has a style of its own keeps it: a code block, a box inside another box, which brings its own
-color, and a reference to an exercise or example, in the color of its kind. A pill or a badge in a light color, such
-as the yellow, has dark blue text, and inside it alerts and highlights are blue, as in a light box.
+On a dark background (a pill or a tag in a dark color, the cover, the closing slide, the header of a table, a dark
+cell), the text, bold and italic are white, an alert and `#primary` yellow, and a highlight yellow with the text in
+blue. Elsewhere (the slide header, the footer, inside an alert or a colored emphasis such as `#primary`), bold and
+italic take the color of the text around them.
+
+A light color is the yellow, the `-lighter` and `-lightest` tones and `quaternary-light` (a luma of 70% or more). A
+pill, a badge or a tag in it has dark blue text, and inside it alerts and highlights are blue, as in a box; a box, a
+callout or an exercise in it uses the dark tone of its color (`secondary-dark`, for the yellow) for what takes its
+color, readable on its fill.
 
 #slide-example("pills", columns: (1fr, 1fr))
 
@@ -661,7 +665,8 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 == The footer and the badges <footer>
 
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
-two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
+two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). The texts
+are in capitals, but for inline code, which keeps its letters as written. `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
 array or a function of `self`: the items of an array are joined by a dot, those that show nothing left out (as
 `info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
@@ -735,7 +740,7 @@ requires Typst 0.15. The languages of the codly-languages package can be given t
 == Icons <icons>
 
 `#icon` draws an icon on the line of text, in the color of its surroundings: black in the text, the color of the box
-inside a box, white in a pill. The theme ships a set of icons, each with a role that is also its name for `#icon`;
+inside a box, white in a dark pill. The theme ships a set of icons, each with a role that is also its name for `#icon`;
 the colored ones keep their colors.
 
 #see("components", "icon()")
