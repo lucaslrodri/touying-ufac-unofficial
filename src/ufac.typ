@@ -287,7 +287,7 @@
   set list(marker: _markers(_box-ink(c)))
   let num(patterns) = (..nums) => {
     let d = nums.pos().len()
-    text(fill: c, weight: "bold", numbering(patterns.at(calc.min(d, patterns.len()) - 1), nums.at(-1)))
+    text(fill: _box-ink(c), weight: "bold", numbering(patterns.at(calc.min(d, patterns.len()) - 1), nums.at(-1)))
   }
   set enum(full: true, numbering: num(("1.", "a)", "i.")))
   _in-box(_box-ink(c), body)

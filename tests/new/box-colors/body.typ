@@ -82,3 +82,11 @@ In the line, #box[$#eq-box[$y = #alert[3]$]$], and in a green one, #box[$#eq-box
   -> an arrow
 ]
 #callout("tip", style: "badge", color: colors.secondary)[A yellow callout with a badge, *bold* and ~~alert~~.]
+
+#exercise-slide(title: [A yellow exercise], color: colors.secondary)[
+  The numbers and the markers in the dark yellow, as the bold:
+  + *first* item
+    + nested item
+  + second item
+  - a bullet
+]
