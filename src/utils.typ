@@ -89,9 +89,11 @@
 
 // ---------- context color stack ----------
 /// Stack of `(color:, kind:, fill:)` entries, `kind` ∈ "box" | "pill" | "title", and `fill` the background of a light
-/// pill or a light cell (`none` elsewhere), for the contrast of a colored emphasis (`_emph-color`), pushed by `emph-box` (body: "box";
-/// title badge: "pill"), `_pill`, the slide header ("title"), the section title ("title") and the content of the
-/// cover ("pill": white on blue). `*bold*`,
+/// pill or a light cell (`none` elsewhere), for the contrast of a colored emphasis (`_emph-color`). Pushed by
+/// `emph-box` (body: "box"; title badge: "pill"), the callouts, the boxes of the exercises and examples, `_pill-text`
+/// (a dark pill: "pill"; a light one: "box" in blue, with its `fill`), the slide header ("title"), the section title
+/// ("title"), the cells of a table (the header and a dark cell: "pill"; a light cell: "box" with its `fill`), the
+/// footer ("title", or "pill" on the closing slide) and the content of the cover ("pill": white on blue). `*bold*`,
 /// `==highlight==`, the `->` arrow, `#underline`, `#icon` and inline `raw` read the color at layout time (in
 /// `context`): in the `> box` form the paragraph reaches `show par` already realized (strong/highlight become
 /// `styled(...)` with black/yellow baked in), so set/show rules inside the box cannot reach them anymore; a `state`

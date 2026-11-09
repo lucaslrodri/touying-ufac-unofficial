@@ -10,7 +10,6 @@
 == A footer with colored emphases
 The red "Tides" and the green "Lab 4" fit and are kept whole, right before the "…".
 
-== An exercise <exercise>
-The same footer in the box of the exercise.
+#exercise-slide(title: [An exercise], color: colors.primary)[The same footer in the box of a blue exercise, where the red and the green show.]
 
 #ending-slide()
