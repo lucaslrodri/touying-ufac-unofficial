@@ -908,8 +908,8 @@
   let has-ratio(x) = type(x) == ratio or (type(x) == relative and x.ratio != 0%)
   let limit(it) = context {
     let (w, h) = (it.at("width", default: auto), it.at("height", default: auto))
-    // the frame: 12em wide, and 66% of the height of the page between its margins (about)
-    let (fw, fh) = (12em.to-absolute(), (page.height - 5em.to-absolute()) * 66%)
+    // the frame: 12em wide, and 66% of the height of the slide between its margins (about)
+    let (fw, fh) = (12em.to-absolute(), (_slide-size(self).last() - 5em.to-absolute()) * 66%)
     // a relative size is resolved in a box of the width or the height of the frame, at its right
     let it = if has-ratio(w) and has-ratio(h) { box(width: fw, height: fh, std.align(right + horizon, it)) } else if (
       has-ratio(w)
