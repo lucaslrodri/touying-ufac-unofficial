@@ -173,8 +173,9 @@ The defense of an undergraduate thesis takes `flavor: "tcc"`: the tag of the wor
 and the date. The `cover-layout` of `title-slide` decides where the authors and the date go, and the flavor gives its
 default (@flavors): `"line"` (the one of a lecture) puts them on one line at the bottom, with the white line of the footer passing between them; `"stack"` stacks the authors at the bottom left;
 `"top"` puts them at the top right and the date in the center of the bottom. Each of the six positions can be changed
-on its own, with content, an array (as `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying keeps of the deck
-(`self => self.info.title`). `author-label` puts a label over the authors (before them in `"line"`), such as "Instructors".
+on its own, with content, an array (as `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying
+keeps of the deck (`self => self.info.title`); there `self.colors.primary` is the white of the text, so that
+`text(fill: self.colors.primary)` stays readable on the blue. `author-label` puts a label over the authors (before them in `"line"`), such as "Instructors".
 
 #slide-example("cover-layouts", pages: (1, 2, 3, 4), columns: (1fr, 1fr))
 
@@ -310,7 +311,7 @@ inside `raw`.
   table.header([Function], [Shorthand], [Result]),
   [`#strong[text]`], [`*text*`], [black bold],
   [`#emph[text]`], [`_text_`], [black italic],
-  [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow on a dark background (@context-colors)],
+  [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere; on a dark background, yellow, or dark blue where it does not read (@context-colors)],
   [`#highlight[text]`], [`==text==`], [light-yellow background; yellow with blue text on a dark background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
   [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box; on a dark background, yellow or dark blue where their color does not read (@context-colors)],
@@ -375,8 +376,9 @@ On a dark background (a dark pill, badge or tag, the cover, the closing slide, t
 table, a dark cell), the text, bold and italic are white, and a highlight is yellow with the text in blue. An alert
 and `#primary` are yellow, or dark blue where the yellow does not read (a contrast under 3:1), as on `quaternary`,
 `neutral` and `secondary-dark`. `#secondary`, `#tertiary` and `#quaternary` keep their color where it reads on the
-background (3:1 or more), as the yellow on the blue, and elsewhere turn yellow or dark blue as an alert: a `#tertiary`
-word in a red badge is yellow.
+background (3:1 or more), as the yellow does on the blue, and elsewhere turn yellow or dark blue, as an alert does. On
+the blue (the cover, a table header, a `===` pill) only `#secondary` keeps its color: `#tertiary` and `#quaternary`
+turn yellow, and so does a `#tertiary` word in a red badge.
 
 A pill, a badge or a tag (@tags) in a light color has dark blue text, and inside it alerts are blue and highlights
 light blue, as in a blue box. A box, a callout, an exercise or an example in a light color uses the dark tone of its
@@ -662,8 +664,8 @@ blue text]
 
 The footer and the cover show the UFAC logo. `config-info(logo:)` is the list of the logos shown there, separated by
 dots: `(auto, x)` keeps the UFAC logo and adds `x` after it, `(x,)` replaces it and `none` removes them. A logo is
-content, or a function of the color of the footer (blue on the slides, white on the cover and the closing slide, the
-color of the box in an exercise or example), so that one drawing serves all; about `0.64em` high, it matches the UFAC logo. In a slide, `#info("logo")` shows them (@info); outside a deck,
+content, or a function of a color (blue in the footer of the slides, white on the cover and the closing slide, the
+color of the box in the footer of an exercise or example), so that one drawing serves all; about `0.64em` high, it matches the UFAC logo. In a slide, `#info("logo")` shows them (@info); outside a deck,
 as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 
 #slide-example("logos", pages: (1, 2))
@@ -673,8 +675,8 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room). The texts
 are in capitals, but for inline code, which keeps its letters as written. `ufac-theme(footer-left:, footer-right:)` replaces either with content, an
-array or a function of `self`, whose `self.colors.primary` is the color of the text there (blue on the slides, white
-on the cover and the closing slide, the color of the box in an exercise or example): the items of an array are joined by a dot, those that show nothing left out (as
+array or a function of `self`, whose `self.colors.primary` is the color of the footer text (blue on the slides, white on
+the closing slide, the color of the box in an exercise or example). The items of an array are joined by a dot, those that show nothing left out (as
 `info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken. The badge of the exercises and examples takes
 another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
 slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).

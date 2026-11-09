@@ -649,7 +649,8 @@
 /// not count.
 ///
 /// Each position takes `auto` (what the layout puts there), `none` (nothing), content (such as `#info("date")`), an
-/// array (its items that show something, separated by a dot) or a function of `self`, like `footer-left` of the theme.
+/// array (its items that show something, separated by a dot) or a function of `self`, like `footer-left` of the theme;
+/// there `self.colors.primary` is the white of the text.
 /// The text of the positions is 0.7 of the size of the slide.
 ///
 /// ```typ
@@ -1193,7 +1194,8 @@
   example-icon: "beaker",
   /// The word of the tag of the section slides ("PART N"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
-  /// Left text of the footer; a function receives `self`. An array (or a function that returns one) shows its items
+  /// Left text of the footer; a function receives `self`, whose `self.colors.primary` is the color of the footer text
+  /// (white on the closing slide, the color of the box in an exercise or example). An array (or a function that returns one) shows its items
   /// separated by a dot, those that show nothing left out; with none left, the footer line runs unbroken. `auto` is the `short-title`, the
   /// `title` and, when the date is a `semester` or a `year`, the date ("AST101 • Astronomy • 2026.2").
   /// -> auto | content | array | function

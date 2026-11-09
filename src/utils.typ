@@ -97,7 +97,7 @@
 /// resolves at the right place. Inline `raw` uses light tones in boxes and titles and dark tones with light text in pills.
 /// -> state
 #let _box-color = state("ufac-box-color", ())
-/// Relative luminance of a color (WCAG 2), for the contrast of an alert or a `#primary` with a dark pill (`_emph-color`).
+/// Relative luminance of a color (WCAG 2), for the contrast of an alert or a colored emphasis with a dark pill (`_emph-color`).
 ///
 /// #test(`calc.abs(_luminance(white) - 1) < 0.001`, `_luminance(black) == 0`)
 /// -> float
