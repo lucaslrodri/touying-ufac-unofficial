@@ -314,13 +314,29 @@
 /// Index of an "Exercise"/"Example": position among the level-2 headings of the same kind whose page is ≤ the given
 /// page (page based, like `utils.current-heading`, because the header is laid out before the body). The headings
 /// re-emitted by Touying on `---` continuations do not show up in `query`, only the original, which keeps the count simple.
+/// A `#touying-recall` shows the slide again, its heading and label included: a named label (`<example-tides>`, the one
+/// a recall needs) counts once, at its first heading, and the slide shown again takes the number of that one.
 /// -> int
 #let _kind-index(
   /// `"exercise"` or `"example"`. -> str
   kind,
   /// Page of the slide. -> int
   page,
-) = query(heading.where(level: 2)).filter(x => _label-kind(x.at("label", default: none)) == kind and x.location().page() <= page).len()
+  /// Label of the heading of the slide, for the number of a slide shown again. -> none | label
+  label: none,
+) = {
+  let firsts = (); let seen = ()
+  for x in query(heading.where(level: 2)) {
+    let l = x.at("label", default: none)
+    if _label-kind(l) != kind { continue }
+    if str(l) == kind { firsts.push(x) } else if str(l) not in seen { seen.push(str(l)); firsts.push(x) }
+  }
+  let page = if label != none and str(label) != kind {
+    let first = firsts.find(x => x.label == label)
+    if first == none { page } else { first.location().page() }
+  } else { page }
+  firsts.filter(x => x.location().page() <= page).len()
+}
 
 // ---------- current subtitle (level-3 heading, repeated after `---`) ----------
 /// Last level-3 heading between the current `==` and `here()`, or `none`. Touying re-emits the `==` at every

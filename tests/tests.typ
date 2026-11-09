@@ -66,6 +66,7 @@
 #include "./sections/explicit-slides/body.typ"
 #include "./sections/ending/body.typ"
 
+#include "./sections/touying-recall/body.typ"
 #include "./sections/edge-cases/body.typ"
 
 // =====================================================================================================================

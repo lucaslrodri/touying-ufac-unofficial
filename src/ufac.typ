@@ -370,7 +370,7 @@
     if sup.value.color != auto { color = sup.value.color }
     if sup.value.icon != auto { ic = sup.value.icon }
   }
-  let badge = context [#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page())#if h.body != [] [ — #h.body]]
+  let badge = context [#_pill-icon(ic)#name #self.info.counter-prefix#_kind-index(kind, here().page(), label: h.at("label", default: none))#if h.body != [] [ — #h.body]]
   let self = utils.merge-dicts(self, _item-page(self, color, badge), config)
   // as on a normal slide: every body through `_flow` and a top-level `===` repeated on the overflow pages
   let bodies = bodies.map(_split-solution).map(_flow)

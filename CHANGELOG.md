@@ -22,6 +22,7 @@ New:
 - Exercises and examples in a box filling the slide, as in a printed handout: the solution with `#solution` / `#answer`, over several pages.
 - Callouts: `#caution`, `#tip`, `#remark`, `#note`, `#example`, `#examples`, or `#callout(kind)`; an arrow list, a `>` box or a quote at the start of one starts on the line under the title.
 - `#arrow-list[..]`, the function form of `-> item`: the `-` items of its body get the arrow.
+- A slide shown again with `#touying-recall` keeps the number of its exercise or example, and the next ones go on from where they were.
 - `#tag`, the yellow tag of the cover, for the text, the titles and the tables.
 - The code blocks in a box of their own, with the language and its logo, which go on to the next page when they are long; `code-languages` adds languages, and the output has its pill in the language of the deck.
 - The texts of the footer stay on one line, cut with "…" when they do not fit, and a long content keeps the repeated `===` pill without running into the footer. `footer-left` and `footer-right` also take an array: its items joined by a dot, those that show nothing left out (with none left, the footer line runs unbroken).

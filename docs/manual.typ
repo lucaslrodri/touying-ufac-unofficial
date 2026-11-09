@@ -266,6 +266,7 @@ A label on the `==` heading turns the slide into the box of an exercise (red) or
 handout. The box fills the slide; the title goes on a badge over its top border, with the icon of the kind (a pencil, a
 beaker), the name, the number and the title; the footer of the slide closes the box. A suffix makes the label unique,
 as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", linked to the slide.
+The same label lets `#touying-recall(<exercise-tides>)` show the slide again, with its number.
 A short example inside an ordinary slide, without a number, is the callout `#example` (@callouts).
 
 Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
