@@ -7,6 +7,8 @@
   info, solution, answer) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
 }
+// the syntax colors of the code, exported for `codly`
+#assert.eq(type(ufac-syntax), bytes)
 
 // the `alert` of a deck is the theme's (it shadows Touying's), and the names of 0.2.0 are gone
 #import "../../../src/lib.typ" as lib

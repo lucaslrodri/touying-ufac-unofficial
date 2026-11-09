@@ -122,11 +122,12 @@
   let (x, y) = (_luminance(a), _luminance(b))
   (calc.max(x, y) + 0.05) / (calc.min(x, y) + 0.05)
 }
-/// True for a light color, on which white text does not read: a luma of 70% or more (the yellow, the `-lighter` and
-/// `-lightest` tones, `quaternary-light`). The threshold of the light cells of a table, the pills and the boxes.
+/// True for a light color, on which white text does not read: a luma of 70% or more (`secondary` and
+/// `secondary-light`, the `-lighter` and `-lightest` tones, `quaternary-light`). The threshold of the light cells of a
+/// table, the pills and the boxes.
 ///
-/// #test(`_is-light(colors.secondary)`, `not _is-light(colors.primary)`, `not _is-light(colors.quaternary)`,
-///   `_is-light(colors.secondary-lighter)`)
+/// #test(`_is-light(colors.secondary)`, `_is-light(colors.secondary-light)`, `not _is-light(colors.primary)`,
+///   `not _is-light(colors.quaternary)`, `_is-light(colors.secondary-lighter)`)
 /// -> bool
 #let _is-light(
   /// Background color. -> color
@@ -143,7 +144,8 @@
 /// The color of what takes the color of a box (bold, alerts, markers, the footer of an item) on a box of `color`: the
 /// color itself, or, for a light one (`_is-light`, the yellow), the `-dark` tone of its family, readable on its fill.
 ///
-/// #test(`_box-ink(colors.secondary) == colors.secondary-dark`, `_box-ink(colors.tertiary) == colors.tertiary`)
+/// #test(`_box-ink(colors.secondary) == colors.secondary-dark`, `_box-ink(colors.tertiary) == colors.tertiary`,
+///   `_box-ink(colors.primary-lighter) == colors.primary-dark`, `_box-ink(rgb("#eeeeee")) == rgb("#eeeeee").darken(40%)`)
 /// -> color
 #let _box-ink(
   /// Color of the box. -> color
