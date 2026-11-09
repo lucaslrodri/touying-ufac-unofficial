@@ -317,9 +317,9 @@ inside `raw`.
   [`#underline[text]`], [`~text~`], [strong yellow underline],
   [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green; on a dark background, a light pill or a light cell, another color where theirs does not read (@context-colors)],
   [`#arrow-list[- item]`], [`-> item`], [arrow list],
-  [`#emph-box[..]`], [`> text`], [box (@boxes)],
-  [`$ #eq-box[$..$] $`], [`> $ .. $`], [equation box (@boxes)],
-  [`#quote-box[..]`], [`"text"`], [quotation (@boxes)],
+  [`#emph-box[..]`], [`> text`], [box (@emph-boxes)],
+  [`$ #eq-box[$..$] $`], [`> $ .. $`], [equation box (@eq-boxes)],
+  [`#quote-box[..]`], [`"text"`], [quotation (@tags)],
 )
 
 == Emphasis
@@ -442,7 +442,7 @@ A backslash on the sign keeps a shorthand literal; `\>` keeps the sign only befo
 
 = Boxes <boxes>
 
-== Emphasis boxes
+== Emphasis boxes <emph-boxes>
 
 `#emph-box` frames a definition or a key idea: a thin border in a color of the palette, and an optional title on a
 badge over the border, with an optional icon.
@@ -478,7 +478,7 @@ read as a box: write `$a > b$`, or escape it before a word or a number (@escapes
 
 #see("components", "emph-box()")
 
-== Equation boxes
+== Equation boxes <eq-boxes>
 
 `#eq-box` frames a key equation from inside the equation, with dollar signs around its body; `>` before a block
 equation, on the same line or the line above, does the same.
