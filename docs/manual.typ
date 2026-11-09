@@ -677,10 +677,10 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 
 == The footer and the badges <footer>
 
-The footer shows the short title, the title and a short date (`semester`, `year`) on the left and the authors on the
-right, each on one line: when the two do not fit, they are cut with "…" at the end of a word (the authors keep at least
-a third of the room); `#alert` or a colored emphasis (`#tertiary`, …) in a footer text is not cut inside, but kept or
-left out whole. The texts are in capitals, but for inline code, which keeps its letters as written.
+The footer shows the short title, the title and, when the date is a `semester` or a `year`, the date on the left and the
+authors on the right, each on one line: when the two do not fit, they are cut with "…" at the end of a word (the authors
+keep at least a third of the room); `#alert` or a colored emphasis (`#tertiary`, …) in a footer text is not cut inside,
+but kept or left out whole. The texts are in capitals, but for inline code, which keeps its letters as written.
 `ufac-theme(footer-left:, footer-right:)` replaces either with content, an array or a function of `self`, whose
 `self.colors.primary` is the color of the footer text, the one a logo gets in the same footer (@logos). The items of an
 array are joined by a dot, those that show nothing left out (as `info("semester")` below, in a deck without a date), and
