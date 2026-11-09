@@ -97,3 +97,15 @@
   #tip[\> escaped: here.]
   #tip["A quote" and text: here.]
 ]
+
+== A list at the start of a callout
+#cols[
+  #tip[- a `-` list
+  - under the title]
+][
+  #tip[+ a `+` list
+  + under the title]
+][
+  #tip[-> an arrow list
+  -> under the title]
+]
