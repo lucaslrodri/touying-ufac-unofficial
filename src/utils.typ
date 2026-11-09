@@ -177,13 +177,18 @@
   text(fill: ink, weight: "bold", if ink == white { _in-box(color, body, kind: "pill") } else { _in-box(colors.primary, body) })
 }
 /// Emphasis color readable in the current context: inside a pill (white text on the color) the blue of
-/// `#alert`/`#primary` would vanish, so it becomes UFAC yellow (like the underline, already yellow in pills);
-/// elsewhere the requested color.
+/// `#alert`/`#primary` would vanish, so it becomes UFAC yellow, or, on a fill where the yellow does not read (a
+/// contrast under 3:1: the green, the gray, the dark yellow), the dark blue of the light pills; elsewhere the
+/// requested color.
+///
+/// #test(`_contrast(colors.secondary, colors.primary) >= 3`, `_contrast(colors.secondary, colors.quaternary) < 3`)
 /// -> color
 #let _emph-color(
   /// Requested color. -> color
   c,
-) = if _in-pill() { colors.secondary } else { c }
+) = if not _in-pill() { c } else if _contrast(colors.secondary, _current-box-color(colors.primary)) >= 3 {
+  colors.secondary
+} else { colors.primary.darken(45%) }
 
 // ---------- raw gate and code box ----------
 /// True inside any `raw` (inline or block): the `==x==` shorthand is not applied there.

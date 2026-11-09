@@ -368,8 +368,8 @@ slide. What has a style of its own keeps it: a code block, a box inside another 
 a reference to an exercise or example, in the color of its kind.
 
 On a dark background (a dark pill, a tag with white text, the cover, the closing slide, the header of a table, a dark
-cell), the text, bold and italic are white, an alert and `#primary` yellow, and a highlight yellow with the text in
-blue. In the slide header, the footer and inside an alert or a colored emphasis such as `#primary`, bold and italic
+cell), the text, bold and italic are white, an alert and `#primary` yellow (dark blue where the yellow does not read:
+on the green, the gray and the dark yellow), and a highlight yellow with the text in blue. In the slide header, the footer and inside an alert or a colored emphasis such as `#primary`, bold and italic
 take the color of the text around them.
 
 A light color is `secondary` and `secondary-light`, the `-lighter` and `-lightest` tones and `quaternary-light` (a
