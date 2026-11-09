@@ -365,6 +365,10 @@ contains them: the color of an `emph-box`, a callout, an exercise or an example,
 block, a box inside another box, which brings its own color, and a reference to an exercise or example, in the
 color of its kind.
 
+Bold and italic are black on a slide, and in a light box bold takes the color of the box. Where the text has a
+color of its own, both take it: white in a pill, on the cover, in the header of a table and on the closing slide,
+blue in the title and the footer, and the color of an alert inside it. An alert on blue is yellow.
+
 #slide-example("pills", columns: (1fr, 1fr))
 
 == Lists and terms

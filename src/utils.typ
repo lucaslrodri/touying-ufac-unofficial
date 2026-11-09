@@ -558,7 +558,7 @@
   set text(if white { self.colors.neutral-lightest } else { self.colors.primary })
   set std.align(bottom)
   let rule = if white { _line-white(self) } else { _line(self) }
-  context layout(size => {
+  let footer = context layout(size => {
     let last-column-size = measure(box(text(utils.last-slide-number, size: 0.6em), inset: 0.4em)).width
     let logos = _logos(self, white: white, color: mono)
     // a text of the footer, or what its function returns, may be an array: the items that show something (an empty
@@ -590,4 +590,7 @@
       rule,
     ), dy: if lift { -0.05em } else { 0pt })
   })
+  // the footer is a context of its own, so that its bold and italic take its color: on the blue page a pill, as the
+  // rest of the page (an alert in it is yellow), elsewhere a title in the color of its text
+  _in-box(self.colors.primary, footer, kind: if white { "pill" } else { "title" })
 }

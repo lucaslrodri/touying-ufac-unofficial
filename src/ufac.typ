@@ -980,9 +980,18 @@
   // `#set enum(numbering: "a)")`: rebuild the enum with the alternative pattern order (a `set` would not
   // override an explicit field)
   show enum.where(numbering: "a)"): it => { let f = it.fields(); let ch = f.remove("children"); enum(..f, full: true, numbering: num(("a)", "i.", "1.")), ..ch) }
-  // bold: black; the box color inside `emph-box` and the `==` title; white inside a pill (the pill color would hide it)
-  show strong: it => context { set text(fill: if _in-pill() { white } else { _current-box-color(self.colors.neutral-darkest) }); it }
-  show emph: set text(fill: self.colors.neutral-darkest)
+  // bold and italic: black on a slide; in a light box bold takes the color of the box and italic stays black;
+  // elsewhere (a pill, the blue page, a dark cell, the `==` title, the footer, an alert) both take the color of the
+  // text around them
+  show strong: it => context {
+    let s = _box-color.get()
+    if s.len() == 0 { set text(fill: self.colors.neutral-darkest); it }
+    else if s.last().kind == "box" { set text(fill: s.last().color); it } else { it }
+  }
+  show emph: it => context {
+    let s = _box-color.get()
+    if s.len() == 0 or s.last().kind == "box" { set text(fill: self.colors.neutral-darkest); it } else { it }
+  }
   // strong underline in UFAC yellow, behind the text and without evading descenders; the text color does not change.
   // Inside `emph-box` (kind "box" only: in pills/titles the yellow stays) it takes the box color; an explicit `stroke:` wins.
   let ul-stroke = .14em + self.colors.secondary

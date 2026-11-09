@@ -32,8 +32,14 @@
 #let alert(
   /// Text to emphasize. -> content
   body,
-) = context text(weight: "bold", fill: if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) },
-  body)
+) = context {
+  let c = if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) }
+  // the bold and the italic inside it take its color: they become text in its color, before the rules of the theme
+  // for bold and italic see them
+  show strong: it => text(fill: c, it.body)
+  show emph: it => text(fill: c, style: "italic", it.body)
+  text(weight: "bold", fill: c, body)
+}
 
 /// Bold text in UFAC yellow. It is weak on white: meant for short labels and dark backgrounds.
 ///
