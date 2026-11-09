@@ -1,4 +1,4 @@
-/// Synopsis: the three layouts of the cover (`cover-layout`: `"line"`, the default, `"stack"` and `"top"`) with three authors, a label over them and a date; then the positions changed one by one (`none`, content, a function of `self`, `#info`) and the white line switched on and off.
+/// Synopsis: the three layouts of the cover (`cover-layout`: `"line"`, the default, `"stack"` and `"top"`) with three authors, a label over them and a date; then the positions changed one by one (`none`, content, a function of `self`, `#info`) and the white line switched on and off; last, a function of `self` that paints with `self.colors.primary`, which is the white of the text on the cover.
 #import "../../common.typ": *
 #show: ufac-theme.with(lang: "en", test-info, config-info(
   author: ([First Author], [Second Author], [Third Author]),
@@ -18,3 +18,5 @@
 #title-slide(cover-layout: "line", footer-line: false)[
   #tag(color: colors.quaternary)[with a body]
 ]
+
+#title-slide(footer-right: self => text(fill: self.colors.primary)[*In the primary color*])

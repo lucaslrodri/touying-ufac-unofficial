@@ -711,7 +711,12 @@
     let slot(name, value) = {
       if value == auto { return preset.at(name, default: none) }
       if value == none { return none }
-      let v = if type(value) == function { value(self) } else { value }
+      // a function gets the white of the text as the primary color, as the function of the logo
+      let v = if type(value) == function {
+        let s = self
+        s.colors.primary = self.colors.neutral-lightest
+        value(s)
+      } else { value }
       // an array: the items that show something, joined by the dot of the footer
       if type(v) == array { v = context _dot-join(v.filter(x => measure([#x]).width > 0pt)) }
       text(size: _slot-size, v)
