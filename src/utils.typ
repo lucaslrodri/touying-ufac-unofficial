@@ -498,7 +498,8 @@
 ) = type(t) == content and (t.func() == raw or (t.has("children") and t.children.any(_has-raw))
   or (t.has("body") and _has-raw(t.body)) or (t.has("child") and _has-raw(t.child)))
 /// Text in capitals, as the texts of the footer, but for its code (`raw`), which keeps the letters as written, also
-/// inside bold, italic, a link and the other elements with a body. A text without code is `upper` as it is.
+/// inside bold, italic, a link, a `#text(..)[..]` and the other elements with a body. A text without code is `upper` as
+/// it is.
 ///
 /// #test(
 ///   `_has-raw(strong[a #raw("b_C")])`,
@@ -506,6 +507,7 @@
 ///   `not _has-raw([a b])`,
 ///   `_upper-but-raw([a b]) == upper([a b])`,
 ///   `_upper-but-raw(raw("b_C")) == raw("b_C")`,
+///   `_upper-but-raw(link("https://example.com", raw("b_C"))) == link("https://example.com", raw("b_C"))`,
 /// )
 /// -> content | str
 #let _upper-but-raw(
@@ -513,7 +515,9 @@
   t,
 ) = if not _has-raw(t) { upper(t) } else if t.func() == raw { t } else if t.has("children") {
   t.children.map(_upper-but-raw).join(default: [])
-} else if t.func() == link { link(t.dest, _upper-but-raw(t.body)) } else if t.has("body") {
+} else if utils.is-styled(t) { utils.reconstruct-styled(t, _upper-but-raw(t.child)) } else if t.func() == link {
+  link(t.dest, _upper-but-raw(t.body))
+} else if t.has("body") {
   let f = t.fields()
   let body = f.remove("body")
   (t.func())(..f, _upper-but-raw(body))
