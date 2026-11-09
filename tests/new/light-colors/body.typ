@@ -1,0 +1,44 @@
+// Body of the `new/light-colors` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
+#import "../../common.typ": *
+
+== A yellow box
+#emph-box(color: colors.secondary, title: [A badge with ~~alert~~ and ==highlight==])[
+  === A subtitle with ~~alert~~, ==highlight==, `raw` and #icon("tip")
+  The body: *bold*, ~~alert~~, ==highlight==, `raw` and #link("https://example.com")[a link].
+
+  -> an arrow
+]
+#callout("tip", style: "badge", color: colors.secondary)[A yellow callout with a badge, *bold* and ~~alert~~.]
+
+#exercise-slide(title: [A yellow exercise], color: colors.secondary)[
+  The numbers and the markers in the dark yellow, as the bold:
+  + *first* item
+    + nested item
+  + second item
+  - a bullet
+]
+
+== A yellow box with lists and a bar callout
+#cols[
+  #emph-box(color: colors.secondary)[
+    - a bullet with *bold*
+    -> an arrow
+    + a number
+  ]
+][
+  #tip(color: colors.secondary)[
+    A yellow callout in the bar style, with *bold* and ~~alert~~:
+    - a bullet
+    + a number
+  ]
+]
+
+== Other light colors
+#cols[
+  #emph-box(color: colors.primary-lighter, title: [Primary lighter])[
+    - *bold* and ~~alert~~ in `primary-dark`
+  ]
+][
+  #note(color: colors.quaternary-light)[A light green callout, *bold* and ~~alert~~ in `quaternary-dark`.]
+]
+#emph-box(color: rgb("#eeeeee"), title: [Out of the palette])[*Bold* and ~~alert~~ in the color darkened by 40%.]

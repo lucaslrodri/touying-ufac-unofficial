@@ -73,20 +73,3 @@ $ #eq-box[$x = #alert[2]$] $
 In the line, #box[$#eq-box[$y = #alert[3]$]$], and in a green one, #box[$#eq-box(color: colors.quaternary)[$z = #alert[4]$]$].
 
 #emph-box(color: colors.tertiary)[In a red box: #box[$#eq-box[$w = #alert[5]$]$].]
-
-== A yellow box
-#emph-box(color: colors.secondary, title: [A badge with ~~alert~~ and ==highlight==])[
-  === A subtitle with ~~alert~~, ==highlight==, `raw` and #icon("tip")
-  The body: *bold*, ~~alert~~, ==highlight==, `raw` and #link("https://example.com")[a link].
-
-  -> an arrow
-]
-#callout("tip", style: "badge", color: colors.secondary)[A yellow callout with a badge, *bold* and ~~alert~~.]
-
-#exercise-slide(title: [A yellow exercise], color: colors.secondary)[
-  The numbers and the markers in the dark yellow, as the bold:
-  + *first* item
-    + nested item
-  + second item
-  - a bullet
-]

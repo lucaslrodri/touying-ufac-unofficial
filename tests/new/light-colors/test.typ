@@ -1,0 +1,4 @@
+/// Synopsis: a light color (a luma of 70% or more: the yellow, the `-lighter` and `-lightest` tones, `quaternary-light`) in a box, a callout and an exercise. The badge and the tag of the box have dark blue text, and what takes the color of the box (bold, alert, highlight, chip, link, icon, markers, arrows, the numbers of the lists of an exercise, the label and the icon of a bar callout, the text and the logo of the footer of an exercise) is in the dark tone of its family, `secondary-dark` for the yellow, or, out of the palette, in the color darkened by 40%. The `===` pill of a yellow box is dark yellow with white text, and an alert in it is yellow, as in any dark pill. The border of an exercise and the rules of its footer, its bottom border, keep the color of the box.
+#import "../../common.typ": *
+#show: setup
+#include "body.typ"
