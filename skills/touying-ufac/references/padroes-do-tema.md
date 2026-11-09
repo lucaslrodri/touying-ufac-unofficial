@@ -492,7 +492,7 @@ Esses números são o teto. O alvo é a regra 1: até ~40 palavras ou 5 itens; c
 | Continuação com 1 ou 2 linhas | Conteúdo maior que a área útil: o tema abre a página sozinho | Quebre à mão com `---` ou abra outro `==` |
 | Um callout pula inteiro de página | O callout não se divide | Menos texto antes dele, ou um slide para ele |
 | Um título menor que os outros | Título com mais de ~65 caracteres | Até 60 caracteres |
-| Uma frase virou caixa azul | `>` no começo do parágrafo | `$x > 0$` ou `\>` |
+| Uma frase virou caixa azul | `>` no começo do parágrafo | `$x > 0$`, ou `\>` antes de uma palavra ou de um número |
 | Uma frase entre aspas virou citação | Parágrafo feito só de uma citação | Texto fora das aspas, ou `\"..\"` |
 | Texto à direita do slide de Parte | Tudo entre `=` e `==` vai para o quadro da Parte | Só a imagem depois do `=` |
 | `== realce==` abriu um slide | `==` com espaço no começo da linha é título | `==realce==` sem espaço, ou `#highlight[..]` |
