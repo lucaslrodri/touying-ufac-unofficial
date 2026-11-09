@@ -174,7 +174,7 @@ and the date. The `cover-layout` of `title-slide` decides where the authors and 
 default (@flavors): `"line"` (the one of a lecture) puts them on one line at the bottom, with a white line, like that
 of the footer of the slides, passing between them; `"stack"` stacks the authors at the bottom left; `"top"` puts them
 at the top right and the date in the center of the bottom. Each of the six positions (`header-left`, `header-center`,
-`header-right`, `footer-left`, `footer-center`, `footer-right`) can be changed on its own, with content, an array (as `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying
+`header-right`, `footer-left`, `footer-center`, `footer-right`) can be changed on its own, with content, an array (as the theme's `footer-left`, @footer), `none` or a function of `self`, the dictionary Touying
 keeps of the deck (`self => self.info.title`); there `self.colors.primary` is the white of the text, so that
 `text(fill: self.colors.primary)` stays readable on the blue. `author-label` puts a label over the authors (before them in `"line"`), such as "Instructors".
 
@@ -315,7 +315,7 @@ inside `raw`.
   [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere; on a dark background, yellow, or dark blue where it does not read (@context-colors)],
   [`#highlight[text]`], [`==text==`], [light-yellow background; yellow with blue text on a dark background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
-  [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green; in a pill or a light cell where their color does not read, another color (@context-colors)],
+  [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green; on a dark background, a light pill or a light cell, another color where theirs does not read (@context-colors)],
   [`#arrow-list[- item]`], [`-> item`], [arrow list],
   [`#emph-box[..]`], [`> text`], [box (@boxes)],
   [`$ #eq-box[$..$] $`], [`> $ .. $`], [equation box (@boxes)],
@@ -677,7 +677,7 @@ as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 == The footer and the badges <footer>
 
 The footer shows the short title and the title on the left and the authors on the right, each on one line: when the
-two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room); an alert
+two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room); `#alert`
 or a colored emphasis (`#tertiary`, …) in a footer text is not cut inside, but kept or left out whole. The texts are in
 capitals, but for inline code, which keeps its letters as written. `ufac-theme(footer-left:, footer-right:)` replaces
 either with content, an array or a function of `self`, whose `self.colors.primary` is the color of the footer text
