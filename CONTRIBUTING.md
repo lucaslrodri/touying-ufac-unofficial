@@ -121,15 +121,25 @@ act push -W .github/workflows/release.yml -e .github/act/release.json    # dry r
 
 ## New version
 
-All of the publishing goes through gotpm: `gotpm bump` changes the version, and `gotpm publish` takes the package to Typst Universe. For a new version:
+While a version is developed on `develop`, `typst.toml` keeps the version published last, and every change a deck can see goes into the section `## Unreleased` of [CHANGELOG.md](CHANGELOG.md). To release the version, one command, on `develop`:
 
-1. `gotpm bump patch` (or `minor`, `major`, or the version, as `gotpm bump 0.4.0`) changes the version of `typst.toml`, and only it;
-2. rename the section `## Unreleased` of [CHANGELOG.md](CHANGELOG.md), where each change a deck can see goes while it is developed, to `## <version>`, and change the version in the imports (`@preview/touying-ufac-unofficial:<version>`) of the template, the example decks, the manual and the README, and in the links of the README (`blob/v<version>/`, `raw.githubusercontent.com/…/v<version>/`): `git grep -n "touying-ufac-unofficial:<previous version>\|v<previous version>"` shows the places;
-3. run `gotpm install -e` (the `@local` of the new version), `sh docs/build.sh`, `sh scripts/examples.sh` and `sh scripts/readme.sh`;
-4. commit, then create and push the tag: `git tag v<version> && git push origin main v<version>`. The tag makes the links and the pictures of the README work and starts [`release.yml`](.github/workflows/release.yml), which runs the tests, publishes through `gotpm publish` (below) and creates the GitHub release, with the zip of the package and the manual;
-5. open the pull request `touying-ufac-unofficial:<version>` in typst/packages from the link in the summary of the workflow, with the checklist of its template filled in (`gotpm publish` suggests another title, `release: touying-ufac-unofficial <version>`; typst/packages asks for `touying-ufac-unofficial:<version>`). After the merge, the version is on [Typst Universe](https://typst.app/universe/) within minutes. Published versions are immutable: a fix is a new version.
+```sh
+sh scripts/release.sh patch              # or minor, major, or the version, as 0.4.0
+sh scripts/release.sh --dry-run patch    # only shows what it would do (the version, the files, the pull request)
+```
 
-While the pull request is not merged, the version can be redone: delete the release and the tag (`gh release delete v<version> --cleanup-tag` and `git tag -d v<version>`), fix, commit and create the tag again. `gotpm publish` adds a commit to the branch already on the fork, and the pull request updates by itself; with no change in the package, it fails, since there is nothing to publish.
+The script stops at the first error and does, in this order:
+
+1. it checks that the working copy can be released: on `develop`, clean, not behind `origin`, with `main` inside it (so that `main` can be fast-forwarded), a section `## Unreleased` that is not empty, the tag still free, `gh` logged in and the fonts downloaded;
+2. it changes the version of `typst.toml` (`gotpm bump`) and, in the tracked files (the template, the example decks, the manual, the README, the skill), the imports (`@preview/touying-ufac-unofficial:<version>`) and the links to the tag (`blob/v<version>/`, `raw.githubusercontent.com/…/v<version>/`). The versions of CHANGELOG.md already released stay as they are, with their links;
+3. it renames `## Unreleased` to `## <version>`;
+4. it runs `sh docs/build.sh`, `sh scripts/examples.sh`, `sh scripts/readme.sh`, `sh scripts/local.sh` and the gate of `gotpm publish`, `sh scripts/package.sh --check` (below);
+5. it shows the changes and asks before it makes the commit `Release <version>`, creates the tag `v<version>` and pushes `develop`, `main` (fast-forwarded to `develop`) and the tag in one atomic push. The tag makes the links and the pictures of the README work and starts [`release.yml`](.github/workflows/release.yml), which runs the tests, publishes through `gotpm publish` and creates the GitHub release, with the zip of the package and the manual. The script also installs the `@local` of the new version (`gotpm install -e`);
+6. it waits for `release.yml` and opens in the browser the pull request `touying-ufac-unofficial:<version>` to typst/packages, with its title and its body (the checklist of an update and the changelog of the version) filled in: check it and press **Create pull request**. When the changelog is too long for the address, the form links to it, and the whole body is in the clipboard.
+
+After the merge, the version is on [Typst Universe](https://typst.app/universe/) within minutes. Published versions are immutable: a fix is a new version.
+
+While the pull request is not merged, the version can be redone: delete the release and the tag (`gh release delete v<version> --cleanup-tag` and `git tag -d v<version>`), fix, commit, then create and push the tag again (`git tag v<version> && git push origin develop develop:main v<version>`). `gotpm publish` adds a commit to the branch already on the fork, and the pull request updates by itself; with no change in the package, it fails, since there is nothing to publish.
 
 ## Publishing
 

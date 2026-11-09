@@ -3,8 +3,9 @@ name: Release
 # Pushing the tag `v<version>` (the version of typst.toml) runs the tests, builds the manual, publishes the package
 # with gotpm to a fork of typst/packages (`gotpm publish`, which first runs the gate of typst.toml,
 # `sh scripts/package.sh --check`, and then pushes the branch `<name>-<version>`) and creates the GitHub release. The
-# pull request to Typst Universe is opened by hand from the link in the job summary: its template is a checklist that
-# the author has to confirm. Setup (fork, token) and local runs with act: see CONTRIBUTING.md.
+# tag is pushed by `sh scripts/release.sh`, which then waits for this workflow and opens the pull request to Typst
+# Universe in the browser, filled in, for the author to confirm (the link is also in the job summary). Setup (fork,
+# token) and local runs with act: see CONTRIBUTING.md.
 on:
   push:
     tags: ["v*"]
