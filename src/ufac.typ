@@ -1195,7 +1195,8 @@
   /// The word of the tag of the section slides ("PART N"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
   /// Left text of the footer; a function receives `self`, whose `self.colors.primary` is the color of the footer text
-  /// (white on the closing slide, the color of the box in an exercise or example). An array (or a function that returns one) shows its items
+  /// (blue on the slides, white on the closing slide, the color of the box in an exercise or example, its dark tone for
+  /// a light color). An array (or a function that returns one) shows its items
   /// separated by a dot, those that show nothing left out; with none left, the footer line runs unbroken. `auto` is the `short-title`, the
   /// `title` and, when the date is a `semester` or a `year`, the date ("AST101 • Astronomy • 2026.2").
   /// -> auto | content | array | function

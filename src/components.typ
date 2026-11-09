@@ -54,7 +54,8 @@
 
 /// Bold text in UFAC yellow, with the bold and the italic inside it in yellow too. It is weak on white: meant for
 /// short labels and dark backgrounds. On a dark background where the yellow does not read (a contrast under 3:1, as
-/// on `quaternary`) it turns dark blue, and on a light pill or tag (the yellow badge) the blue of an alert there.
+/// on `quaternary`) it turns dark blue. On a light pill, badge or tag it takes the blue of an alert there (in a light
+/// cell, the dark tone of the cell).
 ///
 /// ```example
 /// A #secondary[side note] in yellow.
@@ -67,7 +68,8 @@
 
 /// Bold text in red, with the bold and the italic inside it in red too, for warnings and problems. On a dark
 /// background where the red does not read (a contrast under 3:1, as in a red badge or on the blue of the cover) it
-/// turns yellow, or dark blue where the yellow does not read either.
+/// turns yellow, or dark blue where the yellow does not read either. On a light pill, badge or tag it keeps its color
+/// where it reads and otherwise takes the blue of an alert there (in a light cell, the dark tone of the cell).
 ///
 /// ```example
 /// #tertiary[Caution:] the ice is thin.
@@ -80,7 +82,8 @@
 
 /// Bold text in green, with the bold and the italic inside it in green too, for advantages and correct answers. On a
 /// dark background where the green does not read (a contrast under 3:1, as on the blue of the cover) it turns yellow,
-/// or dark blue where the yellow does not read either (in a green badge).
+/// or dark blue where the yellow does not read either (in a green badge). On a light pill, badge or tag, as the yellow
+/// tag, it takes the blue of an alert there where the green does not read (in a light cell, the dark tone of the cell).
 ///
 /// ```example
 /// #quaternary[Correct:] the series
