@@ -30,7 +30,7 @@ sh scripts/report.sh                                                        # te
 - `docs/manual`: compile only; it includes `docs/manual.typ`, so a broken chapter, live example or doc-comment fails the suite. It needs the slide pictures in `docs/examples/out/` (`sh docs/build.sh` renders them; they are committed).
 - `ref/N.png`: one image per page, at 96 ppi (`[tool.tytanic.default]` in `typst.toml`); `max-delta = 1`, `max-deviations = 0`. `out/` and `diff/` are temporary (tytanic creates their `.gitignore`).
 
-A new case goes at the end of the `body.typ` of its test, so that the pages before it keep their numbers, but before a slide that ends with a `set` rule (the last slide of `sections/pause-limits-lists`, `pause-numbering` and `pause-blank-lines`), which reaches the slides after it.
+A new case goes at the end of the `body.typ` of its test, so that the pages before it keep their numbers.
 
 When a test fails, compare `out/N.png` with `ref/N.png` and look at `diff/N.png`; if the change is intentional, `sh scripts/with-preview.sh tt update --use-system-fonts <test>`.
 

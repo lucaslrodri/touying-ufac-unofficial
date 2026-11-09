@@ -701,10 +701,6 @@ of a table, and its `#cols` has no `divider`.
 
 #slide-example("pause", pages: (1, 2, 3))
 
-Between the items of a list (`-`, `+`), the `#pause` goes on its own line or in a paragraph of its own, with blank
-lines around it: the list is the same on every step, and numbered items keep their numbers under the veil, also inside
-an `emph-box` without a title or an icon, a callout in the default style or a column.
-
 #table(
   columns: (auto, 1fr),
   table.header([Feature], [Functions]),

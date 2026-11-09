@@ -41,14 +41,3 @@
   #pause
   - second item, its marker in place
 ]))
-
-== Way out: the first number written
-3. three, written
-#pause
-+ four
-
-#set enum(start: 3)
-== Limit: a split list after `#set enum(start: 3)` (last: the rule reaches the slides after it)
-+ first, numbered 1.
-#pause
-+ second, numbered 2.
