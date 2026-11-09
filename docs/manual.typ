@@ -624,12 +624,12 @@ name, highlights or ranges, the deck takes codly (@codly).
 
 = Customization <customization>
 
-== Language
+== Language <language>
 
 The theme speaks Portuguese by default (`lang: "pt-br"`); `lang: "en"` or `"es"` switches the language of the text and
 every word of the theme: the names of exercises, examples and parts, the titles of the callouts, "Solution" and
 "Answer", "Output", "Thank you!", the dates and the tags of the cover. The names of exercises, examples and parts can
-also be given one by one.
+also be given one by one (`exercise-name`, `example-name`, `part-name`).
 
 #slide-example("lang", pages: (1, 2))
 
@@ -680,12 +680,11 @@ The footer shows the short title and the title on the left and the authors on th
 two do not fit, they are cut with "…" at the end of a word (the authors keep at least a third of the room); `#alert`
 or a colored emphasis (`#tertiary`, …) in a footer text is not cut inside, but kept or left out whole. The texts are in
 capitals, but for inline code, which keeps its letters as written. `ufac-theme(footer-left:, footer-right:)` replaces
-either with content, an array or a function of `self`, whose `self.colors.primary` is the color of the footer text
-(blue on the slides, white on the closing slide, the color of the box in an exercise or example, its dark tone for a
-light color). The items of an array are joined by a dot, those that show nothing left out (as
-`info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken. The badge of the exercises and examples takes
-another name (`exercise-name`, `example-name`) and another icon (`exercise-icon`, `example-icon`), and the section
-slides another word (`part-name`); the callouts `#example` and `#examples` keep theirs (@callouts).
+either with content, an array or a function of `self`, whose `self.colors.primary` is the color of the footer text,
+the one a logo gets in the same footer (@logos). The items of an array are joined by a dot, those that show nothing
+left out (as `info("semester")` below, in a deck without a date), and with none left the footer line runs unbroken.
+Besides its name (@language), the badge of the exercises and examples takes another icon (`exercise-icon`,
+`example-icon`); the callouts `#example` and `#examples` keep their names and icons (@callouts).
 
 ```typ
 #show: ufac-theme.with(
