@@ -628,8 +628,9 @@ name, highlights or ranges, the deck takes codly (@codly).
 
 The theme speaks Portuguese by default (`lang: "pt-br"`); `lang: "en"` or `"es"` switches the language of the text and
 every word of the theme: the names of exercises, examples and parts, the titles of the callouts, "Solution" and
-"Answer", "Output", "Thank you!", the dates and the tags of the cover. The names of exercises, examples and parts can
-also be given one by one (`exercise-name`, `example-name`, `part-name`).
+"Answer", "Output", "Thank you!", the dates and the tags of the cover. The names on the badges of the exercise and
+example slides and the word of the section slides can also be given one by one (`exercise-name`, `example-name`,
+`part-name`).
 
 #slide-example("lang", pages: (1, 2))
 
