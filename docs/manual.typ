@@ -427,7 +427,8 @@ whole slide (@slides).
 
 == Escapes <escapes>
 
-A backslash on the sign keeps a shorthand literal; `\>` keeps the sign only before a word or a number.
+A backslash before the sign keeps a shorthand literal; `\>` keeps the sign only before a word or a number, and
+`$a > b$` keeps it anywhere.
 
 ````example
 \==not highlighted== and
