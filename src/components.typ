@@ -23,7 +23,7 @@
 }
 
 /// Bold text in UFAC blue, also inside a box (unlike `#alert` and `~~text~~`, which take the color of the box around
-/// them). On a dark background (a pill, the cover, the header of a table) it turns UFAC yellow, where blue would
+/// them). On a dark background (a dark pill, the cover, the header of a table) it turns UFAC yellow, where blue would
 /// vanish. The bold and the italic inside it take its color, as in the other colored emphases.
 ///
 /// ```example
@@ -135,7 +135,7 @@
   name,
   /// Fill color (multicolor logos keep their colors). With `auto` it follows the context like bold text: white inside
   /// a dark pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box), the box or title color inside
-  /// @emph-box and `==`, black elsewhere. -> auto | color
+  /// @emph-box and `==`, blue inside a light pill, black elsewhere. -> auto | color
   color: auto,
   /// Height of the icon; the width follows its proportions (square for the icons of the theme). -> length
   size: 1em,
@@ -246,7 +246,7 @@
 }
 /// Emphasis box. Without a title it has a thin border; with a title, a badge sits over the top border. Inside the
 /// box the `-` markers, the `->` arrow, `*bold*`, `~~text~~` and `#alert`, `==highlight==` and `#underline` take the
-/// box color; an explicit `#arrows(color:)`, `#arrow-list(color:)`, `#highlight(fill:)` or `#underline(stroke:)` wins. Colors by convention: primary for
+/// box color (the dark tone of a light color, such as `secondary-dark` in a `secondary` box); an explicit `#arrows(color:)`, `#arrow-list(color:)`, `#highlight(fill:)` or `#underline(stroke:)` wins. Colors by convention: primary for
 /// definitions and what is recalled, quaternary for advantages, tertiary for problems, secondary for side notes.
 ///
 /// ```example

@@ -348,8 +348,8 @@ A ~strong underline~ and
 
 == Code chips
 
-Inline `raw` is a gray chip. Inside a title or a box it follows the color of the container, and inside a dark pill it
-is inverted.
+Inline `raw` is a gray chip. Inside a title or a box it follows the color of the container, and inside a dark pill
+(@context-colors) it is inverted.
 
 ````example
 Call `fit(x, y)` first.
@@ -367,15 +367,17 @@ links, icons (@icons) and the `===` pills take the color of the box; italic stay
 slide. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
 a reference to an exercise or example, in the color of its kind.
 
-On a dark background (a pill or a tag in a dark color, the cover, the closing slide, the header of a table, a dark
+On a dark background (a dark pill, a tag with white text, the cover, the closing slide, the header of a table, a dark
 cell), the text, bold and italic are white, an alert and `#primary` yellow, and a highlight yellow with the text in
-blue. Elsewhere (the slide header, the footer, inside an alert or a colored emphasis such as `#primary`), bold and
-italic take the color of the text around them.
+blue. In the slide header, the footer and inside an alert or a colored emphasis such as `#primary`, bold and italic
+take the color of the text around them.
 
-A light color is the yellow, the `-lighter` and `-lightest` tones and `quaternary-light` (a luma of 70% or more). A
-pill, a badge or a tag in it has dark blue text, and inside it alerts and highlights are blue, as in a box; a box, a
-callout or an exercise in it uses the dark tone of its color (`secondary-dark`, for the yellow) for what takes its
-color, readable on its fill.
+A light color is `secondary` and `secondary-light`, the `-lighter` and `-lightest` tones and `quaternary-light` (a
+luma of 70% or more); the others are dark. A pill or a badge in a light color has dark blue text, and inside it alerts
+and highlights are blue, as in a blue box. A box, a callout, an exercise or an example in a light color uses the dark
+tone of its color (`secondary-dark`, for the yellow) for what takes its color. A tag (@tags) chooses its text by
+contrast instead, dark blue or white, so in `quaternary` or `secondary-dark` it has dark blue text; with dark blue
+text, alerts and highlights inside it are blue too.
 
 #slide-example("pills", columns: (1fr, 1fr))
 
@@ -533,7 +535,7 @@ one, so a text longer than a page goes outside it. With `style: "badge"` it cont
 
 #see("components", "callout()", "caution()", "tip()", "remark()", "note()", "example()", "examples()")
 
-== Tags and quotations
+== Tags and quotations <tags>
 
 `#tag` is the yellow tag of the cover and of the section slides, for the text, the titles and the tables: a short label
 in spaced capitals, on any color. A paragraph made only of quoted lines becomes one quotation per line, a
@@ -557,9 +559,9 @@ in spaced capitals, on any color. A paragraph made only of quoted lines becomes 
 
 == Tables <tables>
 
-The header row is blue with white text. A cell filled with a light tone of the palette
-(`table.cell(fill: colors.secondary-lighter)`) colors its chips and bold text like a box of that family; a cell filled
-with a dark tone is like a pill, with white text.
+The first row, the header, is blue with white text. A cell filled with a light color of the palette
+(@context-colors), such as `table.cell(fill: colors.secondary-lighter)`, colors its chips and bold text like a box of
+that family; a cell filled with another color of the palette is like a dark pill, with white text.
 
 ```example
 #table(
