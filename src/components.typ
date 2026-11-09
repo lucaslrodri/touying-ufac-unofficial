@@ -24,7 +24,8 @@
 
 /// Bold text in UFAC blue, also inside a box (unlike `#alert` and `~~text~~`, which take the color of the box around
 /// them). On a dark background (a dark pill, the cover, the header of a table) it turns UFAC yellow, where blue would
-/// vanish, or dark blue where the yellow would (the green, the gray, the dark yellow). The bold and the italic inside it take its color, as in the other colored emphases.
+/// vanish, or dark blue where the yellow would (a contrast under 3:1, as on `quaternary`, `neutral` and
+/// `secondary-dark`). The bold and the italic inside it take its color, as in the other colored emphases.
 ///
 /// ```example
 /// A #primary[definition] in blue.
@@ -36,7 +37,7 @@
 ) = context _colored(_emph-color(colors.primary), body)
 
 /// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow on a dark background (dark blue
-/// on the green, the gray and the dark yellow, where the yellow does not read): the same
+/// where the yellow does not read, a contrast under 3:1, as on `quaternary`): the same
 /// as the `~~text~~` shorthand, which takes plain text only; this one takes any markup, and its bold and italic take
 /// its color. It replaces Touying's `#alert`, so the theme is imported after Touying.
 ///

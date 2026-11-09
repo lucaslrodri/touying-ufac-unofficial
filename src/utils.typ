@@ -178,7 +178,7 @@
 }
 /// Emphasis color readable in the current context: inside a pill (white text on the color) the blue of
 /// `#alert`/`#primary` would vanish, so it becomes UFAC yellow, or, on a fill where the yellow does not read (a
-/// contrast under 3:1: the green, the gray, the dark yellow), the dark blue of the light pills; elsewhere the
+/// contrast under 3:1, as on `quaternary`, `neutral` and `secondary-dark`), the dark blue of the light pills; elsewhere the
 /// requested color.
 ///
 /// #test(`_contrast(colors.secondary, colors.primary) >= 3`, `_contrast(colors.secondary, colors.quaternary) < 3`)
