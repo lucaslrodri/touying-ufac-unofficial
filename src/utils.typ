@@ -181,7 +181,9 @@
 /// contrast under 3:1, as on `quaternary`, `neutral` and `secondary-dark`), the dark blue of the light pills; elsewhere the
 /// requested color.
 ///
-/// #test(`_contrast(colors.secondary, colors.primary) >= 3`, `_contrast(colors.secondary, colors.quaternary) < 3`)
+/// #test(`_contrast(colors.secondary, colors.primary) >= 3`, `_contrast(colors.secondary, colors.quaternary) < 3`,
+///   `_contrast(colors.primary.darken(45%), colors.quaternary) >= 3`, `_contrast(colors.primary.darken(45%), colors.neutral) >= 3`,
+///   `_contrast(colors.primary.darken(45%), colors.secondary-dark) >= 3`)
 /// -> color
 #let _emph-color(
   /// Requested color. -> color
@@ -515,6 +517,7 @@
 ///   `_upper-but-raw([a b]) == upper([a b])`,
 ///   `_upper-but-raw(raw("b_C")) == raw("b_C")`,
 ///   `_upper-but-raw(link("https://example.com", raw("b_C"))) == link("https://example.com", raw("b_C"))`,
+///   `_upper-but-raw(text(fill: red)[#raw("r_V")]) == text(fill: red)[#raw("r_V")]`,
 /// )
 /// -> content | str
 #let _upper-but-raw(
