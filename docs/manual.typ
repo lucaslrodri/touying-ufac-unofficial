@@ -266,7 +266,8 @@ A label on the `==` heading turns the slide into the box of an exercise (red) or
 handout. The box fills the slide; the title goes on a badge over its top border, with the icon of the kind (a pencil, a
 beaker), the name, the number and the title; the footer of the slide closes the box. A suffix makes the label unique,
 as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", linked to the slide.
-The same label lets `#touying-recall(<exercise-tides>)`, outside a slide, show the slide again with its number,
+The same label lets `#touying-recall(<exercise-tides>)`, on a line of its own between two slides, show the slide
+again with its number,
 without counting it again.
 A short example inside an ordinary slide, without a number, is the callout `#example` (@callouts).
 
@@ -309,8 +310,8 @@ inside `raw`.
   table.header([Function], [Shorthand], [Result]),
   [`#strong[text]`], [`*text*`], [black bold],
   [`#emph[text]`], [`_text_`], [black italic],
-  [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow in a pill],
-  [`#highlight[text]`], [`==text==`], [light-yellow background],
+  [`#alert[text]`], [`~~text~~`], [bold in the color of the box around it, blue elsewhere, yellow on a dark background],
+  [`#highlight[text]`], [`==text==`], [light-yellow background; yellow with blue text on a dark background],
   [`#underline[text]`], [`~text~`], [strong yellow underline],
   [`#primary`, `#secondary`, `#tertiary`, `#quaternary`], [], [bold in blue, yellow, red, green, the same inside a box],
   [`#arrow-list[- item]`], [`-> item`], [arrow list],
@@ -330,7 +331,7 @@ Blue #alert[alert], the same as
 #tertiary[Problem:] a colored label.
 ```
 
-The `==text==` shorthand cannot open a line (there it is a heading), and its text neither starts nor ends with a
+The text of the `==text==` shorthand neither starts nor ends with a
 space; `#highlight` has no such limits and takes another fill, such as a `-lighter` tone of the palette (@colors).
 
 ````example
@@ -360,17 +361,16 @@ Call `fit(x, y)` first.
 
 == Colors by context <context-colors>
 
-Bold text, alerts, highlights, underlines, arrows, the markers of the lists (and, in an exercise or example, their
-numbers), chips, links, icons (@icons) and the `===` pills read the color of what
-contains them: the color of an `emph-box`, a callout, an exercise or an example, or of a light cell of a table
-(@tables); white or yellow inside a pill, on the cover and on the closing slide, where the color would hide them.
-What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and a
-reference to an exercise or example, in the color of its kind.
+On a light background (an `emph-box`, a callout, an exercise or an example, a light cell of a table, @tables), bold
+text, alerts, highlights, underlines, arrows, the markers of the lists (and, in an exercise or example slide, their
+numbers), chips, links, icons (@icons) and the `===` pills take the color of the box; italic stays black, as bold
+and italic are on a slide.
 
-Italic is black on a slide and in a box, as bold is on a slide. Where the text has a color of its own, both take
-it: in a pill, on the cover, in the header of a table, on the closing slide, in the slide header and the footer, and
-inside an alert or a colored emphasis (`#primary`, …), the color of that emphasis. On a dark background a
-highlight is yellow, with the text in blue.
+On a dark background (a pill, the cover, the closing slide, the header of a table, a dark cell), the text, bold and
+italic are white, an alert and `#primary` yellow, and a highlight yellow with the text in blue. In the slide header
+and the footer, and inside an alert or a colored emphasis (`#primary`, …), bold and italic take the color of the
+text around them. What has a style of its own keeps it: a code block, a box inside another box, which brings its own
+color, and a reference to an exercise or example, in the color of its kind.
 
 #slide-example("pills", columns: (1fr, 1fr))
 

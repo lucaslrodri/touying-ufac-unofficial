@@ -23,8 +23,8 @@
 }
 
 /// Bold text in UFAC blue, also inside a box (unlike `#alert` and `~~text~~`, which take the color of the box around
-/// them). Inside a pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box) it turns UFAC yellow,
-/// where blue would vanish.
+/// them). On a dark background (a pill, the cover, the header of a table) it turns UFAC yellow, where blue would
+/// vanish. The bold and the italic inside it take its color, as in the other colored emphases.
 ///
 /// ```example
 /// A #primary[definition] in blue.
@@ -35,9 +35,9 @@
   body,
 ) = context _colored(_emph-color(colors.primary), body)
 
-/// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow inside a pill: the same as the
-/// `~~text~~` shorthand, which takes plain text only; this one takes any markup, and its bold and italic take its
-/// color. It works inside every box of the theme, which is imported after Touying, whose `#alert` it replaces.
+/// Bold text in the color of the box around it (UFAC blue elsewhere) and UFAC yellow on a dark background: the same
+/// as the `~~text~~` shorthand, which takes plain text only; this one takes any markup, and its bold and italic take
+/// its color. It replaces Touying's `#alert`, so the theme is imported after Touying.
 ///
 /// ```example
 /// An #alert[important] word.
@@ -50,7 +50,8 @@
   _colored(if _in-pill() { colors.secondary } else { _current-box-color(colors.primary) }, body)
 }
 
-/// Bold text in UFAC yellow. It is weak on white: meant for short labels and dark backgrounds.
+/// Bold text in UFAC yellow, with the bold and the italic inside it in yellow too. It is weak on white: meant for
+/// short labels and dark backgrounds.
 ///
 /// ```example
 /// A #secondary[side note] in yellow.
@@ -61,7 +62,7 @@
   body,
 ) = _colored(colors.secondary, body)
 
-/// Bold text in red, for warnings and problems.
+/// Bold text in red, with the bold and the italic inside it in red too, for warnings and problems.
 ///
 /// ```example
 /// #tertiary[Caution:] the ice is thin.
@@ -72,7 +73,7 @@
   body,
 ) = _colored(colors.tertiary, body)
 
-/// Bold text in green, for advantages and correct answers.
+/// Bold text in green, with the bold and the italic inside it in green too, for advantages and correct answers.
 ///
 /// ```example
 /// #quaternary[Correct:] the series
@@ -769,7 +770,7 @@
   else if kind == "arrows" { _arrows(ch, arrow-color) }
   else { it }
 }
-/// Arrow lists with the arrow in another color, for everything inside the body. The `-> item` shorthand itself
+/// Arrow lists with the arrow in another color, for the `-> item` lines of the body, also inside its boxes. The `-> item` shorthand itself
 /// needs no function: consecutive lines starting with `->` become one list with a blue arrow (the box color inside an
 /// @emph-box). The list must start the paragraph, and `-\> item` escapes it. The function form of `-> item` is
 /// @arrow-list, which takes its own `color:`.
