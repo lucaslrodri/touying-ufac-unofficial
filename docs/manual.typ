@@ -427,8 +427,8 @@ whole slide (@slides).
 
 == Escapes <escapes>
 
-A backslash before the sign keeps a shorthand literal; `\>` keeps the sign only before a word or a number, and
-`$a > b$` keeps it anywhere.
+A backslash before the sign keeps a shorthand literal; `\>` keeps the sign only before a word or a number, and in math,
+`$a > b$`, the sign is never a shorthand.
 
 ````example
 \==not highlighted== and
@@ -467,7 +467,7 @@ badge over the border, with an optional icon.
 
 A paragraph whose lines start with `>` is the same box in the primary color; a first line `> == Title` gives the title.
 Only inline content fits there: lists and code blocks need `#emph-box`. A loose `>` at the start of a paragraph is
-read as a box: write `$a > b$`, or escape it before a word or a number (@escapes).
+read as a box; @escapes shows how to keep the sign.
 
 ```example
 > A box without title, with *bold*
