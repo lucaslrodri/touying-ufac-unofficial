@@ -57,7 +57,7 @@
 #include "./sections/overflow-code/body.typ"
 #include "./sections/titles/body.typ"
 #include "./sections/lone-shorthands/body.typ"
-#include "./sections/exercises/body.typ"
+#include "./sections/questions/body.typ"
 #include "./sections/items-solution/body.typ"
 #include "./sections/items-colors/body.typ"
 #include "./sections/items-numbering/body.typ"

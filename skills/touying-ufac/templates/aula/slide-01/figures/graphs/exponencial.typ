@@ -1,7 +1,7 @@
-// A exponencial decrescente do exercício, x(t) = e^(-t) u(t): zero antes de t = 0 e e^(-t) depois.
+// A exponencial decrescente da questão, x(t) = e^(-t) u(t): zero antes de t = 0 e e^(-t) depois.
 #import "../../header.typ": grafico
 #import "@preview/lilaq:0.6.0" as lq
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 
 #let t = lq.linspace(0, 4, num: 80)
 #grafico(

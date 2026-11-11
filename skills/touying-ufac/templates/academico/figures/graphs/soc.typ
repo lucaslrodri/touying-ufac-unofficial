@@ -1,6 +1,6 @@
 // O estado de carga (SoC) no ensaio, lido de data/soc.csv: nenhum número copiado à mão. Incluído no slide do
 // resultado com `#align(center, include "figures/graphs/soc.typ")`; o caminho /data/… parte da pasta do deck.
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/lilaq:0.6.0" as lq
 #import "@preview/zero:0.6.1"
 

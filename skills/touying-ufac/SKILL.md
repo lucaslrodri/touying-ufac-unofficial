@@ -28,7 +28,7 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - função que reduza a letra;
    - figura colada como imagem com números ou rótulos menores que o corpo.
 
-   Referências, tabelas e rótulos de gráfico também ficam no tamanho do corpo. A legenda de figura é do tema (0.6em) e não se mexe. Se uma função do `header.typ` que veio de outro deck reduz a letra, passe o tamanho no uso ou proponha ao professor ajustá-la.
+   Referências, tabelas e rótulos de gráfico também ficam no tamanho do corpo. A legenda de figura é do tema (0.6em) e não se mexe. Há uma exceção, do mesmo tamanho da legenda: o valor de cada haste num gráfico de tempo discreto. Ele vai pequeno, acima da ponta da haste, embaixo dela se o valor for negativo e ao lado dela na haste de n = 0, que cai sobre o eixo. Onde a haste é negativa, o número de n sobe para cima do eixo. Valor repetido aparece uma vez só, na primeira haste que o tem (um degrau de altura 1 leva um "1" só). A função de estilo do `header.typ` faz isso (em Sinais e Sistemas, `valores` e `marcas-n`), com a marca `pequeno-permitido` na linha, que o verificador aceita. Se uma função do `header.typ` que veio de outro deck reduz a letra, passe o tamanho no uso ou proponha ao professor ajustá-la.
 3. **Explícito é melhor que implícito.**
    - O código fica onde é usado: os componentes do tema como estão, e uma mudança pequena escrita no próprio slide, mesmo que se repita. Assim o deck guarda a identidade visual do tema.
    - O agente não cria função para tudo: nunca uma função pequena (até umas três linhas, cerca de 50 caracteres), nem uma que muda pouco o que se escreveria no slide, nem apelido de função (`#let a = b`), nem dicionário de argumentos espalhado com `..mini`.
@@ -42,6 +42,8 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - fotos, capturas e memes como imagem.
 
    Cores só do tema (`colors.*`), nada de `rgb()` ou hexadecimal.
+
+   A figura de cada Parte (o quadro ao lado do título do `=`) representa o assunto: um diagrama, um gráfico, um processo ou um desenho feito por você em `figures/`, ou a foto de uma pessoa ou de um objeto, de fonte livre e com crédito. Nunca um ícone: ícone na Parte só na apresentação do curso, no modo aula.
 5. **Só os callouts do tema:**
    - `#caution`: na aula, um erro a evitar; no acadêmico, uma limitação ou um cuidado;
    - `#tip`: atalho;
@@ -55,15 +57,15 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - os dados em `data/` (CSV e JSON);
    - as imagens prontas em `assets/` (fotos, capturas, o JSON dos ícones, o meme);
    - as funções grandes no `header.typ`, na pasta do deck.
-7. **Créditos e referências só no fim.**
+7. **Créditos e referências só no fim, e na aula nem lá.**
    - Nenhuma "Fonte:", "Adaptado de" ou "Redesenhado de" na legenda nem no slide.
-   - Crédito só de imagem tirada inteira de fora (foto, captura, capa de livro, meme), no slide "Créditos das imagens", no fim. Desenho do autor, ou refeito a partir de dados de outro trabalho, não leva crédito.
+   - Crédito só de imagem tirada inteira de fora (foto, captura, capa de livro, meme). No acadêmico, ele vai no slide "Créditos das imagens", no fim. Na aula não há slide de créditos (pedido do professor): a origem de cada imagem de fora fica só no `plano-de-aula.md`, na tabela de figuras. Desenho do autor, ou refeito a partir de dados de outro trabalho, não leva crédito.
    - Na aula, nenhuma referência bibliográfica.
    - No acadêmico, as referências só no slide "Referências", no fim, sem `@chave` nos slides: um `referencias.bib` com as obras da apresentação, listado inteiro com `#bibliography("referencias.bib", full: true, ..)`.
 
-## Antes de começar: o tema 0.3.0
+## Antes de começar: o tema 0.4.0
 
-Os modelos importam o tema pelo nome publicado, `@preview/touying-ufac-unofficial:0.3.0`. Se a 0.3.0 ainda não estiver no Typst Universe, use a versão de desenvolvimento como pacote local: se `@local/touying-ufac-unofficial:0.3.0` não estiver instalado, instale o branch `develop` do [repositório](https://github.com/lucaslrodri/touying-ufac-unofficial) (com o gotpm, ou copiando-o para a pasta de pacotes locais do Typst) e troque `@preview` por `@local` no import do tema, em todo `.typ` que o importa (o deck, o `header.typ` e os arquivos de `figures/`). Diga ao usuário o que instalou e onde.
+Os modelos importam o tema pelo nome publicado, `@preview/touying-ufac-unofficial:0.4.0`. Se a 0.4.0 ainda não estiver no Typst Universe, use a versão de desenvolvimento como pacote local: se `@local/touying-ufac-unofficial:0.4.0` não estiver instalado, instale o branch `develop` do [repositório](https://github.com/lucaslrodri/touying-ufac-unofficial) (com o gotpm, ou copiando-o para a pasta de pacotes locais do Typst) e troque `@preview` por `@local` no import do tema, em todo `.typ` que o importa (o deck, o `header.typ` e os arquivos de `figures/`). Diga ao usuário o que instalou e onde.
 
 ## Pastas
 
@@ -101,7 +103,7 @@ Uma figura entra no slide pelo arquivo dela: `#align(center, include "figures/gr
 |---|---|---|
 | Citação no slide (`@chave`) | não | não |
 | Lista de referências | não há | slide "Referências", no fim, com o `.bib` da apresentação inteiro (`full: true`) |
-| Foto, captura, capa ou meme de fora | crédito no slide "Créditos das imagens", no fim | crédito no slide "Créditos das imagens", depois das Referências |
+| Foto, captura, capa ou meme de fora | sem slide de créditos: a origem fica no `plano-de-aula.md` | crédito no slide "Créditos das imagens", depois das Referências |
 | Desenho do autor, ou refeito de dados de fora | sem crédito | sem crédito (a obra dos dados entra nas Referências) |
 | Legenda | sem fonte | sem fonte |
 
@@ -109,19 +111,19 @@ Uma figura entra no slide pelo arquivo dela: `#align(center, include "figures/gr
 
 ### Regras da aula
 
-1. **Toda questão para o aluno é exercício discursivo:** `== Título <exercise>` (ou `#exercise-slide`), o enunciado, `---` e `#answer` com a solução desenvolvida. O aluno desenvolve a matemática ("calcule", "esboce", "mostre", "determine"). Nunca:
+1. **Toda pergunta para o aluno é questão discursiva:** `== Título <question>` (ou `#question-slide`), o enunciado, `---` e `#answer` com a solução desenvolvida. O aluno desenvolve a matemática ("calcule", "esboce", "mostre", "determine"). Nunca:
    - questão de marcar: alternativas (A) a (D), verdadeiro ou falso, "qual destes", votação;
    - pergunta solta num slide comum;
    - "aquecimento".
-2. **Todo exemplo que o professor resolve é exemplo:** `== Título <example>` e `#solution`. A solução fica no mesmo slide se couber; se não, vai depois de `---`. Cada assunto abre com exemplos introdutórios concretos, antes da definição, e eles também são `<example>`.
-3. **Organizar pelo assunto, nunca por encontro.** O encontro é só uma estimativa. Nada de:
+2. **Todo exemplo que o professor resolve é exemplo:** `== Título <example>` e `#solution`. A solução fica no mesmo slide se couber; se não, vai depois de `---`. Cada assunto abre com exemplos introdutórios concretos, antes da definição, e eles também são `<example>`. Exemplo é a questão-chave: a que ensina conteúdo ou um jeito novo de resolver. As outras, inclusive a variação do mesmo cálculo, são questão (`<question>`, a resposta desenvolvida depois de `---`, no fim da Parte). A distribuição fica perto de meio a meio entre exemplos e questões (uma estimativa: pode ter um pouco mais de questões), e o total de exemplos e questões é pequeno, senão a aula não termina: não acrescente exemplo nem questão para cumprir a sequência; só um exemplo novo, quando ele ensina um conceito importante que o deck não tem. Toda questão é para o aluno fazer, em sala ou em casa: não leva marca de "casa".
+3. **Organizar pelo assunto; os encontros só na apresentação do curso.** A apresentação do curso, na primeira aula, mostra a divisão por encontro: os encontros e o período de cada unidade e o cronograma do plano (`references/aula/apresentacao-do-curso.md`). Fora dela, o encontro é só uma estimativa. Nada de:
    - "Encontro N", "Aula N" ou data de aula;
    - "Resumo do encontro" ou "Próximo encontro";
    - "(encontro N)";
    - arquivos `encontro-N.typ`.
 
-   Partes (`=`), arquivos e resumos têm nome de assunto, e um `#remark` retoma o conceito pelo nome. O planejamento é por prova: todo o conteúdo de cada prova antes dela. A data da prova pode aparecer (vem do plano de curso), mas também é estimativa.
-4. **O último slide é "Fim!" com um meme.** Sem "Obrigado!" e sem o que vem na próxima aula. O professor escolhe o meme entre candidatos que você traz, com link e crédito; os créditos das imagens de fora vêm no slide anterior.
+   Partes (`=`) e arquivos têm nome de assunto, e um `#remark` retoma o conceito pelo nome. Não há slide de resumo, nem no fim da Parte nem no fim do deck: a Parte termina nas questões. O planejamento é por prova: todo o conteúdo de cada prova antes dela. A data da prova pode aparecer (vem do plano de curso), mas também é estimativa.
+4. **O último slide é "Fim!" com um meme.** Sem "Obrigado!" e sem o que vem na próxima aula. O professor escolhe o meme entre candidatos que você traz, com link e crédito. Não há slide de créditos antes dele: a origem do meme e das outras imagens de fora fica no `plano-de-aula.md`.
 
 ### Fluxo da aula
 
@@ -136,7 +138,7 @@ Crie uma tarefa para cada passo.
 2. **Plano de aula.** Preencha `templates/aula/slide-01/plano-de-aula.md` e salve ao lado do deck. Ele traz:
    - o que cai na prova e as datas estimadas;
    - a sequência de assuntos;
-   - por assunto: exemplos introdutórios, definição, exemplos resolvidos, exercícios discursivos com a resposta conferida, concepções erradas a atacar, figuras (com o arquivo de cada uma) e circuitos.
+   - por assunto: exemplos introdutórios, definição, exemplos resolvidos, questões discursivas com a resposta conferida, concepções erradas a atacar, figuras (com o arquivo de cada uma) e circuitos.
 
    Mostre o plano ao professor antes dos slides, a menos que ele já tenha pedido os slides direto.
 3. **Primeira aula:** os slides de apresentação do curso, conforme `references/aula/apresentacao-do-curso.md`.
@@ -218,20 +220,24 @@ Em todo deck:
 | "Cabe se eu diminuir um pouco a letra." | Quebre em dois slides; no acadêmico, ou leve à reserva. |
 | "Vou criar uma funçãozinha para esta caixa, ou para a foto." | Escreva no slide, com o componente do tema. |
 | "Escrevo o gráfico direto no slide." | Um arquivo em `figures/graphs/`, incluído no slide. |
-| "Ponho a fonte na legenda." | Crédito só de imagem de fora, no fim. |
+| "Ponho a fonte na legenda." | Crédito só de imagem de fora: no acadêmico, no fim; na aula, só no `plano-de-aula.md`. |
+| "Fecho a aula com os créditos das imagens." | Na aula não há slide de créditos: da última Parte, direto para o "Fim!". |
 | "Redesenhei do livro, então dou o crédito." | Figura refeita não leva crédito. |
+| "Ponho um roteiro depois da capa." | Não há slide de roteiro: da capa, direto para a primeira Parte. |
+| "Um ícone grande serve de figura para a Parte." | A Parte leva uma figura do assunto (diagrama, gráfico, processo, desenho, foto de pessoa ou objeto); ícone só na apresentação do curso. |
 | "Já olhei as páginas, não precisa de revisor." | Os 3 revisores rodam sempre; a evidência vem deles. |
 
 Na aula:
 
 | Pensamento | O certo |
 |---|---|
-| "É uma perguntinha rápida, um slide comum basta." | Toda questão é `<exercise>` com `#answer`. |
+| "É uma perguntinha rápida, um slide comum basta." | Toda pergunta à turma é `<question>` com `#answer`. |
 | "Uma questão de marcar engaja mais a turma." | Só discursiva: o aluno desenvolve a matemática. |
-| "Um aquecimento antes do assunto." | Antes do assunto vem um exemplo introdutório (`<example>`); depois, exercício. |
+| "Um aquecimento antes do assunto." | Antes do assunto vem um exemplo introdutório (`<example>`); depois, questão. |
 | "Resolvo este caso num slide comum mesmo." | Caso resolvido pelo professor é `<example>`. |
-| "A solução junto do enunciado economiza página." | No exercício, a resposta vem depois de `---`. |
-| "Resumo do encontro" ou "Na próxima aula…" | Resumo por assunto; o fim é "Fim!" e meme. |
+| "Mais um exemplo resolvido deixa claro." | O introdutório e um ou dois por conceito; o resto vira questão, sem marca de "casa": toda questão é para o aluno fazer. |
+| "A solução junto do enunciado economiza página." | Na questão, a resposta vem depois de `---`. |
+| "Um resumo no fim da Parte", "Resumo do encontro" ou "Na próxima aula…" | Não há slide de resumo: a Parte termina nas questões, e o deck no "Fim!" com meme. |
 | "Cito o livro no slide." | Na aula não há referências. |
 | "A função do curso já reduz a letra do gráfico." | Passe o tamanho no uso ou proponha ao professor ajustá-la, no `header.typ`. |
 

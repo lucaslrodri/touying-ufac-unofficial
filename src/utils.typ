@@ -1,5 +1,5 @@
 // touying-ufac-unofficial — internal helpers: content inspection, the context color stack, the `raw` gate, backslash
-// escapes, exercise/example labels, the localized words, the current-subtitle query and the footer pieces.
+// escapes, question/example labels, the localized words, the current-subtitle query and the footer pieces.
 // Names starting with `_` are not part of the public API (Typst has no private bindings, so they stay reachable).
 #import "@preview/touying:0.7.4": *
 #import "constants.typ": colors, _ufac-logo-image
@@ -90,7 +90,7 @@
 // ---------- context color stack ----------
 /// Stack of `(color:, kind:, fill:)` entries, `kind` ∈ "box" | "pill" | "title", and `fill` the background of a light
 /// pill or a light cell (`none` elsewhere), for the contrast of a colored emphasis (`_emph-color`). Pushed by
-/// `emph-box` (body: "box"; title badge: "pill"), the callouts, the boxes of the exercises and examples, `_pill-text`
+/// `emph-box` (body: "box"; title badge: "pill"), the callouts, the boxes of the questions and examples, `_pill-text`
 /// (a dark pill: "pill"; a light one: "box" in blue, with its `fill`), the slide header ("title"), the section title
 /// ("title"), the cells of a table (the header and a dark cell: "pill"; a light cell: "box" with its `fill`), the
 /// footer ("title", or "pill" on the closing slide), the content of the cover and of the closing slide ("pill": white
@@ -320,16 +320,16 @@
   none
 }
 
-// ---------- exercise / example labels ----------
-/// Kind of a heading label: `<exercise>`/`<exercise-id>` → "exercise", `<example>`/`<example-id>` → "example",
+// ---------- question / example labels ----------
+/// Kind of a heading label: `<question>`/`<question-id>` → "question", `<example>`/`<example-id>` → "example",
 /// otherwise `none`. The suffix (id) changes nothing on the slide; it only makes the label unique so the slide can
-/// be cited with `@exercise-id` / `@example-id`.
+/// be cited with `@question-id` / `@example-id`.
 ///
 /// #test(
-///   `_label-kind(label("exercise")) == "exercise"`,
-///   `_label-kind(label("exercise-ogata")) == "exercise"`,
+///   `_label-kind(label("question")) == "question"`,
+///   `_label-kind(label("question-ogata")) == "question"`,
 ///   `_label-kind(label("example-xor")) == "example"`,
-///   `_label-kind(label("exercises")) == none`,
+///   `_label-kind(label("questions")) == none`,
 ///   `_label-kind(label("eq-y")) == none`,
 ///   `_label-kind(none) == none`,
 /// )
@@ -340,7 +340,48 @@
 ) = {
   if lbl == none { return none }
   let s = str(lbl)
-  if s == "exercise" or s.starts-with("exercise-") { "exercise" } else if s == "example" or s.starts-with("example-") { "example" }
+  if s == "question" or s.starts-with("question-") { "question" } else if s == "example" or s.starts-with("example-") { "example" }
+}
+/// The label of a question before 0.4.0, `<exercise>` or `<exercise-id>`, written with the new name (`question`,
+/// `question-id`), or `none` for any other label: a heading with it stops the deck with the new label.
+///
+/// #test(
+///   `_old-question-label(label("exercise")) == "question"`,
+///   `_old-question-label(label("exercise-tides")) == "question-tides"`,
+///   `_old-question-label(label("exercises")) == none`,
+///   `_old-question-label(none) == none`,
+/// )
+/// -> str | none
+#let _old-question-label(
+  /// Label of a heading, or `none`. -> label | none
+  lbl,
+) = {
+  if lbl == none { return none }
+  let s = str(lbl)
+  if s == "exercise" or s.starts-with("exercise-") { "question" + s.slice("exercise".len()) }
+}
+/// The text of a content, without its styles: the text of its letters, its spaces and its children, and nothing of
+/// what is not text (an image, a box, an equation). For the initial of a name given as content.
+///
+/// #test(
+///   `_plain-text([Problem]) == "Problem"`,
+///   `_plain-text([*Big* task]) == "Big task"`,
+///   `_plain-text("Task") == "Task"`,
+///   `_plain-text(none) == ""`,
+/// )
+/// -> str
+#let _plain-text(
+  /// The content, or a string. -> any
+  x,
+) = {
+  if type(x) == str { return x }
+  if type(x) != content { return "" }
+  if x.has("text") and type(x.text) == str { return x.text }
+  if x.func() == [ ].func() { return " " }
+  if x.has("children") { return x.children.map(_plain-text).fold("", (a, b) => a + b) }
+  if x.has("child") { return _plain-text(x.child) }
+  if x.has("body") { return _plain-text(x.body) }
+  ""
 }
 /// Localized words of the theme (`lang.toml`: pt, en, es).
 /// -> dictionary
@@ -357,7 +398,7 @@
 /// deck changes it too.
 /// -> content
 #let _tr(
-  /// Key of `lang.toml`: `"exercise"`, `"thanks"`, … -> str
+  /// Key of `lang.toml`: `"question"`, `"thanks"`, … -> str
   key,
 ) = context _words(text.lang).at(key)
 /// `lang` parameter of the theme → `(lang:, region:)` for `set text`: "pt"/"pt-br" (region BR by default), "en", "es";
@@ -383,13 +424,13 @@
   let region = if parts.len() > 1 { upper(parts.at(1)) } else if code == "pt" { "BR" } else { none }
   (lang: code, region: region)
 }
-/// Name shown for `key` ("exercise", "example", "part"): the theme parameter `<key>-name` when given, otherwise the
+/// Name shown for `key` ("question", "example", "part"): the theme parameter `<key>-name` when given, otherwise the
 /// translation for the current `text.lang` (contextual content).
 /// -> content
 #let _name(
   /// Touying's `self`. -> dictionary
   self,
-  /// `"exercise"`, `"example"` or `"part"`. -> str
+  /// `"question"`, `"example"` or `"part"`. -> str
   key,
 ) = { let v = self.store.at(key + "-name", default: auto); if v == auto { _tr(key) } else { v } }
 /// `(name, color)` of a kind: the name comes from the theme store or the translation, the color from the palette.
@@ -397,19 +438,19 @@
 #let _kind-style(
   /// Touying's `self`. -> dictionary
   self,
-  /// `"exercise"` or `"example"`. -> str
+  /// `"question"` or `"example"`. -> str
   kind,
-) = if kind == "exercise" { (_name(self, "exercise"), self.colors.tertiary) } else { (_name(self, "example"), self.colors.quaternary) }
-/// Icon of a kind in its pill: the theme parameter `<kind>-icon` (`ufac-theme(exercise-icon:, example-icon:)`), a
-/// pencil for exercises and a beaker for examples when the theme did not set it (a stand-in `self`).
+) = if kind == "question" { (_name(self, "question"), self.colors.tertiary) } else { (_name(self, "example"), self.colors.quaternary) }
+/// Icon of a kind in its pill: the theme parameter `<kind>-icon` (`ufac-theme(question-icon:, example-icon:)`), a
+/// pencil for questions and a beaker for examples when the theme did not set it (a stand-in `self`).
 /// -> none | str | content
 #let _kind-icon(
   /// Touying's `self`. -> dictionary
   self,
-  /// `"exercise"` or `"example"`. -> str
+  /// `"question"` or `"example"`. -> str
   kind,
-) = self.store.at(kind + "-icon", default: if kind == "exercise" { "pencil" } else { "beaker" })
-/// Index of an "Exercise"/"Example": position among the level-2 headings of the same kind whose page is ≤ the given
+) = self.store.at(kind + "-icon", default: if kind == "question" { "pencil" } else { "beaker" })
+/// Index of a "Question"/"Example": position among the level-2 headings of the same kind whose page is ≤ the given
 /// page (page based, like `utils.current-heading`, because the header is laid out before the body). The headings
 /// re-emitted by Touying on `---` continuations do not show up in `query`, only the original, which keeps the count simple.
 /// A `#touying-recall` shows the slide again, its heading and label included: a heading with a named label
@@ -417,7 +458,7 @@
 /// again takes the number of the first. Two slides with the same label by mistake but other titles count twice.
 /// -> int
 #let _kind-index(
-  /// `"exercise"` or `"example"`. -> str
+  /// `"question"` or `"example"`. -> str
   kind,
   /// Page of the slide. -> int
   page,
@@ -660,7 +701,7 @@
   white: false,
   /// The logos; `auto` takes those of `config-info(logo:)` (the UFAC logo by default). -> auto | array
   logos: auto,
-  /// Color of the logos and the dot, for the footer of an exercise or example: the UFAC logo all in this color, its
+  /// Color of the logos and the dot, for the footer of a question or example: the UFAC logo all in this color, its
   /// shield too. `auto` is the primary color, or white with `white: true`. -> auto | color
   color: auto,
 ) = {
@@ -689,7 +730,7 @@
 /// fit in the room left by the rules, the logos and the number, the right one gets what the left one leaves (at least a
 /// third of the room) and the left one the rest, and a longer text is cut with "…". `white: true` draws it in white, with the white
 /// logos of the cover, for the closing slide (`#ending-slide`); `color:` draws it in another color, with the UFAC logo
-/// in that color too, for the box of an exercise or example.
+/// in that color too, for the box of a question or example.
 /// -> content
 #let _footer(
   /// Touying's `self`. -> dictionary
@@ -698,10 +739,10 @@
   white: false,
   /// Color of the text, the rules and the logos, instead of the primary color. -> auto | color
   color: auto,
-  /// Color of the rules alone, instead of `color`: in the box of an exercise in a light color they are its bottom
+  /// Color of the rules alone, instead of `color`: in the box of a question in a light color they are its bottom
   /// border, in the color of the box, and the text and the logo in its dark tone. -> auto | color
   rule-color: auto,
-  /// Lift the footer by 0.05em, as on the page. The box of an exercise has its border at the exact middle of the
+  /// Lift the footer by 0.05em, as on the page. The box of a question has its border at the exact middle of the
   /// footer, so its footer is not lifted. -> bool
   lift: true,
 ) = {

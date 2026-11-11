@@ -1,6 +1,6 @@
-# Padrões do tema touying-ufac-unofficial 0.3.0
+# Padrões do tema touying-ufac-unofficial 0.4.0
 
-Pastas, sintaxe, componentes e armadilhas para escrever o deck, nos dois modos. O tema é o mesmo; o que muda de um modo para o outro vem em "Aula" e "Acadêmico". Todo trecho foi compilado (Typst 0.15.1, touying 0.7.4, tema 0.3.0) nas pastas da seção 1. As regras do `SKILL.md` mandam; nada aqui as contraria.
+Pastas, sintaxe, componentes e armadilhas para escrever o deck, nos dois modos. O tema é o mesmo; o que muda de um modo para o outro vem em "Aula" e "Acadêmico". Todo trecho foi compilado (Typst 0.15.1, touying 0.7.4, tema 0.4.0) nas pastas da seção 1. As regras do `SKILL.md` mandam; nada aqui as contraria.
 
 ## 1. Pastas e arquivos
 
@@ -86,7 +86,7 @@ Parta do modelo do modo: `templates/aula/slide-01/slide-01.typ` ou `templates/ac
 
 ### Aula
 
-A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), "Créditos das imagens" e "Fim!". No deck da primeira unidade, a apresentação do curso é a primeira Parte (`references/aula/apresentacao-do-curso.md`).
+A ordem é: imports, `#show: ufac-theme.with(..)`, capa, Partes (`=`) e "Fim!". Na aula não há slide de créditos: a origem das imagens de fora fica no `plano-de-aula.md`. No deck da primeira unidade, a apresentação do curso é a primeira Parte, escrita no próprio deck (`references/aula/apresentacao-do-curso.md`).
 
 | `config-info(..)` | Onde aparece |
 |---|---|
@@ -94,11 +94,11 @@ A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), 
 | `subject`, `subject-code` | título e etiqueta amarela da capa; rodapé |
 | `unit`, `unit-title` | linha amarela ("Unidade I") e linha branca (o assunto) da capa |
 | `semester`, `author` | capa e rodapé |
-| `counter-prefix: [1.]` | "Exemplo 1.N", "Exercício 1.N": use o número da unidade |
+| `counter-prefix: [1.]` | "Exemplo 1.N", "Questão 1.N": use o número da unidade |
 
 ### Acadêmico
 
-A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), "Agradecimentos", "Referências", "Créditos das imagens" (se houver imagem de fora), `#ending-slide`, `#show: appendix` e os slides de reserva.
+A ordem é: imports, `#show: ufac-theme.with(..)`, capa, Partes (`=`), "Agradecimentos", "Referências", "Créditos das imagens" (se houver imagem de fora), `#ending-slide`, `#show: appendix` e os slides de reserva.
 
 | Trabalho | `config-info(..)` | O que a capa mostra |
 |---|---|---|
@@ -126,14 +126,13 @@ A ordem é: imports, `#show: ufac-theme.with(..)`, capa, roteiro, Partes (`=`), 
 
 - **Autores:** em conteúdo livre, cada linha só em itálico é um rótulo de grupo (`_Discente_`, `_Orientador_`, `_Coorientadora_`). O rodapé e os metadados do PDF levam só o primeiro grupo, quem apresenta.
 - **Estilo da capa:** `ufac-theme.with(cover-style: "plain")` tira as bolhas da capa e do encerramento, se o programa pedir sobriedade; `"gradient"` escurece o azul num degradê e mantém as bolhas.
-- **Roteiro:** numa fala de até 10 minutos, ele pode sair.
 
 ### Nos dois modos
 
+- **Sem roteiro:** nenhum slide de roteiro ou de sumário, nem `#outline()`. Da capa, direto para a primeira Parte.
 - Dar um campo com dois nomes (`subject` e `title`, `semester` e `date`) é erro de compilação.
 - **Nada que gere conteúdo antes da capa:** um `#zero.set-num(..)`, um `#provide-icons(..)` ou um texto solto antes do `#title-slide` abre uma página em branco. `#import` e `#let` podem ficar ali.
 - **Ícones Phosphor** (`"ph:nome-bold"`): o `provide-icons` vai **dentro** da capa, `#title-slide[#provide-icons(json("assets/icones-ph.json"))]`.
-- **Roteiro:** `== Roteiro` e `#outline()`, que lista as Partes; com muitas Partes, `#columns(2, gutter: 2em, outline())`.
 - Nenhum `#set text(size: ..)` nem `#show figure.caption: set text(..)` no deck.
 
 ## 3. Estrutura: `=`, `==`, `===`, `---`
@@ -152,14 +151,14 @@ A tensão no capacitor varia com o tempo.
 A velocidade varia com a força do motor.
 ```
 
-- **`=` Parte:** "PARTE N" e o título. Tudo até o próximo `==` vai para o quadro da direita (12em × 66% da altura). Uma imagem sem tamanho preenche o quadro. Ponha só a imagem ali, nenhum texto. Um ícone grande também serve: `#icon("ph:wave-sine-bold", size: 6em)` ou `#icon("info", size: 6em)`.
+- **`=` Parte:** "PARTE N" e o título. Tudo até o próximo `==` vai para o quadro da direita (12em × 66% da altura). Uma imagem sem tamanho preenche o quadro. Ponha só a imagem ali, nenhum texto. A imagem representa o assunto: um diagrama, um gráfico, um processo ou um desenho feito em `figures/` e incluído (`#include "figures/diagrams/sistema.typ"`), ou a foto de uma pessoa ou de um objeto (`#image("assets/fotos/osciloscopio.jpg")`, com crédito no fim). Nunca um ícone: só a Parte da apresentação do curso, na aula, abre com um ícone. O verificador aponta ICONE_NA_PARTE.
   - Na aula, o nome é de assunto, nunca de encontro (regra Aula 3).
   - No acadêmico, o nome é a etapa do argumento (Introdução, Metodologia, Resultados, Conclusões), não o número do capítulo (regra Acadêmico 2), e uma foto ou figura do próprio trabalho é a melhor imagem para o quadro.
 - **`==` slide:** título de até 60 caracteres. Acima de ~65, o tema encolhe o título, o que viola a regra 2. `==` sem texto dá um slide sem título. No acadêmico, nos resultados, o título é o achado (regra Acadêmico 3).
 - **`===` pílula:** é repetida em cada continuação, até a próxima `===`. A `====` não se repete, nem a pílula posta dentro de `cols`, `grid` ou de uma caixa.
-- **`---`** sozinho na linha (ou `#pagebreak()`): a próxima página do mesmo slide. Ela mantém o título e a pílula; num exemplo ou exercício, também a caixa e o número.
+- **`---`** sozinho na linha (ou `#pagebreak()`): a próxima página do mesmo slide. Ela mantém o título e a pílula; num exemplo ou numa questão, também a caixa e o número.
 
-## 4. Exemplo e exercício
+## 4. Exemplo e questão
 
 ```typ
 == Sinal constante <example-constante>
@@ -169,7 +168,7 @@ Calcule $P_infinity$ de $x[n] = 4$.
 #solution
 $ P_infinity = lim_(N -> infinity) 1 / (2N + 1) sum_(n = -N)^N 4^2 = 16 $
 
-== Rampa deslocada <exercise-rampa>
+== Rampa deslocada <question-rampa>
 Esboce $x(t) = r(t + 1) - 2 r(t) + r(t - 1)$ e escreva $x(t)$ por partes.
 
 ---
@@ -179,16 +178,16 @@ Somando as rampas em cada intervalo:
 $ x(t) = cases(t + 1\, quad & -1 <= t < 0, 1 - t\, quad & 0 <= t < 1, 0\, quad & "fora") $
 ```
 
-- `<example>` dá a caixa verde com "Exemplo 1.N" e o título. `<exercise>` dá a caixa vermelha com "Exercício 1.N". Cada um tem seu contador.
-- Com sufixo no rótulo (`<exercise-rampa>`), o slide pode ser citado: `#remark[No @exercise-rampa, três rampas formaram um triângulo.]` mostra "Exercício 1.1", com link.
-- `#solution` e `#answer` ficam sozinhos na linha. Fora de um exemplo ou exercício, não aparecem.
+- `<example>` dá a caixa verde com "Exemplo 1.N" e o título. `<question>` dá a caixa vermelha com "Questão 1.N". Cada um tem seu contador. No índice do PDF (os marcadores do leitor), entram como "E1.N — Título" e "Q1.N — Título".
+- Com sufixo no rótulo (`<question-rampa>`), o slide pode ser citado: `#remark[Na @question-rampa, três rampas formaram um triângulo.]` mostra "Questão 1.1", com link.
+- `#solution` e `#answer` ficam sozinhos na linha. Fora de um exemplo ou de uma questão, não aparecem.
 - **Exemplo:** a solução fica no mesmo slide. Um `#pause` antes dela deixa a turma tentar primeiro: o que vem depois dele fica escondido até o passo seguinte. Se a solução não couber, `---` antes do `#solution`.
-- **Exercício:** sempre `---` antes do `#answer`, e a resposta mostra o desenvolvimento.
-- A forma de função, `#exercise-slide(title: [..])[..]` ou `#example-slide(..)[..]`, troca a cor ou o ícone (`color:`, `icon:`). Dentro do corpo, `---` e `#answer` funcionam igual, mas o slide não pode ser citado com `@`.
+- **Questão:** sempre `---` antes do `#answer`, e a resposta mostra o desenvolvimento.
+- A forma de função, `#question-slide(title: [..])[..]` ou `#example-slide(..)[..]`, troca a cor ou o ícone (`color:`, `icon:`). Dentro do corpo, `---` e `#answer` funcionam igual, mas o slide não pode ser citado com `@`.
 
 ### Aula
 
-Toda questão para o aluno é exercício discursivo, e todo caso que o professor resolve é exemplo (regras Aula 1 e Aula 2). A ordem de cada assunto está em `references/aula/pedagogia.md`.
+Toda pergunta para o aluno é questão discursiva, e todo caso que o professor resolve é exemplo (regras Aula 1 e Aula 2). A ordem de cada assunto está em `references/aula/pedagogia.md`.
 
 ### Acadêmico
 
@@ -284,7 +283,7 @@ $ P = #eq-box[$1 / N sum_n |x[n]|^2$] $
 ### Termos, `tag` e destaques
 
 - **Termos:** `/ $E_infinity$: energia em todo o tempo`, um por linha. Servem para a legenda de símbolos, os pesos de avaliação e os parâmetros de um ensaio, não para frases longas.
-- **`tag`:** `Diagramas de fluxo de sinal. #tag[seminário]` ou `Filtro de Kalman #tag[proposto]` (13.2pt). Uma palavra que marca um item; nunca informação que o público precisa ler, nem título.
+- **`tag`:** `Diagramas de fluxo de sinal. #tag[seminário]`, ou `Filtro de Kalman #tag[proposto]` (13.2pt). Questão não leva `tag` de "casa": toda questão é para o aluno fazer. Uma palavra que marca um item; nunca informação que o público precisa ler, nem título.
 
 | Escrita | Resultado | Para |
 |---|---|---|
@@ -310,15 +309,15 @@ O degrau tem duas propriedades.
 
 ### Ícones e cores
 
-- **Do tema** (sem `provide-icons`): `"caution"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"exercise"`, `"example"`.
+- **Do tema** (sem `provide-icons`): `"caution"`, `"tip"`, `"info"`, `"note"`, `"remark"`, `"question"`, `"example"`.
 - **Phosphor:** `"ph:nome-bold"`, do JSON em `assets/icones-ph.json`, passado ao `provide-icons` dentro da capa. Um ícone que não está no JSON dá erro de compilação com o nome dele. Para usá-lo, baixe-o de `https://api.iconify.design/ph.json?icons=a,b` e acrescente-o ao JSON.
-- Ícone vai no selo de `emph-box`, no callout (`icon:`), na pílula (`=== #icon("ph:wave-sine-bold") Título`) ou na figura da Parte, e o mesmo assunto tem sempre o mesmo ícone. Não decore cada linha.
+- Ícone vai no selo de `emph-box`, no callout (`icon:`) ou na pílula (`=== #icon("ph:wave-sine-bold") Título`), e o mesmo assunto tem sempre o mesmo ícone. Não decore cada linha. Na figura da Parte, não: ali vai uma figura do assunto (seção 3), salvo na apresentação do curso.
 - **Cores:** só `colors.*`, nunca `rgb()` nem hexadecimal. São as famílias `primary` (azul), `secondary` (amarelo), `tertiary` (vermelho), `quaternary` (verde) e `neutral`, cada uma com os tons `-darkest`, `-darker`, `-dark`, base, `-light`, `-lighter` e `-lightest`. Traço e texto usam a base ou um tom escuro; fundo, `-lighter` ou `-lightest`.
 
 | Papel | Cor |
 |---|---|
 | principal, definição, tensão; o sinal principal ou o método proposto num gráfico | `primary` |
-| exercício, `#caution`, problema, corrente; o erro, o método que perde | `tertiary` |
+| questão, `#caution`, problema, corrente; o erro, o método que perde | `tertiary` |
 | exemplo, `#tip`, vantagem, a contribuição | `quaternary` |
 | segundo sinal, segundo caso, destaque, par discreto | `secondary-dark` |
 | referência, eixos | `neutral-dark`, `neutral-darker` |
@@ -348,10 +347,10 @@ A mesma cor tem o mesmo papel no deck todo: se o método proposto é azul no gr�
 
 - A legenda sai a 0.6 do corpo (13,2pt), pelo tema, e só com o texto, sem "Figura N": escreva uma linha curta. Não mude o tamanho dela com `show figure.caption`.
 - A legenda diz o que a figura mostra, nunca de onde ela veio: nada de "Fonte:", "Adaptado de" ou "Redesenhado de", nem na legenda nem no slide (regra 7).
-- **Leva crédito** só a imagem tirada inteira de fora: foto, captura de tela, capa de livro, meme. O crédito (autor, licença, fonte com link) vai no slide "Créditos das imagens", no fim (seção 12), no tamanho do corpo.
+- **Leva crédito** só a imagem tirada inteira de fora: foto, captura de tela, capa de livro, meme. O crédito (autor, licença, fonte com link) vai, no acadêmico, no slide "Créditos das imagens", no fim (seção 12), no tamanho do corpo. Na aula não há slide de créditos: o crédito fica só na tabela de figuras do `plano-de-aula.md`.
 - **Não leva crédito** o desenho do autor, nem a figura refeita a partir dos dados ou da figura de outro trabalho. No acadêmico, a obra de que vêm os dados entra nas Referências (seção 9); na aula, não há referência.
 - Gráfico, circuito e diagrama de blocos não entram como imagem de outro lugar: refaça com lilaq, zap ou fletcher, num arquivo de `figures/` (regras 4 e 6). Foto, mapa e captura de tela entram como imagem, de `assets/`.
-- A foto e os créditos se escrevem no slide, com `image` e o caminho de `assets/`, mesmo que se repitam; nada de função para a foto nem para a lista de créditos (regra 3). Cantos arredondados, se quiser: `box(radius: 6pt, clip: true, image(..))`.
+- A foto (e, no acadêmico, os créditos) se escreve no slide, com `image` e o caminho de `assets/`, mesmo que se repitam; nada de função para a foto nem para a lista de créditos (regra 3). Cantos arredondados, se quiser: `box(radius: 6pt, clip: true, image(..))`.
 
 ## 7. Gráficos (lilaq)
 
@@ -385,7 +384,7 @@ Leia os dados do arquivo do trabalho, nunca copie os números à mão:
 ```typ
 // figures/graphs/soc.typ: o estado de carga no ensaio, lido de data/soc.csv.
 
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/lilaq:0.6.0" as lq
 #import "@preview/zero:0.6.1"
 
@@ -429,7 +428,7 @@ A maior distância do Kalman à referência foi de 0,6%.
 ```typ
 // figures/diagrams/ensaio.typ: o método como fluxo, nas cores do tema.
 
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/fletcher:0.5.8": diagram, node, edge
 
 #diagram(
@@ -467,12 +466,12 @@ A maior distância do Kalman à referência foi de 0,6%.
 
 ## 10. Quanto cabe num slide 16:9 sem diminuir a letra
 
-O corpo tem 22pt. A área útil é de 763 × 364pt num slide comum e de 745 × 336pt num exemplo ou exercício.
+O corpo tem 22pt. A área útil é de 763 × 364pt num slide comum e de 745 × 336pt num exemplo ou numa questão.
 
 | Conteúdo | Cabe | Transborda a partir de |
 |---|---|---|
 | parágrafos de uma linha | 10 (9 com pílula) | 11 |
-| itens `-` ou setas `->` | 13 (12 com pílula, ou num exemplo ou exercício) | 14 |
+| itens `-` ou setas `->` | 13 (12 com pílula, ou num exemplo ou numa questão) | 14 |
 | texto corrido (~13 palavras por linha) | ~150 palavras | 170 |
 | título `==` | ~65 caracteres | 70 (já reduzido) |
 | meme no "Fim!" | `height: 14em` | `16em` |
@@ -494,10 +493,10 @@ Esses números são o teto. O alvo é a regra 1: até ~40 palavras ou 5 itens; c
 | Uma frase entre aspas virou citação | Parágrafo feito só de uma citação | Texto fora das aspas, ou `\"..\"` |
 | Texto à direita do slide de Parte | Tudo entre `=` e `==` vai para o quadro da Parte | Só a imagem depois do `=` |
 | `== realce==` abriu um slide | `==` com espaço no começo da linha é título | `==realce==` sem espaço, ou `#highlight[..]` |
-| `#solution` ou `#answer` não aparece | Está fora de `<example>` ou `<exercise>` | Ponha-o dentro do item |
+| `#solution` ou `#answer` não aparece | Está fora de `<example>` ou `<question>` | Ponha-o dentro do item |
 | O `(t)` foi para o subscrito | `$v_s(t)$` | `$v_s (t)$` |
 | Erro "file not found" num arquivo de `figures/` | Caminho sem `/` parte da pasta do arquivo: `"data/soc.csv"` vira `figures/graphs/data/soc.csv` | `/data/soc.csv`; na aula, os arquivos do deck por `../../` (seção 1) |
-| Erro "unknown variable: colors" (ou `grafico`, `lq`) num arquivo de `figures/` | O arquivo não importou o que usa | O import no próprio arquivo: `#import "@preview/touying-ufac-unofficial:0.3.0": colors` |
+| Erro "unknown variable: colors" (ou `grafico`, `lq`) num arquivo de `figures/` | O arquivo não importou o que usa | O import no próprio arquivo: `#import "@preview/touying-ufac-unofficial:0.4.0": colors` |
 | Duas curvas viraram uma | As séries quase coincidem | Marcadores numa delas (`mark: "o"`, `stroke: none`) |
 | O slide "Referências" sai vazio | `#bibliography` sem `full: true`: nenhum slide cita | `full: true` |
 | "Fim!" sozinho e o meme na página seguinte | Meme alto demais | `height: 12em` (até 14em) |
@@ -506,19 +505,15 @@ Esses números são o teto. O alvo é a regra 1: até ~40 palavras ou 5 itens; c
 
 ## 12. Encerramento
 
-### Aula: "Créditos das imagens" e "Fim!" com meme
+### Aula: "Fim!" com meme
 
 ```typ
-== Créditos das imagens
-- Sol: NASA/SDO (AIA), domínio público, #link("https://commons.wikimedia.org/wiki/File:The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg")[Wikimedia Commons].
-- Meme: autor, licença, fonte.
-
 #ending-slide(title: [Fim!])[#image("assets/meme.svg", height: 12em)]
 ```
 
-- **Créditos das imagens:** uma linha por imagem tirada inteira de fora (foto, captura, capa de livro, o meme), escrita no slide e no tamanho do corpo. Desenho próprio ou refeito não entra (regra 7).
+- **Sem slide de créditos** (pedido do professor): da última Parte, direto para o "Fim!". A origem de cada imagem tirada inteira de fora (foto, captura, capa de livro, o meme) fica só na tabela de figuras do `plano-de-aula.md`, com autor, licença e link.
 - **"Fim!":** a página azul com "Fim!" e o meme no corpo. Não leva subtítulo, "Obrigado!", contato nem a próxima aula (regra Aula 4).
-- Antes, traga ao professor candidatos a meme, cada um com link e crédito. O escolhido fica em `assets/meme.png` (ou `.svg`), e o crédito dele vai no slide de créditos.
+- Antes, traga ao professor candidatos a meme, cada um com link e crédito. O escolhido fica em `assets/meme.png` (ou `.svg`), e o crédito dele vai no `plano-de-aula.md`.
 
 ### Acadêmico: Agradecimentos, Referências, Créditos, encerramento e reserva
 
@@ -546,4 +541,4 @@ Esses números são o teto. O alvo é a regra 1: até ~40 palavras ou 5 itens; c
 - **Referências:** o `referencias.bib` inteiro, com `full: true` (seção 9).
 - **Créditos das imagens:** só se o deck tiver foto, captura ou outra imagem tirada inteira de fora; uma linha por imagem, no tamanho do corpo. Figura refeita do trabalho ou de outro não entra.
 - **Encerramento:** "Obrigado!", "Perguntas?" e o contato (`#info("contact")`, do `contact` do `config-info`). Sem meme.
-- **Reserva:** depois de `#show: appendix`, um slide por pergunta prevista no plano, com a pergunta no título, para achar rápido. O rodapé continua numerando (a banca pode pedir "volta no slide 19"); o `appendix` marca o começo da reserva e congela o total do Touying no encerramento. A reserva não entra no tempo nem no roteiro (não use `=` nela).
+- **Reserva:** depois de `#show: appendix`, um slide por pergunta prevista no plano, com a pergunta no título, para achar rápido. O rodapé continua numerando (a banca pode pedir "volta no slide 19"); o `appendix` marca o começo da reserva e congela o total do Touying no encerramento. A reserva não entra no tempo e não abre Parte (não use `=` nela).

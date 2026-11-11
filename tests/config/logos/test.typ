@@ -1,4 +1,4 @@
-/// Synopsis: `config-info(logo:)`: the UFAC logo, a partner's logo (content) and one drawn in the color of the footer (a function), separated by dots, in the footer and, in white, on the cover; `#info("logo")` with the three logos in a line of text; the function gets the color of the box in the footer of a yellow exercise (its dark tone) and white on the closing slide.
+/// Synopsis: `config-info(logo:)`: the UFAC logo, a partner's logo (content) and one drawn in the color of the footer (a function), separated by dots, in the footer and, in white, on the cover; `#info("logo")` with the three logos in a line of text; the function gets the color of the box in the footer of a yellow question (its dark tone) and white on the closing slide.
 #import "../../common.typ": *
 #show: ufac-theme.with(
   lang: "en",
@@ -16,6 +16,6 @@ The UFAC logo, the yellow square and "LAB" in blue, with a dot between each two;
 
 In a line of text, `#info("logo")` gives the whole row, centered on the capitals: #info("logo") in the text.
 
-#exercise-slide(title: [A yellow exercise], color: colors.secondary)[In the footer of the box, "LAB" is in the dark yellow of the text.]
+#question-slide(title: [A yellow question], color: colors.secondary)[In the footer of the box, "LAB" is in the dark yellow of the text.]
 
 #ending-slide()

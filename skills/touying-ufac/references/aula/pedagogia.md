@@ -1,6 +1,6 @@
 # Pedagogia: a sequência didática
 
-A ordem em que cada assunto entra no deck e no plano de aula. Vale para qualquer disciplina; os exemplos são de Sinais e Sistemas (CCET488). As regras do `SKILL.md` mandam: onde a pesquisa sugere votação, quiz ou aquecimento, aqui entra exemplo ou exercício discursivo (regras Aula 1 e Aula 2). Os livros e os artigos citados aqui são fontes do plano de aula e do professor; nos slides da aula não há referência bibliográfica (regra 7).
+A ordem em que cada assunto entra no deck e no plano de aula. Vale para qualquer disciplina; os exemplos são de Sinais e Sistemas (CCET488). As regras do `SKILL.md` mandam: onde a pesquisa sugere votação, quiz ou aquecimento, aqui entra exemplo ou questão discursiva (regras Aula 1 e Aula 2). Os livros e os artigos citados aqui são fontes do plano de aula e do professor; nos slides da aula não há referência bibliográfica (regra 7).
 
 ## 1. A sequência de cada assunto
 
@@ -10,12 +10,12 @@ A ordem em que cada assunto entra no deck e no plano de aula. Vale para qualquer
 | 2. Refinamento | as tentativas de definir, cada uma corrigindo a falha da anterior | slides comuns, setas `->` |
 | 3. Definição | o resultado do refinamento, contínuo e discreto lado a lado | dois `emph-box` num `grid` |
 | 4. Exemplo resolvido | o professor aplica a definição a um sinal do elenco | `== Título <example>` + `#solution` |
-| 5. Exercício | discursivo, com um item reverso, contra uma concepção errada medida | `== Título <exercise>`, `---`, `#answer` |
+| 5. Questão | discursiva, com um item reverso, contra uma concepção errada medida | `== Título <question>`, `---`, `#answer` |
 | 6. Retomada | quando um assunto posterior depende deste | `#remark` pelo nome do conceito |
 
 Nunca a definição antes do exemplo introdutório. Nada de "aquecimento" nem de pergunta solta (regra Aula 1).
 
-Esqueleto de um assunto (trecho de deck; compilado abaixo do cabeçalho `ufac-theme.with(config-info(..))`, com Typst 0.15.1, touying 0.7.4 e tema 0.3.0, sem o `header.typ`):
+Esqueleto de um assunto (trecho de deck; compilado abaixo do cabeçalho `ufac-theme.with(config-info(..))`, com Typst 0.15.1, touying 0.7.4 e tema 0.4.0, sem o `header.typ`):
 
 ```typ
 = Energia e potência
@@ -46,8 +46,8 @@ Calcule $E_infinity$ do pulso $x(t) = u(t) - u(t - 3)$.
 #solution
 $ E_infinity = integral_0^3 1 dif t = 3 $
 
-// 5. Exercício discursivo com item reverso
-== Energia e escala <exercise-escala>
+// 5. Questão discursiva com item reverso
+== Energia e escala <question-escala>
 + Calcule $E_infinity$ de $2 x(t)$, com o pulso do @example-pulso.
 + Um sinal $y(t) = a x(t)$ tem $E_infinity = 27$. Determine $a > 0$ e explique cada passo.
 
@@ -79,7 +79,7 @@ Cada tentativa é um slide ou um item, e a falha aparece num caso concreto. Exem
 - Deduza pela substituição do argumento: $x(a t + b)$ vale em $t$ o que $x$ vale em $a t + b$. Regra sem dedução vira "truque mágico" decorado (Wage et al. 2021, citado em Crockett 2022).
 - Confira em dois pontos: onde o argumento vale 0 e outro ponto fácil (dois cantos do trapézio).
 - No discreto, os mesmos dois pontos: $r[n + 1] - r[n] = u[n]$ dá $0 - 0 = 0 = u[-1]$ em $n = -1$ e $1 - 0 = 1 = u[0]$ em $n = 0$.
-- O exercício pede ao aluno a mesma conferência.
+- A questão pede ao aluno a mesma conferência.
 
 ```typ
 // Regra deduzida e conferida por dois pontos
@@ -90,14 +90,14 @@ O valor de $x(2t - 4)$ em $t$ é o de $x$ no ponto $2t - 4$.
 -> O ponto 2 de $x$: $2t - 4 = 2$, então $t = 3$.
 ```
 
-## 5. Exercícios contra as concepções erradas medidas
+## 5. Questões contra as concepções erradas medidas
 
 - Sempre discursivos: "calcule", "esboce", "mostre", "determine", "explique". Onde a pesquisa usa votação ou alternativas (Crouch e Mazur; os distratores do SSCI), o distrator vira um item "explique por que não é…".
-- Pelo menos um **item reverso** por exercício: o que era dado vira pedido (dado o gráfico ou o resultado, ache a expressão ou o parâmetro). Ele separa quem entendeu de quem decorou (Wage et al. 2002).
+- Pelo menos um **item reverso** por questão: o que era dado vira pedido (dado o gráfico ou o resultado, ache a expressão ou o parâmetro). Ele separa quem entendeu de quem decorou (Wage et al. 2002).
 - Ataque o que foi medido. O que é só alerta de livro entra no plano como "ponto de atenção, não medido".
-- O plano de aula lista, por assunto, as concepções e o exercício de cada uma; o revisor de conteúdo confere.
+- O plano de aula lista, por assunto, as concepções e a questão de cada uma; o revisor de conteúdo confere.
 
-| Concepção errada | Evidência | Exercício |
+| Concepção errada | Evidência | Questão |
 |---|---|---|
 | refletir e deslocar: $x(b - t)$ vai para o lado errado | 41% → 52% de acerto; 43% refletem certo e erram o lado (Crockett 2022) | "O ponto 0 de $x$ foi para $t = 3$ e o ponto 1 para $t = 2$: determine $alpha$ e $beta$ em $x(alpha t + beta)$" |
 | deslocar por $b$ em vez de $b \/ a$ | Haykin, cap. 1; Fayyaz 2018 | "Esboce $x(2t - 4)$ e confira em dois pontos" |

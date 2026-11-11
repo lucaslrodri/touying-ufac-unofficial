@@ -1,6 +1,6 @@
 # Circuitos com o zap 0.6.0
 
-Todo circuito é desenhado com o zap (regra 4), nunca com CeTZ à mão nem como imagem. O tema não tem estilo de circuito, então o estilo e as funções grandes ficam no `header.typ` do deck, copiados de `templates/circuitos/header.typ`, e cada circuito fica num arquivo seu, em `figures/circuits/<nome>.typ` (regra 6). Os trechos daqui foram compilados com Typst 0.15.1, touying 0.7.4, touying-ufac-unofficial 0.3.0 e zap 0.6.0.
+Todo circuito é desenhado com o zap (regra 4), nunca com CeTZ à mão nem como imagem. O tema não tem estilo de circuito, então o estilo e as funções grandes ficam no `header.typ` do deck, copiados de `templates/circuitos/header.typ`, e cada circuito fica num arquivo seu, em `figures/circuits/<nome>.typ` (regra 6). Os trechos daqui foram compilados com Typst 0.15.1, touying 0.7.4, touying-ufac-unofficial 0.4.0 e zap 0.6.0.
 
 ## 1. Onde fica cada coisa
 
@@ -60,7 +60,7 @@ Funções do estilo, que o zap não tem:
 | `corrente((2, 4), (3.8, 4), $i(t)$)` | seta num trecho de fio, de `a` para `b`; `pos: 30%` muda o lugar, `lado: -1` passa o rótulo para o outro lado |
 | `regiao((-1.6, -0.5), (3.9, 4.5), rotulo: [Equivalente de Norton])` | retângulo de destaque atrás de parte do circuito; chame antes dos componentes |
 
-A tensão entre dois terminais, que não é de um componente, se escreve no próprio circuito, com três textos em `colors.primary`: o +, o − e o rótulo no meio, como em `templates/circuitos/figures/circuits/divisor-de-tensao.typ`. O arquivo importa as `colors` do tema (`#import "@preview/touying-ufac-unofficial:0.3.0": colors`).
+A tensão entre dois terminais, que não é de um componente, se escreve no próprio circuito, com três textos em `colors.primary`: o +, o − e o rótulo no meio, como em `templates/circuitos/figures/circuits/divisor-de-tensao.typ`. O arquivo importa as `colors` do tema (`#import "@preview/touying-ufac-unofficial:0.4.0": colors`).
 
 ```typ
   cetz.draw.content((5.5, 1.55), text(fill: colors.primary, $+$))

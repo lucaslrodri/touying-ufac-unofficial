@@ -1,4 +1,4 @@
-/// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer, columns, the box of an exercise and the closing slide on 4:3 paper), in the default language (Portuguese) with English text. The figure of the section is a tall image without a size: its frame, 66% of the height, depends on the height of the page.
+/// Synopsis: `aspect-ratio: "4-3"` (cover, section slide, header, footer, columns, the box of a question and the closing slide on 4:3 paper), in the default language (Portuguese) with English text. The figure of the section is a tall image without a size: its frame, 66% of the height, depends on the height of the page.
 #import "../../common.typ": *
 #show: ufac-theme.with(aspect-ratio: "4-3", test-info)
 
@@ -18,7 +18,7 @@
 ]
 "Quotation in 4:3"
 
-== An exercise in 4:3 <exercise>
+== A question in 4:3 <question>
 The box of the item on the 4:3 page.
 
 #answer

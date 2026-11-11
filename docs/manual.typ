@@ -33,13 +33,13 @@ with `typst watch --font-path <folder> main.typ`. In the #link("https://typst.ap
 
 == A first deck <first-deck>
 
-`typst init @preview/touying-ufac-unofficial:0.3.0` creates a deck from the template of the package; in the new folder,
+`typst init @preview/touying-ufac-unofficial:0.4.0` creates a deck from the template of the package; in the new folder,
 `typst watch main.typ` compiles it on every change. A deck imports
 Touying and the theme, applies `ufac-theme` with the information of the deck, and starts with the cover:
 
 ```typ
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 ```
 
 The theme comes after Touying, as above: both export `alert` and `cols`, and the later import wins (@touying).
@@ -50,7 +50,7 @@ From here on, most examples show the source on the left and the result on the ri
 belongs to the slide (headers, pills, continuations), otherwise the content alone, laid out by the same rules as in a
 deck. The repository has three complete decks to start from (@flavors): a lecture, the work of students for a course
 and a thesis defense
-(#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0/example")[`example/`]).
+(#link("https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.4.0/example")[`example/`]).
 
 == Dependencies <dependencies>
 
@@ -89,7 +89,7 @@ installed as a local package and imported as `@local/touying-ufac-unofficial:<ve
 `typst.toml`) instead of `@preview`: clone the branch
 (`git clone -b develop https://github.com/lucaslrodri/touying-ufac-unofficial`) and, in the new folder, install it with
 #link("https://github.com/npikall/gotpm")[gotpm] (`gotpm install`); see
-#link("https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.3.0/CONTRIBUTING.md#local-installation-with-gotpm")[Local installation with gotpm] in the contributing guide.
+#link("https://github.com/lucaslrodri/touying-ufac-unofficial/blob/v0.4.0/CONTRIBUTING.md#local-installation-with-gotpm")[Local installation with gotpm] in the contributing guide.
 ]
 
 = The information of the deck <information>
@@ -111,7 +111,7 @@ reads these fields:
   [`institution`], [`auto`], [one or an array; `auto` is the Universidade Federal do Acre; shown with `#info` (@info)],
   [`logo`], [`auto`], [the logos of the footer and of the cover (@logos)],
   [`contact`], [`none`], [one or an array (an e-mail, a page); shown with `#info` (@info)],
-  [`counter-prefix`], [`[1.]`], [prefix of the numbers of exercises and examples: "Exercise 1.N" (@items)],
+  [`counter-prefix`], [`[1.]`], [prefix of the numbers of questions and examples: "Question 1.N" (@items)],
 )
 
 An author written as free content keeps its lines (broken with `\`), and a line only in emphasis is a label over a
@@ -138,18 +138,18 @@ names (`subject` and `title`) is an error. A date given as `semester` or `year` 
 )
 
 `config-info(flavor:)` tells what the presentation is, and brings the recommended cover and numbering; anything the deck writes
-wins over it. The default is `"lecture"`. The prefix of the exercises and examples ("Exercise 1.1") stands for the unit
-of a course, so the flavors without units number them without it ("Exercise 1").
+wins over it. The default is `"lecture"`. The prefix of the questions and examples ("Question 1.1") stands for the unit
+of a course, so the flavors without units number them without it ("Question 1").
 
 #table(
   columns: (auto, 1fr),
   table.header([`flavor`], [Recommends]),
   [`"lecture"` (the default)], [the cover layout `"line"` (`cover-layout`, @cover-page): the authors and the date on one line
     at the bottom],
-  [`"coursework"`], [the layout `"stack"`: the authors in groups at the bottom left; no units: exercises without a
+  [`"coursework"`], [the layout `"stack"`: the authors in groups at the bottom left; no units: questions without a
     prefix],
   [`"tcc"`, `"dissertation"`, `"thesis"`], [the layout `"top"` and the tag of the work ("Undergraduate Thesis", …);
-    no units: exercises without a prefix],
+    no units: questions without a prefix],
 )
 
 The work of students for a course keeps the names of the course and takes `flavor: "coursework"`: the students and the
@@ -211,10 +211,10 @@ Headings build the deck: no function call is needed for the ordinary slides.
   [`= Title`], [section slide: the title under the yellow tag "PART N"; what follows the heading goes to the right],
   [`== Title`], [new slide with a blue header, fitted to the width],
   [`==`], [a slide without a title, with the footer],
-  [`== Title <exercise>`, `<example>`], [exercise or example: a box filling the slide, numbered (@items)],
+  [`== Title <question>`, `<example>`], [question or example: a box filling the slide, numbered (@items)],
   [`=== Subtitle`], [a pill; no new slide; repeated at the top of every continuation page],
   [`==== Subtitle`], [the same pill, not repeated],
-  [`---`, `#pagebreak()`], [next page of the same slide (same header; in an exercise or example, the same box and number)],
+  [`---`, `#pagebreak()`], [next page of the same slide (same header; in a question or example, the same box and number)],
 )
 
 == Sections and their figure
@@ -231,7 +231,7 @@ drawing wider than the frame keeps its width, and its caption wraps there.
 
 #slide-example("section")
 
-== The outline
+== The outline <deck-outline>
 
 `#outline()` lists the parts of the deck, each line a link to the slide where the part starts. It usually takes a slide
 of its own, right after the cover.
@@ -262,44 +262,52 @@ bodies of a slide in columns.
 
 #slide-example("slides", pages: (1, 2))
 
-= Exercises and examples <items>
+= Questions and examples <items>
 
-A label on the `==` heading turns the slide into the box of an exercise (red) or an example (green), as in a printed
+A label on the `==` heading turns the slide into the box of a question (red) or an example (green), as in a printed
 handout. The box fills the slide; the title goes on a badge over its top border, with the icon of the kind (a pencil, a
 beaker), the name, the number and the title; the footer of the slide closes the box. A suffix makes the label unique,
-as in `<exercise-tides>`, so the slide can be cited: `@exercise-tides` becomes "Exercise 1.N", linked to the slide.
-The same label lets `#touying-recall(<exercise-tides>)`, on a line of its own between two slides, show the slide
+as in `<question-tides>`, so the slide can be cited: `@question-tides` becomes "Question 1.N", linked to the slide.
+The same label lets `#touying-recall(<question-tides>)`, on a line of its own between two slides, show the slide
 again with its number,
 without counting it again.
 A short example inside an ordinary slide, without a number, is the callout `#example` (@callouts).
 
-Exercises and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
-gives "Exercise 1.1", "Exercise 1.2"; `[3.]`, for the third unit of a course, gives "Exercise 3.1"; `none` gives
-"Exercise 1", the default of the flavors without units (@flavors).
+Questions and examples are numbered on their own, after a prefix, `config-info(counter-prefix:)`: `[1.]` by default
+gives "Question 1.1", "Question 1.2"; `[3.]`, for the third unit of a course, gives "Question 3.1"; `none` gives
+"Question 1", the default of the flavors without units (@flavors).
 
 ```typ
 #show: ufac-theme.with(config-info(
   subject: [Ocean Science],
-  counter-prefix: [3.],   // "Exercise 3.1"; none gives "Exercise 1"
+  counter-prefix: [3.],   // "Question 3.1"; none gives "Question 1"
 ))
 ```
+
+In the bookmarks of the PDF (the outline of the document in the reader), a question or an example comes with the
+initial of its name, its number and, after a dash, its title: "Q3.1 — Tide table", "E3.2 — Wave speed"; "Q3.1" alone
+without a title, "Q1" with `counter-prefix: none`. The initial is the one of the name on the badge, in the language
+of the deck ("P" for "Pregunta") or of `question-name` and `example-name` (@language). The continuation pages of a
+question or example add no bookmark, and the other slides and the sections keep their titles alone. Typst's own
+outline, `std.outline()`, lists the slides with the same text; the theme's `#outline()` lists only the parts
+(@deck-outline).
 
 Inside the box, the bold text, the markers, the links, the `===` pills and the rest of what has no style of its own
 take the color of the item (@context-colors).
 
-`#solution` (in an example) and `#answer` (in an exercise), alone on a line like `#pause`, open the solution: a dashed
+`#solution` (in an example) and `#answer` (in a question), alone on a line like `#pause`, open the solution: a dashed
 line and "Solution." or "Answer." in bold at the start of the next paragraph; after a blank line, the word stays alone
 and the solution starts a new paragraph. With a `#pause` right before or after the marker, the solution appears on the
 next step of the slide (@touying). The word ends with a period; `#answer(sep: ":")` ends it with a colon, and
 `#solution(sep: [:\ ])` with a colon and a line break, so that the solution starts on the next line.
 
-An exercise or example goes on until a slide of another kind: a long content continues on the next page in the same
-box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. `#exercise-slide` and
+A question or example goes on until a slide of another kind: a long content continues on the next page in the same
+box, with the same number, and `---` or `#pagebreak()` breaks the page by hand. `#question-slide` and
 `#example-slide` are the function forms, with a color and an icon of their own; they cannot be cited.
 
-#see("ufac", "exercise-slide()", "example-slide()", "solution()", "answer()")
+#see("ufac", "question-slide()", "example-slide()", "solution()", "answer()")
 
-#slide-example("exercise", pages: (1, 2, 3, 4, 5, 6))
+#slide-example("question", pages: (1, 2, 3, 4, 5, 6))
 
 = Writing on a slide <writing>
 
@@ -363,11 +371,11 @@ Call `fit(x, y)` first.
 
 == Colors by context <context-colors>
 
-In a box (an `emph-box`, a callout, an exercise or an example, a light cell of a table: @tables), bold text, alerts,
-highlights, underlines, arrows, the markers of the lists (and, in an exercise or example slide, their numbers), chips,
+In a box (an `emph-box`, a callout, a question or an example, a light cell of a table: @tables), bold text, alerts,
+highlights, underlines, arrows, the markers of the lists (and, in a question or example slide, their numbers), chips,
 links, icons (@icons) and the `===` pills take the color of the box; italic stays black, as bold and italic are on a
 slide. What has a style of its own keeps it: a code block, a box inside another box, which brings its own color, and
-a reference to an exercise or example, in the color of its kind. In the slide header, the footer and inside an alert or
+a reference to a question or example, in the color of its kind. In the slide header, the footer and inside an alert or
 a colored emphasis such as `#primary`, bold and italic take the color of the text around them.
 
 A light color is `secondary` and `secondary-light`, the `-lighter` and `-lightest` tones and `quaternary-light` (a
@@ -383,7 +391,7 @@ turn yellow, and so does a `#tertiary` word in a red badge.
 
 A pill, a badge or a tag (@tags) in a light color has dark blue text, and inside it alerts are blue and highlights
 light blue, as in a blue box; `#secondary`, `#tertiary` and `#quaternary` keep their color where it reads (3:1) and
-otherwise take that blue: a `#secondary` word in a yellow badge is blue. A box, a callout, an exercise or an example
+otherwise take that blue: a `#secondary` word in a yellow badge is blue. A box, a callout, a question or an example
 in a light color uses the dark tone of its color (`secondary-dark`, for the yellow) for what takes its color; in a
 light cell, `#secondary`, `#tertiary` and `#quaternary` also take it where their color does not read.
 
@@ -627,10 +635,10 @@ name, highlights or ranges, the deck takes codly (@codly).
 == Language <language>
 
 The theme speaks Portuguese by default (`lang: "pt-br"`); `lang: "en"` or `"es"` switches the language of the text and
-every word of the theme: the names of exercises, examples and parts, the titles of the callouts, "Solution" and
-"Answer", "Output", "Thank you!", the dates and the tags of the cover. The names on the badges of the exercise and
-example slides and the word of the section slides can also be given one by one (`exercise-name`, `example-name`,
-`part-name`).
+every word of the theme: the names of questions, examples and parts, the titles of the callouts, "Solution" and
+"Answer", "Output", "Thank you!", the dates and the tags of the cover. The names on the badges of the question and
+example slides and the word of the section slides can also be given one by one (`question-name`, `example-name`,
+`part-name`); the initials of the first two open the bookmarks of the questions and examples (@items).
 
 #slide-example("lang", pages: (1, 2))
 
@@ -669,7 +677,7 @@ blue text]
 The footer and the cover show the UFAC logo. `config-info(logo:)` is the list of the logos shown there, separated by
 dots: `(auto, x)` keeps the UFAC logo and adds `x` after it, `(x,)` replaces it and `none` removes them. A logo is
 content, or a function of a color (blue in the footer of the slides, white on the cover and the closing slide, the
-color of the box in the footer of an exercise or example, its dark tone for a light color), so that one drawing serves
+color of the box in the footer of a question or example, its dark tone for a light color), so that one drawing serves
 all; about `0.64em` high, it matches the UFAC logo. In a slide, `#info("logo")` shows them (@info); outside a deck,
 as in a handout, `image(bytes(ufac-logo))` draws the UFAC logo.
 
@@ -684,14 +692,14 @@ but kept or left out whole. The texts are in capitals, but for inline code, whic
 `ufac-theme(footer-left:, footer-right:)` replaces either with content, an array or a function of `self`, whose
 `self.colors.primary` is the color of the footer text, the one a logo gets in the same footer (@logos). The items of an
 array are joined by a dot, those that show nothing left out (as `info("semester")` below, in a deck without a date), and
-with none left the footer line runs unbroken. The badge of the exercises and examples takes another name (@language) and
-another icon (`exercise-icon`, `example-icon`); the callouts `#example` and `#examples` keep their names and icons
+with none left the footer line runs unbroken. The badge of the questions and examples takes another name (@language) and
+another icon (`question-icon`, `example-icon`); the callouts `#example` and `#examples` keep their names and icons
 (@callouts).
 
 ```typ
 #show: ufac-theme.with(
   footer-left: ([Introductory Astronomy], info("semester")),
-  exercise-name: [Task], exercise-icon: "terminal",
+  question-name: [Task], question-icon: "terminal",
   config-info(subject: [Astronomy]),
 )
 ```
@@ -789,7 +797,7 @@ theme ships also answer to their own names: `"alert"`, `"light-bulb"`, `"info"`,
 Any other icon comes from a collection in the JSON format of #link("https://iconify.design/")[Iconify], read by the
 #link("https://typst.app/universe/package/iconify")[iconify] package, which the theme imports: the deck gives the
 collection to `provide-icons` and writes the icon as `"collection:name"`, in `#icon` or wherever the theme takes the
-name of an icon (an `emph-box`, a callout, the badge of an exercise or example). It is then an icon like those of the
+name of an icon (an `emph-box`, a callout, the badge of a question or example). It is then an icon like those of the
 theme, with the same size, the same place on the line and the color of its surroundings. `#provide-icons` goes in a
 slide, and its icons serve the whole deck, the cover included.
 
@@ -807,7 +815,27 @@ and each collection has its own license.
 ]
 
 
-= Moving from 0.2.0 <migration>
+= Moving from 0.3.0 <migration>
+
+In 0.4.0 the exercises are questions: every name of the theme that said "exercise" says "question", and the badge
+reads "Questão" / "Question" / "Pregunta". A deck of 0.3.0 changes these names; `#answer` and everything else stay as
+they are. A name of 0.3.0 left in the deck stops it with the new one.
+
+#table(
+  columns: (1fr, 1fr),
+  table.header([In 0.3.0], [In 0.4.0]),
+  [`== Title <exercise>`, `<exercise-id>`], [`== Title <question>`, `<question-id>`],
+  [`@exercise-id`, `#touying-recall(<exercise-id>)`], [`@question-id`, `#touying-recall(<question-id>)`],
+  [`#exercise-slide(..)`], [`#question-slide(..)`, with the same arguments],
+  [`ufac-theme(exercise-name: ..)`], [`ufac-theme(question-name: ..)`],
+  [`ufac-theme(exercise-icon: ..)`], [`ufac-theme(question-icon: ..)`],
+  [`#icon("exercise")`, `emph-box(icon: "exercise")`], [`#icon("question")`, `emph-box(icon: "question")`],
+)
+
+The bookmarks of the PDF of a question or example now carry its initial and number, "Q1.2 — Title" (@items); a deck
+needs no change for it.
+
+= Moving from 0.2.0 <migration-0-2>
 
 A deck of 0.2.0 needs the changes of this table and, in some cases, those of the notes after it.
 
@@ -873,7 +901,7 @@ chapters above show how to use them.
 
 == The theme and the slides
 
-#reference("ufac", "ufac-theme", "title-slide", "slide", "new-section-slide", "ending-slide", "exercise-slide",
+#reference("ufac", "ufac-theme", "title-slide", "slide", "new-section-slide", "ending-slide", "question-slide",
   "example-slide", "solution", "answer")
 
 == The information of the deck

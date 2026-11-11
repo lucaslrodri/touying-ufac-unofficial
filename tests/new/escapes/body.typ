@@ -15,7 +15,7 @@
   [`#underline[..]`], [`~text~`], [start/space/opening bracket before, space/punctuation/end after (`Fig.~1 and Tab.~2` stay spaces)],
   [`#highlight[..]`], [`==text==`], [plain text, never at the start of the line],
   [`#primary` (blue, also in a box), `#secondary`, `#tertiary`, `#quaternary`], [(no shorthand)], [colored emphases, named after the color],
-  [`#exercise-slide(title:, color:)[..]`], [`== Title <exercise>`], [numbered red pill],
+  [`#question-slide(title:, color:)[..]`], [`== Title <question>`], [numbered red pill],
   [`#example-slide(title:, color:)[..]`], [`== Title <example>`], [numbered green pill],
   [`#pagebreak()`], [`---` (alone on a line)], [slide continuation, `===` pill repeated],
   [`#cols(divider:)[..][..]`], [(no shorthand)], [columns with or without divider],

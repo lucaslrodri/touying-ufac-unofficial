@@ -2,7 +2,7 @@
 // the theme (a light fill with a bar on the left, square corners), with the line numbers from Typst's `raw.line`, the
 // language in a pill with its logo and the output of a program (`text`) in gray. With codly 2, which the deck imports
 // and passes to the theme (`ufac-theme(codly: codly)`), the same look is applied through codly's own theme
-// (`codly-ufac-theme`, plain data) and rules. Inside a colored box (an exercise, an `emph-box`) a block keeps its look.
+// (`codly-ufac-theme`, plain data) and rules. Inside a colored box (a question, an `emph-box`) a block keeps its look.
 #import "constants.typ": colors
 #import "utils.typ": _tr, _words
 #import "components.typ": icon

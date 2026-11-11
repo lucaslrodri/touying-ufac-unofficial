@@ -45,7 +45,7 @@
 ///   table.header([Family], [Base], [Role]),
 ///   [`primary`], [`#0C4DA2`], [titles, `->` markers, tables, `#alert`/`#primary`, pills],
 ///   [`secondary`], [`#FFBF14`], [`-` markers, `#secondary`, quotes; `-lighter` is the highlight],
-///   [`tertiary`], [`#BE1E2D`], [`#tertiary`, exercises],
+///   [`tertiary`], [`#BE1E2D`], [`#tertiary`, questions],
 ///   [`quaternary`], [`#09B081`], [`#quaternary`, examples],
 ///   [`neutral`], [`#808080`], [`-darkest` is the bold/italic text, `-lightest` the background],
 /// )
@@ -85,7 +85,7 @@
 
 /// The UFAC logo as an image, in the colors the theme uses: blue lettering with the yellow shield, as in the footer
 /// of the slides; the lettering in another color, as on the cover (`color: white`, the shield still yellow); or all
-/// in one color (`color: c, shield: c`), as in the footer of an exercise or example. The deck shows it through
+/// in one color (`color: c, shield: c`), as in the footer of a question or example. The deck shows it through
 /// `#info("logo")`.
 ///
 /// ```example

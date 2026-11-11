@@ -42,8 +42,8 @@
     *Bold* in red.]
 ]
 
-== Boxes inside boxes <exercise>
-=== The subtitle of the exercise, in red
+== Boxes inside boxes <question>
+=== The subtitle of the question, in red
 #emph-box(color: colors.quaternary)[
   ==== In green, inside a green box
   #callout("remark")[==== In blue, inside a callout inside the box]

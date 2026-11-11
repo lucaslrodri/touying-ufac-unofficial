@@ -8,7 +8,7 @@
   author: [Prof. Author Name],
 ))
 // --- example ---
-== Tide table <exercise-tides>
+== Tide table <question-tides>
 
 High tide was at 6:10. When is
 the next one?
@@ -30,7 +30,7 @@ short one in deep water?
 Yes: the speed grows with the
 square root of the wavelength.
 
-#exercise-slide(
+#question-slide(
   title: [Field trip],
   color: colors.primary,
   icon: "terminal",
@@ -52,5 +52,5 @@ square root of the wavelength.
 
 == Review
 
-Solve @exercise-tides before
+Solve @question-tides before
 the next class.

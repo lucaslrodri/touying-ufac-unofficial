@@ -10,6 +10,6 @@
 
 The footer has only the logo and the slide number; the cover is empty.
 
-== Second slide <exercise>
+== Second slide <question>
 
-The exercise pill still works.
+The question pill still works.

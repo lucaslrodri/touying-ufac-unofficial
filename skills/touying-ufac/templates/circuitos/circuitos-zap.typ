@@ -1,6 +1,6 @@
 // circuitos-zap.typ: deck de demonstração do estilo de circuito para o pacote zap 0.6.0 com o tema
 // touying-ufac-unofficial, que não tem estilo de circuito. Validado com Typst 0.15.1, touying 0.7.4,
-// touying-ufac-unofficial 0.3.0 e zap 0.6.0 (que traz o cetz 0.5.2). Guia: references/zap.md.
+// touying-ufac-unofficial 0.4.0 e zap 0.6.0 (que traz o cetz 0.5.2). Guia: references/zap.md.
 //
 // O estilo (`zap-ufac`, `tensao`, `corrente`, `regiao`) está em header.typ; cada circuito, num arquivo de
 // figures/circuits/, que importa o zap e as funções do estilo; o deck só inclui o arquivo, um circuito por slide.
@@ -19,7 +19,7 @@
 // Compile desta pasta, que é a raiz: typst compile circuitos-zap.typ
 
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",

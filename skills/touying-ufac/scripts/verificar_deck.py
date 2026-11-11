@@ -87,8 +87,10 @@ Créditos e referências (regra 7):
   "Fonte:" no texto de um slide.
 - CREDITO_DE_DESENHO (AVISO): "redesenhado", "adaptado de" ou "seguem as Figuras" em qualquer arquivo do deck:
   desenho próprio, ou refeito, não leva crédito.
-- CREDITOS (AVISO): imagem raster em assets/ e nenhum slide "Créditos das imagens"; ou esse slide não é o último
-  "==" antes do #ending-slide.
+- CREDITOS [acadêmico] (AVISO): imagem raster em assets/ e nenhum slide "Créditos das imagens"; ou esse slide não é
+  o último "==" antes do #ending-slide.
+- CREDITOS [aula] (BLOQUEIO): slide "Créditos das imagens" (ou "Créditos"). Na aula não há slide de créditos (pedido
+  do professor): o deck vai da última Parte ao "Fim!", e a origem das imagens de fora fica no plano-de-aula.md.
 - REFERENCIA_NA_AULA (REVISAR) [aula]: bibliography(), cite() ou @x em que x não é rótulo do deck (@example-pulso,
   com <example-pulso> num título, não conta).
 - CITACAO_NO_SLIDE (REVISAR) [acadêmico]: @x (x não é rótulo do deck) ou cite() fora do slide "Referências".
@@ -97,18 +99,29 @@ Créditos e referências (regra 7):
   BLOQUEIO sem full: true.
 
 Slides:
-- EXERCICIO_SEM_QUEBRA (REVISAR): slide <exercise> sem "---" antes do #answer.
-- EXERCICIO_SEM_RESPOSTA (REVISAR): slide <exercise> sem #answer.
+- ROTEIRO (BLOQUEIO): slide "=" ou "==" de roteiro ("Roteiro", "Sumário", "Agenda", "Roteiro da unidade") ou
+  outline() num arquivo de slide. Não há roteiro em nenhum modo: da capa, direto para a primeira Parte.
+- RESUMO (BLOQUEIO) [aula]: slide "==" de resumo ("Resumo", "Resumo: <assunto>"). Não há slide de resumo: a Parte
+  termina nas questões, e o deck no "Fim!".
+- ICONE_NA_PARTE (BLOQUEIO): #icon(..) no quadro de uma Parte ("="). A Parte leva uma figura que represente o
+  assunto (diagrama, gráfico, processo, desenho, foto de pessoa ou objeto); ícone só na apresentação do curso.
+- QUESTAO_SEM_QUEBRA (REVISAR): slide <question> sem "---" antes do #answer.
+- QUESTAO_SEM_RESPOSTA (REVISAR): slide <question> sem #answer.
+- NOME_DA_0_3 (BLOQUEIO): um nome do tema 0.3.0 para a questão, que a 0.4.0 não aceita: o rótulo <exercise> ou
+  <exercise-x> (e @exercise-x), #exercise-slide, exercise-name:, exercise-icon: ou o ícone "exercise". Na 0.4.0:
+  <question>, <question-x>, @question-x, #question-slide, question-name:, question-icon: e "question".
 - EXEMPLO_SEM_SOLUCAO (AVISO): slide <example> sem #solution.
 - QUESTAO_DE_MARCAR (BLOQUEIO) [aula]: "(A)" e "(B)" no mesmo slide, "verdadeiro ou falso", "assinale",
   "alternativa", opcoes(). "Qual destes", "votação" e numeração "(A)": REVISAR.
-- PERGUNTA_FORA_DE_EXERCICIO (BLOQUEIO) [aula]: título "==" terminado em "?" sem <exercise> nem <example>.
+- PERGUNTA_FORA_DE_QUESTAO (BLOQUEIO) [aula]: título "==" terminado em "?" sem <question> nem <example>.
 - AQUECIMENTO (BLOQUEIO) [aula]: "aquecimento" num título.
 - QUESTAO_EM_SLIDE_COMUM (REVISAR) [aula]: enunciado ("Calcule", "Esboce", "Escreva", "Pense"...) no começo de uma
   linha de um slide comum. Uma pergunta "?" no corpo dele: AVISO.
 - ORGANIZACAO_POR_ENCONTRO (BLOQUEIO) [aula]: "Encontro N", "Aula N", "Próximo encontro", "Próxima aula", "Resumo do
-  encontro", "(encontro", data dd/mm num título "=" ou "==", arquivo encontro-N.typ ou aula-N.typ.
-- MENCAO_A_ENCONTRO (AVISO) [aula]: outra menção a "encontro" ou a "aula anterior".
+  encontro", "(encontro", data dd/mm num título "=" ou "==", arquivo encontro-N.typ ou aula-N.typ. Fora da Parte
+  "Apresentação do curso", onde entram os encontros de cada unidade e o cronograma.
+- MENCAO_A_ENCONTRO (AVISO) [aula]: outra menção a "encontro" ou a "aula anterior", fora da Parte "Apresentação do
+  curso".
 - TITULO_GENERICO (REVISAR) [acadêmico]: título "==" que só nomeia a parte ou a peça ("Resultados", "Discussão",
   "Tabela 2", "Figura 3", "Gráfico"): o título de um resultado diz o achado.
 - ENCERRAMENTO (REVISAR):
@@ -118,7 +131,7 @@ Slides:
   sem contato (#info("contact")): AVISO.
 - TEMPO (REVISAR) [acadêmico]: com --minutos N, mais de 1,2 × N slides de conteúdo; menos de 0,5 × N é AVISO. Slide
   de conteúdo: cada "==" e cada "---" entre a capa e o #ending-slide, a partir do arquivo principal e dos #include
-  da pasta, menos Roteiro, Agradecimentos, Referências e Créditos das imagens. As seções "=", as pausas e a reserva
+  da pasta, menos Agradecimentos, Referências e Créditos das imagens. As seções "=", as pausas e a reserva
   (depois do encerramento) não contam.
 
 No PDF, página a página. O rodapé (as linhas que se repetem em mais de 80% das páginas e o que fica abaixo
@@ -469,8 +482,9 @@ class Slide:
     @property
     def tipo(self):
         r = self.rotulo or ""
-        if r == "exercise" or r.startswith("exercise-"):
-            return "exercicio"
+        # o rótulo da 0.3.0 (<exercise>) também, para as outras verificações; NOME_DA_0_3 aponta o nome
+        if r in ("question", "exercise") or r.startswith(("question-", "exercise-")):
+            return "questao"
         if r == "example" or r.startswith("example-"):
             return "exemplo"
         return "comum"
@@ -580,6 +594,8 @@ def verificar_letra(fonte, ach, corpo):
         if valor is None:
             continue
         rel = tamanho_relativo(valor, corpo)
+        if "pequeno-permitido" in fonte.linhas_brutas[fonte.linha(ini) - 1]:
+            continue  # exceção declarada na linha: o valor sobre a haste de um gráfico discreto (pedido do professor)
         if rel is not None and rel < 0.995:
             eh_set = t[max(0, ini - 4) : ini] == "set "
             forma = "set text(size: …)" if eh_set else "text(size: …)"
@@ -611,6 +627,9 @@ def verificar_letra(fonte, ach, corpo):
             if not pm:
                 continue
             rel = tamanho_relativo(pm.group(2), corpo)
+            l0, l1 = fonte.linha(m.start()), fonte.linha(ini_corpo + len(corpo_f))
+            if any("pequeno-permitido" in fonte.linhas_brutas[i - 1] for i in range(l0, l1 + 1)):
+                continue  # exceção declarada no corpo da função (o valor sobre a haste, pedido do professor)
             if rel is not None and rel < 0.995 and re.search(
                     r"(?<![\w-])size\s*:\s*" + re.escape(pm.group(1)) + r"(?![\w-])", corpo_f):
                 ln = fonte.linha(m.start())
@@ -823,9 +842,18 @@ def imagens_raster(pasta):
     return achadas
 
 
-def verificar_creditos(pasta, linhas, ach):
-    """CREDITOS: imagem raster em assets/ sem slide "Créditos das imagens"; o slide de créditos não é o último "=="
-    antes do #ending-slide."""
+def verificar_creditos(pasta, linhas, ach, modo="academico"):
+    """CREDITOS: na aula, qualquer slide de créditos (não há). No acadêmico, imagem raster em assets/ sem slide
+    "Créditos das imagens", ou o slide de créditos não é o último "==" antes do #ending-slide."""
+    if modo == "aula":
+        for f, ln, t in linhas:
+            m = RE_TITULO.match(t)
+            if m and RE_TITULO_CREDITOS.match(RE_ROTULO.sub("", m.group(2)).strip()):
+                ach.add("BLOQUEIO", "CREDITOS", f.onde(ln, True),
+                        'Slide de créditos na aula: não há (pedido do professor). O deck vai da última Parte ao '
+                        '"Fim!", e a origem de cada imagem de fora (autor, licença, link) fica na tabela de figuras '
+                        "do plano-de-aula.md.", f.trecho(ln))
+        return
     titulos, fim, creditos_depois = [], None, None
     for f, ln, t in linhas:
         m = RE_TITULO.match(t)
@@ -1129,43 +1157,110 @@ def verificar_circuitos(fontes, ach):
 
 
 # ---------------------------------------------------------------------------------------------------------------
-# Slides: exercícios e exemplos (os dois modos)
+# Slides: questões e exemplos (os dois modos)
 # ---------------------------------------------------------------------------------------------------------------
 
+
+RE_TITULO_ROTEIRO = re.compile(
+    r"^(roteiro|sum[áa]rio|agenda|outline)(\s+d[aoe]s?\s+(unidade|aula|apresenta[çc][ãa]o|defesa|trabalho|curso))?$",
+    re.I)
+RE_OUTLINE = re.compile(r"(?<![\w.-])outline\s*\(")
+
+
+def verificar_roteiro(fonte, slides, ach):
+    apontados = set()
+    for s in slides:
+        if RE_TITULO_ROTEIRO.match(s.titulo.strip()):
+            ach.add("BLOQUEIO", "ROTEIRO", fonte.onde(s.ini, True),
+                    f'Slide "{s.titulo}": não há roteiro, nem na aula nem no acadêmico. Tire o slide; da capa, '
+                    "direto para a primeira Parte.", fonte.trecho(s.ini))
+            apontados.add(s.ini)
+    for ln, linha in enumerate(fonte.linhas, 1):
+        s = slide_da_linha(slides, ln)
+        if RE_OUTLINE.search(linha) and not (s and s.ini in apontados):
+            ach.add("BLOQUEIO", "ROTEIRO", fonte.onde(ln, True),
+                    "outline() lista as Partes num roteiro, e não há roteiro em nenhum modo. Tire-o; da capa, "
+                    "direto para a primeira Parte.", fonte.trecho(ln))
+
+
+RE_ICONE = re.compile(r"(?<![\w.-])icon\s*\(")
+
+
+def verificar_icone_na_parte(fonte, slides, ach):
+    for s in slides:
+        if s.nivel != 1 or RE_APRESENTACAO.match(s.titulo.strip()):
+            continue
+        for ln, t in s.linhas():
+            if RE_ICONE.search(t):
+                ach.add("BLOQUEIO", "ICONE_NA_PARTE", fonte.onde(ln, True),
+                        f'A Parte "{s.titulo}" abre com um ícone. Ponha no quadro uma figura que represente o assunto '
+                        "(um diagrama, um gráfico, um processo, um desenho, a foto de uma pessoa ou de um objeto); "
+                        "ícone só na apresentação do curso.", fonte.trecho(ln))
+                break
+
+RE_TITULO_RESUMO = re.compile(r"^resumo\b", re.I)
+
+
+def verificar_resumo(fonte, slides, ach):
+    for s in slides:
+        if s.nivel == 2 and RE_TITULO_RESUMO.match(s.titulo.strip()):
+            ach.add("BLOQUEIO", "RESUMO", fonte.onde(s.ini, True),
+                    f'Slide "{s.titulo}": não há slide de resumo na aula. Tire-o; a Parte termina nas questões.',
+                    fonte.trecho(s.ini))
 
 RE_ANSWER = re.compile(r"^\s*#answer\b")
 RE_SOLUTION = re.compile(r"^\s*#solution\b")
 RE_QUEBRA = re.compile(r"^\s*(---|#pagebreak\(\))\s*$")
 
 
-def verificar_exercicios(fonte, slides, ach):
+def verificar_questoes_e_exemplos(fonte, slides, ach):
     for s in slides:
         if s.nivel != 2:
             continue
         linhas = s.linhas()
-        if s.tipo == "exercicio":
+        if s.tipo == "questao":
             resp = next((ln for ln, t in linhas if RE_ANSWER.match(t)), None)
             if resp is None:
-                ach.add("REVISAR", "EXERCICIO_SEM_RESPOSTA", fonte.onde(s.ini, True),
-                        "Exercício sem #answer: a resposta conferida vem depois de ---.", fonte.trecho(s.ini))
+                ach.add("REVISAR", "QUESTAO_SEM_RESPOSTA", fonte.onde(s.ini, True),
+                        "Questão sem #answer: a resposta conferida vem depois de ---.", fonte.trecho(s.ini))
             elif not any(RE_QUEBRA.match(t) for ln, t in linhas if ln < resp):
-                ach.add("REVISAR", "EXERCICIO_SEM_QUEBRA", fonte.onde(resp, True),
-                        "No exercício, a resposta vem depois de ---, na página seguinte.", fonte.trecho(s.ini))
+                ach.add("REVISAR", "QUESTAO_SEM_QUEBRA", fonte.onde(resp, True),
+                        "Na questão, a resposta vem depois de ---, na página seguinte.", fonte.trecho(s.ini))
         elif s.tipo == "exemplo":
             if not any(RE_SOLUTION.match(t) for _, t in linhas):
                 ach.add("AVISO", "EXEMPLO_SEM_SOLUCAO", fonte.onde(s.ini, True),
                         "Exemplo sem #solution.", fonte.trecho(s.ini))
-    for ini, args, blocos, fim in chamadas(fonte.texto, r"exercise-slide"):
+    for ini, args, blocos, fim in chamadas(fonte.texto, r"question-slide|exercise-slide"):
         corpo = "\n".join(blocos)
         ln = fonte.linha(ini)
         if "#answer" not in corpo:
-            ach.add("REVISAR", "EXERCICIO_SEM_RESPOSTA", fonte.onde(ln, True), "Exercício sem #answer.",
+            ach.add("REVISAR", "QUESTAO_SEM_RESPOSTA", fonte.onde(ln, True), "Questão sem #answer.",
                     fonte.trecho(ln))
         else:
             antes = corpo[: corpo.index("#answer")]
             if not re.search(r"(?m)^\s*(---|#pagebreak\(\))\s*$", antes):
-                ach.add("REVISAR", "EXERCICIO_SEM_QUEBRA", fonte.onde(ln, True),
-                        "No exercício, a resposta vem depois de ---.", fonte.trecho(ln))
+                ach.add("REVISAR", "QUESTAO_SEM_QUEBRA", fonte.onde(ln, True),
+                        "Na questão, a resposta vem depois de ---.", fonte.trecho(ln))
+
+
+# Os nomes do tema 0.3.0 para a questão, que a 0.4.0 trocou: o deck não compila com eles (o tema para com o nome
+# novo), e aqui saem todos de uma vez, com o nome novo de cada um.
+NOMES_DA_0_3 = [
+    (re.compile(r"<exercise(-[\w:.-]+)?>"), lambda m: f"<question{m.group(1) or ''}>"),
+    (re.compile(r"(?<![\w.@/\\-])@exercise(-[\w:.-]*[\w-])"), lambda m: f"@question{m.group(1)}"),
+    (re.compile(r"(?<![\w.-])exercise-slide\b"), lambda m: "question-slide"),
+    (re.compile(r"(?<![\w.-])exercise-(name|icon)\s*:"), lambda m: f"question-{m.group(1)}:"),
+    (re.compile(r"icon\s*:?\s*\(?\s*\"exercise\""), lambda m: 'o ícone "question"'),
+]
+
+
+def verificar_nomes_da_0_3(fonte, ach):
+    for ln, linha in enumerate(fonte.linhas, 1):
+        for rx, novo in NOMES_DA_0_3:
+            for m in rx.finditer(linha):
+                ach.add("BLOQUEIO", "NOME_DA_0_3", fonte.onde(ln, True),
+                        f"{m.group(0)} é do tema 0.3.0; na 0.4.0 o exercício virou questão: {novo(m)}.",
+                        fonte.trecho(ln))
 
 
 RE_FLAVOR = re.compile(r'(?<![\w-])flavor\s*:\s*"([\w-]+)"')
@@ -1209,7 +1304,7 @@ def verificar_questoes(fonte, slides, ach):
         nomes = [nome for rx, nome in MARCAR_BLOQUEIO if rx.search(linha)]
         if nomes:
             ach.add("BLOQUEIO", "QUESTAO_DE_MARCAR", fonte.onde(ln, True),
-                    f"{', '.join(nomes)}: questão de marcar. Reescreva como exercício discursivo (<exercise>, "
+                    f"{', '.join(nomes)}: questão de marcar. Reescreva como questão discursiva (<question>, "
                     "enunciado, --- e #answer com o desenvolvimento).", fonte.trecho(ln))
             continue
         nomes = [nome for rx, nome in MARCAR_REVISAR if rx.search(linha)]
@@ -1218,23 +1313,28 @@ def verificar_questoes(fonte, slides, ach):
                     f"{', '.join(nomes)}: parece questão de escolha. Só vale a discursiva.", fonte.trecho(ln))
     for s in slides:
         txt = s.texto()
-        if "(A)" in txt and "(B)" in txt:
-            ln = next(l for l, t in s.linhas() if "(A)" in t)
+        if RE_ALT_A.search(txt) and RE_ALT_B.search(txt):
+            ln = next(l for l, t in s.linhas() if RE_ALT_A.search(t))
             ach.add("BLOQUEIO", "QUESTAO_DE_MARCAR", fonte.onde(ln, True),
-                    f'"(A)" e "(B)" no slide "{s.titulo}": alternativas de marcar. Reescreva como exercício '
-                    "discursivo.", fonte.trecho(ln))
+                    f'"(A)" e "(B)" no slide "{s.titulo}": alternativas de marcar. Reescreva como questão '
+                    "discursiva.", fonte.trecho(ln))
+
+
+# "(A)" de alternativa, não o argumento de uma função (bold(A), mat(A))
+RE_ALT_A = re.compile(r"(?<![\w.])\(A\)")
+RE_ALT_B = re.compile(r"(?<![\w.])\(B\)")
 
 
 def verificar_titulos_aula(fonte, slides, ach):
     for s in slides:
         if s.nivel == 2 and s.titulo.endswith("?") and s.tipo == "comum":
-            ach.add("BLOQUEIO", "PERGUNTA_FORA_DE_EXERCICIO", fonte.onde(s.ini, True),
-                    "Título em pergunta num slide comum. Toda questão é <exercise> com #answer; senão, "
+            ach.add("BLOQUEIO", "PERGUNTA_FORA_DE_QUESTAO", fonte.onde(s.ini, True),
+                    "Título em pergunta num slide comum. Toda pergunta à turma é <question> com #answer; senão, "
                     "troque o título por uma afirmação.", fonte.trecho(s.ini))
         if re.search(r"aquecimento", s.titulo, re.I):
             ach.add("BLOQUEIO", "AQUECIMENTO", fonte.onde(s.ini, True),
                     'Não há "aquecimento": antes do assunto vem um exemplo introdutório (<example>); '
-                    "a prática é exercício (<exercise>).", fonte.trecho(s.ini))
+                    "a prática é uma questão (<question>).", fonte.trecho(s.ini))
 
 
 VERBOS_DE_QUESTAO = (
@@ -1247,8 +1347,8 @@ RE_ENUNCIADO = re.compile(r"^\s*(?:[-+]|->|\d+\.|\[)?\s*" + VERBOS_DE_QUESTAO)
 
 def verificar_questao_em_slide_comum(fonte, slides, ach):
     """Enunciado (verbo no imperativo no começo da linha) ou pergunta no corpo de um slide comum."""
-    em_item = set()  # linhas dentro de #exercise-slide(..)[..] e #example-slide(..)[..]
-    for ini, args, blocos, fim in chamadas(fonte.texto, r"exercise-slide|example-slide"):
+    em_item = set()  # linhas dentro de #question-slide(..)[..] e #example-slide(..)[..]
+    for ini, args, blocos, fim in chamadas(fonte.texto, r"question-slide|exercise-slide|example-slide"):
         em_item.update(range(fonte.linha(ini), fonte.linha(fim) + 1))
     for s in slides:
         if s.nivel != 2 or s.tipo != "comum":
@@ -1258,15 +1358,15 @@ def verificar_questao_em_slide_comum(fonte, slides, ach):
         if enunciados:
             ln = enunciados[0][0]
             ach.add("REVISAR", "QUESTAO_EM_SLIDE_COMUM", fonte.onde(ln, True),
-                    f'Enunciado no slide comum "{s.titulo}" ({len(enunciados)} linha(s)). Questão para o aluno é '
-                    "<exercise> com --- e #answer; caso resolvido pelo professor é <example> com #solution.",
+                    f'Enunciado no slide comum "{s.titulo}" ({len(enunciados)} linha(s)). Pergunta para o aluno é '
+                    "<question> com --- e #answer; caso resolvido pelo professor é <example> com #solution.",
                     fonte.trecho(ln))
             continue
         perguntas = [(ln, t) for ln, t in corpo if "?" in t]
         if perguntas:
             ln = perguntas[0][0]
             ach.add("AVISO", "QUESTAO_EM_SLIDE_COMUM", fonte.onde(ln, True),
-                    f'Pergunta no corpo do slide comum "{s.titulo}": se é para a turma responder, vira <exercise>.',
+                    f'Pergunta no corpo do slide comum "{s.titulo}": se é para a turma responder, vira <question>.',
                     fonte.trecho(ln))
 
 
@@ -1278,10 +1378,24 @@ ENCONTRO_BLOQUEIO = [
 ]
 ENCONTRO_AVISO = re.compile(r"\bencontros?\b|\baula\s+(passada|anterior)\b|\búltima\s+aula\b", re.I)
 RE_DATA = re.compile(r"(?<![\d/])\d{1,2}/\d{1,2}(/\d{2,4})?(?![\d/])")
+RE_APRESENTACAO = re.compile(r"^apresenta[çc][ãa]o d[oa] (curso|disciplina)$", re.I)
 
 
-def verificar_encontros(fonte, ach):
+def linhas_da_apresentacao(fonte, slides):
+    """As linhas da Parte "Apresentação do curso", do "=" dela ao próximo "=": a divisão por encontro só entra ali."""
+    partes = [s.ini for s in slides if s.nivel == 1] + [len(fonte.linhas) + 1]
+    linhas = set()
+    for s in slides:
+        if s.nivel == 1 and RE_APRESENTACAO.match(s.titulo.strip()):
+            linhas.update(range(s.ini, next(p for p in partes if p > s.ini)))
+    return linhas
+
+
+def verificar_encontros(fonte, slides, ach):
+    apresentacao = linhas_da_apresentacao(fonte, slides)
     for ln, linha in enumerate(fonte.linhas, 1):
+        if ln in apresentacao:
+            continue
         achou = False
         for rx in ENCONTRO_BLOQUEIO:
             m = rx.search(linha)
@@ -1462,7 +1576,7 @@ def verificar_common_importado(fontes, ach):
 
 
 RE_INCLUDE = re.compile(r'#include\s+"([^"]+)"')
-FORA_DO_TEMPO = re.compile(r"^(roteiro|sum[áa]rio|agradecimentos?|refer[êe]ncias|bibliografia|cr[ée]ditos.*)$", re.I)
+FORA_DO_TEMPO = re.compile(r"^(agradecimentos?|refer[êe]ncias|bibliografia|cr[ée]ditos.*)$", re.I)
 
 
 def linhas_expandidas(caminho, por_caminho, vistos=None):
@@ -1503,7 +1617,7 @@ def ordem_dos_slides(slides_f, principal):
 
 def contar_slides_de_conteudo(linhas):
     """Slides de conteúdo entre a capa e o #ending-slide: cada "==" e cada "---" (ou #pagebreak()), menos os de
-    estrutura (Roteiro, Agradecimentos, Referências, Créditos). As seções "=" e as pausas não contam."""
+    estrutura (Agradecimentos, Referências, Créditos). As seções "=" e as pausas não contam."""
     n, fora = 0, True
     for _, _, t in linhas:
         if RE_ENCERRAMENTO.search(t):
@@ -1924,14 +2038,19 @@ def main():
             if f.papel == "common":
                 continue
             verificar_credito_de_desenho(f, ach)
+            verificar_nomes_da_0_3(f, ach)
             if f.papel == "slide":
-                verificar_exercicios(f, slides, ach)
+                verificar_roteiro(f, slides, ach)
+                verificar_icone_na_parte(f, slides, ach)
+                verificar_questoes_e_exemplos(f, slides, ach)
                 verificar_figuras_no_slide(f, ach)
             if modo == "aula":
                 verificar_questoes(f, slides, ach)
+                if f.papel == "slide":
+                    verificar_resumo(f, slides, ach)
                 verificar_titulos_aula(f, slides, ach)
                 verificar_questao_em_slide_comum(f, slides, ach)
-                verificar_encontros(f, ach)
+                verificar_encontros(f, slides, ach)
                 verificar_referencias_aula(f, ach, rotulos)
             else:
                 verificar_titulos_academico(f, slides, ach)
@@ -1956,7 +2075,7 @@ def main():
             except Incompleta:
                 principal = None  # só para a ordem dos slides; sem ele, a ordem dos arquivos
         linhas = ordem_dos_slides(slides_f, principal)
-        verificar_creditos(pasta, linhas, ach)
+        verificar_creditos(pasta, linhas, ach, modo)
         n_conteudo = None
         if modo == "academico" and principal:
             n_conteudo = contar_slides_de_conteudo(linhas)

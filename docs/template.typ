@@ -23,7 +23,7 @@
   colors: colors,
   methods: (alert: (self: none, it) => alert(it)),
   info: (counter-prefix: [1.], title: [], subtitle: [], logo: auto),
-  store: (lang: "en", region: none, exercise-name: auto, example-name: auto, part-name: auto),
+  store: (lang: "en", region: none, question-name: auto, example-name: auto, part-name: auto),
 )
 
 /// Font, paragraph and headings of the manual: the theme's font, numbered headings in black (level 1 with a thin

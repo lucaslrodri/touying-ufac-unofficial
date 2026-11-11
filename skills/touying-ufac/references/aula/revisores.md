@@ -62,11 +62,11 @@ Subagente (general-purpose):
 
     ## Checklist
     C1. Cobertura. Liste o que o plano diz que cai na prova e os assuntos do
-        plano; para cada um, as páginas da definição, do exemplo e do
-        exercício. Conteúdo de prova sem página: bloqueio. Assunto do plano
+        plano; para cada um, as páginas da definição, do exemplo e da
+        questão. Conteúdo de prova sem página: bloqueio. Assunto do plano
         sem página: importante. Assunto fora do plano, ou de outra unidade
         posto aqui pela cronologia das aulas (regra Aula 3): importante.
-    C2. Respostas refeitas. Para cada <example> e <exercise>: resolva a partir
+    C2. Respostas refeitas. Para cada <example> e <question>: resolva a partir
         do enunciado ANTES de ler o #solution, o #answer e a resposta do
         plano. Só então compare passo a passo. Se divergir, refaça por outro
         caminho e mostre as duas contas na evidência.
@@ -81,12 +81,12 @@ Subagente (general-purpose):
         coerência com a bibliografia do plano.
     C5. Ordem didática, por assunto: exemplo introdutório concreto
         (<example>) antes da definição; definição que nasce de refinamento;
-        exemplo resolvido; exercício discursivo com item reverso. Definição
+        exemplo resolvido; questão discursiva com item reverso. Definição
         antes do primeiro exemplo introdutório: importante.
     C6. Toda regra deduzida no slide (pela substituição do argumento ou
         equivalente) e conferida em dois pontos.
-    C7. Exercícios: discursivos (o aluno calcula, esboça, mostra, determina),
-        com os dados necessários e resposta verificável; cada um ataca uma
+    C7. Questões: discursivas (o aluno calcula, esboça, mostra, determina),
+        com os dados necessários e resposta verificável; cada uma ataca uma
         concepção errada listada no plano e tem item reverso. Questão de
         marcar, verdadeiro ou falso, votação ou "aquecimento": importante
         (regra Aula 1); a correção traz a versão discursiva.
@@ -118,7 +118,7 @@ Subagente (general-purpose):
     - Evidência: <a conta refeita, ou os pontos do gráfico: esperado x lido>
     - Correção: <mudança concreta que respeita as regras>
     ## Cobertura
-    <assunto ou item de prova> -> p. <definição>, <exemplo>, <exercício>
+    <assunto ou item de prova> -> p. <definição>, <exemplo>, <questão>
     ## Verificações sem achado
     ## Não pude verificar
     ## Deixei de julgar
@@ -168,10 +168,10 @@ Subagente (general-purpose):
         leria do fundo da sala. Diga onde fica, no PNG. A legenda embaixo de
         uma figura é menor de propósito (do tema): só aponte se ela passa de
         uma linha curta.
-    L6. Perguntas: pergunta ao aluno fora de uma caixa de exercício (vermelha,
-        "Exercício N.M"); alternativas (A) a (D), verdadeiro ou falso, "qual
+    L6. Perguntas: pergunta ao aluno fora de uma caixa de questão (vermelha,
+        "Questão N.M"); alternativas (A) a (D), verdadeiro ou falso, "qual
         destes", votação, "aquecimento"; "Resposta." visível na mesma página
-        do enunciado do exercício (regra Aula 1).
+        do enunciado da questão (regra Aula 1).
     L7. Destaques: realce ou negrito colorido em item curto, em título ou em
         quase tudo do slide (regra 5).
     Depois da última página:
@@ -179,10 +179,12 @@ Subagente (general-purpose):
         Parte ("PARTE N"), em ordem. Lidos assim, eles contam a sequência do
         assunto? Marque o título fora de ordem, o salto e o título que não diz
         do que trata o slide.
-    L9. Encontro e data: título, Parte ou resumo com "Encontro N", "Aula N",
-        data de aula, "Resumo do encontro", "Próximo encontro" ou "Próxima
-        aula"; último slide diferente de "Fim!" com um meme; "Obrigado!"
-        (regras Aula 3 e Aula 4). A data de uma prova pode aparecer.
+    L9. Encontro e data: fora da apresentação do curso, título, Parte ou
+        resumo com "Encontro N", "Aula N", data de aula, "Resumo do
+        encontro", "Próximo encontro" ou "Próxima aula"; último slide
+        diferente de "Fim!" com um meme; "Obrigado!" (regras Aula 3 e
+        Aula 4). A apresentação do curso mostra os encontros e o período
+        de cada unidade e o cronograma; a data de uma prova pode aparecer.
 
     ## Calibração
     Importante: mais de uma ideia, texto acima da referência, salto, símbolo
@@ -254,12 +256,12 @@ Subagente (general-purpose):
     # cores fora do tema
     grep -rnE --include='*.typ' "rgb\(|luma\(|cmyk\(|oklch\(|oklab\(" .
     grep -rnE --include='*.typ' "(:|\+) *(black|gray|silver|white|navy|blue|aqua|teal|eastern|purple|fuchsia|maroon|red|orange|yellow|olive|green|lime)\b" .
-    # exercício: --- antes de #answer; pergunta fora de exercício ou exemplo
-    awk '/^ *=+ /{ex = ($0 ~ /<exercise/); br = 0; t = FILENAME ":" FNR} ex && /^ *---/{br = 1} ex && /#answer/ && !br {print t ": #answer sem --- antes"}' *.typ
-    awk '/^ *=+ /{ex = ($0 ~ /<exercise|<example/)} !ex && /\?/ && !/^ *=+ / && !/^ *\/\// {print FILENAME ":" FNR ": " $0}' *.typ
+    # questão: --- antes de #answer; pergunta fora de questão ou exemplo
+    awk '/^ *=+ /{q = ($0 ~ /<question/); br = 0; t = FILENAME ":" FNR} q && /^ *---/{br = 1} q && /#answer/ && !br {print t ": #answer sem --- antes"}' *.typ
+    awk '/^ *=+ /{q = ($0 ~ /<question|<example/)} !q && /\?/ && !/^ *=+ / && !/^ *\/\// {print FILENAME ":" FNR ": " $0}' *.typ
     grep -rniE --include='*.typ' "alternativa|assinale|marque|verdadeiro ou falso|qual destes|vota" .
     grep -rnE --include='*.typ' "\([A-D]\)" .
-    # encontro, data, encerramento
+    # encontro, data, encerramento (na Parte "Apresentação do curso", os encontros e o cronograma são esperados)
     grep -rniE --include='*.typ' "encontro|aula [0-9]|próxim[ao] (aula|encontro)|a seguir|obrigad[oa]|[0-9]{1,2}/[0-9]{1,2}" .
     grep -rn --include='*.typ' "ending-slide" .
     # travessão no texto
@@ -277,8 +279,8 @@ Subagente (general-purpose):
 
     ## Checklist
     T1. Compilação: código 0 e nenhum aviso no log; imports exatos
-        @preview/touying:0.7.4 e @preview/touying-ufac-unofficial:0.3.0 (ou
-        @local, com a 0.3.0 fora do Typst Universe: SKILL.md, "Antes de
+        @preview/touying:0.7.4 e @preview/touying-ufac-unofficial:0.4.0 (ou
+        @local, com a 0.4.0 fora do Typst Universe: SKILL.md, "Antes de
         começar") em todo .typ que importa o tema (o deck, o header.typ e os
         arquivos de figures/).
         BLOQUEIO no verificador.txt também é achado. Cada REVISAR dele recebe
@@ -301,8 +303,8 @@ Subagente (general-purpose):
         Uma função do header.typ vinda de outro deck que reduz a letra é um
         achado só, com as páginas; a correção é passar o tamanho no uso ou
         propor o ajuste ao professor.
-    T5. Exercício e exemplo (regras Aula 1 e Aula 2): == Título <exercise>
-        (ou #exercise-slide), enunciado, --- e #answer; == Título <example>
+    T5. Questão e exemplo (regras Aula 1 e Aula 2): == Título <question>
+        (ou #question-slide), enunciado, --- e #answer; == Título <example>
         com #solution, na mesma página se couber, senão depois de ---;
         #solution ou #answer fora de item; pergunta solta; questão de marcar.
     T6. Código explícito (regra 3): o código fica onde é usado. São achados,
@@ -341,15 +343,17 @@ Subagente (general-purpose):
         (#bibliography, cite(..), @chave de uma obra, slide "Referências"; a
         bibliografia do curso, na apresentação do curso, vem do plano de
         curso e não conta); nenhuma "Fonte:", "Adaptado de" ou "Redesenhado
-        de" na legenda nem no slide; crédito só de imagem tirada inteira de
-        fora (foto, captura, capa de livro, meme), no slide "Créditos das
-        imagens", antes do "Fim!"; cada foto, captura, capa ou meme de
-        assets/ tem o seu crédito ali; desenho do autor, ou refeito, sem
-        crédito.
+        de" na legenda nem no slide; nenhum slide "Créditos das imagens"
+        (pedido do professor): o deck vai da última Parte ao "Fim!"; cada
+        foto, captura, capa ou meme de assets/ tem a origem (autor, licença,
+        link) na tabela de figuras do plano-de-aula.md; desenho do autor, ou
+        refeito, sem crédito.
     T10. Estrutura (regras Aula 3 e Aula 4): Partes (=) e arquivos com nome
-         de assunto; nada de "Encontro N", "Aula N", data de aula, "Resumo
-         do encontro", "Próximo encontro", "(encontro N)", arquivo
-         encontro-N.typ. A data de uma prova pode aparecer. Última página:
+         de assunto; fora da apresentação do curso, nada de "Encontro N",
+         "Aula N", data de aula, "Resumo do encontro", "Próximo encontro",
+         "(encontro N)", arquivo encontro-N.typ. A apresentação mostra os
+         encontros e o período de cada unidade e o cronograma; a data de
+         uma prova pode aparecer. Última página:
          "Fim!" com o meme, em assets/, como
          #ending-slide(title: [Fim!])[#image("assets/<meme>", height: 12em)];
          sem subtítulo, "Obrigado!", contato nem o que vem na próxima aula.
@@ -419,14 +423,15 @@ Subagente (general-purpose):
     Um por vez: primeiro os bloqueios, depois os importantes. Respeite as
     regras: o que não cabe vira dois ou mais slides (--- ou um == novo),
     nunca letra, inset ou margem menores, nem scale; pergunta vira
-    <exercise> com --- e #answer; questão de marcar vira discursiva; caso
+    <question> com --- e #answer; questão de marcar vira discursiva; caso
     resolvido vira <example>; circuito vai para o zap; função pequena,
     apelido ou ..mini que o agente criou sai (as funções do usuário
     ficam), e o código vai escrito no slide; função grande
     vai para o header.typ do deck; figura escrita no slide vai para um
     arquivo em figures/<tipo>/, incluído no slide; arquivo fora do lugar vai
     para a pasta dele, com os caminhos ajustados; "Fonte:" e referência saem
-    do slide, e o crédito de imagem de fora vai para "Créditos das imagens".
+    do slide, e o crédito de imagem de fora vai para o plano-de-aula.md
+    (na aula não há slide de créditos).
     Edite só o que é do deck: [PASTA_DECK] e os arquivos dele que forem
     para [RAIZ]/data/. Nunca edite o tema nem as funções do header.typ que
     vieram de outros decks: o que pede mudança neles vira proposta ao

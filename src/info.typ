@@ -5,7 +5,7 @@
 #import "utils.typ": _words, _children, _is-space, _given, _list, _logos
 
 /// The defaults of the theme for `config-info`: no `short-title`, `short-subtitle`, date nor contact; the institution
-/// and the logo are UFAC's (`auto`); exercises and examples numbered "1.N".
+/// and the logo are UFAC's (`auto`); questions and examples numbered "1.N".
 /// -> dictionary
 #let _info-defaults = config-info(title: [], short-title: none, subtitle: [], short-subtitle: none, author: none,
   date: none, institution: auto, logo: auto, contact: none, counter-prefix: [1.])
@@ -169,8 +169,8 @@
 }
 
 /// The flavors of presentation (`config-info(flavor:)`) and what each one recommends: the layout of the cover, the tag
-/// of the cover (the `short-title`, by its key in `lang.toml`) and, for the flavors without units, numbers of exercises
-/// and examples without a prefix (`counter-prefix: none`, "Exercise 1"): the prefix stands for the unit of a course.
+/// of the cover (the `short-title`, by its key in `lang.toml`) and, for the flavors without units, numbers of questions
+/// and examples without a prefix (`counter-prefix: none`, "Question 1"): the prefix stands for the unit of a course.
 /// A deck without a `flavor` is a `"lecture"`. The deck can always change any of them.
 ///
 /// #test(`_flavors.lecture.layout == "line"`, `_flavors.tcc.short-title == "tcc"`,

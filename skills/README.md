@@ -13,6 +13,6 @@ The agent picks the mode from the request, or from the `flavor` of an existing d
 
 To install it, copy the folder into the skills folder of the agent: for Claude Code, `cp -R skills/touying-ufac ~/.claude/skills/`, or into `.claude/skills/` in a project. It replaces the two skills of before, `touying-ufac-lectures` and `touying-ufac-academic`: remove them if they are installed.
 
-It needs the theme 0.3.0 (before it reaches Typst Universe, the development version as a local package: the `SKILL.md` says how), Typst, Python 3, and `pdftotext` and `pdfinfo` (Poppler) for the checker and the contact sheet. The slides that present a course, in the lectures mode, also read the plan of the course with the `ufac-syllabus` package, installed as `@local/ufac-syllabus:0.0.3`.
+It needs the theme 0.4.0 (before it reaches Typst Universe, the development version as a local package: the `SKILL.md` says how), Typst, Python 3, and `pdftotext` and `pdfinfo` (Poppler) for the checker and the contact sheet. The slides that present a course, in the lectures mode, also read the plan of the course with the `ufac-syllabus` package, installed as `@local/ufac-syllabus:0.0.3`.
 
 The rules of the `SKILL.md` are choices (one idea per slide, never a smaller text, the title of a result that states the finding, credits only at the end): edit them to your own. The skill is not part of the package: the `exclude` of `typst.toml` leaves this folder out.

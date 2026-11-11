@@ -13,8 +13,8 @@
 #callout("caution")[The title of the callouts]
 #callout("tip", style: "badge")[in the language of the deck.]
 
-== Exercise title <exercise-a>
-Red pill with the localized name and the counter; cited as @exercise-a.
+== Question title <question-a>
+Red pill with the localized name and the counter; cited as @question-a.
 
 == Example title <example>
 Green pill with the localized name.
@@ -30,4 +30,4 @@ The word of the solution.
 the output of a program
 ```
 
-#exercise-slide(title: [By function])[Same localized name from `#exercise-slide`.]
+#question-slide(title: [By function])[Same localized name from `#question-slide`.]

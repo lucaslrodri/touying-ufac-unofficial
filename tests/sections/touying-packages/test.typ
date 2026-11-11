@@ -1,4 +1,4 @@
-/// Synopsis: the packages Touying integrates: a CeTZ canvas and a Fletcher diagram that reveal their parts with `#pause` through `touying-reduce`, on a slide and inside the box of an exercise, where the covered parts are hidden as Touying does (the diagrams keep their size). It imports CeTZ and Fletcher, so it is not part of the catalogue.
+/// Synopsis: the packages Touying integrates: a CeTZ canvas and a Fletcher diagram that reveal their parts with `#pause` through `touying-reduce`, on a slide and inside the box of a question, where the covered parts are hidden as Touying does (the diagrams keep their size). It imports CeTZ and Fletcher, so it is not part of the catalogue.
 #import "../../common.typ": *
 #import "@preview/cetz:0.5.2"
 #import "@preview/fletcher:0.5.8" as fletcher: node, edge
@@ -17,7 +17,7 @@
   line((0, 0), (4, 2.5), stroke: colors.quaternary)
 })
 
-== Fletcher in an exercise <exercise>
+== Fletcher in a question <question>
 Follow the states of a file:
 
 #fletcher-diagram(

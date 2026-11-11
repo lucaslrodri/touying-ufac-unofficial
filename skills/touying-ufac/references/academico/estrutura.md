@@ -47,12 +47,12 @@ Nos resultados e na discussão, o título é uma frase curta com o achado, e o c
 
 - Até 60 caracteres (regra Acadêmico 3): um achado por título. Acima de ~65, o tema encolhe a letra do título (regra 2).
 - A afirmação não passa do que a evidência mostra: "neste ensaio", "nesta amostra", quando for o caso (regra Acadêmico 1).
-- Slides de estrutura (Roteiro, Objetivo, Metodologia, Conclusões, Referências) podem ter título de tópico.
+- Slides de estrutura (Objetivo, Metodologia, Conclusões, Referências) podem ter título de tópico.
 - Teste dos títulos: lidos em ordem, só os títulos contam o trabalho.
 
 ## 4. O tempo
 
-- **Cerca de um slide de conteúdo por minuto** (regra Acadêmico 4). Slide de conteúdo é cada `==` e cada página de `---` entre a capa e o encerramento, menos Roteiro, Agradecimentos, Referências e Créditos das imagens; a página de cada Parte e a reserva não contam. O verificador conta com `--minutos N`.
+- **Cerca de um slide de conteúdo por minuto** (regra Acadêmico 4). Slide de conteúdo é cada `==` e cada página de `---` entre a capa e o encerramento, menos Agradecimentos, Referências e Créditos das imagens; a página de cada Parte e a reserva não contam. O verificador conta com `--minutos N`.
 - **O tempo vem da regra:** o regimento do programa ou o professor da disciplina. Se as fontes não dizem, pergunte; não suponha.
 - **Referência comum**, só para o plano antes de saber o tempo dado: TCC e trabalho de disciplina, de 15 a 20 min; mestrado, de 30 a 40 min; doutorado, de 40 a 50 min.
 - **Passou do tempo:** o slide sai para a reserva, ou dois slides viram um sem juntar ideias. Nunca letra menor, nunca "falo mais rápido".

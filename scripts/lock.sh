@@ -2,7 +2,7 @@
 # Writes tinymist.lock (ignored by git) for the editor. With `tinymist.projectResolution: "lockDatabase"`
 # (.vscode/settings.json), tinymist compiles a file that another one includes inside the document recorded here,
 # instead of alone. The body of a test (`body.typ`, `config/lang-body.typ`) only works under the theme that its
-# `test.typ` applies (alone, its `@exercise-…` references fail), so every test with a body is recorded and the editor
+# `test.typ` applies (alone, its `@question-…` references fail), so every test with a body is recorded and the editor
 # opens a body through its own test. The other tests are left out: deck/ and docs/ include the decks and the manual,
 # which open by themselves, and unit/ only compiles inside Tytanic.
 #

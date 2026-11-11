@@ -17,7 +17,7 @@ else:
     state = "gas"
 ```
 
-== Power in a resistor <exercise>
+== Power in a resistor <question>
 For $R = 10$ Ω and $I$ from 0 to 2 A, compute $P = R I^2$:
 
 + `I` in steps of 0.1 A
@@ -47,7 +47,7 @@ The same, with `#solution` right before `#pause`.
 #pause
 The line and the word appear with the solution, on the next subslide.
 
-== The answer in a paragraph of its own <exercise>
+== The answer in a paragraph of its own <question>
 A blank line after `#answer`: "Answer." stays alone on its line.
 
 #answer
@@ -64,7 +64,7 @@ The same with `#pause` and `#solution`, and a blank line after the marker.
 
 The solution starts in a new paragraph, below the word.
 
-== Another separator <exercise>
+== Another separator <question>
 `#answer(sep: ":")` ends the word with a colon.
 
 #answer(sep: ":")
@@ -76,13 +76,13 @@ The next high tide is at 18:35.
 #solution(sep: [:\ ])
 The solution starts on the next line, without an indent.
 
-== A marker outside an exercise or example
+== A marker outside a question or example
 A bare `#solution` on a slide of another kind opens nothing and shows nothing:
 
 #solution
 The text goes on, without a line nor a word.
 
-== The separator after a pause <exercise>
+== The separator after a pause <question>
 `#pause` and then `#answer(sep: ":")`: the line and "Answer:" with the text appear on the next subslide.
 
 #pause

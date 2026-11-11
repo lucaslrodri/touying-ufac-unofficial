@@ -22,12 +22,12 @@ Covered running text: *bold*, _italic_, #alert[alert], `chip`, ==highlight==, ~u
 == Covered inside a callout
 #tip[Visible `chip` and ==high==. #pause Covered `chip`, ==highlight==, #icon("note") and ~under~.]
 
-== Covered in an exercise <exercise>
+== Covered in a question <question>
 Visible `chip` and ==high==.
 
 #pause
 
-Covered `chip`, ==highlight==, #icon("note") and ~under~ in the box of an exercise.
+Covered `chip`, ==highlight==, #icon("note") and ~under~ in the box of a question.
 
 == Covered boxes with a badge, tags, logos and framed equations
 Visible #tag[tag] and #eq-box[$x = 2$].

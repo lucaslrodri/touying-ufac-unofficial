@@ -10,7 +10,7 @@
 ]
 #callout("tip", style: "badge", color: colors.secondary)[A yellow callout with a badge, *bold* and ~~alert~~.]
 
-#exercise-slide(title: [A yellow exercise], color: colors.secondary)[
+#question-slide(title: [A yellow question], color: colors.secondary)[
   The numbers and the markers in the dark yellow, as the bold:
   + *first* item
     + nested item
@@ -43,7 +43,7 @@
 ]
 #emph-box(color: rgb("#eeeeee"), title: [Out of the palette])[*Bold* and ~~alert~~ in the color darkened by 40%.]
 
-#exercise-slide(title: [A yellow exercise that goes on], color: colors.secondary)[
+#question-slide(title: [A yellow question that goes on], color: colors.secondary)[
   === A subtitle with ~~alert~~
   The pill is dark yellow and the alert in it dark blue.
 
@@ -64,7 +64,7 @@
   The solution in the dark tone too.
 ]
 
-#exercise-slide(title: [A #secondary[yellow] word in a yellow badge], color: colors.secondary)[
+#question-slide(title: [A #secondary[yellow] word in a yellow badge], color: colors.secondary)[
   === A #quaternary[green] word in the dark yellow pill
   Tags: #tag[#secondary[yellow] and #tertiary[red] in yellow] and #tag(color: colors.quaternary-light)[#quaternary[green] in light green].
 

@@ -22,7 +22,7 @@
   The tide turns at 14:20.
 ]
 
-#exercise-slide(
+#question-slide(
   title: [Wave height],
   icon: "ph:waves-bold",
 )[

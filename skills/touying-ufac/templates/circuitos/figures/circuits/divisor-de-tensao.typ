@@ -1,6 +1,6 @@
 // O divisor de tensão: dois resistores em série e a tensão de saída entre os terminais a e b.
 
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/zap:0.6.0"
 #import "/header.typ": zap-ufac, corrente
 

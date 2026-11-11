@@ -1,14 +1,14 @@
-// Modelo de deck do modo acadêmico da skill touying-ufac (touying-ufac-unofficial 0.3.0). O trabalho é fictício, só
+// Modelo de deck do modo acadêmico da skill touying-ufac (touying-ufac-unofficial 0.4.0). O trabalho é fictício, só
 // de exemplo, e também os números, os dados (data/soc.csv) e as referências (referencias.bib).
 // Copie esta pasta para a da apresentação e compile de lá (a raiz é a pasta do deck):
 //   typst compile deck.typ
 // Pastas: as figuras feitas em Typst em figures/<tipo>/, os dados em data/, as imagens prontas em assets/ e, quando
-// houver uma função grande, o header.typ. Sequência: capa, roteiro, Introdução, Metodologia, Resultados, Conclusões,
-// Agradecimentos, Referências, encerramento e os slides de reserva. Sintaxe e componentes:
+// houver uma função grande, o header.typ. Sequência: capa, Introdução, Metodologia, Resultados, Conclusões,
+// Agradecimentos, Referências, encerramento e os slides de reserva, sem roteiro. Sintaxe e componentes:
 // references/padroes-do-tema.md; sequência e tempo: references/academico/estrutura.md.
 
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
@@ -28,12 +28,11 @@
 // nada que gere conteúdo antes da capa: só imports, #let e regras
 #title-slide()
 
-== Roteiro
-#outline()
-
-// Parte: a etapa do argumento, não o capítulo do texto; depois do =, só a imagem ou o ícone
+// sem roteiro: da capa, direto para a primeira Parte
+// Parte: a etapa do argumento, não o capítulo do texto; depois do =, só uma figura que represente o assunto (um
+// desenho, um diagrama, um gráfico ou a foto de uma pessoa ou de um objeto), nunca um ícone
 = Introdução
-#icon("info", size: 6em)
+#include "figures/drawings/bateria.typ"
 
 // contexto: por que o problema importa; a obra de onde vem cada afirmação entra no referencias.bib, não no slide
 == Toda bateria precisa de um indicador de carga
@@ -56,7 +55,7 @@
 + Comparar a contagem de Coulomb com o filtro de Kalman.
 
 = Metodologia
-#icon("note", size: 6em)
+#include "figures/diagrams/ensaio.typ"
 
 // o método como fluxo: um arquivo em figures/diagrams/, incluído no slide
 == O ensaio em três etapas
@@ -71,7 +70,7 @@ Uma célula de 2,5 Ah descarrega a 0,75 A por 120 min; a tensão e a corrente s�
 -> O $"SoC"_"ref"$ vem da carga descarregada, medida em laboratório.
 
 = Resultados
-#icon("example", size: 6em)
+#include "figures/graphs/soc.typ"
 
 // resultado: o título diz o achado; a figura, num arquivo que lê data/soc.csv, é a evidência
 == O filtro de Kalman fica a menos de 1% da referência
@@ -92,7 +91,7 @@ A maior distância do Kalman à referência foi de 0,6%.
 #caution[O ensaio usou uma célula só, a 25 °C.]
 
 = Conclusões
-#icon("tip", size: 6em)
+#include "figures/drawings/bateria.typ"
 
 // uma conclusão por objetivo específico, na ordem dos objetivos
 == Conclusões

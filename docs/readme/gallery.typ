@@ -3,7 +3,7 @@
 // element-emphasis.png, 5 element-section.png. It is not an example, and it is not published; the other rows come
 // from the decks of example/. The test of the minimum version of Typst (.github/workflows/tests.yml) compiles it too.
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",

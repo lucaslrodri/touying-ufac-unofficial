@@ -7,21 +7,21 @@ The sea rises and falls twice a day.
 == Another example <example>
 A second example.
 
-== The waves <exercise-waves>
+== The waves <question-waves>
 How tall is a wave?
 
 #touying-recall(<example-tides>)
 
-#touying-recall(<exercise-waves>)
+#touying-recall(<question-waves>)
 
 == A third example <example>
-After the recalls: @example-tides and @exercise-waves.
+After the recalls: @example-tides and @question-waves.
 
-== Another exercise <exercise>
-The second exercise.
+== Another question <question>
+The second question.
 
-== One by mistake <exercise-dup>
+== One by mistake <question-dup>
 The same named label on two slides with other titles, without a recall.
 
-== Another by mistake <exercise-dup>
+== Another by mistake <question-dup>
 Each keeps a number of its own.

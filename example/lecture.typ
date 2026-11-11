@@ -1,8 +1,8 @@
 // Example deck of the touying-ufac-unofficial theme: a lecture of a course, with the aliases of a course (`subject`,
 // `subject-code`, `unit`, `unit-title`, `semester`) and the prefix of its unit (`counter-prefix`), a slide revealed
-// step by step, exercises and examples with their solutions, callouts and the closing slide.
+// step by step, questions and examples with their solutions, callouts and the closing slide.
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 
 #show: ufac-theme.with(
   lang: "en",
@@ -14,7 +14,7 @@
     unit-title: [The solar system],
     semester: [2026.2],
     author: [Prof. Dr. Your Name],
-    counter-prefix: [2.],   // the second unit: "Exercise 2.1"
+    counter-prefix: [2.],   // the second unit: "Question 2.1"
   ),
 )
 
@@ -58,7 +58,7 @@ From $T^2 = a^3$:
 
 $ T = sqrt(1.52^3) approx 1.87 "years" $
 
-== Jupiter and Saturn <exercise>
+== Jupiter and Saturn <question>
 Find the period of:
 
 + Jupiter, at $5.2$ au

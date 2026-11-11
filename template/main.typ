@@ -1,7 +1,7 @@
 // Starting deck for the touying-ufac-unofficial theme. Syntax: the manual, docs/manual.pdf; whole decks: example/ (a
-// lecture, coursework, a thesis defense), both at https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.3.0
+// lecture, coursework, a thesis defense), both at https://github.com/lucaslrodri/touying-ufac-unofficial/tree/v0.4.0
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 
 #show: ufac-theme.with(
   aspect-ratio: "16-9",
@@ -13,7 +13,7 @@
     unit-title: [Title of the teaching unit], // or `subtitle:`
     unit: [Teaching unit I],                  // or `short-subtitle:`
     author: [Prof. Dr. Your Name],
-    // counter-prefix: [2.],   // "Exercise 2.N" in the second unit; the flavor "lecture" gives [1.]
+    // counter-prefix: [2.],   // "Question 2.N" in the second unit; the flavor "lecture" gives [1.]
   ),
 )
 

@@ -3,7 +3,7 @@
 // verdade, também os dados do plano (`#let plano = json("/data/<disciplina>-plano.json")`, do ufac-syllabus) e o
 // código da turma. Não há common.typ: cada deck leva a sua cópia, tirada do header.typ do deck anterior. Os arquivos
 // de figura o importam por `#import "../../header.typ": grafico`.
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/lilaq:0.6.0" as lq
 
 // Um gráfico de sinal no estilo da disciplina: os eixos passam pela origem, sem grade, e os rótulos ficam no tamanho

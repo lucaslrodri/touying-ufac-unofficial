@@ -52,7 +52,7 @@ n=$(pdfinfo "$P/deck.pdf" | awk '/^Pages:/ {print $2}')
 for i in $(seq 1 "$n"); do pdftotext -layout -f "$i" -l "$i" "$P/deck.pdf" "$P/texto/p$(printf "%0${#n}d" "$i").txt"; done
 ```
 
-O mapa lê o título de cada página pela posição e pelo tamanho da letra e procura o `=` ou `==` igual nos `.typ` da pasta do deck e das subpastas dela. A página com "PARTE" é de uma Parte (`=`); as outras, de um slide (`==`). O rótulo que o tema põe no título de um exemplo ou exercício ("Exemplo 2.1 — ") sai antes da busca.
+O mapa lê o título de cada página pela posição e pelo tamanho da letra e procura o `=` ou `==` igual nos `.typ` da pasta do deck e das subpastas dela. A página com "PARTE" é de uma Parte (`=`); as outras, de um slide (`==`). O rótulo que o tema põe no título de um exemplo ou de uma questão ("Exemplo 2.1 — ", "Questão 2.2 — ") sai antes da busca.
 
 ```sh
 python3 -I - "$P/deck.pdf" [PASTA_DECK] > "$P/mapa.tsv" <<'EOF'
@@ -69,7 +69,7 @@ for p, pg in enumerate(xml.split("<page ")[1:], 1):
     big = [w for y, h, w in ws if h > 40]
     top = [(y, w) for y, h, w in ws if y < 60 and h > 21.5]
     titulo = " ".join(big or [w for y, w in top if y == min(top)[0]] if top or big else [])
-    titulo = re.sub(r"^(Exemplo|Exercício) [\d.]+ — ", "", titulo)  # o rótulo de <example> e de <exercise>
+    titulo = re.sub(r"^(Exemplo|Questão) [\d.]+ — ", "", titulo)  # o rótulo de <example> e de <question>
     nivel = 1 if "PARTE" in (w for y, h, w in ws) else 2  # a página de uma Parte (=) ou de um slide (==)
     linha = next((loc for n, t, loc in heads if n == nivel and norm(titulo) and t == norm(titulo)), "?")
     print(p, titulo, linha, sep="\t")
@@ -108,7 +108,7 @@ Os 3 revisores devolvem o mesmo formato, para o corretor juntar e deduplicar. O 
 - **Localização tripla:** página do `deck.pdf`, título do slide e `arquivo.typ:linha` (do mapa, com o caminho a partir da pasta do deck, como `figures/graphs/soc.typ:12`). A página sozinha não basta: dividir um slide desloca as seguintes.
 - **Um achado por defeito.** O mesmo defeito com a mesma origem (uma função, um padrão repetido) é um achado só, com a lista de páginas.
 - **Direto ao ponto:** começa pelo veredito, sem narrar o processo. `APROVADO` só sem bloqueio nem importante.
-- **A correção nunca viola uma regra.** Não cabe: dividir em 2 ou mais slides, dizendo onde cortar e o título de cada um, ou, no acadêmico, levar à reserva; nunca diminuir a letra, o `inset` ou a margem, nem `scale`. Na aula, questão de marcar: a versão discursiva; pergunta solta: um `<exercise>` com `#answer`, ou sai do slide. No acadêmico, número divergente: o valor do texto, com a página.
+- **A correção nunca viola uma regra.** Não cabe: dividir em 2 ou mais slides, dizendo onde cortar e o título de cada um, ou, no acadêmico, levar à reserva; nunca diminuir a letra, o `inset` ou a margem, nem `scale`. Na aula, questão de marcar: a versão discursiva; pergunta solta: uma `<question>` com `#answer`, ou sai do slide. No acadêmico, número divergente: o valor do texto, com a página.
 - **"Parece certo" não é verificação.** Cada linha de "Verificações sem achado" diz o que foi conferido e como.
 
 ## 4. Gravidade

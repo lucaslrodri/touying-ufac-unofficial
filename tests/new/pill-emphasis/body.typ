@@ -26,7 +26,7 @@ Tags with white text: #tag(color: colors.tertiary)[red ~~alert~~ #primary[primar
       #(("primary": "yellow, yellow, yellow", "tertiary": "yellow, yellow, yellow", "quaternary": "dark blue, dark blue, dark blue",
         "secondary-dark": "dark blue, dark blue, dark blue", "neutral-dark": "yellow, yellow, yellow").at(n))]))
 
-#exercise-slide(title: [A #tertiary[red] word in a red badge], color: colors.tertiary)[
+#question-slide(title: [A #tertiary[red] word in a red badge], color: colors.tertiary)[
   === A #tertiary[red] word in a red pill
   Tags: #tag(color: colors.tertiary)[#tertiary[red] in red] and #tag(color: colors.quaternary)[#quaternary[green] in green].
 ]

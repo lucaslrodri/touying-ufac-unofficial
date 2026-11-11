@@ -106,7 +106,7 @@ render docs/readme/gallery.typ gallery && expect gallery 5
 for deck in $examples; do render "example/$deck.typ" "$deck"; done
 expect lecture 13 && expect coursework 4 && expect tcc 8
 sheet flavors 3 28 lecture-1 coursework-1 tcc-1
-for element in slide:lecture-4 emphasis:gallery-4 section:gallery-5 exercise:lecture-10 boxes:gallery-1 \
+for element in slide:lecture-4 emphasis:gallery-4 section:gallery-5 question:lecture-10 boxes:gallery-1 \
   callouts:gallery-2 code:lecture-12 table:gallery-3 ending:lecture-13; do
   sheet "element-${element%%:*}" 1 4 "${element#*:}"
 done

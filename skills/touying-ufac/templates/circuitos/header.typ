@@ -1,12 +1,12 @@
 // header.typ: o estilo de circuito para o pacote zap 0.6.0 com o tema touying-ufac-unofficial, que não tem estilo de
-// circuito. Validado com Typst 0.15.1, touying 0.7.4, touying-ufac-unofficial 0.3.0 e zap 0.6.0 (que traz o cetz
+// circuito. Validado com Typst 0.15.1, touying 0.7.4, touying-ufac-unofficial 0.4.0 e zap 0.6.0 (que traz o cetz
 // 0.5.2). Guia: references/zap.md.
 //
 // Cada circuito fica num arquivo de figures/circuits/, que importa o zap e as funções daqui. O deck não importa nada
 // disto: ele só inclui o arquivo do circuito. Como levar para um deck, no comentário do começo de circuitos-zap.typ.
 
 #import "@preview/zap:0.6.0"
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 
 // Circuitos (zap): símbolos americanos (IEEE: resistor em zigue-zague, fonte com + e −), traço de 1.4pt e as cores
 // do tema. Componentes, fios e rótulos em neutral-darkest; tensão em primary; corrente em tertiary; destaque em

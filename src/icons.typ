@@ -10,7 +10,7 @@
 #let _shipped = ("octicon", "ph", "devicon", "simple-icons", "material-icon-theme", "vscode-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
 
 /// The icon of each role of the theme, as `"collection:name"`: Octicons (size 16) for the callouts, the
-/// badges of exercises and examples, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
+/// badges of questions and examples, the file name of a code block, the terminal and the contact; Phosphor in the bold weight
 /// for code; colored icons for the pills of the code blocks: the logos of Devicon (Typst from Simple Icons), the
 /// terminal of Material Icon Theme for the shell and the log of VSCode Icons for the output of a program. A role is
 /// also a valid name for `icon`: `#icon("caution")`. `warning` and `caution` are the same icon, under the name of
@@ -28,7 +28,7 @@
   info: "octicon:info-16",
   note: "octicon:note-16",
   remark: "octicon:history-16",
-  exercise: "octicon:pencil-16",
+  question: "octicon:pencil-16",
   example: "octicon:beaker-16",
   file: "octicon:file-code-16",
   terminal: "octicon:terminal-16",
@@ -43,8 +43,9 @@
 
 /// Where an icon comes from, decided at the call: `(collection, name)` of a shipped icon, or the full `"collection:name"`
 /// of an icon the deck provides (looked up later, in the iconify store). A bare name is a role of the theme
-/// (`"warning"`) or the name of a shipped Octicon without its size, as in 0.2.0 (`"alert"`, `"pencil"`, `"beaker"`); any
-/// other bare name is an error that tells how to use the Octicons the theme does not ship.
+/// (`"warning"`) or the name of a shipped Octicon without its size, as in 0.2.0 (`"alert"`, `"pencil"`, `"beaker"`); the role
+/// `"exercise"` of 0.3.0 is an error that gives its new name, `"question"`, and any other bare name an error that tells
+/// how to use the Octicons the theme does not ship.
 ///
 /// #test(
 ///   `_icon-source("warning") == ("octicon", "alert-16")`,
@@ -59,6 +60,7 @@
   name,
 ) = {
   assert(type(name) == str, message: "icon: the name is a string, got " + repr(name))
+  assert(name != "exercise", message: "icon: the role \"exercise\" is now \"question\" in 0.4.0, #icon(\"question\")")
   let full = theme-icons.at(name, default: name)
   if not full.contains(":") {
     let n = full + "-16"

@@ -2,7 +2,7 @@
 # Downloads from the Iconify API the icons the theme ships, one JSON per collection in assets/icons/ (the format that
 # src/icons.typ reads, the same as the `provide-icons` of the iconify package): only the icons the theme uses, not the
 # whole collections. Run it again only when the list below changes; the files are committed.
-#   octicon       Octicons (GitHub, MIT): the roles of the theme (callouts, exercise, example, file, terminal, contact)
+#   octicon       Octicons (GitHub, MIT): the roles of the theme (callouts, question, example, file, terminal, contact)
 #   ph            Phosphor (MIT), bold weight: code
 #   devicon       Devicon (MIT): the logos of the languages of the code blocks
 #   simple-icons  Simple Icons (CC0): the Typst logo

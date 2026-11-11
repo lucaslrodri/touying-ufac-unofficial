@@ -1,12 +1,12 @@
 # Apresentação do curso (primeira aula)
 
-Os slides que apresentam a disciplina na primeira aula: informações, ementa, unidades, bibliografia, avaliações e seminário. Tudo vem do plano de curso. Todo trecho daqui foi compilado (Typst 0.15.1, touying 0.7.4, tema 0.3.0, ufac-syllabus 0.0.3) com o plano real de Sinais e Sistemas e passou no `scripts/verificar_deck.py`.
+Os slides que apresentam a disciplina na primeira aula: informações, Classroom, o que fica nas aulas e no seminário, a estrutura do curso com os encontros, o cronograma, a bibliografia e as avaliações. O formato é o da apresentação que o professor aprovou, no deck da Unidade I de Sinais e Sistemas. Os números, as datas e as referências vêm do plano de curso. Todo trecho daqui foi compilado (Typst 0.15.1, touying 0.7.4, tema 0.4.0, ufac-syllabus 0.0.3) com o plano real de Sinais e Sistemas e passou no `scripts/verificar_deck.py`.
 
 ## Onde fica
 
-- Um arquivo de assunto, `apresentacao-do-curso.typ`, na pasta do deck da primeira unidade (`<disciplina>/slide-01/`). Ele é a primeira Parte (`=`) do deck, como no deck que o professor aprovou.
-- O deck o inclui logo depois do roteiro: `#include "apresentacao-do-curso.typ"`.
+- A apresentação é a primeira Parte (`=`) do deck da primeira unidade (`<disciplina>/slide-01/slide-01.typ`), escrita no próprio deck, logo depois da capa. Não há arquivo à parte nem `#include`: o deck inteiro fica num arquivo só.
 - O mapa do curso é uma figura do deck, em `figures/diagrams/mapa-do-curso.typ`. O print do Classroom e as capas dos livros ficam em `assets/` do deck (`assets/classroom.png`, `assets/livros/`).
+- A data curta de cada avaliação vem da função `data-avaliacao`, no `header.typ` do deck.
 - A capa é o `#title-slide` do deck. A Parte abre com um ícone, não com a capa de um livro (nenhum livro é o principal).
 
 ## De onde vem cada dado
@@ -14,12 +14,13 @@ Os slides que apresentam a disciplina na primeira aula: informações, ementa, u
 | Dado | Fonte | Campo |
 |---|---|---|
 | horário, carga horária, pré-requisito, professor | JSON do plano | `course.subject-datetime`, `subject-hours`, `prerequisites`, `instructor` |
-| ementa | JSON | `course.syllabus`, literal |
-| unidades: título, tópicos, período | JSON | `course.program-content` (`deck.units`, `deck.period`) |
-| provas e datas | JSON | entradas de `program-content` com `grade` e `date`; `course.evaluations` |
+| total de encontros e duração de cada um | JSON | soma dos `meetings` de `course.program-content`; `deck.meeting-minutes` |
+| encontros e período de cada unidade | JSON | `meetings` e `period` da unidade (`deck.unit`, `deck.period`) |
+| cronograma | JSON | `course.program-content`, pelo `deck.schedule` |
+| datas das provas, do seminário e da prova final | JSON | `course.evaluations` (`data-avaliacao`, do `header.typ`) |
+| temas do seminário | JSON | a entrada com `grade: "T"` (`topics`) |
 | bibliografia | JSON | `bibliography.main` e `bibliography.complementary` |
 | fórmulas das notas | `plano-de-curso.typ` | argumento `assignments` (o JSON não as traz) |
-| seminário: temas e data | JSON | a entrada com `grade: "T"` (`topics`, `date`) |
 | o plano de curso | `header.typ` do deck | `plano`, lido de `/data/<disciplina>-plano.json` |
 | código da turma | `header.typ` do deck | `codigo-turma` |
 | print do Classroom, capas dos livros | `assets/` do deck | `assets/classroom.png`, `assets/livros/` |
@@ -28,74 +29,99 @@ O que não está nessas fontes não entra: sala, contato, horário de atendiment
 
 ## Regras desta parte
 
-- **Nada inventado.** O texto do plano entra literal: ementa, tópicos, referências e as frases das avaliações. Só duas coisas são escolha sua: a divisão da ementa por domínio e a capa de cada livro. Mostre as duas ao professor.
-- **A bibliografia é conteúdo, não referência.** Na aula não há referência bibliográfica nos slides (regra 7): nada de `@chave` nem de `#bibliography`. Os slides "Bibliografia básica" e "Bibliografia complementar" são outra coisa: a lista de livros da disciplina, que o plano de curso traz e o aluno precisa conhecer, com o texto de cada referência literal, como os tópicos. É o único lugar da aula em que uma referência aparece.
-- **Crédito das capas no fim.** A capa de um livro e o print do Classroom são imagens tiradas inteiras de fora: o crédito vai no slide "Créditos das imagens", no fim do deck, antes do "Fim!" (regra 7). A legenda da capa é a referência do livro, do plano, e não leva "Fonte:".
-- **Sem função pequena** (regra 3): o ícone da pílula, a foto e os créditos se escrevem no slide, com os componentes do tema.
+- **Os encontros só aqui** (regra Aula 3). A divisão por encontro aparece nesta Parte e em nenhum outro lugar do deck:
+  - a carga horária, com o total de encontros;
+  - cada unidade, com os encontros e o período no `deck.stats`;
+  - o "Cronograma previsto", com o `deck.schedule`.
+
+  Depois desta Parte, o deck segue o assunto: nada de "Encontro N", "Resumo do encontro" ou "(encontro N)". Os encontros e as datas são estimativa.
+- **Do plano, sem inventar.** Os números, as datas, as referências, os temas do seminário e as fórmulas das notas vêm do plano, como estão. São escolha sua, e você as mostra ao professor:
+  - o resumo "Nas aulas", por domínio;
+  - o título curto de cada unidade ("I · Sinais") e os tópicos dela, encurtados do plano;
+  - o ícone de cada unidade e a capa de cada livro.
+- **A bibliografia é conteúdo, não referência.** Na aula não há referência bibliográfica nos slides (regra 7): nada de `@chave` nem de `#bibliography`. O slide "Bibliografia" é outra coisa: a lista de livros da disciplina, que o plano de curso traz e o aluno precisa conhecer, com o texto de cada referência literal. É o único lugar da aula em que uma referência aparece.
+- **Crédito das capas no plano.** A capa de um livro e o print do Classroom são imagens tiradas inteiras de fora. Na aula não há slide de créditos (regra 7): a origem delas fica na tabela de figuras do `plano-de-aula.md`. A legenda da capa é a referência do livro, do plano, e não leva "Fonte:".
+- **Sem função pequena** (regra 3): o ícone da pílula e a foto se escrevem no slide, com os componentes do tema. A única função desta Parte é a `data-avaliacao`, no `header.typ`: ela é usada em quase todo slide daqui, e o tema e o ufac-syllabus não a têm.
 - **Sem letra pequena** (regra 2). Fica de fora o que o deck antigo fazia:
   - `text(size: .85em)` nos cartões e `.62em` no período;
   - `#set text(size: .8em)` na bibliografia;
-  - o cronograma a `.56em`;
+  - o cronograma a `.56em`: aqui ele fica no corpo e continua na página seguinte, com o cabeçalho repetido;
   - `#show figure.caption: set text(size: .6em)` no deck (o tema já põe a legenda a 0.6em).
 
-  O rótulo do `deck.stats` sai a `.56em`: passe `text(size: 1.8em)` no uso. O `#tag[seminário]` (0,6 do corpo) é componente do tema e é a única exceção.
-- **Sem encontros** (regra Aula 3). Fica de fora:
-  - o número de encontros por unidade;
-  - o cronograma do `deck.schedule`, que é por encontro.
-
-  Períodos e datas de prova aparecem, sempre como estimativa.
-- **Sem destaque** (`~~ ~~`) nos tópicos das unidades nem na ementa: é o texto do plano.
+  O rótulo do `deck.stats` sai a `.56em`: passe `text(size: 1.8em)` no uso.
+- **Sem destaque** (`~~ ~~`) nos tópicos das unidades: são os do plano, só encurtados.
 
 ## Os slides, nesta ordem
 
 | # | Slide | Componentes | Páginas em Sinais e Sistemas |
 |---|---|---|---|
 | 1 | Capa: `#title-slide` do deck e a Parte `= Apresentação do curso` | ícone grande na seção | 1 + 1 |
-| 2 | Informações gerais | 4 `emph-box` com ícone | 1 |
+| 2 | Informações gerais | 4 `emph-box` com ícone, em 2 × 2 | 1 |
 | 3 | Google Classroom | `emph-box` com o código, setas, print | 1 |
-| 4 | Ementa do PPC, por domínio, com `#tag[seminário]` | pílula por domínio, `---` entre eles | 4 |
-| 5 | Mapa do curso | `figures/diagrams/mapa-do-curso.typ`, incluído | 1 |
-| 6 | Uma unidade temática por slide | pílula com o título, lista, `deck.stats` | 9 (7 unidades; 2 delas em 2 páginas) |
-| 7 | Bibliografia: 2 capas, depois a terceira sozinha e centralizada; complementar | `figure` com a referência como legenda | 2 + 2 |
-| 8 | Avaliações | as frases do plano e as equações em `>` | 2 |
-| 9 | Datas das provas, estimadas | `deck.evaluation-dates`, `#note` | 1 |
-| 10 | Seminário, em coluna simples | `deck.punctuated`, `#note` | 2 |
+| 4 | Nas aulas × No seminário ($T$) | `emph-box` "Nas aulas"; `emph-box` amarela com os temas do seminário, até 4 por página; `#note` | 3 |
+| 5 | Estrutura do curso: o mapa | `figures/diagrams/mapa-do-curso.typ`, numa `figure` | 1 |
+| 6 | Estrutura do curso: uma unidade por página, agrupadas pela prova | pílula `===` da prova; `emph-box` com ícone, tópicos e `deck.stats` | 8 (7 unidades; a VI em 2) |
+| 7 | Cronograma previsto | `deck.schedule` | 3 |
+| 8 | Bibliografia: Básica (2 capas, depois a terceira centralizada) e Complementar | `figure` com a referência como legenda; `deck.punctuated` | 2 + 2 |
+| 9 | Avaliações | `cols`: as notas, o que cada prova cobra e a data; a média final | 1 |
 
-As capas e o print do Classroom entram nos "Créditos das imagens", no fim do deck, fora desta Parte.
+A origem das capas e do print do Classroom fica no `plano-de-aula.md`: na aula não há slide de créditos.
 
 ## O código
 
-O arquivo começa assim. O `plano` e o `codigo-turma` vêm do `header.typ` do deck; os ícones Phosphor (`"ph:.."`), do `assets/icones-ph.json` que o deck passa ao `provide-icons` dentro da capa.
+O arquivo começa assim. O `plano`, o `codigo-turma` e a `data-avaliacao` vêm do `header.typ` do deck; os ícones Phosphor (`"ph:.."`), do `assets/icones-ph.json` que o deck passa ao `provide-icons` dentro da capa.
 
 ```typ
-// Apresentação do curso: a primeira Parte do deck da Unidade I. Tudo lido do plano de curso (`plano`, do header.typ).
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 #import "@local/ufac-syllabus:0.0.3": deck
-#import "header.typ": plano, codigo-turma
+#import "header.typ": plano, codigo-turma, data-avaliacao
 
 #let curso = deck.course(plano)
 
+// ... o #show: ufac-theme.with(..) e a capa, #title-slide[#provide-icons(json("assets/icones-ph.json"))]
+
 = Apresentação do curso
-#icon("ph:graduation-cap-bold", size: 7em)
+#icon("ph:graduation-cap-bold", size: 7em, color: colors.primary)
+```
+
+### O plano e a data de uma avaliação, no `header.typ`
+
+```typ
+// O header.typ do deck: o plano e o código da turma, que vários decks usam, e a data curta de uma avaliação do
+// plano, na apresentação do curso.
+#import "@local/ufac-syllabus:0.0.3": deck
+
+#let plano = json("/data/<disciplina>-plano.json")
+#let codigo-turma = "<código da turma>"
+
+// `data-avaliacao("P_1")` dá "03/12"; a prova final, que não tem nota, pelo título:
+// `data-avaliacao(none, titulo: "Prova final")`.
+#let data-avaliacao(nota, titulo: none) = {
+  let e = deck.course(plano).evaluations.find(e => if titulo != none { e.title == titulo } else {
+    e.at("grade", default: none) == nota
+  })
+  deck.short-date(e.date)
+}
 ```
 
 ### Informações gerais
 
-Horário e pré-requisito na largura toda, cada um numa linha; carga horária e professor lado a lado. Os cartões ficam com a mesma altura por linha.
+Os quatro cartões em 2 × 2. A carga horária traz o total de encontros e a duração de cada um.
 
 ```typ
 == Informações gerais
+#let encontros = curso.program-content.map(x => x.meetings).sum()
 #v(1fr)
 #grid(
   columns: (1fr, 1fr),
-  gutter: 1.2em,
-  grid.cell(colspan: 2, emph-box(icon: "ph:clock-bold", title: [Horário])[#curso.subject-datetime]),
-  grid.cell(colspan: 2, emph-box(icon: "ph:graduation-cap-bold", title: [Pré-requisito])[
-    #curso.prerequisites.join(", ")
-  ]),
-  emph-box(icon: "ph:hourglass-medium-bold", title: [Carga horária])[#curso.subject-hours],
-  emph-box(icon: "ph:chalkboard-teacher-bold", title: [Professor])[#curso.instructor],
+  gutter: (1em, 1.5em),
+  emph-box(icon: "ph:clock-bold", title: [Horário])[#align(center, curso.subject-datetime)],
+  emph-box(icon: "ph:hourglass-medium-bold", title: [Carga horária])[
+    #align(center)[#curso.subject-hours: #encontros encontros \ de #deck.meeting-minutes(plano) min]
+  ],
+  emph-box(icon: "ph:graduation-cap-bold", title: [Pré-requisito])[#align(center, curso.prerequisites.join(", "))],
+  emph-box(icon: "ph:chalkboard-teacher-bold", title: [Professor])[#align(center, curso.instructor)],
 )
 #v(1fr)
 ```
@@ -107,7 +133,7 @@ Horário e pré-requisito na largura toda, cada um numa linha; carga horária e 
 ```typ
 == Google Classroom
 #grid(
-  columns: (1fr, 1.4fr),
+  columns: (1fr, 1.6fr),
   gutter: 1.2em,
   align: horizon,
   [
@@ -120,71 +146,69 @@ Horário e pré-requisito na largura toda, cada um numa linha; carga horária e 
   ],
   figure(
     box(radius: 8pt, clip: true, stroke: 1pt + colors.neutral-lighter, image("assets/classroom.png", width: 100%)),
-    caption: [A turma no Classroom],
+    caption: [A turma no Google Classroom],
   ),
 )
 ```
 
-### Ementa do PPC
+### Nas aulas × No seminário
 
-- Cada item é o texto literal do `course.syllabus`, pelo índice.
-- Um domínio por página, com até 5 itens.
-- `#tag[seminário]` vai nos itens que estão nos temas do seminário (a entrada `T` do plano).
-- O ícone do domínio vai na pílula, escrito com o `icon` do tema, que o põe branco nela.
-- Os domínios abaixo são os de Sinais e Sistemas; em outra disciplina, proponha-os ao professor.
+- "Nas aulas": o que as aulas cobrem, numa ou duas frases por domínio (no tempo, na frequência), a partir das unidades do plano. É escolha sua: mostre ao professor.
+- "No seminário": os temas da entrada `T` do plano, separados por `"; "`. A data do seminário vai no título da caixa, nunca no título do slide.
+- Até 4 temas por página; o `deck.punctuated` põe o `;` e o ponto final em cada página. O `#note` dos grupos fecha a última.
 
 ```typ
-#let ementa = curso.syllabus
+#let seminario = curso.program-content.find(x => x.at("grade", default: none) == "T")
+#let temas = seminario.topics.at(0).split("; ")
 
-== Ementa do PPC
-O que o PPC diz que a disciplina cobre. Os itens com #tag[seminário] ficam para os seminários.
+== Nas aulas × No seminário ($T$)
+#v(1fr)
+#emph-box(icon: "ph:chalkboard-teacher-bold", title: [Nas aulas])[
+  *No tempo.* Sinais, sistemas lineares e invariantes no tempo (LIT), convolução, equações diferenciais e de diferenças e espaço de estados.
 
-=== #icon("ph:wave-sine-bold") No tempo: sinais e equações
-- #ementa.at(0)
-- #ementa.at(1)
-- #ementa.at(8)
-- #ementa.at(9) #tag[seminário]
-
----
-
-=== #icon("ph:grid-four-bold") No tempo: espaço de estados
-- #ementa.at(10)
-- #ementa.at(11)
-- #ementa.at(12)
-- #ementa.at(13) #tag[seminário]
+  *Na frequência.* Série e transformada de Fourier de tempo discreto e transformada Z.
+]
+#v(1fr)
 
 ---
 
-=== #icon("ph:chart-bar-bold") Na frequência
-- #ementa.at(3) #tag[seminário]
-- #ementa.at(4) #tag[seminário]
-- #ementa.at(7) #tag[seminário]
+#emph-box(color: colors.secondary-dark, icon: "ph:users-three-bold", title: [No seminário, #data-avaliacao("T")])[
+  #deck.punctuated(temas.slice(0, 4))
+]
 
 ---
 
-=== #icon("ph:waveform-bold") Na amostragem
-- #ementa.at(2) #tag[seminário]
-- #ementa.at(5)
-- #ementa.at(6) #tag[seminário]
+#emph-box(color: colors.secondary-dark, icon: "ph:users-three-bold", title: [No seminário, #data-avaliacao("T")])[
+  #deck.punctuated(temas.slice(4))
+]
+
+#v(1fr)
+#note[Os temas e os grupos do seminário serão definidos de acordo com o número de inscritos.]
 ```
 
-### Mapa do curso
+### Estrutura do curso: o mapa
+
+Uma frase com o número de unidades, provas e seminários, e o mapa numa `figure`.
 
 ```typ
-== Mapa do curso
-#align(center, include "figures/diagrams/mapa-do-curso.typ")
+== Estrutura do curso
+Sete unidades temáticas, três provas e um seminário:
+
+#v(1fr)
+#figure(include "figures/diagrams/mapa-do-curso.typ", caption: [As unidades, as provas e o seminário])
+#v(1fr)
 ```
 
 O mapa tem uma linha por prova: as unidades que ela cobra, em algarismos romanos, a prova e a data estimada embaixo dela. Tudo no tamanho do corpo e lido do plano.
 
-Se a disciplina ainda não tem esse mapa, crie `figures/diagrams/mapa-do-curso.typ` com o código abaixo e mostre-o ao professor. O arquivo é a figura: ele importa o fletcher e o `ufac-syllabus`, lê o plano pelo `header.typ` do deck (`../../header.typ`) e não define função. Um mapa com rótulos menores que o corpo ou com datas escritas à mão fica de fora (regra 2 e "nada inventado"): o antigo de Sinais e Sistemas tinha rótulos a `.5em` (cerca de 10 pt) e o recesso escrito à mão.
+Se a disciplina ainda não tem esse mapa, crie `figures/diagrams/mapa-do-curso.typ` com o código abaixo e mostre-o ao professor. O arquivo é a figura: ele importa o fletcher e o `ufac-syllabus`, lê o plano pelo `header.typ` do deck (`../../header.typ`) e não define função. Um mapa com rótulos menores que o corpo ou com datas escritas à mão fica de fora (regra 2 e "do plano, sem inventar"): o antigo de Sinais e Sistemas tinha rótulos a `.5em` (cerca de 10 pt) e o recesso escrito à mão.
 
 ```typ
 // Mapa do curso: uma linha por prova, com as unidades que ela cobra (em algarismos romanos), a prova e a data
 // estimada embaixo dela, na ordem do plano. Uma prova seguida de outra (P3 e T) fica na mesma linha. Cada prova
 // do plano tem `grade`.
 
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/fletcher:0.5.8": diagram, node, edge
 #import "@local/ufac-syllabus:0.0.3": deck
 #import "../../header.typ": plano
@@ -223,152 +247,170 @@ Se a disciplina ainda não tem esse mapa, crie `figures/diagrams/mapa-do-curso.t
 }
 ```
 
-### As unidades
+### Estrutura do curso: as unidades
 
-- Um `==` por unidade, gerado do plano.
-- O título da unidade vai na pílula: o mais longo de Sinais e Sistemas, com 68 caracteres, cabe numa linha. Como título `==`, ele passaria de 65 caracteres e o tema diminuiria a letra.
-- Os tópicos ficam como estão no plano, com o `;` dele e sem destaque.
-- Mais de 4 tópicos vão em duas páginas.
-- A prova de cada unidade é a primeira entrada com `grade` depois dela.
+- Depois do mapa, `---` e uma unidade por página, na ordem do plano, escritas à mão (regra 3: o código fica onde é usado).
+- Antes da primeira unidade de cada prova, a pílula `=== $P_1$ · <data>: Unidades I, II e III`. Ela continua nas páginas seguintes, até a próxima.
+- Cada unidade numa `emph-box` com um ícone e o título curto: o algarismo romano e o assunto ("I · Sinais").
+- Os tópicos são os do plano, encurtados, com o `;` e sem destaque. Até 5 por página, com cerca de 40 palavras (regra 1); com mais, a unidade vai em duas páginas, e o `deck.stats` fica na última.
+- O `deck.stats` traz os encontros e o período da unidade, lidos do plano. O `\u{a0}` e o `\u{2060}` prendem as datas à meia-risca, para o período não quebrar.
 
 ```typ
-#let conteudo = curso.program-content
-#for (n, u) in deck.units(plano).enumerate(start: 1) [
-  #let prova = conteudo.slice(conteudo.position(x => x == u)).find(x => "grade" in x)
-  #let metade = calc.ceil(u.topics.len() / 2)
-  == Unidade #deck.roman(n)
-  === #u.title
-  #if u.topics.len() > 4 [
-    #list(..u.topics.slice(0, metade))
+---
 
-    ---
+=== $P_1$ · #data-avaliacao("P_1"): Unidades I, II e III
 
-    #list(..u.topics.slice(metade))
-  ] else [
-    #list(..u.topics)
-  ]
-
+#v(1fr)
+#emph-box(icon: "ph:wave-sine-bold", title: [I · Sinais])[
+  - Energia e potência de um sinal;
+  - Deslocamento, reflexão e mudança de escala no tempo;
+  - Sinais periódicos, pares e ímpares;
+  - Exponenciais e senoides, contínuas e discretas;
+  - Impulso unitário e degrau unitário.
   // o rótulo do deck.stats sai a .56em: 1.8em o põe no corpo
   #deck.stats(
-    (deck.period(u), text(size: 1.8em)[período]),
-    ([#deck.grade(prova.grade) · #deck.period(prova)], text(size: 1.8em)[prova]),
+    ([#deck.unit(plano, 1).meetings], text(size: 1.8em)[encontros]),
+    (deck.period(deck.unit(plano, 1)).replace(" – ", "\u{a0}–\u{2060}\u{a0}"), text(size: 1.8em)[período]),
   )
 ]
+#v(1fr)
+
+---
+
+#v(1fr)
+#emph-box(icon: "ph:flow-arrow-bold", title: [II · Sistemas LIT])[
+  - Exemplos de sistemas e interconexões;
+  - Memória, invertibilidade, causalidade, estabilidade, invariância no tempo e linearidade;
+  - Convolução: a soma (discreta) e a integral (contínua);
+  - Propriedades dos sistemas LIT.
+  #deck.stats(
+    ([#deck.unit(plano, 2).meetings], text(size: 1.8em)[encontros]),
+    (deck.period(deck.unit(plano, 2)).replace(" – ", "\u{a0}–\u{2060}\u{a0}"), text(size: 1.8em)[período]),
+  )
+]
+#v(1fr)
 ```
 
-O `---` gerado no laço quebra a página como o escrito à mão: o `#for` de markup funciona com o Touying.
+As outras unidades seguem igual. Uma unidade em duas páginas, como a VI de Sinais e Sistemas, com sete tópicos:
+
+```typ
+=== $P_3$ · #data-avaliacao("P_3"): Unidades VI e VII
+
+#v(1fr)
+#emph-box(icon: "ph:target-bold", title: [VI · Transformada Z])[
+  - Transformada Z, região de convergência e transformada inversa;
+  - Propriedades e pares de transformadas;
+  - Função de transferência, causalidade e estabilidade;
+  - Resposta em frequência a partir dos polos e zeros;
+]
+#v(1fr)
+
+---
+
+#v(1fr)
+#emph-box(icon: "ph:target-bold", title: [VI · Transformada Z])[
+  - Interconexões e diagramas de blocos;
+  - Transformada Z unilateral e equações de diferenças;
+  - Mapeamento s–Z: a ligação entre as transformadas de Laplace e Z.
+  #deck.stats(
+    ([#deck.unit(plano, 6).meetings], text(size: 1.8em)[encontros]),
+    (deck.period(deck.unit(plano, 6)).replace(" – ", "\u{a0}–\u{2060}\u{a0}"), text(size: 1.8em)[período]),
+  )
+]
+#v(1fr)
+```
+
+### Cronograma previsto
+
+Uma linha por unidade, prova e seminário, com o período, os encontros, as aulas e a carga horária, e o total. A tabela fica no corpo e continua na página seguinte, com o cabeçalho repetido: em Sinais e Sistemas, 3 páginas. O `deck.schedule` dá erro se os encontros não somam a carga horária do plano.
+
+```typ
+== Cronograma previsto
+#deck.schedule(plano)
+```
 
 ### Bibliografia
 
 - Básica: duas capas lado a lado, depois a terceira sozinha e centralizada.
-- As capas têm o mesmo tamanho e seguem a ordem do plano. A referência do plano é a legenda, no corpo; o crédito da capa vai no fim do deck.
+- As capas têm o mesmo tamanho e seguem a ordem do plano. A referência do plano é a legenda; a origem da capa fica no `plano-de-aula.md`.
 - Complementar: 3 referências por página.
 
 ```typ
-#let basica = plano.bibliography.main
+== Bibliografia
 
-== Bibliografia básica
+=== Básica
+
+#v(1fr)
 #grid(
-  columns: (1fr, 1fr),
+  columns: (1fr,) * 2,
   gutter: 2em,
-  figure(image("assets/livros/oppenheim.jpg", height: 8em), caption: basica.at(0)),
-  figure(image("assets/livros/haykin.jpg", height: 8em), caption: basica.at(1)),
+  align: center + top,
+  figure(image("assets/livros/oppenheim.jpg", height: 10em), caption: plano.bibliography.main.at(0)),
+  figure(image("assets/livros/haykin.jpg", height: 10em), caption: plano.bibliography.main.at(1)),
 )
+#v(1fr)
 
 ---
 
-#align(center, box(width: 50%, figure(image("assets/livros/lathi.jpg", height: 8em), caption: basica.at(2))))
-
-#let complementar = plano.bibliography.complementary
-
-== Bibliografia complementar
-#list(..complementar.slice(0, 3))
+#v(1fr)
+#align(center, box(width: 50%, figure(image("assets/livros/lathi.jpg", height: 10em), caption: plano.bibliography.main.at(2))))
+#v(1fr)
 
 ---
 
-#list(..complementar.slice(3))
+=== Complementar
+
+#deck.punctuated(plano.bibliography.complementary.slice(0, 3))
+
+---
+
+#deck.punctuated(plano.bibliography.complementary.slice(3))
 ```
 
 ### Avaliações
 
-As frases e as fórmulas são as do `assignments` do plano de curso. O `>` sozinho na linha põe a equação em destaque (`eq-box`), e o `&` alinha as duas notas.
+- As fórmulas são as do `assignments` do plano de curso.
+- A lista de termos diz o que cada prova cobra e a data dela.
+- A média final traz a regra da prova final, com a data.
 
 ```typ
 == Avaliações
-As notas $N_1$ e $N_2$ são dadas por:
 
->
-$
-  N_1 & = P_1 + P_2 \
-  N_2 & = "0,6" dot P_3 + "0,4" dot T
-$
+#cols(divider: true, columns: (1.25fr, 1fr), gutter: 1.2em)[
+  === Notas
 
-$P_1$, $P_2$ e $P_3$ são as avaliações teóricas, e $T$ é o trabalho (seminários).
+  $ N_1 = P_1 + P_2 $
 
----
+  $ N_2 = "0,6" dot P_3 + "0,4" dot T $
 
-E a média final é dada por:
+  / $P_1$: Unidades I a III, #data-avaliacao("P_1")
+  / $P_2$: Unidades IV e V, #data-avaliacao("P_2")
+  / $P_3$: Unidades VI e VII, #data-avaliacao("P_3")
+  / $T$: seminário, #data-avaliacao("T")
+][
+  === Média final
 
->
-$ M = (N_1 + N_2) / 2 $
+  $ M = (N_1 + N_2) / 2 $
 
-Caso o discente não atinja média 8,0, será realizada uma avaliação que terá o valor do exame final.
+  -> $M < "8,0"$: prova final em #data-avaliacao(none, titulo: "Prova final").
+]
 ```
 
-### Datas das provas
+### Origem das imagens
 
-A tabela do `deck.evaluation-dates` fica no corpo, numa página, com a prova final.
-
-```typ
-== Datas das provas
-#deck.evaluation-dates(plano)
-
-#note[As datas são estimadas. O que cada prova cobra não muda.]
-```
-
-### Seminário
-
-- Os temas vêm da entrada `T` do plano, separados por `"; "`.
-- Coluna simples, em duas páginas. O `deck.punctuated` põe o `;` e o ponto final em cada página.
-- A data do seminário já está na tabela de datas.
-
-```typ
-#let seminario = conteudo.find(x => x.at("grade", default: none) == "T")
-#let temas = seminario.topics.at(0).split("; ")
-
-== Seminário ($T$)
-Os demais tópicos da ementa são estudados pelos discentes e apresentados em seminários:
-
-#deck.punctuated(temas.slice(0, 4))
-
----
-
-#deck.punctuated(temas.slice(4))
-
-#note[Os temas e a formação dos grupos serão definidos de acordo com o número de inscritos na disciplina.]
-```
-
-### Créditos, no fim do deck
-
-O slide "Créditos das imagens" fica no fim do deck, antes do "Fim!", não nesta Parte. Uma linha por imagem de fora, no tamanho do corpo; as capas podem dividir uma linha.
-
-```typ
-== Créditos das imagens
-- Capas da bibliografia básica: editora, fonte com link.
-- Google Classroom: captura de tela da turma.
-- Meme: autor, licença, fonte.
-```
+Na aula não há slide de créditos. A origem das capas (editora, fonte com link) e do print do Classroom vai na tabela de figuras do `plano-de-aula.md`.
 
 ## Conferir
 
-- Em Sinais e Sistemas, a Parte tem 26 páginas, da seção ao seminário.
-- O `verificar_deck.py` dá 0 bloqueio e um REVISAR. É a Unidade V: 41 palavras, mas são os 4 tópicos do plano, que cabem numa página ("cerca de 40", regra 1).
+- Em Sinais e Sistemas, a Parte tem 23 páginas, da seção às avaliações.
+- O `verificar_deck.py` não aponta encontro nesta Parte e dá 0 bloqueio e um REVISAR. É a Unidade VII: 43 palavras, mas são os 5 tópicos do plano, que cabem numa página ("cerca de 40", regra 1).
 - Na folha de contato, confira:
-  - cada pílula de unidade numa linha;
+  - o título de cada unidade numa linha;
   - os rótulos do `deck.stats` em maiúsculas, no tamanho do corpo;
+  - o cronograma no corpo, com o cabeçalho em cada página;
   - a terceira capa centralizada.
 - Pendências para o professor:
   - sala, contato e horário de atendimento, se ele quiser (não estão no plano);
-  - a divisão da ementa por domínio;
+  - o resumo "Nas aulas", os títulos curtos, os tópicos e os ícones das unidades;
   - o `figures/diagrams/mapa-do-curso.typ`, se a disciplina ainda usar um mapa com letra pequena;
-  - o crédito de cada capa de livro, no slide "Créditos das imagens".
+  - a origem de cada capa de livro, no `plano-de-aula.md`.

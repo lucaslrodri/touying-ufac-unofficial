@@ -108,7 +108,7 @@
   move(rotate(square(stroke: color + 2pt, size: 0.3em, radius: 0.1em), -20deg), dy: 0.4em),
   move(circle(stroke: color + 1.2pt, radius: 0.13em), dy: 0.4em),
 )
-/// Rounded label with white bold text on `color` (subtitles `===`/`====`, exercise/example header). Pushes
+/// Rounded label with white bold text on `color` (subtitles `===`/`====`, question/example header). Pushes
 /// `kind: "pill"` on the color stack so `*bold*`, `#alert`, `raw` and `#icon` inside it pick readable colors; on a light
 /// color (yellow) the text is dark and the inside follows the convention of a light box (`_pill-text`).
 /// -> content
@@ -120,7 +120,7 @@
 ) = box(fill: color, radius: 5pt, inset: (x: .7em), outset: (y: .4em),
   _pill-text(color, body))
 
-/// Pill of a subtitle (`===`, `====`): in the color of the box around it, the color of the item inside an exercise
+/// Pill of a subtitle (`===`, `====`): in the color of the box around it, the color of the item inside a question
 /// (red) or an example (green), and blue elsewhere.
 /// -> content
 #let _subtitle-pill(
@@ -130,7 +130,7 @@
 
 // ---------- icons ----------
 /// An icon, already wrapped in a `box` for inline use: a role of the theme (`"caution"` or `"warning"`, `"tip"`, `"info"`, `"note"`,
-/// `"exercise"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
+/// `"question"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
 /// Octicons the theme ships by its own name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
 /// collection given with `provide-icons`, as `"collection:name"` (`"octicon:rocket-16"`, `"mdi:home"`). An unknown name
 /// is a compile error that says how to get the icon.
@@ -146,7 +146,7 @@
   /// Name of the icon. -> str
   name,
   /// Fill color (multicolor logos keep their colors). With `auto` it follows the context like bold text: white inside
-  /// a dark pill (a `===` subtitle, the badge of an exercise, the title of an @emph-box), the box or title color inside
+  /// a dark pill (a `===` subtitle, the badge of a question, the title of an @emph-box), the box or title color inside
   /// @emph-box and `==`, blue inside a light pill, black elsewhere. -> auto | color
   color: auto,
   /// Height of the icon; the width follows its proportions (square for the icons of the theme). -> length
@@ -161,7 +161,7 @@
     box(baseline: baseline, image(bytes(_icon-svg(source, c)), width: auto, height: size, alt: name, format: "svg"))
   }
 }
-/// Icon at the start of a pill (the header of an exercise or example, the badge of an @emph-box), followed by a small
+/// Icon at the start of a pill (the header of a question or example, the badge of an @emph-box), followed by a small
 /// space and centered on the height of the capitals of the text, whatever its height: the name of an @icon (white in
 /// the pill) or any content, such as an image. `none` gives nothing.
 /// -> content
@@ -184,7 +184,7 @@
   }
   h(gap)
 }
-/// Line of a pill that may have an icon (the header of an exercise or example, the badge of an @emph-box). It starts
+/// Line of a pill that may have an icon (the header of a question or example, the badge of an @emph-box). It starts
 /// with an invisible strut as tall as a pill icon (1em) and placed like one, centered on the capitals, so that the
 /// pills with and without an icon have the same height: without it the line is as tall as the capitals, shorter than
 /// the icon centered on them. A long title still wraps and the pill grows with it (a fixed height would cut the second
@@ -268,7 +268,7 @@
 ///   - Works with ==highlights==
 /// ]
 /// #emph-box(color: colors.tertiary,
-///   icon: "exercise", title: [Homework])[
+///   icon: "question", title: [Homework])[
 ///   An icon before the title.
 /// ]
 /// ```
@@ -282,7 +282,7 @@
   /// Badge over the top border; `none` gives the thin-border box (unless there is an `icon`). -> none | content
   title: none,
   /// Icon at the start of the badge, before the title: the name of an @icon, any content (an image, a symbol) or
-  /// `none`. It is centered on the capitals of the title, as in the badges of exercises and examples; without a title it
+  /// `none`. It is centered on the capitals of the title, as in the badges of questions and examples; without a title it
   /// is the whole badge. The badge has the same height with or without an icon. -> none | str | content
   icon: none,
   /// Content of the box. -> content

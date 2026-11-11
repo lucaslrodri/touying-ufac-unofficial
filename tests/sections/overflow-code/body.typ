@@ -49,8 +49,8 @@ x40 = 40 * 2  # line 40
 
 #for i in range(1, 30) [- Item #i of a long list under the repeated pill]
 
-== A long listing in an exercise <exercise>
-The code block goes on in the box of the exercise, with the same number, and the answer after it.
+== A long listing in a question <question>
+The code block goes on in the box of the question, with the same number, and the answer after it.
 
 ```python
 x1 = 1 * 2  # line 1

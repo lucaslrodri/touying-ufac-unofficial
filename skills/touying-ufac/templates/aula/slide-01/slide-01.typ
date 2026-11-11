@@ -1,14 +1,14 @@
-// Modelo de deck do modo aula da skill touying-ufac (touying-ufac-unofficial 0.3.0). O conteúdo é de Sinais e
+// Modelo de deck do modo aula da skill touying-ufac (touying-ufac-unofficial 0.4.0). O conteúdo é de Sinais e
 // Sistemas, só de exemplo. Copie esta pasta para <disciplina>/slide-NN/ (se a disciplina já tem decks, com o
 // header.typ do anterior no lugar do daqui) e compile da pasta do deck; a raiz é a pasta da disciplina:
 //   typst compile --root .. slide-NN.typ
 // Pastas: as figuras feitas em Typst em figures/<tipo>/, as imagens prontas em assets/, os dados em ../data/ e, no
 // header.typ, as funções grandes e o que vários decks usam (o plano, o estilo dos gráficos); não há common.typ.
-// Cada assunto: Parte (=), exemplo introdutório, definição, exemplos, exercícios, resumo. Sintaxe e componentes:
-// references/padroes-do-tema.md.
+// Cada assunto: Parte (=), exemplo introdutório, definição, exemplos, questões; sem slide de resumo. Sintaxe e
+// componentes: references/padroes-do-tema.md.
 
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 // #import "@local/ufac-syllabus:0.0.3": deck   // só na apresentação do curso (primeira aula)
 
 #show: ufac-theme.with(
@@ -21,17 +21,15 @@
     unit-title: [Sinais de tempo contínuo e de tempo discreto],
     semester: [2026.2],
     author: [Prof. Dr. Nome do Professor],
-    counter-prefix: [1.],   // número da unidade: Exemplo 1.1, Exercício 1.1
+    counter-prefix: [1.],   // número da unidade: Exemplo 1.1, Questão 1.1
   ),
 )
 
 // os ícones Phosphor (JSON do Iconify) que o deck usa, dados na capa, que não mostra nada deles
 #title-slide[#provide-icons(json("assets/icones-ph.json"))]
 
-== Roteiro
-#outline()
-
-// Parte: nome de assunto, nunca de encontro; depois do =, só a imagem (foto de fora: crédito no fim)
+// sem roteiro: da capa, direto para a primeira Parte
+// Parte: nome de assunto, nunca de encontro; depois do =, só a imagem (foto de fora: origem no plano-de-aula.md)
 = Energia de um sinal
 #image("assets/fotos/sol.jpg")
 
@@ -62,8 +60,8 @@ Calcule $E_infinity$ de $x(t) = 3$ para $-1 <= t <= 1$ e $x(t) = 0$ fora.
 #solution
 $ E_infinity = integral_(-1)^1 3^2 dif t = 9 dot 2 = 18 $
 
-// exercício: só discursivo; o enunciado, --- e a resposta desenvolvida
-== Exponencial decrescente <exercise-exponencial>
+// questão: só discursiva; o enunciado, --- e a resposta desenvolvida
+== Exponencial decrescente <question-exponencial>
 Calcule $E_infinity$ de $x(t) = e^(-t) u(t)$. Mostre cada passo.
 
 #align(center, include "figures/graphs/exponencial.typ")
@@ -74,17 +72,10 @@ Calcule $E_infinity$ de $x(t) = e^(-t) u(t)$. Mostre cada passo.
 Para $t < 0$, $x(t) = 0$; para $t >= 0$, $|x(t)|^2 = e^(-2t)$. Então
 $ E_infinity = integral_0^(+infinity) e^(-2t) dif t = [-1/2 e^(-2t)]_0^(+infinity) = 1/2 $
 
-// resumo com nome de assunto, nunca "do encontro"
-== Resumo: energia de um sinal
--> $E_infinity$ soma $|x(t)|^2$ em todo o tempo.
--> Num resistor de $1 Omega$, é a energia dissipada.
--> Pulso de altura $A$ e largura $T$: $E_infinity = A^2 T$.
+// sem slide de resumo: a Parte termina nas questões
 
-// créditos só das imagens tiradas inteiras de fora (fotos, capturas, capas, o meme), no tamanho do corpo; desenho
-// próprio ou refeito não leva crédito, e a aula não tem referências bibliográficas
-== Créditos das imagens
-- Sol: NASA/SDO (AIA), domínio público, #link("https://commons.wikimedia.org/wiki/File:The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg")[Wikimedia Commons].
-// - Meme: autor, licença, fonte (o do meme que o professor escolher; o deste modelo é só um lugar para ele)
+// sem slide de créditos: a origem das imagens tiradas inteiras de fora (o Sol, o meme) fica na tabela de figuras do
+// plano-de-aula.md; desenho próprio ou refeito não leva crédito, e a aula não tem referências bibliográficas
 
 // último slide: "Fim!" e o meme, sem "Obrigado!" nem a próxima aula; height até 14em cabe, 16em empurra o meme para
 // outra página

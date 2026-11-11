@@ -1,4 +1,4 @@
-// touying-ufac-unofficial — the theme: slide header, `slide`, `exercise-slide`/`example-slide`, the cover, the
+// touying-ufac-unofficial — the theme: slide header, `slide`, `question-slide`/`example-slide`, the cover, the
 // closing and section slides and `ufac-theme` (page, fonts, every set/show rule of the syntax, Touying configuration).
 #import "@preview/touying:0.7.4": *
 #import "constants.typ": colors
@@ -8,7 +8,7 @@
 #import "info.typ": _info-defaults, _prepare-configs, _deck, _date, _author-names, _authors
 
 // ---------- header ----------
-/// Header of a content slide: the current `==` in blue, fit to width. (Exercises and examples have no header: their
+/// Header of a content slide: the current `==` in blue, fit to width. (Questions and examples have no header: their
 /// title is on the badge of their box.)
 /// -> content
 #let _header(
@@ -94,7 +94,7 @@
     }
   }
 }
-// ---------- exercises and examples ----------
+// ---------- questions and examples ----------
 /// The marker of the start of the solution of an example, alone on its line like Touying's `#pause`: what comes before
 /// it is the statement and what comes after it the solution, opened by a dashed line and "Solução." / "Solution." /
 /// "Solución." in bold. With a `#pause` right before or right after it, the line, the word and the solution appear on
@@ -114,7 +114,7 @@
   sep: ".",
 ) = metadata((kind: "ufac-solution", word: "solution", sep: sep))
 
-/// The marker of the start of the answer of an exercise: the same as @solution, opened by "Resposta." / "Answer." /
+/// The marker of the start of the answer of a question: the same as @solution, opened by "Resposta." / "Answer." /
 /// "Respuesta.", with the same separator.
 /// -> content
 #let answer(
@@ -162,7 +162,7 @@
   }
 }
 
-/// The body of an exercise or example with the solution opened at its marker (`#solution`, `#answer`): the opening
+/// The body of a question or example with the solution opened at its marker (`#solution`, `#answer`): the opening
 /// takes the place of the marker. The word opens the paragraph that follows the marker; after a blank line, it stays
 /// alone on its line and the solution starts in a new paragraph. A `#pause` right after the marker goes before the
 /// opening, which then appears with the solution. Done before Touying handles the `#pause`.
@@ -193,7 +193,7 @@
   (head + opening + rest).join()
 }
 
-/// The outline of the box of an exercise, open at the bottom: the sides go down, turn a quarter of a circle and end
+/// The outline of the box of a question, open at the bottom: the sides go down, turn a quarter of a circle and end
 /// where the line of the footer starts, which closes the box. A `curve`: a block without its bottom border draws only
 /// half of the bottom corners, and covering the bottom border with a band of the fill leaves a thread of the border at
 /// the edges of the band (the antialiasing of the PDF viewer).
@@ -232,7 +232,7 @@
   (if notes == right { page.width / 2 } else { page.width }, if notes == bottom { page.height / 2 } else { page.height })
 }
 
-/// The box of an exercise or example, as in a printed handout, drawn on the page: the fill in the color
+/// The box of a question or example, as in a printed handout, drawn on the page: the fill in the color
 /// lightened 95%, the badge with the title over the top border and the footer of the slide over the bottom one, in the
 /// color of the item, its lines being the bottom border (the outline is open at the bottom and its sides turn into
 /// them). It is the background of every page of the slide, so a content longer than one page goes on to the next one,
@@ -293,16 +293,17 @@
   _in-box(_box-ink(c), body)
 }
 
-/// The marker of the continuation of an exercise or example after a `---`, with the heading of the item.
+/// The marker of the continuation of a question or example after a `---`, with the heading of the item.
 #let _continue-kind = "ufac-continue"
 
-/// Marks the continuations of the exercises and examples. A `---` (or a `#pagebreak()`) inside an exercise breaks the
-/// page, and the exercise goes on in the next slide, until a `==` heading of another kind. Touying calls the slide of a
+/// Marks the continuations of the questions and examples. A `---` (or a `#pagebreak()`) inside a question breaks the
+/// page, and the question goes on in the next slide, until a `==` heading of another kind. Touying calls the slide of a
 /// continuation without
-/// headings (`self.headings` is empty), so it would not know that it is an exercise, and its box changes the margins and
+/// headings (`self.headings` is empty), so it would not know that it is a question, and its box changes the margins and
 /// drops the header and the footer, which is decided before any `context`. So, before Touying splits the deck, a marker
-/// with the heading of the item goes right after every `---` inside an exercise or example (also in the parts with
-/// `#set`/`#show`, the `styled` ones, and inside `exercise-slide`/`example-slide`).
+/// with the heading of the item goes right after every `---` inside a question or example (also in the parts with
+/// `#set`/`#show`, the `styled` ones, and inside `question-slide`/`example-slide`). On the way, a `==` with the label
+/// of a question of 0.3.0 (`<exercise>`, `<exercise-id>`) stops the deck with the new label.
 /// -> content
 #let _mark-continuations(
   /// The deck. -> content
@@ -312,8 +313,14 @@
     let out = ()
     for c in children {
       if c.func() == heading and c.depth <= 2 {
-        // a heading of a section or of a slide ends the item; one of an exercise or example opens another
-        h = if c.depth == 2 and _label-kind(c.at("label", default: none)) != none { c } else { none }
+        let l = c.at("label", default: none)
+        let new = if c.depth == 2 { _old-question-label(l) }
+        if new != none {
+          assert(false, message: "the label <" + str(l) + "> is now <" + new + "> in 0.4.0"
+            + if new != "question" { ", cited as @" + new } else { "" })
+        }
+        // a heading of a section or of a slide ends the item; one of a question or example opens another
+        h = if c.depth == 2 and _label-kind(l) != none { c } else { none }
         out.push(c)
       } else if utils.is-styled(c) {
         let (inner, after) = walk(if utils.is-sequence(c.child) { c.child.children } else { (c.child,) }, h)
@@ -333,7 +340,7 @@
     }
     (out.join(), h)
   }
-  if utils.is-sequence(body) { walk(body.children, none).first() } else { body }
+  walk(if utils.is-sequence(body) { body.children } else { (body,) }, none).first()
 }
 
 /// The heading of the item that a body continues, if it starts with the marker of a continuation.
@@ -349,7 +356,7 @@
   if m != none and _is-meta(m, _continue-kind) { m.value.heading }
 }
 
-/// The slide of an exercise or example: the box of the item on the page, without the header (the badge carries the
+/// The slide of a question or example: the box of the item on the page, without the header (the badge carries the
 /// title) and without the footer of the page (it goes into the box, in the color of the item).
 /// -> content
 #let _item-slide(
@@ -357,7 +364,7 @@
   self,
   /// The heading of the item. -> content
   h,
-  /// `"exercise"` or `"example"`. -> str
+  /// `"question"` or `"example"`. -> str
   kind,
   /// Arguments of @slide. -> dictionary
   config, repeat, setting, composer,
@@ -414,12 +421,12 @@
   touying-slide(self: self, repeat: repeat, setting: setting, composer: composer, ..bodies)
 })
 
-// `exercise-slide`/`example-slide` return a level-2 heading with the label followed by the body (no
+// `question-slide`/`example-slide` return a level-2 heading with the label followed by the body (no
 // `touying-slide-wrapper`: Touying flattens sequences at document level, so `---` inside the body works too). An
 // explicit color or icon travels in the heading `supplement`. `depth` is used rather than `level` because Touying
 // reads `depth` before layout.
 
-/// `supplement` of the heading of an exercise or example slide: `auto`, or the color and the icon of the slide.
+/// `supplement` of the heading of a question or example slide: `auto`, or the color and the icon of the slide.
 /// -> auto | content
 #let _kind-supplement(
   /// Color of the box, or `auto`. -> auto | color
@@ -428,32 +435,35 @@
   icon,
 ) = if color == auto and icon == auto { auto } else { metadata((color: color, icon: icon)) }
 
-/// Exercise slide: the red box of an exercise filling the slide, with a pencil and "Exercise 1.N — Title" on its badge,
-/// numbered automatically. The function form of `== Title <exercise>`. Only the heading form can carry a unique label
-/// (`== Title <exercise-tides>`) and be cited with `@exercise-tides`, which shows "Exercise 1.N" linked to the slide.
+/// Question slide: the red box of a question filling the slide, with a pencil and "Question 1.N — Title" on its badge,
+/// numbered automatically. The function form of `== Title <question>`. Only the heading form can carry a unique label
+/// (`== Title <question-tides>`) and be cited with `@question-tides`, which shows "Question 1.N" linked to the slide.
 ///
 /// ```typ
-/// #exercise-slide(title: [Tide table])[Find the next high tide.]
-/// #exercise-slide(title: [Lab],
+/// #question-slide(title: [Tide table])[Find the next high tide.]
+/// #question-slide(title: [Lab],
 ///   color: colors.primary,
 ///   icon: "terminal",
 /// )[Another color and icon.]
 /// ```
 /// -> content
-#let exercise-slide(
+#let question-slide(
   /// Text after the number, following a dash; empty omits the dash. -> content
   title: [],
   /// Color of the box; `auto` is red (`tertiary`). -> auto | color
   color: auto,
   /// Icon before the name: the name of an `icon`, any content (an image) or `none` for no icon; `auto` is the icon of
-  /// the theme, `ufac-theme(exercise-icon:)` (a pencil). -> auto | none | str | content
+  /// the theme, `ufac-theme(question-icon:)` (a pencil). -> auto | none | str | content
   icon: auto,
-  /// Content of the slide; `---` or `#pagebreak()` inside it continues the same exercise. -> content
+  /// Content of the slide; `---` or `#pagebreak()` inside it continues the same question. -> content
   body,
-) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <exercise> #body]
+) = [#heading(depth: 2, supplement: _kind-supplement(color, icon), title) <question> #body]
+
+// The name of 0.3.0, `exercise-slide`, stops with the new one, instead of Typst's "unknown variable".
+#let exercise-slide(..args) = assert(false, message: "exercise-slide is now question-slide in 0.4.0")
 
 /// Example slide: the green box of an example, with a beaker and "Example 1.N — Title" on its badge, with a counter
-/// independent from the exercises. The function form of `== Title <example>`; see @exercise-slide.
+/// independent from the questions. The function form of `== Title <example>`; see @question-slide.
 ///
 /// ```typ
 /// #example-slide(title: [Wave speed])[Longer waves travel faster in deep water.]
@@ -961,8 +971,35 @@
 // ones). They are separate so that a document that is not a deck (the manual in `docs/`) can apply `_rules` alone, with
 // a stand-in `self` (`colors`, `methods.alert`, `info.counter-prefix`, `store`), and keep its own page, font size and headings.
 
+/// The numbering of the headings of a deck, which numbers the PDF bookmark of a question or an example. Typst writes
+/// the numbering of a heading, as plain text, before its title in the bookmark, and the slides hide their headings, so
+/// the numbering shows only there and in Typst's own `outline` (`std.outline`), with the same text. The `==` of a
+/// question or example gets the initial of the name of its kind (of `question-name`, `example-name` or the word of the
+/// language: "Q", "E"; "P" for "Pregunta"), the `counter-prefix` and the number of its badge, followed by a dash when
+/// the slide has a title: the bookmark is "Q1.2 — Title" ("Q2" with `counter-prefix: none`), or "Q1.2" without a
+/// title. Every other heading gets none, so the other bookmarks are the titles alone. The continuation pages of a
+/// question have no heading, and no bookmark.
+///
+/// Typst calls it where the heading is (`here()`, in `context`), and there `query(here())` is the heading itself;
+/// called elsewhere, as by the title of the header of a slide, it gives none.
+/// -> function
+#let _heading-numbering(
+  /// Touying's `self`. -> dictionary
+  self,
+) = (..nums) => {
+  let h = query(here()).at(0, default: none)
+  if h == none or h.func() != heading or h.depth != 2 { return none }
+  let kind = _label-kind(h.at("label", default: none))
+  if kind == none { return none }
+  let name = self.store.at(kind + "-name", default: auto)
+  let name = if name == auto { _words(text.lang).at(kind) } else { _plain-text(name) }
+  let initial = upper(name.trim().clusters().at(0, default: ""))
+  let n = _kind-index(kind, here().page(), label: h.label, body: h.body)
+  [#initial#self.info.counter-prefix#n#if h.body != [] [ —]]
+}
+
 /// Rules that only make sense on a slide: font and size, paragraph spacing and the headings (`=` hidden, `==` blue,
-/// `===`/`====` as pills).
+/// `===`/`====` as pills; the numbering of the PDF bookmarks of the questions and examples).
 /// -> content
 #let _slide-rules(
   /// Touying's `self`. -> dictionary
@@ -972,7 +1009,7 @@
 ) = {
   set text(font: "New Computer Modern Sans", size: 22pt, weight: 500, lang: self.store.lang, region: self.store.region)
   set par(leading: 0.55em, spacing: 0.9em)
-  set heading(numbering: (..n) => none)
+  set heading(numbering: _heading-numbering(self))
   show heading.where(level: 1): none
   show heading.where(level: 2): set text(fill: self.colors.primary, weight: "bold")
   // `===` and `====` are pills that do not create a slide; a top-level `===` is repeated on every continuation
@@ -1054,19 +1091,26 @@
   show regex("\u{a0}\u{a0}([^\u{a0}]+?)\u{a0}\u{a0}"): it => (self.methods.alert)(self: self, it.text.trim("\u{a0}"))
   show par: _rewrite-par
   show quote: it => quote-box[#it.body #if it.attribution != none { linebreak(); std.align(right, text(size: .85em)[— #it.attribution]) }]
-  // links and references inside a colored box (an `emph-box`, a callout, an exercise) in the color of the box,
+  // links and references inside a colored box (an `emph-box`, a callout, a question) in the color of the box,
   // darkened 25%; elsewhere the theme does not color them
   let in-box-color(it) = context {
     let s = _box-color.get()
     if s.len() == 0 or s.last().kind != "box" { it } else { show text: set text(fill: s.last().color.darken(25%)); it }
   }
   show link: in-box-color
-  // @exercise-id / @example-id → "Exercício 1.N" / "Exemplo 1.N", bold in the kind's color (also inside a box), linked
+  // @question-id / @example-id → "Questão 1.N" / "Exemplo 1.N", bold in the kind's color (also inside a box), linked
   // to the slide.
   // `self.headings` cannot be used: Touying resets it after every `---` (`call-slide-fn-and-reset`).
+  // A citation of a question of 0.3.0 (`@exercise-id`) that nothing in the deck carries stops with the new name.
   show ref: it => {
     let kind = _label-kind(it.target)
-    if kind == none { in-box-color(it) } else { context {
+    let new = _old-question-label(it.target)
+    if new != none { context {
+      if query(it.target).len() == 0 {
+        assert(false, message: "@" + str(it.target) + " is now @" + new + " in 0.4.0, with the label <" + new + ">")
+      }
+      in-box-color(it)
+    } } else if kind == none { in-box-color(it) } else { context {
       let hs = query(it.target)
       if hs.len() == 0 { it } else {
         let h = hs.first(); let (name, color) = _kind-style(self, kind)
@@ -1100,7 +1144,7 @@
     let w = if it.text.contains(" ") { auto } else { measure(body).width + .6em }
     box(width: w, fill: bg, stroke: .5pt + line, radius: 3pt, inset: (x: .3em), outset: (y: .2em), baseline: -.07em, body)
   }
-  // a bare `#solution` / `#answer` (Typst writes the name of the function, as code) outside the top of an exercise or
+  // a bare `#solution` / `#answer` (Typst writes the name of the function, as code) outside the top of a question or
   // example, where nothing opens it, is left out, as the marker with a separator (a metadata) is; after the rule of
   // the chip, so that no empty chip is left
   show raw.where(block: false, lang: "typc"): it => if it.text in ("solution", "answer") { none } else { it }
@@ -1173,8 +1217,8 @@
 /// or a shorter name: the tag of the cover), `subtitle` (the topic), `short-subtitle` (the lecture or the unit), `author`
 /// (one, an array or free content), `date`, `institution`, `logo` and `contact`; the aliases of a course (`subject`,
 /// `subject-code`, `unit`, `unit-title`, `course`, `semester`, `year`); the `flavor` of the presentation (`"lecture"` by
-/// default); and `counter-prefix`, the prefix of the exercise and example numbers ("Exercise 1.N"; `none` gives
-/// "Exercise N", the default of the flavors without units: `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`).
+/// default); and `counter-prefix`, the prefix of the question and example numbers ("Question 1.N"; `none` gives
+/// "Question N", the default of the flavors without units: `"coursework"`, `"tcc"`, `"dissertation"`, `"thesis"`).
 /// -> content
 #let ufac-theme(
   /// Any ratio accepted by Touying's `utils.page-args-from-aspect-ratio`: `"16-9"`, `"4-3"`, … -> str
@@ -1182,20 +1226,22 @@
   /// Language of the deck: `"pt-br"` (or `"pt"`), `"en"` or `"es"`, optionally with a region (`"en-US"`). It sets
   /// `text.lang`/`region` and the localized names below. -> str
   lang: "pt-br",
-  /// Name on the badge of exercise slides; `auto` is Exercício / Exercise / Ejercicio. -> auto | content
-  exercise-name: auto,
-  /// Name on the badge of example slides; `auto` is Exemplo / Example / Ejemplo. -> auto | content
+  /// Name on the badge of question slides; `auto` is Questão / Question / Pregunta. Its initial opens the PDF bookmark
+  /// of the slide ("Q1.2 — Title"). -> auto | content
+  question-name: auto,
+  /// Name on the badge of example slides; `auto` is Exemplo / Example / Ejemplo. Its initial opens the PDF bookmark of
+  /// the slide ("E1.2 — Title"). -> auto | content
   example-name: auto,
-  /// Icon before the name on the badge of exercise slides: the name of an `icon`, any content (an image or a symbol,
-  /// centered on the capitals like the icons) or `none` for no icon. `exercise-slide(icon:)` changes it on one slide.
+  /// Icon before the name on the badge of question slides: the name of an `icon`, any content (an image or a symbol,
+  /// centered on the capitals like the icons) or `none` for no icon. `question-slide(icon:)` changes it on one slide.
   /// -> none | str | content | symbol
-  exercise-icon: "pencil",
-  /// Icon before the name on the badge of example slides, like `exercise-icon`. -> none | str | content | symbol
+  question-icon: "pencil",
+  /// Icon before the name on the badge of example slides, like `question-icon`. -> none | str | content | symbol
   example-icon: "beaker",
   /// The word of the tag of the section slides ("PART N"); `auto` is Parte / Part / Parte. -> auto | content
   part-name: auto,
   /// Left text of the footer; a function receives `self`, whose `self.colors.primary` is the color of the footer text
-  /// (blue on the slides, white on the closing slide, the color of the box in an exercise or example, its dark tone for
+  /// (blue on the slides, white on the closing slide, the color of the box in a question or example, its dark tone for
   /// a light color). An array (or a function that returns one) shows its items
   /// separated by a dot, those that show nothing left out; with none left, the footer line runs unbroken. `auto` is the `short-title`, the
   /// `title` and, when the date is a `semester` or a `year`, the date ("AST101 • Astronomy • 2026.2").
@@ -1232,6 +1278,10 @@
     ("cover-layout", "title-slide(cover-layout: ..)"), ("author-label", "title-slide(author-label: ..)")) {
     assert(key not in args.named(), message: "ufac-theme: " + key + " goes in " + place)
   }
+  // the names of 0.3.0
+  for (old, new) in (("exercise-name", "question-name"), ("exercise-icon", "question-icon")) {
+    assert(old not in args.named(), message: "ufac-theme: " + old + " is now " + new + " in 0.4.0")
+  }
   let footer-left = if footer-left != auto { footer-left } else { self => {
     let parts = (self.info.at("short-title", default: none), self.info.title)
     if self.info.at("date-short", default: false) { parts.push(_date(self)) }
@@ -1245,7 +1295,7 @@
   let bg = _cover-styles.at(cover-style)
   assert("section-margin" not in args.named(), message: "ufac-theme: section-margin moved to new-section-slide(margin:)"
     + " in 0.3.0: config-common(new-section-slide-fn: new-section-slide.with(margin: 0pt))")
-  for (key, ic) in (("exercise-icon", exercise-icon), ("example-icon", example-icon)) {
+  for (key, ic) in (("question-icon", question-icon), ("example-icon", example-icon)) {
     assert(ic == none or type(ic) in (str, content, symbol),
       message: "ufac-theme: " + key + " is the name of an icon, content (an image, a symbol) or none")
   }
@@ -1264,8 +1314,8 @@
       alert: (self: none, it) => alert(it),
     ),
     config-colors(..colors),
-    config-store(lang: l.lang, region: l.region, exercise-name: exercise-name, example-name: example-name,
-      exercise-icon: exercise-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
+    config-store(lang: l.lang, region: l.region, question-name: question-name, example-name: example-name,
+      question-icon: question-icon, example-icon: example-icon, part-name: part-name, footer-left: footer-left,
       footer-right: footer-right, codly: codly, code-languages: code-languages,
       cover-fill: bg.fill, cover-bubbles: bg.bubbles),
     // `author: none`, not `[]`: Touying turns a content author into a string for `set document(author:)` and an empty

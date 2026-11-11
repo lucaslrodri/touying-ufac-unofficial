@@ -1,6 +1,6 @@
 // A resposta do circuito RC à rampa: a entrada v_s (t) = t e a tensão no capacitor, com R C = 1 s.
 
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/lilaq:0.6.0" as lq
 
 #lq.diagram(

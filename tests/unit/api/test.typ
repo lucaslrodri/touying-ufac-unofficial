@@ -2,7 +2,7 @@
 #import "../../../src/lib.typ": *
 
 // public functions exist
-#for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, exercise-slide, example-slide, emph-box, quote-box, arrows, arrow-list, cols,
+#for f in (ufac-theme, title-slide, slide, ending-slide, new-section-slide, question-slide, example-slide, emph-box, quote-box, arrows, arrow-list, cols,
   alert, primary, secondary, tertiary, quaternary, icon, eq-box, outline, provide-icons, callout, caution, tip, remark, note, example, examples, tag,
   info, solution, answer) {
   assert(type(f) == function, message: "expected a function, got " + str(type(f)))
@@ -36,13 +36,15 @@
 #assert.eq(colors.neutral-darkest, rgb("#000000"))
 #assert.eq(colors.neutral-lightest, rgb("#ffffff"))
 
-// exercise/example labels: `exercise`/`example` prefix, free suffix
+// question/example labels: `question`/`example` prefix, free suffix
 #assert.eq(_label-kind(none), none)
-#assert.eq(_label-kind(<exercise>), "exercise")
-#assert.eq(_label-kind(<exercise-b>), "exercise")
+#assert.eq(_label-kind(<question>), "question")
+#assert.eq(_label-kind(<question-b>), "question")
 #assert.eq(_label-kind(<example>), "example")
 #assert.eq(_label-kind(<example-a>), "example")
-#assert.eq(_label-kind(<exercises>), none)
+#assert.eq(_label-kind(<questions>), none)
+// the label of 0.3.0 is no longer a question
+#assert.eq(_label-kind(<exercise>), none)
 #assert.eq(_label-kind(<eq-y>), none)
 
 // icons: an unknown bare name fails at the call, with a clear message that tells how to get it; a role, a shipped
@@ -75,7 +77,7 @@
 #assert(catch(() => title-slide(color: red)).contains("unknown argument \"color\""))
 
 // slides by function: level-2 heading with the kind's label
-#assert.eq(type(exercise-slide(title: [T])[body]), content)
+#assert.eq(type(question-slide(title: [T])[body]), content)
 #assert.eq(type(example-slide[body]), content)
 
 // lang: "pt"/"pt-br" (region BR), "en", "es", optional region; anything else fails
@@ -147,7 +149,7 @@
 #assert(catch(() => ufac-theme(cover-layout: "top")[x]).contains("title-slide(cover-layout:"))
 #assert(catch(() => ufac-theme(author-label: [A])[x]).contains("title-slide(author-label:"))
 #assert(catch(() => ufac-theme(kind: "tcc")[x]).contains("config-info(flavor:"))
-// the flavors that are not part of a course number the exercises without a prefix, before the configs of the deck
+// the flavors that are not part of a course number the questions without a prefix, before the configs of the deck
 #for flavor in ("coursework", "tcc", "dissertation", "thesis") {
   let prefix = _prepare-configs("en", (config-info(flavor: flavor),)).before.map(c => c.info).filter(i => "counter-prefix" in i)
   assert.eq(prefix, ((counter-prefix: none),), message: flavor + " has no units: no prefix")
@@ -188,7 +190,7 @@
 #assert(catch(() => ending-slide(color: red)).contains("unknown argument \"color\""))
 
 
-// exercises and examples: the markers of the solution are functions that give a metadata, with the separator;
+// questions and examples: the markers of the solution are functions that give a metadata, with the separator;
 // written bare (`#solution`), Typst writes the name of the function, which the theme reads as the marker with "."
 #assert.eq(solution().func(), metadata)
 #assert.eq(answer(sep: ":").value, (kind: "ufac-solution", word: "answer", sep: ":"))
@@ -200,7 +202,7 @@
 #assert(catch(() => callout("tip", style: "x")[a]).contains("style is \"bar\" or \"badge\""))
 #assert(catch(() => icon(5)).contains("the name is a string"))
 // the icons of the badges are checked when the theme is applied
-#assert(catch(() => ufac-theme(exercise-icon: 5)[x]).contains("exercise-icon is the name of an icon"))
+#assert(catch(() => ufac-theme(question-icon: 5)[x]).contains("question-icon is the name of an icon"))
 #assert(catch(() => ufac-theme(example-icon: 5)[x]).contains("example-icon"))
 // every kind of callout has its title in both styles; every language has every word of Portuguese, the titles of the
 // bar callouts included
@@ -216,3 +218,21 @@
 }
 
 API test done.
+
+// the names of 0.3.0 for a question stop with the new ones: the function, the options of the theme, the label of a
+// slide (when the theme is applied), a citation of it and the role of the icon
+#assert.eq(catch(() => exercise-slide(title: [T])[x]), "assertion failed: exercise-slide is now question-slide in 0.4.0")
+#assert.eq(catch(() => ufac-theme(exercise-name: [Task])[x]),
+  "assertion failed: ufac-theme: exercise-name is now question-name in 0.4.0")
+#assert.eq(catch(() => ufac-theme(exercise-icon: "pencil")[x]),
+  "assertion failed: ufac-theme: exercise-icon is now question-icon in 0.4.0")
+#assert.eq(catch(() => ufac-theme[== Tides <exercise>]),
+  "assertion failed: the label <exercise> is now <question> in 0.4.0")
+#assert.eq(catch(() => ufac-theme[== Tides <exercise-tides> \ x]),
+  "assertion failed: the label <exercise-tides> is now <question-tides> in 0.4.0, cited as @question-tides")
+#assert.eq(catch(() => icon("exercise")),
+  "assertion failed: icon: the role \"exercise\" is now \"question\" in 0.4.0, #icon(\"question\")")
+#assert.eq(theme-icons.question, "octicon:pencil-16")
+#assert("exercise" not in theme-icons)
+// the initial of the bookmark of a question comes from the text of a name given as content
+#assert.eq(_plain-text([*Tarefa* de casa]), "Tarefa de casa")

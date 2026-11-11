@@ -12,7 +12,7 @@
 
 = Las mareas
 
-== Tabla de mareas <exercise>
+== Tabla de mareas <question>
 
 ¿A qué hora es la próxima
 marea alta?

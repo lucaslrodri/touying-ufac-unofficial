@@ -10,7 +10,7 @@ An example whose content is longer than one page goes on to the next one, in the
 #solution
 The solution after the overflow.
 
-== A long numbered list <exercise>
+== A long numbered list <question>
 Answer every item:
 
 #for i in range(1, 13) [+ Item #i: compute the value and explain the result.\ ]
@@ -26,7 +26,7 @@ The statement on the first page.
 #solution
 The solution on the second page, opened without the dashed line.
 
-== Broken with `#pagebreak()` <exercise>
+== Broken with `#pagebreak()` <question>
 The statement on the first page.
 
 #pagebreak()
@@ -36,10 +36,10 @@ The answer on the second page, as with `---`.
 
 #pagebreak()
 
-And a third page of the same exercise.
+And a third page of the same question.
 
 == Next topic
-A slide of another kind ends the exercise.
+A slide of another kind ends the question.
 
-== The next one <exercise>
-Exercise 1.3: the breaks did not count as exercises.
+== The next one <question>
+Question 1.3: the breaks did not count as questions.

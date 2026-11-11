@@ -1,6 +1,7 @@
 # Localized words of the theme, by language (the `lang` of `ufac-theme`, read from `text.lang`); an unknown language
 # falls back to Portuguese. Read by `_words` and `_tr` (src/utils.typ).
-#   exercise, example, part     the pill of the exercise and example slides, the label of the section slides
+#   question, example, part     the pill of the question and example slides, the label of the section slides; the
+#                               first letter of question and example opens the PDF bookmark of the slide ("Q1.2")
 #   solution, answer            the words that open `#solution` and `#answer`, before the separator (".")
 #   caution, tip, remark, note, the titles of `callout` in the style "badge" (`example` too, the word above);
 #   examples                    [lang.xx.bar], the same in the style "bar", example included, which open the text (with
@@ -12,7 +13,7 @@
 #   tcc, dissertation, thesis   the tag of the cover of those flavors
 
 [lang.pt]
-exercise = "Exercício"
+question = "Questão"
 example = "Exemplo"
 part = "Parte"
 solution = "Solução"
@@ -40,7 +41,7 @@ example = "Exemplo."
 examples = "Exemplos."
 
 [lang.en]
-exercise = "Exercise"
+question = "Question"
 example = "Example"
 part = "Part"
 solution = "Solution"
@@ -68,7 +69,7 @@ example = "Example."
 examples = "Examples."
 
 [lang.es]
-exercise = "Ejercicio"
+question = "Pregunta"
 example = "Ejemplo"
 part = "Parte"
 solution = "Solución"

@@ -5,7 +5,7 @@ Modelo da skill touying-ufac (modo aula). Salve ao lado do deck (slide-NN/plano-
 
 - Tudo vem das fontes: o plano de curso (o JSON do ufac-syllabus, em data/), o README do repositório de aulas, os decks anteriores e a bibliografia. O que não está nelas vira pergunta ao professor.
 - Nada por encontro: sem data de aula, horário, sala, minutos por slide ou "na aula 3". O planejamento é por prova.
-- Toda resposta de exercício foi refeita por você (à mão, em Python ou conferida no livro) antes de entrar aqui.
+- Toda resposta de questão foi refeita por você (à mão, em Python ou conferida no livro) antes de entrar aqui.
 - A bibliografia serve ao conteúdo e não entra nos slides: na aula não há referências.
 -->
 
@@ -50,7 +50,7 @@ Ao fim do deck, o aluno consegue:
 
 ## Sequência por Parte
 
-<!-- Uma Parte (=) por assunto, na ordem lógica do conteúdo, com nome de assunto. Em cada assunto: exemplos introdutórios, definição, exemplos resolvidos, exercícios e resumo do assunto. Copie o bloco abaixo para cada Parte. -->
+<!-- Uma Parte (=) por assunto, na ordem lógica do conteúdo, com nome de assunto. Em cada assunto: exemplos introdutórios, definição, exemplos resolvidos e questões (as de sala e as para casa). Não há slide de resumo. Copie o bloco abaixo para cada Parte. -->
 
 ### Parte <N>: <assunto>
 
@@ -74,7 +74,7 @@ Ao fim do deck, o aluno consegue:
 |---|---|---|
 | <N.2> | <enunciado> | <solução> |
 
-**Exercícios discursivos** (`<exercise>`: enunciado, `---` e `#answer` com o desenvolvimento)
+**Questões discursivas** (`<question>`: enunciado, `---` e `#answer` com o desenvolvimento)
 
 | # | Enunciado ("calcule", "esboce", "mostre", "determine") | Resposta | Conferida como |
 |---|---|---|---|
@@ -87,30 +87,29 @@ Ao fim do deck, o aluno consegue:
 
 | Erro comum | Onde o deck ataca | Como |
 |---|---|---|
-| <o erro, como o aluno o comete> | <slide ou exercício> | <`#caution`, exemplo, item do exercício> |
+| <o erro, como o aluno o comete> | <slide ou questão> | <`#caution`, exemplo, item da questão> |
 
-<!-- ex.: | achar que a soma acumulada de $u[k]$ até $n$ dá $r[n]$ | Exercício 2.3 | `#caution` e a conta em n = 0 | -->
+<!-- ex.: | achar que a soma acumulada de $u[k]$ até $n$ dá $r[n]$ | Questão 2.3 | `#caution` e a conta em n = 0 | -->
 
 **Figuras e circuitos**
 
-| Figura | Ferramenta | Arquivo | Crédito (só imagem de fora) |
+| Figura | Ferramenta | Arquivo | Origem (só imagem de fora) |
 |---|---|---|---|
 | <o que mostra> | <zap, lilaq, fletcher, CeTZ; foto ou captura> | <`figures/<tipo>/<nome>.typ`; `assets/<nome>.jpg`> | <sem crédito; foto: autor, licença, link> |
 
 <!-- ex.: | circuito RC | zap | `figures/circuits/rc.typ` | sem crédito | -->
-<!-- Figura feita em Typst fica em figures/graphs/, diagrams/, drawings/ ou circuits/ e não leva crédito, nem quando é refeita de um livro. Crédito só de imagem tirada inteira de fora (foto, captura, capa de livro, meme), no slide "Créditos das imagens", no fim. -->
-
-**Resumo do assunto:** <2 a 4 ideias, com o nome do assunto no título do slide>.
+<!-- ex.: | o Sol (figura da Parte) | foto | `assets/fotos/sol.jpg` | NASA/SDO (AIA), domínio público, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg) | -->
+<!-- Figura feita em Typst fica em figures/graphs/, diagrams/, drawings/ ou circuits/ e não leva crédito, nem quando é refeita de um livro. Crédito só de imagem tirada inteira de fora (foto, captura, capa de livro, meme), e só aqui: na aula não há slide de créditos. -->
 
 ## Ritmo (estimativa)
 
-- Páginas previstas: <N> (<a> exemplos, <b> exercícios).
+- Páginas previstas: <N> (<a> exemplos, <b> questões).
 - Aulas estimadas: <N>, pelo ritmo dos decks anteriores (<páginas por aula>). É só estimativa; o deck não muda com ela.
 - Se atrasar, sai da sala e vira estudo em casa, sem cortar conteúdo de prova:
 
 | O que | Como o aluno estuda | Onde está no deck |
 |---|---|---|
-| <exercício ou exemplo repetido> | <em casa, com a resposta no deck> | <título do slide> |
+| <questão ou exemplo repetido> | <em casa, com a resposta no deck> | <título do slide> |
 
 - Nunca sai: a definição, o primeiro exemplo de cada assunto e o que a prova cobra.
 
@@ -120,7 +119,7 @@ Ao fim do deck, o aluno consegue:
 |---|---|---|
 | <tópico> | <N> | <"título", "título"> |
 
-<!-- Todo tópico da prova que cai neste deck tem ao menos um exemplo e um exercício. Um tópico do plano que não está aqui vai com o deck onde está. Depois de compilar, acrescente as páginas do PDF a cada título. -->
+<!-- Todo tópico da prova que cai neste deck tem ao menos um exemplo e uma questão. Um tópico do plano que não está aqui vai com o deck onde está. Depois de compilar, acrescente as páginas do PDF a cada título. -->
 
 ## Pendências para o professor
 

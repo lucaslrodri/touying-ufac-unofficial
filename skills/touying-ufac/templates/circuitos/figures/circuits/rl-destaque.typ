@@ -1,6 +1,6 @@
 // O circuito RL com o indutor em destaque (secondary-dark), com a corrente e a tensão no indutor.
 
-#import "@preview/touying-ufac-unofficial:0.3.0": colors
+#import "@preview/touying-ufac-unofficial:0.4.0": colors
 #import "@preview/zap:0.6.0"
 #import "/header.typ": zap-ufac, tensao, corrente
 

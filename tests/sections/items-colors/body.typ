@@ -1,7 +1,7 @@
 // Body of the `sections/items-colors` test: included by test.typ (Tytanic) and by /tests.typ (the catalogue).
 #import "../../common.typ": *
 
-== Everything without a style of its own <exercise>
+== Everything without a style of its own <question>
 ==== A subtitle in the color of the item
 Write a program that shows the *amount* of an investment month by month, as in the #link("https://www.ufac.br")[handout]:
 

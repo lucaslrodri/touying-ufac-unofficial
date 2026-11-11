@@ -1,7 +1,7 @@
 // Example deck of the touying-ufac-unofficial theme: the work of students for a course (`flavor: "coursework"`), with
 // the students and the teacher under their labels on the cover (the layout "stack" of the flavor) and `#info`.
 #import "@preview/touying:0.7.4": *
-#import "@preview/touying-ufac-unofficial:0.3.0": *
+#import "@preview/touying-ufac-unofficial:0.4.0": *
 
 #show: ufac-theme.with(
   lang: "en",

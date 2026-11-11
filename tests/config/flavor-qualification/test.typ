@@ -11,5 +11,5 @@
 
 #title-slide()
 
-== Uma questão para a banca <exercise>
-"Exercício 1": sem o prefixo da unidade, como no flavor.
+== Uma questão para a banca <question>
+"Questão 1": sem o prefixo da unidade, como no flavor.

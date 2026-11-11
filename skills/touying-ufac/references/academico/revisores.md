@@ -282,8 +282,8 @@ Subagente (general-purpose):
 
     ## Checklist
     T1. Compilação: código 0 e nenhum aviso no log; imports exatos
-        @preview/touying:0.7.4 e @preview/touying-ufac-unofficial:0.3.0 (ou
-        @local, com a 0.3.0 fora do Typst Universe: SKILL.md, "Antes de
+        @preview/touying:0.7.4 e @preview/touying-ufac-unofficial:0.4.0 (ou
+        @local, com a 0.4.0 fora do Typst Universe: SKILL.md, "Antes de
         começar") em todo .typ que importa o tema (o deck, o header.typ e os
         arquivos de figures/). BLOQUEIO no verificador.txt também é achado.
         Cada REVISAR dele recebe sua decisão: achado, ou verificação sem
