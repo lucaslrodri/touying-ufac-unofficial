@@ -54,7 +54,7 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - toda figura feita em Typst num arquivo seu, em `figures/<tipo>/<nome>.typ`: `graphs/` (lilaq), `diagrams/` (fletcher), `drawings/` (CeTZ), `circuits/` (zap);
    - os dados em `data/` (CSV e JSON);
    - as imagens prontas em `assets/` (fotos, capturas, o JSON dos ícones, o meme);
-   - as funções grandes no `header.typ`, na pasta do deck; na aula, também o que vários decks da disciplina usam (os dados do plano, o código da turma, o estilo dos gráficos), copiado do `header.typ` do deck anterior. Não há `common.typ` em nenhum modo.
+   - as funções grandes no `header.typ`, na pasta do deck.
 7. **Créditos e referências só no fim.**
    - Nenhuma "Fonte:", "Adaptado de" ou "Redesenhado de" na legenda nem no slide.
    - Crédito só de imagem tirada inteira de fora (foto, captura, capa de livro, meme), no slide "Créditos das imagens", no fim. Desenho do autor, ou refeito a partir de dados de outro trabalho, não leva crédito.
