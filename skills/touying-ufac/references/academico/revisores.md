@@ -449,7 +449,7 @@ Subagente (general-purpose):
 
 ## 7. Marcadores do modo acadêmico
 
-Os marcadores dos dois modos (`[REGRAS]`, `[PASTA_DECK]`, `[VERIFICADOR]` e os outros) estão em `references/revisores.md`, seção "Marcadores". No acadêmico, `[ENTRADA]` é `deck.typ`, `[RAIZ]` é a pasta do deck (a menos que ele leia arquivos de fora), não há `[COMMON]` e `[VERIFICADOR]` roda com `--modo academico` e `--minutos`.
+Os marcadores dos dois modos (`[REGRAS]`, `[PASTA_DECK]`, `[VERIFICADOR]` e os outros) estão em `references/revisores.md`, seção "Marcadores". No acadêmico, `[ENTRADA]` é `deck.typ`, `[RAIZ]` é a pasta do deck (a menos que ele leia arquivos de fora) e `[VERIFICADOR]` roda com `--modo academico` e `--minutos`.
 
 | Marcador | Conteúdo |
 |---|---|

@@ -15,7 +15,7 @@ A ordem em que cada assunto entra no deck e no plano de aula. Vale para qualquer
 
 Nunca a definição antes do exemplo introdutório. Nada de "aquecimento" nem de pergunta solta (regra Aula 1).
 
-Esqueleto de um assunto (trecho de deck; compilado abaixo do cabeçalho `ufac-theme.with(config-info(..))`, com Typst 0.15.1, touying 0.7.4 e tema 0.3.0, sem o `common.typ`):
+Esqueleto de um assunto (trecho de deck; compilado abaixo do cabeçalho `ufac-theme.with(config-info(..))`, com Typst 0.15.1, touying 0.7.4 e tema 0.3.0, sem o `header.typ`):
 
 ```typ
 = Energia e potência
@@ -112,7 +112,7 @@ O valor de $x(2t - 4)$ em $t$ é o de $x$ no ponto $2t - 4$.
 - **Elenco:** poucos sinais que voltam em todo assunto, no contínuo e no discreto (trapézio, pulso, degrau, rampa, $(1\/2)^n u[n]$, cosseno). O conceito novo se aplica primeiro a um deles: a forma já é conhecida, só o conceito é novo.
 - **Fio condutor:** um sistema físico que volta onde ajuda: o circuito RC ($v_C (t)$ como sinal, $e^(-t \/ R C)$, $v_C (n T_s)$ amostrado, resposta ao degrau), em poucos lugares escolhidos no plano.
 - O plano de aula escreve o elenco e o fio condutor, com fórmulas, e os decks seguintes os reusam.
-- O desenho de um sinal do elenco é um arquivo do deck, em `figures/graphs/` (regra 6), com o estilo de gráfico do `common.typ` da disciplina: o mesmo sinal sai igual em todos os decks, sem estilo copiado em cada um.
+- O desenho de um sinal do elenco é um arquivo do deck, em `figures/graphs/` (regra 6), com o estilo de gráfico da disciplina, que o `header.typ` de cada deck copia do anterior sem mudar: o mesmo sinal sai igual em todos os decks.
 
 ## 7. `#remark` só para retomar
 

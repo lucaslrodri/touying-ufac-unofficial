@@ -28,11 +28,11 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - função que reduza a letra;
    - figura colada como imagem com números ou rótulos menores que o corpo.
 
-   Referências, tabelas e rótulos de gráfico também ficam no tamanho do corpo. A legenda de figura é do tema (0.6em) e não se mexe. Se uma função do `common.typ` da disciplina reduz a letra, passe o tamanho no uso ou proponha ao professor ajustá-la.
+   Referências, tabelas e rótulos de gráfico também ficam no tamanho do corpo. A legenda de figura é do tema (0.6em) e não se mexe. Se uma função do `header.typ` que veio de outro deck reduz a letra, passe o tamanho no uso ou proponha ao professor ajustá-la.
 3. **Explícito é melhor que implícito.**
    - O código fica onde é usado: os componentes do tema como estão, e uma mudança pequena escrita no próprio slide, mesmo que se repita. Assim o deck guarda a identidade visual do tema.
    - O agente não cria função para tudo: nunca uma função pequena (até umas três linhas, cerca de 50 caracteres), nem uma que muda pouco o que se escreveria no slide, nem apelido de função (`#let a = b`), nem dicionário de argumentos espalhado com `..mini`.
-   - Função nova do agente só quando o código é grande e o tema não tem o recurso (o estilo de um gráfico, de um diagrama, de um circuito). Ela vai para o `header.typ` do deck; na aula, se vários decks da disciplina a usam, para o `common.typ` dela.
+   - Função nova do agente só quando o código é grande e o tema não tem o recurso (o estilo de um gráfico, de um diagrama, de um circuito). Ela vai para o `header.typ` do deck, também na aula quando vários decks da disciplina a usam: cada deck leva a sua cópia, e não há `common.typ`.
    - O usuário cria as funções que quiser, e as dele ficam: o agente não as remove nem as reescreve sem pedido. O verificador aponta toda função pequena, só para informar.
 4. **Figuras:**
    - gráficos com lilaq, lendo os dados de `data/`;
@@ -54,7 +54,7 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
    - toda figura feita em Typst num arquivo seu, em `figures/<tipo>/<nome>.typ`: `graphs/` (lilaq), `diagrams/` (fletcher), `drawings/` (CeTZ), `circuits/` (zap);
    - os dados em `data/` (CSV e JSON);
    - as imagens prontas em `assets/` (fotos, capturas, o JSON dos ícones, o meme);
-   - as funções grandes do deck no `header.typ`; na aula, o que vários decks da disciplina usam (os dados do plano, o estilo dos gráficos) no `common.typ` da pasta da disciplina. No acadêmico não há `common.typ`.
+   - as funções grandes no `header.typ`, na pasta do deck; na aula, também o que vários decks da disciplina usam (os dados do plano, o código da turma, o estilo dos gráficos), copiado do `header.typ` do deck anterior. Não há `common.typ` em nenhum modo.
 7. **Créditos e referências só no fim.**
    - Nenhuma "Fonte:", "Adaptado de" ou "Redesenhado de" na legenda nem no slide.
    - Crédito só de imagem tirada inteira de fora (foto, captura, capa de livro, meme), no slide "Créditos das imagens", no fim. Desenho do autor, ou refeito a partir de dados de outro trabalho, não leva crédito.
@@ -63,7 +63,7 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
 
 ## Antes de começar: o tema 0.3.0
 
-Os modelos importam o tema pelo nome publicado, `@preview/touying-ufac-unofficial:0.3.0`. Se a 0.3.0 ainda não estiver no Typst Universe, use a versão de desenvolvimento como pacote local: se `@local/touying-ufac-unofficial:0.3.0` não estiver instalado, instale o branch `develop` do [repositório](https://github.com/lucaslrodri/touying-ufac-unofficial) (com o gotpm, ou copiando-o para a pasta de pacotes locais do Typst) e troque `@preview` por `@local` no import do tema, em todo `.typ` que o importa (o deck, o `header.typ`, o `common.typ` e os arquivos de `figures/`). Diga ao usuário o que instalou e onde.
+Os modelos importam o tema pelo nome publicado, `@preview/touying-ufac-unofficial:0.3.0`. Se a 0.3.0 ainda não estiver no Typst Universe, use a versão de desenvolvimento como pacote local: se `@local/touying-ufac-unofficial:0.3.0` não estiver instalado, instale o branch `develop` do [repositório](https://github.com/lucaslrodri/touying-ufac-unofficial) (com o gotpm, ou copiando-o para a pasta de pacotes locais do Typst) e troque `@preview` por `@local` no import do tema, em todo `.typ` que o importa (o deck, o `header.typ` e os arquivos de `figures/`). Diga ao usuário o que instalou e onde.
 
 ## Pastas
 
@@ -71,11 +71,10 @@ Aula, uma pasta por disciplina e um deck por pasta (`templates/aula/`):
 
 ```
 <disciplina>/
-├── common.typ          o que vários decks usam: os dados do plano, o estilo dos gráficos e diagramas
 ├── data/               CSV e JSON da disciplina (o plano do ufac-syllabus)
 └── slide-NN/           um deck por assunto, nunca "encontro-N"
     ├── slide-NN.typ    o deck (compile com: typst compile --root .. slide-NN.typ)
-    ├── header.typ      só as funções grandes deste deck, quando houver
+    ├── header.typ      as funções grandes e o que vários decks usam: o plano, o estilo dos gráficos
     ├── plano-de-aula.md
     ├── figures/{graphs,diagrams,drawings,circuits}/<nome>.typ
     └── assets/         fotos, capturas, ícones, meme
@@ -94,7 +93,7 @@ Acadêmico, uma pasta por apresentação (`templates/academico/`):
 └── assets/             fotos e capturas
 ```
 
-Uma figura entra no slide pelo arquivo dela: `#align(center, include "figures/graphs/soc.typ")`, ou `#figure(include "figures/graphs/soc.typ", caption: [..])`. O arquivo importa o que usa (o tema, o lilaq, o zap) e lê os dados por caminho absoluto a partir da raiz da compilação: `/data/soc.csv` no acadêmico, `/common.typ` e `/data/<disciplina>-plano.json` na aula; os arquivos do próprio deck da aula, por `../../` (`../../header.typ`). O estilo do zap e o exemplo de cada circuito estão em `templates/circuitos/`.
+Uma figura entra no slide pelo arquivo dela: `#align(center, include "figures/graphs/soc.typ")`, ou `#figure(include "figures/graphs/soc.typ", caption: [..])`. O arquivo importa o que usa (o tema, o lilaq, o zap) e lê os dados por caminho absoluto a partir da raiz da compilação: `/data/soc.csv` no acadêmico, `/data/<disciplina>-plano.json` na aula; os arquivos do próprio deck da aula, por `../../` (`../../header.typ`). O estilo do zap e o exemplo de cada circuito estão em `templates/circuitos/`.
 
 ## Créditos e referências
 
@@ -141,7 +140,7 @@ Crie uma tarefa para cada passo.
 
    Mostre o plano ao professor antes dos slides, a menos que ele já tenha pedido os slides direto.
 3. **Primeira aula:** os slides de apresentação do curso, conforme `references/aula/apresentacao-do-curso.md`.
-4. **Escrever o deck:** copie `templates/aula/slide-01/` para `<disciplina>/slide-NN/` (e `templates/aula/common.typ` para a pasta da disciplina, se ela não tiver um). Use `references/padroes-do-tema.md` (sintaxe, componentes, pastas e armadilhas), `references/zap.md` para circuitos e `references/aula/pedagogia.md` para a ordem didática.
+4. **Escrever o deck:** copie `templates/aula/slide-01/` para `<disciplina>/slide-NN/`. Se a disciplina já tem decks, troque o `header.typ` do modelo pelo do deck anterior e deixe nele só o que este deck usa. Use `references/padroes-do-tema.md` (sintaxe, componentes, pastas e armadilhas), `references/zap.md` para circuitos e `references/aula/pedagogia.md` para a ordem didática.
 5. **Compilar e verificar:**
    - `typst compile --root .. slide-NN.typ` e PNGs das páginas;
    - `python3 scripts/folha_de_contato.py <deck.pdf>`;
@@ -234,7 +233,7 @@ Na aula:
 | "A solução junto do enunciado economiza página." | No exercício, a resposta vem depois de `---`. |
 | "Resumo do encontro" ou "Na próxima aula…" | Resumo por assunto; o fim é "Fim!" e meme. |
 | "Cito o livro no slide." | Na aula não há referências. |
-| "A função do curso já reduz a letra do gráfico." | Passe o tamanho no uso ou proponha ajustar o `common.typ`. |
+| "A função do curso já reduz a letra do gráfico." | Passe o tamanho no uso ou proponha ao professor ajustá-la, no `header.typ`. |
 
 No acadêmico:
 

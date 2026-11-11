@@ -192,7 +192,7 @@ Pendência ao autor: a Tabela 4.2 dá 0,6% e o data/soc.csv dá 0,7% (p. 41)
 Decisão: <o que decidi>; <por quê>; <o que custa se eu estiver errado>
 ```
 
-- **Na entrega** (SKILL.md, passo "Entregar com evidência"), o relatório traz o último veredito de cada revisor, as decisões e os menores adiados. Na aula, também as propostas ao professor para o `common.typ` e os candidatos a meme; no acadêmico, as pendências ao autor e as perguntas da banca sem resposta no deck.
+- **Na entrega** (SKILL.md, passo "Entregar com evidência"), o relatório traz o último veredito de cada revisor, as decisões e os menores adiados. Na aula, também as propostas ao professor para as funções do `header.typ` que vieram de outros decks e os candidatos a meme; no acadêmico, as pendências ao autor e as perguntas da banca sem resposta no deck.
 
 ## 7. Marcadores
 
@@ -207,7 +207,6 @@ Os marcadores que valem nos dois modos. Os de cada modo (a disciplina, o trabalh
 | `[PADROES]`, `[ZAP]` | `references/padroes-do-tema.md`, `references/zap.md` |
 | `[PASTA_DECK]` | a pasta do deck, com o `header.typ`, `figures/` e `assets/` (no acadêmico, também `data/` e o `referencias.bib`) |
 | `[ENTRADA]`, `[RAIZ]` | o caminho do arquivo de entrada (o `slide-NN.typ` na aula, o `deck.typ` no acadêmico); a raiz do `--root` (na aula, a pasta da disciplina, acima do deck; no acadêmico, a pasta do deck) |
-| `[COMMON]` | só na aula: o `common.typ` da pasta da disciplina (`[RAIZ]/common.typ`). No acadêmico não há `common.typ`, e os prompts do modo não têm o marcador |
 | `[TMP]`, `[P]` | pasta temporária da sessão; pacote da rodada (`[TMP]/revisao-<deck>/r<N>`) |
 | `[VERIFICADOR]` | o passo "Compilar e verificar" do SKILL.md sobre o PDF recém-compilado: na aula, `python3 scripts/verificar_deck.py --modo aula [PASTA_DECK] <deck.pdf>`; no acadêmico, `python3 scripts/verificar_deck.py --modo academico [PASTA_DECK] <deck.pdf> --minutos <N>` |
 | `[ACHADOS]` | achados consolidados, literais |

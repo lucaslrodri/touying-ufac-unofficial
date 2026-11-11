@@ -1,5 +1,5 @@
 // A exponencial decrescente do exercício, x(t) = e^(-t) u(t): zero antes de t = 0 e e^(-t) depois.
-#import "/common.typ": grafico
+#import "../../header.typ": grafico
 #import "@preview/lilaq:0.6.0" as lq
 #import "@preview/touying-ufac-unofficial:0.3.0": colors
 

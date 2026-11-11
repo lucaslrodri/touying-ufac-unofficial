@@ -6,19 +6,18 @@ Todo circuito é desenhado com o zap (regra 4), nunca com CeTZ à mão nem como 
 
 | O quê | Onde |
 |---|---|
-| o estilo (`zap-ufac`) e as funções `tensao`, `corrente` e `regiao` | no `header.typ` do deck; na aula, se vários decks da disciplina têm circuitos, no `common.typ` da pasta da disciplina, uma vez só |
+| o estilo (`zap-ufac`) e as funções `tensao`, `corrente` e `regiao` | no `header.typ` do deck; na aula, se vários decks da disciplina têm circuitos, cada um leva a sua cópia |
 | cada circuito | num arquivo em `figures/circuits/<nome>.typ`, que importa o zap e o que usa do estilo |
 | o slide | só inclui o arquivo: `#align(center, include "figures/circuits/rc-serie.typ")` |
 
 - Para começar, copie `templates/circuitos/header.typ` para a pasta do deck. Se o deck já tem um `header.typ`, copie para ele os dois imports e as quatro funções.
 - O deck não importa o zap nem o estilo: só o arquivo do circuito os usa.
-- O arquivo do circuito importa pelo nome o que usa (regra 3). O caminho depende do modo e de onde está o estilo:
+- O arquivo do circuito importa pelo nome o que usa (regra 3). O caminho depende do modo:
 
 | Modo | Estilo no | Import no arquivo do circuito |
 |---|---|---|
 | Acadêmico | `header.typ` do deck | `#import "/header.typ": zap-ufac, tensao, corrente` |
 | Aula | `header.typ` do deck | `#import "../../header.typ": zap-ufac, tensao, corrente` |
-| Aula | `common.typ` da disciplina | `#import "/common.typ": zap-ufac, tensao, corrente` |
 
 No acadêmico, a raiz da compilação é a pasta da apresentação, e `/header.typ` é o do deck. Na aula, a raiz é a pasta da disciplina (`--root ..`): ali `/header.typ` não existe, e o do deck se alcança de `figures/circuits/` por `../../`.
 
@@ -28,8 +27,8 @@ No acadêmico, a raiz da compilação é a pasta da apresentação, e `/header.t
 #import "@preview/zap:0.6.0"
 ```
 
-- Essa linha vai no `header.typ` (ou no `common.typ`), para o estilo, e em cada arquivo de `figures/circuits/`, para o `zap.circuit`.
-- Não use `import "@preview/zap:0.6.0": *` no topo de um arquivo. Escreva `import zap: *` só dentro do bloco do circuito: no topo, `node`, `wire`, `switch` e `symbol` do zap passam a valer no arquivo todo, e o `node` do zap encobre o do fletcher (no `common.typ` da aula, em todo deck que o importa).
+- Essa linha vai no `header.typ`, para o estilo, e em cada arquivo de `figures/circuits/`, para o `zap.circuit`.
+- Não use `import "@preview/zap:0.6.0": *` no topo de um arquivo. Escreva `import zap: *` só dentro do bloco do circuito: no topo, `node`, `wire`, `switch` e `symbol` do zap passam a valer no arquivo todo, e o `node` do zap encobre o do fletcher (no `header.typ`, também em todo arquivo que o importa).
 - O CeTZ vem dentro do zap, como `zap.cetz`, ou `cetz` depois do `import zap: *`. Não importe outro.
 
 ## 3. API essencial
@@ -159,7 +158,7 @@ Se o mesmo circuito aparece em vários slides, inclua o mesmo arquivo em cada um
 | Erro "value none was equal to none" | Fio de comprimento zero, `wire(p, p)` | Tire o fio |
 | Erro "unknown variable: set-style" | O `set-style` é do CeTZ | `zap.cetz.draw.set-style(..)` (o `zap-ufac` já usa) |
 | Erro "unknown variable: zap-ufac" (ou `tensao`, `corrente`, `regiao`) | O arquivo do circuito não importou a função | `#import "/header.typ": zap-ufac, ..` com o caminho da seção 1 |
-| Erro "file not found" no `/header.typ`, na aula | Na aula, a raiz é a pasta da disciplina | `"../../header.typ"`, ou `"/common.typ"` se o estilo está lá |
+| Erro "file not found" no `/header.typ`, na aula | Na aula, a raiz é a pasta da disciplina | `"../../header.typ"` |
 | "R i(t)" lido como produto | O `label` e o `i:` nativo saem do mesmo lado | `corrente()` no fio |
 | Rótulo do `u:` nativo em cima da seta (componente vertical) | O zap afasta o rótulo pela altura, não pela largura | `tensao()` |
 | A tensão caiu em cima do rótulo | `tensao(lado: "north")` usa o lado do rótulo | Mude o rótulo: `label: (content: $R$, anchor: "south")` |

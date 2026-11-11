@@ -20,8 +20,8 @@ Os slides que apresentam a disciplina na primeira aula: informações, ementa, u
 | bibliografia | JSON | `bibliography.main` e `bibliography.complementary` |
 | fórmulas das notas | `plano-de-curso.typ` | argumento `assignments` (o JSON não as traz) |
 | seminário: temas e data | JSON | a entrada com `grade: "T"` (`topics`, `date`) |
-| o plano de curso | `common.typ` da disciplina | `plano`, lido de `/data/<disciplina>-plano.json` |
-| código da turma | `common.typ` da disciplina | `codigo-turma` |
+| o plano de curso | `header.typ` do deck | `plano`, lido de `/data/<disciplina>-plano.json` |
+| código da turma | `header.typ` do deck | `codigo-turma` |
 | print do Classroom, capas dos livros | `assets/` do deck | `assets/classroom.png`, `assets/livros/` |
 
 O que não está nessas fontes não entra: sala, contato, horário de atendimento. Pergunte ao professor e anote como pendência.
@@ -65,14 +65,14 @@ As capas e o print do Classroom entram nos "Créditos das imagens", no fim do de
 
 ## O código
 
-O arquivo começa assim. O `plano` e o `codigo-turma` vêm do `common.typ` da disciplina; os ícones Phosphor (`"ph:.."`), do `assets/icones-ph.json` que o deck passa ao `provide-icons` dentro da capa.
+O arquivo começa assim. O `plano` e o `codigo-turma` vêm do `header.typ` do deck; os ícones Phosphor (`"ph:.."`), do `assets/icones-ph.json` que o deck passa ao `provide-icons` dentro da capa.
 
 ```typ
-// Apresentação do curso: a primeira Parte do deck da Unidade I. Tudo lido do plano de curso (`plano`, do common.typ).
+// Apresentação do curso: a primeira Parte do deck da Unidade I. Tudo lido do plano de curso (`plano`, do header.typ).
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *
 #import "@local/ufac-syllabus:0.0.3": deck
-#import "/common.typ": plano, codigo-turma
+#import "header.typ": plano, codigo-turma
 
 #let curso = deck.course(plano)
 
@@ -177,7 +177,7 @@ O que o PPC diz que a disciplina cobre. Os itens com #tag[seminário] ficam para
 
 O mapa tem uma linha por prova: as unidades que ela cobra, em algarismos romanos, a prova e a data estimada embaixo dela. Tudo no tamanho do corpo e lido do plano.
 
-Se a disciplina ainda não tem esse mapa, crie `figures/diagrams/mapa-do-curso.typ` com o código abaixo e mostre-o ao professor. O arquivo é a figura: ele importa o fletcher e o `ufac-syllabus`, lê o plano pelo `/common.typ` e não define função. Um mapa com rótulos menores que o corpo ou com datas escritas à mão fica de fora (regra 2 e "nada inventado"): o antigo de Sinais e Sistemas tinha rótulos a `.5em` (cerca de 10 pt) e o recesso escrito à mão.
+Se a disciplina ainda não tem esse mapa, crie `figures/diagrams/mapa-do-curso.typ` com o código abaixo e mostre-o ao professor. O arquivo é a figura: ele importa o fletcher e o `ufac-syllabus`, lê o plano pelo `header.typ` do deck (`../../header.typ`) e não define função. Um mapa com rótulos menores que o corpo ou com datas escritas à mão fica de fora (regra 2 e "nada inventado"): o antigo de Sinais e Sistemas tinha rótulos a `.5em` (cerca de 10 pt) e o recesso escrito à mão.
 
 ```typ
 // Mapa do curso: uma linha por prova, com as unidades que ela cobra (em algarismos romanos), a prova e a data
@@ -187,7 +187,7 @@ Se a disciplina ainda não tem esse mapa, crie `figures/diagrams/mapa-do-curso.t
 #import "@preview/touying-ufac-unofficial:0.3.0": colors
 #import "@preview/fletcher:0.5.8": diagram, node, edge
 #import "@local/ufac-syllabus:0.0.3": deck
-#import "/common.typ": plano
+#import "../../header.typ": plano
 
 #{
   let linhas = ((),)

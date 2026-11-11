@@ -2,9 +2,9 @@
 """Verificador mecânico de um deck feito com o tema touying-ufac-unofficial, nos dois modos da skill touying-ufac.
 
 Lê os .typ do deck, fora de comentários e de blocos de código, e o PDF compilado, e aponta o que fere as regras da
-skill: as comuns e as do modo. Os .typ lidos são os do nível de cima da pasta do deck (os slides), o header.typ, os
-de figures/ (em todas as subpastas) e, na aula, o common.typ da pasta da disciplina (a pasta acima da do deck). Só
-biblioteca padrão; chama pdftotext, pdfinfo e typst.
+skill: as comuns e as do modo. Os .typ lidos são os do nível de cima da pasta do deck (os slides), o header.typ e os
+de figures/ (em todas as subpastas); um common.typ que ainda exista, na pasta do deck ou, na aula, na da
+disciplina, também. Só biblioteca padrão; chama pdftotext, pdfinfo e typst.
 
 Uso: python3 verificar_deck.py --modo {aula,academico} <pasta-do-deck> <deck.pdf> [--minutos N] [--json]
 
@@ -13,8 +13,8 @@ Uso: python3 verificar_deck.py --modo {aula,academico} <pasta-do-deck> <deck.pdf
   academico  a apresentação de um trabalho (flavor "tcc", "dissertation", "thesis" ou "coursework"); aceita
              também "acadêmico". A raiz da compilação é a própria pasta do deck. Só neste modo vale --minutos N,
              que confere o número de slides de conteúdo com o tempo.
---min-caracteres-funcao N (padrão: 50, umas três linhas): o corpo mínimo, em caracteres sem espaço, de uma função do header.typ, de
-  figures/ ou do common.typ; uma função menor que isso, ou um apelido de função, sai como FUNCAO_PEQUENA.
+--min-caracteres-funcao N (padrão: 50, umas três linhas): o corpo mínimo, em caracteres sem espaço, de uma função do header.typ ou de
+  figures/; uma função menor que isso, ou um apelido de função, sai como FUNCAO_PEQUENA.
 """
 import argparse
 import bisect
@@ -37,22 +37,22 @@ Modos: --modo aula ou --modo academico (ou acadêmico), obrigatório. As verific
 dois; [aula] e [acadêmico] marcam as de um modo só.
 
 Arquivos lidos, fora de comentários e de blocos de código: os .typ do nível de cima da pasta do deck (os slides),
-o header.typ, figures/**/*.typ e, na aula, o ../common.typ da pasta da disciplina (ou o ../comum.typ, se só ele
-existir). Os locais dos achados são relativos à pasta do deck: slide-01.typ:40, figures/graphs/soc.typ:12,
-../common.typ:30.
+o header.typ e figures/**/*.typ. Na aula, um ../common.typ (ou ../comum.typ) que ainda exista na pasta da
+disciplina também é lido, para os achados dele. Os locais dos achados são relativos à pasta do deck:
+slide-01.typ:40, figures/graphs/soc.typ:12, ../common.typ:30.
 
 Verificações: CÓDIGO (gravidade) e o que dispara.
 
 Modo e pastas:
 - MODO_E_FLAVOR (AVISO): o --modo não bate com o flavor do config-info ("lecture" é aula; "tcc", "dissertation",
   "thesis" e "coursework" são acadêmico).
-- NOME_DO_COMMON (AVISO) [aula]: a pasta da disciplina tem comum.typ e não common.typ: renomeie.
-- COMMON_NO_ACADEMICO (REVISAR) [acadêmico]: há common.typ ou comum.typ na pasta do deck, ou um .typ importa um
-  deles. No acadêmico não há common.typ: as funções grandes vão para o header.typ.
+- COMMON_TYP (REVISAR): há common.typ ou comum.typ na pasta do deck (ou, na aula, na da disciplina), ou um .typ
+  importa um deles. Não há common.typ em nenhum modo: as funções grandes, o plano e o estilo dos gráficos vão
+  para o header.typ do deck.
 - FIGURA_SEM_TIPO (AVISO): .typ direto em figures/, ou numa subpasta que não é graphs/, diagrams/, drawings/ ou
   circuits/.
 - CAMINHO_FORA_DO_LUGAR (AVISO): image() fora de assets/; csv(), json(), read(), yaml(), toml() ou xml() fora de
-  data/ ou assets/ (na aula, também o data/ da disciplina); na aula, common.typ dentro da pasta do deck.
+  data/ ou assets/ (na aula, também o data/ da disciplina).
 
 Letra e espaço:
 - LETRA_REDUZIDA (BLOQUEIO): text(size:) ou set text(size:) menor que 1em (ou que o corpo, em pt); scale() sobre
@@ -65,7 +65,7 @@ Letra e espaço:
 
 Funções (regra 3, explícito é melhor que implícito):
 - FUNCAO_NO_DECK (REVISAR): função num arquivo de slide: #let f(..), let f = (..) =>, let f = g.with(..) ou apelido
-  de função (#let a = b). O código vai no slide; função só se grande, no header.typ (ou no common.typ, na aula).
+  de função (#let a = b). O código vai no slide; função só se grande, no header.typ do deck.
 - FUNCAO_PEQUENA (AVISO): função do header.typ, de figures/ ou do common.typ com corpo de
   menos de --min-caracteres-funcao (50) caracteres sem espaço, g.with(..) curto ou apelido de função. Só informa: o
   agente não cria função pequena, e a do usuário fica.
@@ -516,8 +516,9 @@ def eh_slide_de(slides, ln, rx):
 
 
 def ler_fontes(pasta, modo, ach):
-    """Os .typ do deck: os do nível de cima (slides; o header.typ à parte), figures/** e, na aula, o common.typ da
-    pasta da disciplina."""
+    """Os .typ do deck: os do nível de cima (slides; o header.typ à parte) e figures/**. Um common.typ (ou comum.typ)
+    que ainda exista também, com o achado COMMON_TYP: na pasta do deck, lido como header; na aula, na pasta da
+    disciplina, como common."""
     fontes = []
     for n in sorted(os.listdir(pasta)):
         caminho = os.path.join(pasta, n)
@@ -528,14 +529,9 @@ def ler_fontes(pasta, modo, ach):
             papel = "header"
         elif n in NOMES_DO_COMMON:
             papel = "header"  # lido como as funções do próprio deck
-            if modo == "academico":
-                ach.add("REVISAR", "COMMON_NO_ACADEMICO", n,
-                        f"{n} na pasta da apresentação: no acadêmico não há common.typ. As funções grandes vão "
-                        "para o header.typ; o resto, escrito no slide.")
-            else:
-                ach.add("AVISO", "CAMINHO_FORA_DO_LUGAR", n,
-                        f"{n} dentro da pasta do deck: o common.typ fica na pasta da disciplina, acima da do deck; "
-                        "as funções grandes só deste deck vão para o header.typ.")
+            ach.add("REVISAR", "COMMON_TYP", n,
+                    f"{n} na pasta do deck: não há common.typ. O que ele traz (as funções grandes, o plano, o estilo "
+                    "dos gráficos) vai para o header.typ do deck; o resto, escrito no slide.")
         fontes.append(Fonte(caminho, n, papel))
     figuras = os.path.join(pasta, "figures")
     if os.path.isdir(figuras):
@@ -547,14 +543,14 @@ def ler_fontes(pasta, modo, ach):
                     fontes.append(Fonte(caminho, os.path.relpath(caminho, pasta).replace(os.sep, "/"), "figura"))
     if modo == "aula":
         pai = os.path.dirname(pasta)
-        common, comum = os.path.join(pai, "common.typ"), os.path.join(pai, "comum.typ")
-        if os.path.isfile(common):
-            fontes.append(Fonte(common, "../common.typ", "common"))
-        elif os.path.isfile(comum):
-            fontes.append(Fonte(comum, "../comum.typ", "common"))
-            ach.add("AVISO", "NOME_DO_COMMON", "../comum.typ",
-                    "A pasta da disciplina tem comum.typ: renomeie para common.typ, e troque os #import dele nos "
-                    "decks e nas figuras.")
+        for n in NOMES_DO_COMMON:
+            caminho = os.path.join(pai, n)
+            if os.path.isfile(caminho):
+                fontes.append(Fonte(caminho, f"../{n}", "common"))
+                ach.add("REVISAR", "COMMON_TYP", f"../{n}",
+                        f"{n} na pasta da disciplina: não há common.typ. O que o deck usa dele (o plano, o estilo "
+                        "dos gráficos, as funções grandes) vai para o header.typ do deck, uma cópia em cada deck.")
+                break
     return fontes
 
 
@@ -964,9 +960,7 @@ def verificar_funcoes(fontes, ach, min_caracteres, modo):
         if a.alvo in nomes_de_funcao or ("." in a.alvo and raiz in MODULOS):
             apelidos_de_funcao.append(a)
     nomes_de_funcao |= {a.nome for a in apelidos_de_funcao}
-    onde_vai = "no header.typ"
-    if modo == "aula":
-        onde_vai += " (ou no common.typ da disciplina, se vários decks a usam)"
+    onde_vai = "no header.typ do deck"
 
     # FUNCAO_NO_DECK: qualquer função ou apelido de função num arquivo de slide
     for d in sorted(funcoes + apelidos_de_funcao, key=lambda d: (d.fonte.nome, d.pos)):
@@ -1455,15 +1449,15 @@ RE_IMPORTA_COMMON = re.compile(r'(?<![\w.-])(?:import|include)\s+"([^"]*(?:commo
 
 
 def verificar_common_importado(fontes, ach):
-    """COMMON_NO_ACADEMICO: um achado só, com os arquivos que importam um common.typ ou comum.typ."""
+    """COMMON_TYP: um achado só, com os arquivos que importam um common.typ ou comum.typ."""
     importam = [(f, f.linha(m.start()), m.group(1)) for f in fontes for m in RE_IMPORTA_COMMON.finditer(f.texto)]
     if not importam:
         return
     f, ln, alvo = importam[0]
     onde = ", ".join(g.onde(l, True) for g, l, _ in importam[:5]) + (" ..." if len(importam) > 5 else "")
-    ach.add("REVISAR", "COMMON_NO_ACADEMICO", onde,
-            f'{len(importam)} arquivo(s) importam "{alvo}": no acadêmico não há common.typ. As funções grandes '
-            "vão para o header.typ da apresentação; o resto, escrito no slide ou no arquivo da figura.",
+    ach.add("REVISAR", "COMMON_TYP", onde,
+            f'{len(importam)} arquivo(s) importam "{alvo}": não há common.typ. O que ele traz vai para o header.typ '
+            "do deck, e os arquivos o importam de lá; o resto, escrito no slide ou no arquivo da figura.",
             f.trecho(ln))
 
 
@@ -1850,7 +1844,7 @@ def main():
     ap = Analisador(
         prog="verificar_deck.py",
         description="Verifica um deck touying-ufac contra as regras da skill touying-ufac, no modo dado (aula ou "
-        "acadêmico): os .typ do deck (slides, header.typ, figures/ e, na aula, o common.typ da disciplina) e o PDF "
+        "acadêmico): os .typ do deck (slides, header.typ e figures/) e o PDF "
         "compilado. Saída em tabela por gravidade (BLOQUEIO, REVISAR, AVISO).",
         epilog=AJUDA,
         formatter_class=Formatador,
@@ -1873,8 +1867,8 @@ def main():
     ap.add_argument("--minutos", type=int, metavar="N",
                     help="só no modo acadêmico: tempo da apresentação, para a verificação TEMPO")
     ap.add_argument("--min-caracteres-funcao", type=int, default=50, metavar="N",
-                    help="corpo mínimo, em caracteres sem espaço, de uma função do header.typ, de figures/ ou do "
-                    "common.typ; abaixo disso, FUNCAO_PEQUENA (padrão: 50, umas três linhas)")
+                    help="corpo mínimo, em caracteres sem espaço, de uma função do header.typ ou de "
+                    "figures/; abaixo disso, FUNCAO_PEQUENA (padrão: 50, umas três linhas)")
     ap.add_argument("--corpo", type=float, default=22.0, metavar="PT", help="corpo do tema em pt (padrão: 22)")
     ap.add_argument("--limiar", type=float, default=0.8, metavar="FRAÇÃO",
                     help="fração do corpo abaixo da qual o texto é letra pequena (padrão: 0.8)")
@@ -1945,13 +1939,13 @@ def main():
         verificar_tipos_de_figura(fontes, ach)
         verificar_funcoes(fontes, ach, args.min_caracteres_funcao, modo)
         verificar_circuitos(fontes, ach)
+        verificar_common_importado(deck, ach)
         if modo == "aula":
             verificar_arquivos(slides_f, ach)
             verificar_encerramento_aula(slides_f, ach)
         else:
             verificar_encerramento_academico(slides_f, ach)
             verificar_bibliografia(deck, ach)
-            verificar_common_importado(deck, ach)
 
         principal = None
         if not args.sem_compilar or args.minutos:

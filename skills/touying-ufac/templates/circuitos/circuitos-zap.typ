@@ -8,13 +8,11 @@
 // Como levar para um deck:
 //   1. O estilo vai no header.typ do deck. Se o deck ainda não tem um, copie este header.typ para a pasta dele (no
 //      acadêmico, ao lado do deck.typ; na aula, em slide-NN/); se já tem, copie para ele os dois imports e as
-//      funções. Na aula, se vários decks da disciplina têm circuitos, o estilo vai no common.typ da pasta da
-//      disciplina, uma vez só.
+//      funções. Na aula, cada deck com circuitos leva a sua cópia (não há common.typ).
 //   2. Cada circuito num arquivo de figures/circuits/<nome>.typ, que importa o zap e o que usa do estilo, como os
-//      daqui. O caminho do import muda com o lugar do estilo:
+//      daqui. O caminho do import muda com o modo:
 //        acadêmico (a raiz é a pasta da apresentação):  #import "/header.typ": zap-ufac, tensao, corrente
-//        aula, estilo no header.typ do deck:             #import "../../header.typ": zap-ufac, tensao, corrente
-//        aula, estilo no common.typ da disciplina:       #import "/common.typ": zap-ufac, tensao, corrente
+//        aula (a raiz é a pasta da disciplina):          #import "../../header.typ": zap-ufac, tensao, corrente
 //   3. No slide, o circuito entra pelo arquivo:
 //        #align(center, include "figures/circuits/rc-serie.typ")
 //

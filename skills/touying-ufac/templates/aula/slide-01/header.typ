@@ -1,7 +1,8 @@
-// Comum aos decks da disciplina (modelo do modo aula da skill touying-ufac; a disciplina do exemplo é Sinais e
-// Sistemas). Só o que vários decks usam: aqui, o estilo dos gráficos de sinal; numa disciplina de verdade, também os
-// dados do plano (data/<disciplina>-plano.json, do ufac-syllabus). A raiz da compilação é a pasta da disciplina
-// (`typst compile --root .. slide-NN.typ`), e os arquivos de figura o importam por `#import "/common.typ": grafico`.
+// O header.typ do deck (modelo do modo aula da skill touying-ufac; a disciplina do exemplo é Sinais e Sistemas): as
+// funções grandes e o que vários decks da disciplina usam. Aqui, o estilo dos gráficos de sinal; numa disciplina de
+// verdade, também os dados do plano (`#let plano = json("/data/<disciplina>-plano.json")`, do ufac-syllabus) e o
+// código da turma. Não há common.typ: cada deck leva a sua cópia, tirada do header.typ do deck anterior. Os arquivos
+// de figura o importam por `#import "../../header.typ": grafico`.
 #import "@preview/touying-ufac-unofficial:0.3.0": colors
 #import "@preview/lilaq:0.6.0" as lq
 

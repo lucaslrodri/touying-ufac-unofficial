@@ -47,7 +47,7 @@ gotpm install --install-dir "$tmp/gotpm" > /dev/null
 find "$tmp/gotpm" -name .DS_Store -delete
 diff -rq "$out" "$tmp/gotpm" >&2 || fail "gotpm would publish other files than scripts/package.sh: align the \`exclude\` of typst.toml"
 # the templates of the skill, each compiled with its folder as the root, where the absolute paths of its files start
-# (/common.typ, /data/soc.csv, /header.typ): a course folder in aula/, a deck folder in academico/ and circuitos/
+# (/data/soc.csv, /header.typ): a course folder in aula/, a deck folder in academico/ and circuitos/
 templates=skills/touying-ufac/templates
 for f in aula/slide-01/slide-01.typ academico/deck.typ circuitos/circuitos-zap.typ; do
   typst compile $typst_fonts --root "$templates/${f%%/*}" "$templates/$f" "$tmp/skill.pdf" ||

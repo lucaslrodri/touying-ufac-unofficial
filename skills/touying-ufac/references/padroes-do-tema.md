@@ -12,12 +12,11 @@ Uma pasta por disciplina, que é a raiz da compilação, e um deck por assunto:
 
 ```
 sinais-e-sistemas/               a raiz: typst compile --root .. slide-NN.typ, da pasta do deck
-├── common.typ                   o que vários decks usam: o plano, o estilo dos gráficos
 ├── data/
 │   └── sinais-e-sistemas-plano.json
 └── slide-01/
     ├── slide-01.typ             o deck
-    ├── header.typ               só se o deck tiver uma função grande que só ele usa
+    ├── header.typ               as funções grandes e o que vários decks usam: o plano, o estilo dos gráficos
     ├── plano-de-aula.md
     ├── figures/
     │   ├── graphs/pulso.typ
@@ -28,8 +27,8 @@ sinais-e-sistemas/               a raiz: typst compile --root .. slide-NN.typ, d
         └── meme.svg
 ```
 
-- O `common.typ` traz o que vários decks da disciplina usam: os dados do plano de curso (`#let plano = json("/data/<disciplina>-plano.json")`) e as funções grandes, como o estilo dos gráficos de sinal (no modelo, `grafico(..)`). Se a disciplina ainda não tem um, copie `templates/aula/common.typ`.
-- O `header.typ` do deck só existe se o deck tiver uma função grande que nenhum outro usa (regra 3). Se outro deck passar a usá-la, ela vai para o `common.typ`.
+- O `header.typ` do deck traz as funções grandes (regra 3) e o que vários decks da disciplina usam: os dados do plano de curso (`#let plano = json("/data/<disciplina>-plano.json")`), o código da turma e o estilo dos gráficos de sinal (no modelo, `grafico(..)`).
+- Não há `common.typ`: cada deck leva a sua cópia. No deck novo, copie o `header.typ` do deck anterior e deixe nele só o que este deck usa; no primeiro, use o de `templates/aula/slide-01/`.
 - Os dados ficam no `data/` da disciplina, não no deck.
 
 ### Acadêmico
@@ -51,7 +50,7 @@ defesa/                          a raiz: typst compile deck.typ, desta pasta
     └── fotos/
 ```
 
-- Não há `common.typ`: a apresentação é um deck só, e a função grande (o estilo de um circuito, por exemplo) vai no `header.typ`.
+- A apresentação é um deck só, e a função grande (o estilo de um circuito, por exemplo) vai no `header.typ`.
 - Os dados de cada figura vêm do trabalho: o CSV vai para `data/`, nunca os números copiados à mão.
 
 ### O arquivo de uma figura
@@ -67,7 +66,7 @@ Uma célula de 2,5 Ah descarrega a 0,75 A por 120 min.
 
 Com legenda, `#figure(include "figures/diagrams/ensaio.typ", caption: [..])`. O mesmo arquivo pode entrar em vários slides.
 
-- O arquivo importa o que usa: o tema (`colors`), o pacote do desenho e, se houver, a função grande do `header.typ` ou do `common.typ`, pelo nome.
+- O arquivo importa o que usa: o tema (`colors`), o pacote do desenho e, se houver, a função grande do `header.typ`, pelo nome.
 - É só a figura: o texto que diz o que olhar e a legenda ficam no slide.
 - O `#zero.set-num(..)` de um gráfico com vírgula decimal vai dentro do arquivo dele.
 - Os caminhos dentro do arquivo partem da raiz (com `/`) ou da pasta do próprio arquivo (sem `/`):
@@ -76,7 +75,6 @@ Com legenda, `#figure(include "figures/diagrams/ensaio.typ", caption: [..])`. O 
 |---|---|---|
 | a raiz da compilação | a pasta da disciplina | a pasta da apresentação |
 | os dados | `/data/<arquivo>` | `/data/<arquivo>` |
-| as funções da disciplina | `/common.typ` | não há |
 | as funções do deck | `../../header.typ` | `/header.typ` |
 | uma imagem do deck | `../../assets/<arquivo>` | `/assets/<arquivo>` |
 
@@ -361,13 +359,13 @@ Cada gráfico é um arquivo em `figures/graphs/<nome>.typ` (seção 1), que lê 
 
 ### Aula
 
-Use o estilo de gráfico do `common.typ` da disciplina. No modelo (`templates/aula/common.typ`), é a função `grafico(..)`, com os eixos pela origem e sem grade:
+Use o estilo de gráfico da disciplina, no `header.typ` do deck. No modelo (`templates/aula/slide-01/header.typ`), é a função `grafico(..)`, com os eixos pela origem e sem grade:
 
 ```typ
 // figures/graphs/pulso.typ: o pulso retangular do exemplo, no estilo da disciplina.
 
 #import "@preview/lilaq:0.6.0" as lq
-#import "/common.typ": grafico
+#import "../../header.typ": grafico
 
 #grafico(
   xlim: (-2.5, 2.5),
@@ -376,8 +374,8 @@ Use o estilo de gráfico do `common.typ` da disciplina. No modelo (`templates/au
 )
 ```
 
-- Se a disciplina não tem estilo de gráfico, use o lilaq direto, como no acadêmico. Um estilo que vários decks repetem vira uma função grande no `common.typ` (regra 3).
-- Se o estilo do `common.typ` reduz a letra (números a 13.6pt, rótulos a 17pt), passe o tamanho no uso, se a função deixar, ou proponha ao professor ajustá-la, em vez de contornar com outro gráfico no deck (regra 2).
+- Se a disciplina não tem estilo de gráfico, use o lilaq direto, como no acadêmico. Um estilo que vários decks repetem vira uma função grande no `header.typ`, copiada de um deck para o outro (regra 3).
+- Se o estilo do `header.typ` reduz a letra (números a 13.6pt, rótulos a 17pt), passe o tamanho no uso, se a função deixar, ou proponha ao professor ajustá-la, em vez de contornar com outro gráfico no deck (regra 2).
 - Num gráfico de sinal, prefira a legenda, ou o rótulo na ponta do eixo, ao `ylabel` girado 90°.
 
 ### Acadêmico
@@ -449,9 +447,9 @@ A maior distância do Kalman à referência foi de 0,6%.
 ```
 
 - O fluxo do método e os diagramas de blocos são feitos com fletcher, em `figures/diagrams/`; desenhos, com CeTZ, em `figures/drawings/`; circuitos, sempre com zap, em `figures/circuits/` (`references/zap.md`).
-- O estilo de cada nó se escreve nele, mesmo que se repita, como acima (regra 3). Uma função de estilo só se o código for grande: no `header.typ` do deck ou, na aula, se vários decks a usam, no `common.typ`.
+- O estilo de cada nó se escreve nele, mesmo que se repita, como acima (regra 3). Uma função de estilo só se o código for grande: no `header.typ` do deck, mesmo que vários decks a usem.
 - CeTZ: `#import "@preview/cetz:0.5.2"` e `cetz.canvas(length: 1.4em, { import cetz.draw: *; .. })`; com `length` em `em`, o desenho acompanha a letra. Rótulos sem `size:` e traços em `colors.*`.
-- Na aula, se um estilo do `common.typ` reduz a letra, passe o tamanho no uso, se a função deixar, ou proponha ao professor ajustá-lo, sem criar uma cópia no deck (regra 2).
+- Na aula, se um estilo do `header.typ` que veio de outro deck reduz a letra, passe o tamanho no uso, se a função deixar, ou proponha ao professor ajustá-lo, sem criar outra versão dele no deck (regra 2).
 
 ## 9. Referências (só no acadêmico)
 

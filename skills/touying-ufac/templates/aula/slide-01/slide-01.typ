@@ -1,10 +1,11 @@
 // Modelo de deck do modo aula da skill touying-ufac (touying-ufac-unofficial 0.3.0). O conteúdo é de Sinais e
-// Sistemas, só de exemplo. Copie esta pasta para <disciplina>/slide-NN/ (e o ../common.typ para a pasta da
-// disciplina, se ela não tiver um) e compile da pasta do deck; a raiz é a pasta da disciplina:
+// Sistemas, só de exemplo. Copie esta pasta para <disciplina>/slide-NN/ (se a disciplina já tem decks, com o
+// header.typ do anterior no lugar do daqui) e compile da pasta do deck; a raiz é a pasta da disciplina:
 //   typst compile --root .. slide-NN.typ
-// Pastas: as figuras feitas em Typst em figures/<tipo>/, as imagens prontas em assets/, os dados em ../data/ e, quando
-// houver uma função grande só deste deck, o header.typ. Cada assunto: Parte (=), exemplo introdutório, definição,
-// exemplos, exercícios, resumo. Sintaxe e componentes: references/padroes-do-tema.md.
+// Pastas: as figuras feitas em Typst em figures/<tipo>/, as imagens prontas em assets/, os dados em ../data/ e, no
+// header.typ, as funções grandes e o que vários decks usam (o plano, o estilo dos gráficos); não há common.typ.
+// Cada assunto: Parte (=), exemplo introdutório, definição, exemplos, exercícios, resumo. Sintaxe e componentes:
+// references/padroes-do-tema.md.
 
 #import "@preview/touying:0.7.4": *
 #import "@preview/touying-ufac-unofficial:0.3.0": *

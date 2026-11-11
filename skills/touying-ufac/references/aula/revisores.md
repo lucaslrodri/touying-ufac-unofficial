@@ -10,7 +10,7 @@ Os prompts de R1, R2, R3 e do corretor para um deck de aula. O protocolo (o flux
 | plano de aula aprovado | sim | só objetivos e pré-requisitos | não | sim |
 | `references/aula/pedagogia.md` | sim | não | não | sim |
 | decks anteriores do curso | sim (para os `#remark`) | não | não | não |
-| fontes do deck (`slide-NN.typ`, `header.typ`, `figures/`, `assets/`), o `common.typ` e os dados de `data/` da disciplina | sim | **não** | sim | sim |
+| fontes do deck (`slide-NN.typ`, `header.typ`, `figures/`, `assets/`) e os dados de `data/` da disciplina | sim | **não** | sim | sim |
 | `deck.pdf`, `png/`, `texto/`, `mapa.tsv` | sim | sim | sim | sim |
 | `compilacao.log`, `verificador.txt`, `folha.png` | não | não | sim | sim |
 | `references/padroes-do-tema.md`, `references/zap.md` | não | não | sim | sim |
@@ -30,7 +30,7 @@ A ordem na rodada e os princípios (violação de regra nunca é menor; justific
 
 ## 3. R1: conteúdo e contas
 
-Recebe: regras, plano aprovado, `pedagogia.md`, decks anteriores, fontes, `common.typ`, dados, PDF, PNGs, texto e mapa. Não recebe: relatório do autor, log, verificador, achados dos outros.
+Recebe: regras, plano aprovado, `pedagogia.md`, decks anteriores, fontes, dados, PDF, PNGs, texto e mapa. Não recebe: relatório do autor, log, verificador, achados dos outros.
 
 ```text
 Subagente (general-purpose):
@@ -49,8 +49,8 @@ Subagente (general-purpose):
     Decks anteriores do curso (só para saber o que já foi visto): [DECKS_ANTERIORES]
 
     ## Material
-    Fontes: [PASTA_DECK] (o deck, o header.typ e as figuras de figures/),
-    [COMMON] e os dados que as figuras leem, em [RAIZ]/data/
+    Fontes: [PASTA_DECK] (o deck, o header.typ e as figuras de figures/)
+    e os dados que as figuras leem, em [RAIZ]/data/
     PDF: [P]/deck.pdf · páginas: [P]/png/ · texto por página: [P]/texto/
     Mapa página -> título -> arquivo.typ:linha: [P]/mapa.tsv
 
@@ -210,7 +210,7 @@ Subagente (general-purpose):
 
 ## 5. R3: tema e layout
 
-Recebe: regras, `padroes-do-tema.md`, `zap.md`, fontes, `common.typ`, log, verificador, PDF, PNGs, folha e mapa. Não recebe: plano, relatório do autor, justificativas de layout.
+Recebe: regras, `padroes-do-tema.md`, `zap.md`, fontes, log, verificador, PDF, PNGs, folha e mapa. Não recebe: plano, relatório do autor, justificativas de layout.
 
 ```text
 Subagente (general-purpose):
@@ -228,7 +228,7 @@ Subagente (general-purpose):
     Circuitos: [ZAP]
 
     ## Material
-    Fontes: [PASTA_DECK] (o deck, o header.typ, figures/ e assets/) e [COMMON]
+    Fontes: [PASTA_DECK] (o deck, o header.typ, figures/ e assets/)
     Compilação feita agora: [P]/compilacao.log (última linha: código de saída)
     Verificador mecânico: [P]/verificador.txt (é uma alegação: confira)
     PDF: [P]/deck.pdf · páginas: [P]/png/ · folha: [P]/folha.png
@@ -244,7 +244,7 @@ Subagente (general-purpose):
     awk '/^ *\/\//{next} /^ *= /{s++} /^ *== /{c++} /^ *---[ \t]*$/{q++} /#pause/{p++} /#[a-z-]*slide[[(]/{f++} END{print "esperadas:", s+c+q+p+f, "(" f+0 " slides por função, " s+0 " seções, " c+0 " slides, " q+0 " quebras, " p+0 " pausas)"}' *.typ
     pdfinfo [P]/deck.pdf | grep Pages
     # letra no código
-    grep -rnE --include='*.typ' "size:|scale\(|inset:|margin:" . [COMMON]
+    grep -rnE --include='*.typ' "size:|scale\(|inset:|margin:" .
     # letra no PDF: palavras de texto menores que o corpo (22pt), fora do rodapé
     pdftotext -bbox [P]/deck.pdf - | awk -F'"' '/<page /{p++} /<word /{h=sprintf("%.1f",$8-$4); w=$9; gsub(/^>|<\/word>$/,"",w); if (h+0<21.5 && $4+0<440 && w~/[A-Za-z][A-Za-z]/) printf "p.%d\t%spt\t%s\n",p,h,w}'
     # funções, apelidos e dicionários de argumentos definidos no deck
@@ -265,13 +265,13 @@ Subagente (general-purpose):
     # travessão no texto
     grep -rn --include='*.typ' "—" . | grep -vE "^[^:]+:[0-9]+: *//"
     # figuras: pacotes, imagens, includes e desenho no slide (no header.typ, só o estilo)
-    grep -rnE --include='*.typ' "@preview/(zap|lilaq|fletcher|cetz)" . [COMMON]
+    grep -rnE --include='*.typ' "@preview/(zap|lilaq|fletcher|cetz)" .
     grep -rnE --include='*.typ' "image\(|include " .
     grep -nE "diagram\(|canvas\(|circuit\(|circuito\(" *.typ
     # pastas: arquivo fora do lugar e caminho fora do lugar
     find . -type f ! -name '*.typ' ! -name '*.md' ! -name '*.pdf' ! -path './assets/*' ! -path './figures/*'
     find ./figures -type f 2>/dev/null | grep -vE '^\./figures/(graphs|diagrams|drawings|circuits)/[^/]+\.typ$'
-    grep -rnoE --include='*.typ' '"[^"@]+\.(typ|csv|json|png|jpe?g|svg|gif|webp)"' . [COMMON] | grep -vE '"(/|(\.\./)+)?((assets|data)/|figures/(graphs|diagrams|drawings|circuits)/|(header|common)\.typ")'
+    grep -rnoE --include='*.typ' '"[^"@]+\.(typ|csv|json|png|jpe?g|svg|gif|webp)"' . | grep -vE '"(/|(\.\./)+)?((assets|data)/|figures/(graphs|diagrams|drawings|circuits)/|header\.typ")'
     # fontes, referências e créditos
     grep -rniE --include='*.typ' "fonte:|adaptad[oa] de|redesenhad|bibliography\(|cite\(|refer[êe]ncias|cr[ée]ditos" .
 
@@ -279,8 +279,8 @@ Subagente (general-purpose):
     T1. Compilação: código 0 e nenhum aviso no log; imports exatos
         @preview/touying:0.7.4 e @preview/touying-ufac-unofficial:0.3.0 (ou
         @local, com a 0.3.0 fora do Typst Universe: SKILL.md, "Antes de
-        começar") em todo .typ que importa o tema (o deck, o header.typ, o
-        common.typ e os arquivos de figures/).
+        começar") em todo .typ que importa o tema (o deck, o header.typ e os
+        arquivos de figures/).
         BLOQUEIO no verificador.txt também é achado. Cada REVISAR dele recebe
         sua decisão: achado, ou verificação sem achado com o motivo.
     T2. Transbordo: páginas obtidas diferentes das esperadas, ou título
@@ -293,14 +293,14 @@ Subagente (general-purpose):
         elemento sobre o cabeçalho ou o rodapé.
     T4. Letra (regra 2): text(size:) ou set text(size:) menor que 1em,
         scale() sobre texto, inset ou margem apertados, função que reduz a
-        letra (também no header.typ, em figures/ e no common.typ), um show
+        letra (também no header.typ e em figures/), um show
         figure.caption no deck, e toda palavra da busca no PDF. Números e
         rótulos de gráfico: confira no PNG e no arquivo da figura. Não
         contam: rodapé, número da página, etiqueta da capa, "PARTE N",
         legenda de figura (0.6em, do tema), índices e limites de fórmulas.
-        Uma função do common.typ que reduz a letra é um achado só, com as
-        páginas; a correção é passar o tamanho no uso ou propor o ajuste ao
-        professor.
+        Uma função do header.typ vinda de outro deck que reduz a letra é um
+        achado só, com as páginas; a correção é passar o tamanho no uso ou
+        propor o ajuste ao professor.
     T5. Exercício e exemplo (regras Aula 1 e Aula 2): == Título <exercise>
         (ou #exercise-slide), enunciado, --- e #answer; == Título <example>
         com #solution, na mesma página se couber, senão depois de ---;
@@ -316,11 +316,11 @@ Subagente (general-purpose):
         arquivos. A correção é escrever no slide o componente do tema ou o
         código, mesmo que se repita. Fica a função grande de um recurso que o
         tema não tem (o estilo de um gráfico, de um diagrama, de um
-        circuito): no header.typ do deck, ou no common.typ se vários decks da
-        disciplina a usam. Não é achado ler os dados num #let dentro do
+        circuito): no header.typ do deck, mesmo que vários decks da
+        disciplina a usem. Não é achado ler os dados num #let dentro do
         arquivo da figura (csv(..), json(..)). Função pequena ou apelido do
-        common.typ que o deck usa: um achado só; a correção é o código
-        escrito no slide e a proposta ao professor.
+        header.typ que veio de outro deck: um achado só; a correção é o
+        código escrito no slide e a proposta ao professor.
     T7. Callouts e destaques (regra 5): #caution só para erro a evitar, #tip
         para atalho, #remark só para retomar, #note para o secundário ou para
         um assunto adiante (pelo nome, nunca "próxima aula"), #example e
@@ -396,7 +396,7 @@ Subagente (general-purpose):
     Regras (literais; "regra 3" é das comuns, "regra Aula 2" é da aula): [REGRAS]
     Plano de aula: [PLANO] · Sequência didática: [PEDAGOGIA]
     Padrões do tema: [PADROES] · Circuitos: [ZAP]
-    Fontes: [PASTA_DECK] e [COMMON] · pacote: [P] (deck.pdf, png/, texto/, mapa.tsv)
+    Fontes: [PASTA_DECK] · pacote: [P] (deck.pdf, png/, texto/, mapa.tsv)
     Registro: [REGISTRO] · relatório desta rodada (você escreve): [RELATORIO]
 
     ## Passo 1: confirmar, sem editar nada
@@ -428,9 +428,10 @@ Subagente (general-purpose):
     para a pasta dele, com os caminhos ajustados; "Fonte:" e referência saem
     do slide, e o crédito de imagem de fora vai para "Créditos das imagens".
     Edite só o que é do deck: [PASTA_DECK] e os arquivos dele que forem
-    para [RAIZ]/data/. Nunca edite o common.typ nem o tema: o que pede
-    mudança neles vira proposta ao professor, no relatório. Achado menor não
-    se corrige agora: liste-o. Não mexa no que nenhum achado tocou.
+    para [RAIZ]/data/. Nunca edite o tema nem as funções do header.typ que
+    vieram de outros decks: o que pede mudança neles vira proposta ao
+    professor, no relatório. Achado menor não se corrige agora: liste-o.
+    Não mexa no que nenhum achado tocou.
 
     ## Passo 3: verificar cada correção
     Recompile (código 0, nenhum aviso), renderize as páginas afetadas e
@@ -441,7 +442,7 @@ Subagente (general-purpose):
     ## Retorno
     No relatório, por achado: veredito, evidência, mudança (arquivo.typ:linha),
     comando rodado, saída e páginas novas; depois as propostas ao professor
-    para o common.typ, os menores adiados e o mapa antigo -> novo. Para mim,
+    para o header.typ, os menores adiados e o mapa antigo -> novo. Para mim,
     em até 15 linhas: Status (FEITO | FEITO_COM_RESSALVAS |
     PRECISA_DE_CONTEXTO | BLOQUEADO); confirmados / não confirmados /
     conflitos; a linha da compilação; o resultado do verificador; o caminho
@@ -450,7 +451,7 @@ Subagente (general-purpose):
 
 ## 7. Marcadores do modo aula
 
-Os marcadores dos dois modos (`[REGRAS]`, `[PASTA_DECK]`, `[COMMON]`, `[VERIFICADOR]` e os outros) estão em `references/revisores.md`, seção "Marcadores". Na aula, `[ENTRADA]` é `slide-NN.typ`, `[RAIZ]` é a pasta da disciplina (`..`, a partir do deck), `[COMMON]` é o `common.typ` dela e `[VERIFICADOR]` roda com `--modo aula`.
+Os marcadores dos dois modos (`[REGRAS]`, `[PASTA_DECK]`, `[VERIFICADOR]` e os outros) estão em `references/revisores.md`, seção "Marcadores". Na aula, `[ENTRADA]` é `slide-NN.typ`, `[RAIZ]` é a pasta da disciplina (`..`, a partir do deck) e `[VERIFICADOR]` roda com `--modo aula`.
 
 | Marcador | Conteúdo |
 |---|---|

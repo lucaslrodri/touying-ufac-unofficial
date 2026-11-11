@@ -1,5 +1,5 @@
-// O pulso retangular do exemplo: x(t) = 3 para -1 <= t <= 1 e 0 fora, no estilo da disciplina (/common.typ).
-#import "/common.typ": grafico
+// O pulso retangular do exemplo: x(t) = 3 para -1 <= t <= 1 e 0 fora, no estilo da disciplina (../../header.typ).
+#import "../../header.typ": grafico
 #import "@preview/lilaq:0.6.0" as lq
 
 #grafico(
