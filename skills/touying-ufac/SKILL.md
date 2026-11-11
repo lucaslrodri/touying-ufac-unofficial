@@ -43,6 +43,8 @@ Escolha o modo pelo pedido; num deck que já existe, pelo `flavor` do `config-in
 
    Cores só do tema (`colors.*`), nada de `rgb()` ou hexadecimal.
 
+   **Folga onde faz sentido ter margem.** Elementos que pedem margem não encostam nem se sobrepõem: rótulo, número, seta, ponta de seta, linha de chamada ou de ampliação, borda de caixa e peça de desenho ficam separados do vizinho por uma folga pequena e visível no projetor (cerca de 0,2em). A seta para um pouco antes do alvo; a linha de chamada termina perto da peça, sem tocá-la; peças empilhadas, como os discos de uma coluna, ficam separadas; nenhuma linha passa por cima de uma peça ou de um rótulo que não seja o dela. Não precisa de folga o que se toca no objeto real: os dentes de duas engrenagens, o eixo que atravessa um disco.
+
    A figura de cada Parte (o quadro ao lado do título do `=`) representa o assunto: um diagrama, um gráfico, um processo ou um desenho feito por você em `figures/`, ou a foto de uma pessoa ou de um objeto, de fonte livre e com crédito. Nunca um ícone: ícone na Parte só na apresentação do curso, no modo aula.
 5. **Só os callouts do tema:**
    - `#caution`: na aula, um erro a evitar; no acadêmico, uma limitação ou um cuidado;
@@ -218,6 +220,7 @@ Em todo deck:
 | Pensamento | O certo |
 |---|---|
 | "Cabe se eu diminuir um pouco a letra." | Quebre em dois slides; no acadêmico, ou leve à reserva. |
+| "Encostou um pouco, mas dá para entender." | No projetor, o que encosta parece erro: afaste até ter folga visível (regra 4). |
 | "Vou criar uma funçãozinha para esta caixa, ou para a foto." | Escreva no slide, com o componente do tema. |
 | "Escrevo o gráfico direto no slide." | Um arquivo em `figures/graphs/`, incluído no slide. |
 | "Ponho a fonte na legenda." | Crédito só de imagem de fora: no acadêmico, no fim; na aula, só no `plano-de-aula.md`. |

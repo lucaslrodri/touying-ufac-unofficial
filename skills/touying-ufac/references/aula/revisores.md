@@ -292,7 +292,11 @@ Subagente (general-purpose):
         deixando um buraco.
     T3. Sobreposição, no PNG: texto sobre figura, rótulo sobre a curva,
         rótulo que cruza a borda de uma caixa ou encosta na borda da página,
-        elemento sobre o cabeçalho ou o rodapé.
+        elemento sobre o cabeçalho ou o rodapé. Dentro de cada figura, no PNG
+        ampliado: rótulo, seta, ponta de seta, linha de chamada ou de
+        ampliação, borda ou peça que encosta em outro elemento ou passa por
+        cima dele, sem folga visível (regra 4). Não conta o que se toca no
+        objeto real (os dentes de duas engrenagens, um eixo).
     T4. Letra (regra 2): text(size:) ou set text(size:) menor que 1em,
         scale() sobre texto, inset ou margem apertados, função que reduz a
         letra (também no header.typ e em figures/), um show
