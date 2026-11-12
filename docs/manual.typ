@@ -82,7 +82,7 @@ The theme needs *Typst #package.compiler or later*. Typst fetches the packages b
 )
 
 touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.4, which also works with Typst 0.14.
-codly and codly-languages are imported by the deck that wants them (@codly, @codly-languages).
+codly and codly-languages are imported by the deck that wants them (@integrations).
 
 #[
 #set par(justify: false)   // the long chips of this paragraph would leave wide gaps between the words
@@ -793,9 +793,8 @@ through codly with the same look, the same language pills included, and codly's 
 The theme knows the languages most used in engineering (@code). For the others, the
 #link("https://typst.app/universe/package/codly-languages")[codly-languages] package has hundreds, with their logos:
 the deck imports it and passes its dictionary to `ufac-theme(code-languages:)`, with or without codly. The languages of
-the theme keep their pills, so `python` still shows the logo of the theme and `m` is still MATLAB; the logos of the
-package come out at the height of the theme's. A language that neither the theme nor the package knows goes in the
-same dictionary, as SPICE here:
+the theme keep their pills, so `python` still shows the logo of the theme and `m` is still MATLAB, and the logos of the
+package come out at the height of the theme's:
 
 ```typ
 #import "@preview/codly-languages:0.1.10": codly-languages
@@ -834,8 +833,8 @@ the colored ones keep their colors.
 `"warning"` and `"caution"` are the same icon, under the name of 0.2.0 and the one of the callout. The Octicons the
 theme ships also answer to their own names: `"alert"`, `"light-bulb"`, `"info"`, `"note"`,
 `"history"`, `"pencil"`, `"beaker"`, `"file-code"`, `"terminal"` and `"mail"`. The logos of the languages of the
-code blocks (@code) are shipped too, under their full names: `code-languages.rust.icon` gives
-`"material-icon-theme:rust"`, for `#icon(code-languages.rust.icon)`. The icons come from
+code blocks (@code) ship too: `#icon(code-languages.rust.icon)`, or by the full name,
+`#icon("material-icon-theme:rust")`. The icons come from
 #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT license),
 #link("https://phosphoricons.com/")[Phosphor] (MIT license), #link("https://devicon.dev/")[Devicon] (MIT license),
 #link("https://simpleicons.org/")[Simple Icons] (CC0),
@@ -878,14 +877,16 @@ reads "Questão" / "Question" / "Pregunta". A deck of 0.3.0 changes these names;
   [`#exercise-slide(..)`], [`#question-slide(..)`, with the same arguments],
   [`ufac-theme(exercise-name: ..)`], [`ufac-theme(question-name: ..)`],
   [`ufac-theme(exercise-icon: ..)`], [`ufac-theme(question-icon: ..)`],
-  [`#icon("exercise")`, `emph-box(icon: "exercise")`, `#tip(icon: "exercise")`, `question-icon: "exercise"`],
+  [`#icon("exercise")`, `emph-box(icon: "exercise")`, `#tip(icon: "exercise")`, `exercise-icon: "exercise"`],
   [`#icon("question")`, `emph-box(icon: "question")`, `#tip(icon: "question")`, `question-icon: "question"`],
 )
 
 The languages of the theme keep their pills (@code): `ufac-theme(code-languages:)` adds languages but no longer replaces
-those the theme knows. A deck that gave a language of the theme another name or icon there
-(`python: (name: "Python 3", ..)`) now gets the pill of the theme, with no error; to keep its own, it writes its blocks
-under a key the theme does not use (`py3`).
+those the theme knows, and the theme knows many more now, with short keys such as `c`, `m`, `v` and `s` (the table in
+@code). A deck that gave one of these keys a name or an icon of its own there, as `python: (name: "Python 3", ..)` or
+`v: (name: "Coq", ..)`, now gets the pill of the theme, with no error. To keep its own, it moves the entry to a key the
+theme does not use and that Typst still colors, and writes its blocks under it: `py3: (name: "Python 3", ..)` and a
+block in `py3`.
 
 The bookmarks of the PDF of a question or example now carry its initial and number, "Q1.2 — Title" (@items); a deck
 needs no change for it.

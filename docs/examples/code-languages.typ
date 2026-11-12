@@ -26,6 +26,6 @@ tide(t) = 1.2 * cos(2π * t / 12.4)
 R1 in out 1k
 ```
 
-```python
-print("the pill of the theme")
+```m
+disp("the pill of the theme")
 ```
