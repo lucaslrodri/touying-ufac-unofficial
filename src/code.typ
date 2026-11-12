@@ -89,7 +89,7 @@
 
 /// Icon of a language, in `c` (the logos keep their colors), centered on the capitals of the name: the name of an
 /// `icon` or content, such as a logo of the codly-languages package, an image at 130% of its box: in a box of 1/1.3 of
-/// the height, it comes out at the height of the other icons.
+/// the height, with its baseline at the bottom of the icon, it comes out at the height and place of the other icons.
 /// -> content | none
 #let _lang-icon(
   /// Icon of the language. -> none | str | content
@@ -98,7 +98,7 @@
   c,
 ) = if ic == none { none } else if type(ic) == str {
   _centered(s => icon(ic, color: c, size: s, baseline: 0pt), 1em)
-} else { _centered(s => box(height: s, box(height: s / 1.3, ic)), 1em) }
+} else { _centered(s => box(height: s, box(height: s / 1.3, baseline: s / 1.3 - s, ic)), 1em) }
 
 /// Pill of the language of a block: white, with the border and the text in `c`, the icon and the name. The border is the
 /// color lightened 55%: a darker one weighed on the slide, mostly on a reduced one, where the PDF viewer draws the thin

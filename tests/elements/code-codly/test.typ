@@ -1,9 +1,11 @@
-/// Synopsis: code blocks through codly 2 (`ufac-theme(codly: codly)`): the same look as without codly, the console in the gray box of the output too, plus codly's file name, highlights, range and diff; `code-languages` adds a language.
+/// Synopsis: code blocks through codly 2 (`ufac-theme(codly: codly)`): the same look as without codly, the console in the gray box of the output too, plus codly's file name, highlights, range and diff; `code-languages` adds a language, and a language of the codly-languages package keeps its logo through codly, at the height of the icons of the theme.
 #import "@preview/touying:0.7.4": *
 #import "../../../src/lib.typ": *
 #import "@preview/codly:2.0.0" as codly
+#import "@preview/codly-languages:0.1.10": codly-languages
 #import "../../common.typ": test-info
-#show: ufac-theme.with(lang: "en", codly: codly, code-languages: (zig: (name: "Zig", icon: none)), test-info)
+#show: ufac-theme.with(lang: "en", codly: codly, code-languages: codly-languages + (zig: (name: "Zig", icon: none)),
+  test-info)
 
 == Code through codly 2
 The same look as without codly: the box, the numbers, the language pill and the output in gray.
@@ -48,3 +50,12 @@ pub fn main() void {}
   print(y)
   ```
 ]
+
+== A language of codly-languages through codly
+The logo of the package, at the height of the icons of the theme, and `python` with the pill of the theme:
+```julia
+f(x) = 2x + 1
+```
+```python
+print(f(1))
+```
