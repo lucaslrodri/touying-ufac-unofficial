@@ -1,9 +1,9 @@
-/// Synopsis: code blocks through codly 2 (`ufac-theme(codly: codly)`): the same look as without codly, plus codly's file name, highlights, range and diff; `code-languages` adds a language.
+/// Synopsis: code blocks through codly 2 (`ufac-theme(codly: codly)`): the same look as without codly, the console in the gray box of the output too, plus codly's file name, highlights, range and diff; `code-languages` adds a language.
 #import "@preview/touying:0.7.4": *
 #import "../../../src/lib.typ": *
 #import "@preview/codly:2.0.0" as codly
 #import "../../common.typ": test-info
-#show: ufac-theme.with(lang: "en", codly: codly, code-languages: (rust: (name: "Rust", icon: none)), test-info)
+#show: ufac-theme.with(lang: "en", codly: codly, code-languages: (zig: (name: "Zig", icon: none)), test-info)
 
 == Code through codly 2
 The same look as without codly: the box, the numbers, the language pill and the output in gray.
@@ -11,12 +11,18 @@ The same look as without codly: the box, the numbers, the language pill and the 
 def mean(values):
     return sum(values) / len(values)
 ```
-```text
-8.333333333333334
-```
+#cols[
+  ```text
+  8.333333333333334
+  ```
+][
+  ```console
+  $ python mean.py
+  ```
+]
 A language added with `code-languages` (no icon):
-```rust
-fn main() {}
+```zig
+pub fn main() void {}
 ```
 
 == codly's own features

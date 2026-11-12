@@ -60,6 +60,10 @@
 
 // code: the languages of the theme and codly's theme as plain data
 #assert.eq(code-languages.python.name, "Python")
+#assert.eq(code-languages.m, code-languages.matlab)
+#assert.eq(code-languages.at("c++").name, "C++")
+#assert.eq(code-languages.console.name, auto)
+#assert.eq(type(icon(code-languages.lean.icon)), content)
 #assert.eq(type(codly-ufac-theme), dictionary)
 #assert.eq(codly-ufac-theme.radius, 0pt)
 

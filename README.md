@@ -314,6 +314,6 @@ $ overline(x) = 20 "min", quad s = sqrt((100 + 25 + 0 + 25 + 100) / 4) approx 7.
 
 The theme is [MIT](LICENSE). The [template](template/) is [MIT-0](LICENSE-MIT-0): a deck made from it needs no attribution.
 
-The icons in [assets/icons/](assets/icons/) come from [Octicons](https://primer.style/octicons/) (© GitHub Inc., MIT License), [Phosphor](https://phosphoricons.com/) (MIT License), [Devicon](https://devicon.dev/) (MIT License), [Simple Icons](https://simpleicons.org/) (CC0), [Material Icon Theme](https://github.com/material-extensions/vscode-material-icon-theme) (MIT License) and [VSCode Icons](https://github.com/vscode-icons/vscode-icons) (MIT License), in [Iconify](https://iconify.design/) format.
+The icons in [assets/icons/](assets/icons/) come from [Octicons](https://primer.style/octicons/) (© GitHub Inc., MIT License), [Phosphor](https://phosphoricons.com/) (MIT License), [Devicon](https://devicon.dev/) (MIT License), [Simple Icons](https://simpleicons.org/) (CC0), [Material Icon Theme](https://github.com/material-extensions/vscode-material-icon-theme) (MIT License), [VSCode Icons](https://github.com/vscode-icons/vscode-icons) (MIT License) and [File Icons](https://github.com/file-icons/icons) (ISC License), in [Iconify](https://iconify.design/) format.
 
 The UFAC logo ([assets/ufac-logo.svg](assets/ufac-logo.svg)) belongs to the [Federal University of Acre](https://www.ufac.br/). This theme is unofficial: the university does not endorse it.

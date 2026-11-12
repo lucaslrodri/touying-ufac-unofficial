@@ -1,6 +1,6 @@
 // Shared body of the `config/lang-*` tests: the same deck rendered with `lang: "pt-br"` (the default), `"en"` and `"es"`.
 // Checked: `text.lang`/`region`, the smart quotes of the language, the titles of the callouts, the pill names, the
-// section prefix, a reference, the word of the solution and the pill of the output.
+// section prefix, a reference, the word of the solution and the pills of the output and of the console.
 #import "../common.typ": *
 #title-slide()
 
@@ -26,8 +26,14 @@ The word of the solution.
 #remark[The title of a reminder.] #note[The title of a note.]
 #cols[#example[In the singular.]][#examples[In the plural.]]
 #examples(style: "badge")[The plural on the badge, without the period.]
-```text
-the output of a program
-```
+#cols[
+  ```text
+  the output of a program
+  ```
+][
+  ```console
+  $ typst compile
+  ```
+]
 
 #question-slide(title: [By function])[Same localized name from `#question-slide`.]

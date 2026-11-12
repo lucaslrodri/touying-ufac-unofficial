@@ -3,11 +3,11 @@
 // package for the icons a deck provides itself (`provide-icons`).
 #import "@preview/iconify:0.5.3" as _iconify
 
-/// The collections shipped by the theme, by prefix: Octicons (the roles of the theme), Phosphor (code), Devicon (the
-/// logos of the languages), Simple Icons (the Typst logo), Material Icon Theme (the terminal of the shell) and VSCode
-/// Icons (the output of a program).
+/// The collections shipped by the theme, by prefix: Octicons (the roles of the theme), Phosphor (code), and the logos
+/// of the languages of the code blocks (`code-languages`): Devicon, Material Icon Theme (also the terminal of the
+/// shell), VSCode Icons (also the output of a program), and Simple Icons and File Icons, in one color.
 /// -> dictionary
-#let _shipped = ("octicon", "ph", "devicon", "simple-icons", "material-icon-theme", "vscode-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
+#let _shipped = ("octicon", "ph", "devicon", "simple-icons", "material-icon-theme", "vscode-icons", "file-icons").map(p => (p, json("../assets/icons/" + p + ".json"))).to-dict()
 
 /// The icon of each role of the theme, as `"collection:name"`: Octicons (size 16) for the callouts, the
 /// badges of questions and examples, the file name of a code block, the terminal and the contact; Phosphor in the bold weight

@@ -4,12 +4,14 @@
 
 Breaking changes, and how to move a 0.3.0 deck:
 
+- The languages of the theme keep their pills: `ufac-theme(code-languages:)` adds languages but no longer replaces those the theme knows (it could rename `python` in 0.3.0), so the dictionary of the codly-languages package can go there whole.
 - The exercises are questions: the badge reads "Questão" / "Question" / "Pregunta", and every name of the theme that said `exercise` says `question`. `== Title <exercise>` → `== Title <question>`; `<exercise-id>` → `<question-id>`, so `@exercise-id` → `@question-id` and `#touying-recall(<exercise-id>)` → `#touying-recall(<question-id>)`; `#exercise-slide(..)` → `#question-slide(..)`, with the same arguments; `ufac-theme(exercise-name: ..)` → `question-name:` and `ufac-theme(exercise-icon: ..)` → `question-icon:`; the icon `"exercise"` → `"question"` (`#icon`, `emph-box(icon:)`, a callout). `#answer` and the rest stay as they are. A name of 0.3.0 left in the deck stops it with the new one, an `@exercise-id` too when nothing in the deck carries that label (see *Moving from 0.3.0* in the manual).
 
 New:
 
 - The PDF bookmarks of a question or example carry its initial, its number and its title, after a dash: "Q1.2 — Title", "E1.1 — Title"; "Q1" with `counter-prefix: none`, and "Q1.2" alone without a title. The initial is the one of the name on the badge, in the language of the deck ("P" for "Pregunta") or of `question-name` and `example-name`. The continuation pages of a question add no bookmark, the other slides and the sections keep their titles alone, and Typst's own `outline` (`std.outline`) lists the slides with the same text.
 - The skill for AI agents (`skills/touying-ufac/`) writes questions (`<question>`, `#question-slide`).
+- The code blocks know the languages most used in engineering, each with its logo in the pill: MATLAB (also `m`), Python, C, C++, Arduino (`ino`), Rust, Fortran, R, Assembly (also x86, ARM and RISC-V), VHDL, Verilog, SystemVerilog, Typst, LaTeX, Lean, Markdown, HTML, JavaScript, TypeScript, OpenSCAD, Bash and Shell; a console session (`console`) goes in the gray box of the output, as "Console" / "Consola". For other languages, the deck passes the dictionary of the codly-languages package to `ufac-theme(code-languages:)`, and its logos come out at the height of the theme's (see *Code* in the manual).
 
 ## 0.3.0
 

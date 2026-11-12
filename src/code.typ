@@ -4,7 +4,7 @@
 // and passes to the theme (`ufac-theme(codly: codly)`), the same look is applied through codly's own theme
 // (`codly-ufac-theme`, plain data) and rules. Inside a colored box (a question, an `emph-box`) a block keeps its look.
 #import "constants.typ": colors
-#import "utils.typ": _tr, _words
+#import "utils.typ": _words
 #import "components.typ": icon
 
 /// The syntax colors of the code blocks: a tmTheme with the palette of the theme and general scopes (comments in
@@ -12,9 +12,9 @@
 /// -> bytes
 #let ufac-syntax = read("../assets/ufac.tmTheme", encoding: none)
 
-/// Languages whose block is the output of a program: the gray box, without line numbers.
+/// Languages whose block is the output of a program or a console session: the gray box, without line numbers.
 /// -> array
-#let _output-langs = ("text", "txt", "output")
+#let _output-langs = ("text", "txt", "output", "console")
 
 /// Colors of the box of a block: the bar, the fill and the thin border; blue for code, gray for an output. The same
 /// everywhere: inside a colored box a block keeps its own look.
@@ -30,26 +30,49 @@
   (bar: colors.primary, fill: colors.primary.lighten(96%), edge: colors.primary.lighten(60%))
 }
 
-/// The languages the theme knows: the name in the pill of a block and its icon (a name of `icon`, content or `none`).
-/// The languages with a logo show it; the shell (`bash`, `sh`) shows a colored terminal. `ufac-theme(code-languages:)`
-/// adds languages or replaces any of them except the output, in the same format. The output (`text`, `txt`,
-/// `output`) is "Saída" / "Output" / "Salida" in the language of the deck (`name: auto`).
+/// The languages the theme knows, the most common in engineering: the name in the pill of a block and its icon (a
+/// name of `icon`, content or `none`). The logos keep their colors; the shell (`bash`, `sh`) shows a colored terminal.
+/// The output (`text`, `txt`, `output`) and the console (`console`) are words of the theme in the language of the deck
+/// (`name: auto`): "Saída" / "Output" / "Salida" and "Console" / "Console" / "Consola". `ufac-theme(code-languages:)`
+/// adds others, in the same format, such as the hundreds of the codly-languages package; a language of this dictionary
+/// keeps its pill.
 ///
-/// #test(`code-languages.python.name == "Python"`, `code-languages.text.name == auto`,
-///   `code-languages.bash.icon == "shell"`)
+/// #test(`code-languages.python.name == "Python"`, `code-languages.m.name == "MATLAB"`,
+///   `code-languages.text.name == auto`, `code-languages.bash.icon == "shell"`)
 /// -> dictionary
-#let code-languages = (
-  python: (name: "Python", icon: "python"),
-  py: (name: "Python", icon: "python"),
-  typst: (name: "Typst", icon: "typst"),
-  typ: (name: "Typst", icon: "typst"),
-  matlab: (name: "MATLAB", icon: "matlab"),
-  bash: (name: "Bash", icon: "shell"),
-  sh: (name: "Shell", icon: "shell"),
-  text: (name: auto, icon: "output"),
-  txt: (name: auto, icon: "output"),
-  output: (name: auto, icon: "output"),
-)
+#let code-languages = {
+  // each language under its keys: the name and the icon
+  let langs = (
+    (("python", "py"), "Python", "python"),
+    (("matlab", "m"), "MATLAB", "matlab"),
+    (("c", "h"), "C", "material-icon-theme:c"),
+    (("cpp", "c++", "cc", "hpp"), "C++", "material-icon-theme:cpp"),
+    (("arduino", "ino"), "Arduino", "material-icon-theme:arduino"),
+    (("rust", "rs"), "Rust", "material-icon-theme:rust"),
+    (("fortran", "f90"), "Fortran", "material-icon-theme:fortran"),
+    (("r",), "R", "devicon:r"),
+    (("asm", "s", "assembly"), "Assembly", "material-icon-theme:assembly"),
+    (("x86", "nasm"), "Assembly x86", "file-icons:assembly-intel"),
+    (("arm", "armasm"), "Assembly ARM", "file-icons:assembly-arm"),
+    (("riscv",), "Assembly RISC-V", "file-icons:assembly-riscv"),
+    (("vhdl", "vhd"), "VHDL", "file-icons:vhdl"),
+    (("verilog", "v"), "Verilog", "material-icon-theme:verilog"),
+    (("systemverilog", "sv", "svh"), "SystemVerilog", "file-icons:systemverilog"),
+    (("typst", "typ"), "Typst", "typst"),
+    (("latex", "tex"), "LaTeX", "material-icon-theme:tex"),
+    (("lean",), "Lean", "file-icons:lean"),
+    (("markdown", "md"), "Markdown", "devicon:markdown"),
+    (("html",), "HTML", "material-icon-theme:html"),
+    (("javascript", "js"), "JavaScript", "devicon:javascript"),
+    (("typescript", "ts"), "TypeScript", "devicon:typescript"),
+    (("openscad", "scad"), "OpenSCAD", "vscode-icons:file-type-openscad"),
+    (("bash",), "Bash", "shell"),
+    (("sh", "shell"), "Shell", "shell"),
+    (("console",), auto, "terminal"),
+    (("text", "txt", "output"), auto, "output"),
+  )
+  langs.map(((keys, name, icon)) => keys.map(k => (k, (name: name, icon: icon)))).join().to-dict()
+}
 
 /// An icon of height `size`, centered on the capitals of the text around it, as the icons of the pills.
 /// -> content
@@ -65,7 +88,8 @@
 }
 
 /// Icon of a language, in `c` (the logos keep their colors), centered on the capitals of the name: the name of an
-/// `icon` or content (the icon of the codly-languages package).
+/// `icon` or content, such as a logo of the codly-languages package, an image at 130% of its box: in a box of 1/1.3 of
+/// the height, it comes out at the height of the other icons.
 /// -> content | none
 #let _lang-icon(
   /// Icon of the language. -> none | str | content
@@ -74,7 +98,7 @@
   c,
 ) = if ic == none { none } else if type(ic) == str {
   _centered(s => icon(ic, color: c, size: s, baseline: 0pt), 1em)
-} else { _centered(s => box(height: s, ic), 1em) }
+} else { _centered(s => box(height: s, box(height: s / 1.3, ic)), 1em) }
 
 /// Pill of the language of a block: white, with the border and the text in `c`, the icon and the name. The border is the
 /// color lightened 55%: a darker one weighed on the slide, mostly on a reduced one, where the PDF viewer draws the thin
@@ -91,11 +115,10 @@
   let l = if type(lang) == str { langs.at(lang, default: none) }
   if l == none { return none }
   let ic = _lang-icon(l.at("icon", default: none), c)
-  let name = l.at("name", default: lang)
   text(size: 0.72em, weight: "bold", fill: c, box(fill: white, stroke: 0.6pt + c.lighten(55%), radius: 0.42em,
     inset: (x: 0.55em, y: 0.28em), {
       if ic != none { ic; h(0.3em) }
-      if name == auto { _tr("output") } else { name }
+      l.at("name", default: lang)
     }))
 }
 
@@ -159,9 +182,7 @@
   // the languages in codly's format, the icon already as content in the color of its box
   let languages = langs.pairs().map(((k, l)) => {
     let c = _box-colors(k).bar
-    let name = l.at("name", default: k)
-    (k, (name: if name == auto { _tr("output") } else { name }, color: c,
-      icon: _lang-icon(l.at("icon", default: none), c)))
+    (k, (name: l.at("name", default: k), color: c, icon: _lang-icon(l.at("icon", default: none), c)))
   }).to-dict()
   show: codly.lang-set_(languages: languages)
   // the language pill drawn by `_label`, as without codly: the key of the language comes in the `body` of codly's
@@ -245,13 +266,16 @@
   /// The deck. -> content
   body,
 ) = {
+  // the output and the console are words of the language of the deck, read here: inside a code block `text.lang` is
+  // not the deck's
+  let words = _words(self.store.at("lang", default: "pt"))
+  let theme = code-languages.pairs().map(((k, l)) => (k, if l.name == auto {
+    l + (name: words.at(if k == "console" { "console" } else { "output" }))
+  } else { l })).to-dict()
+  // the deck's languages under those of the theme: a language the theme knows keeps its pill
   let extra = self.store.at("code-languages", default: (:))
-  let langs = code-languages + extra.pairs().map(((k, l)) => (k, (name: l.at("name", default: k),
-    icon: l.at("icon", default: none)))).to-dict()
-  // the output keeps the name and the icon of the theme, even when the deck's dictionary has a `text`; its name is the
-  // word of the language of the deck, read here: inside a code block `text.lang` is not the deck's
-  let out = _words(self.store.at("lang", default: "pt")).output
-  let langs = langs + _output-langs.map(k => (k, code-languages.at(k) + (name: out))).to-dict()
+  let langs = extra.pairs().map(((k, l)) => (k, (name: l.at("name", default: k),
+    icon: l.at("icon", default: none)))).to-dict() + theme
   let codly = self.store.at("codly", default: none)
   if codly == none { _native(langs, body) } else { _with-codly(codly, langs, body) }
 }

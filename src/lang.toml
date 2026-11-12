@@ -6,7 +6,7 @@
 #   caution, tip, remark, note, the titles of `callout` in the style "badge" (`example` too, the word above);
 #   examples                    [lang.xx.bar], the same in the style "bar", example included, which open the text (with
 #                               the punctuation of the language)
-#   output                      the label of the output of a program in a code block
+#   output, console             the label of the output of a program and of a console session in a code block
 #   thanks                      the title of `#ending-slide` without a title
 #   and                         the last separator of a list of names ("A, B e C")
 #   months, date                the date in full; in `date`, {day}, {month} and {year} are replaced
@@ -24,6 +24,7 @@ remark = "Relembrando"
 note = "Nota"
 examples = "Exemplos"
 output = "Saída"
+console = "Console"
 thanks = "Obrigado!"
 and = "e"
 months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"]
@@ -52,6 +53,7 @@ remark = "Reminder"
 note = "Note"
 examples = "Examples"
 output = "Output"
+console = "Console"
 thanks = "Thank you!"
 and = "and"
 months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -80,6 +82,7 @@ remark = "Recordando"
 note = "Nota"
 examples = "Ejemplos"
 output = "Salida"
+console = "Consola"
 thanks = "¡Gracias!"
 and = "y"
 months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]

@@ -1258,8 +1258,8 @@
   /// through codly, with the look of the theme (`codly-ufac-theme`). `none` gives the code box of the theme, without
   /// codly. -> none | module
   codly: none,
-  /// Languages added to those of the theme (`code-languages`) or replacing any of them except the output, as
-  /// `(name:, icon:)`.
+  /// Languages added to those of the theme (`code-languages`), as `(name:, icon:)`, such as the dictionary of the
+  /// codly-languages package; a language the theme knows keeps its pill.
   /// -> dictionary
   code-languages: (:),
   /// Touying configs, typically `config-info(..)`; also `config-common(..)`, `config-page(..)`. -> dictionary

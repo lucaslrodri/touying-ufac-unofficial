@@ -618,9 +618,44 @@ $ c = sqrt((g lambda) / (2 pi)) $
 
 A code block goes in the box of the theme: a light blue fill with a bar on the left, the line numbers (a long line
 wraps and continues under the code), the language in a pill at the top right and the syntax colors of the theme. The
-output of a program, a block in `text` (or `txt`, `output`), goes in a gray box without numbers. Inside a colored box
-a block keeps its look. The languages with a pill are `python` (`py`), `typst` (`typ`), `matlab`, `bash` and `sh`, and
-the output has its own ("Output"); `ufac-theme(code-languages:)` adds others.
+output of a program, a block in `text` (or `txt`, `output`), goes in a gray box without numbers, and so does a console
+session, in `console`; both are named in the language of the deck ("Output", "Console"). Inside a colored box a block
+keeps its look. The theme knows the languages most used in engineering, each with its logo in the pill:
+
+#{
+  set text(size: 8pt)
+  set par(justify: false)
+  // the languages of the theme, one per name, with their keys
+  let groups = ()
+  for (k, l) in code-languages.pairs() {
+    if groups.len() > 0 and groups.last().lang == l { groups.last().keys.push(k) } else {
+      groups.push((lang: l, keys: (k,)))
+    }
+  }
+  grid(
+    columns: (1fr,) * 3, row-gutter: .75em, column-gutter: .5em,
+    ..groups.map(((lang, keys)) => {
+      let out = lang.name == auto
+      let name = if not out { lang.name } else if "console" in keys { "Console" } else { "Output" }
+      [#icon(lang.icon, size: 1.4em, color: if out { colors.neutral-dark } else { colors.primary }) #h(.3em)
+        *#name* #text(fill: luma(120), keys.map(raw).join[, ])]
+    }),
+  )
+}
+
+For other languages, the deck passes the dictionary of the
+#link("https://typst.app/universe/package/codly-languages")[codly-languages] package, with hundreds of languages and
+their logos, to `ufac-theme(code-languages:)`: the languages of the theme keep their pills, and the logos of the package
+come out at the height of the theme's. A language that neither has goes in the same dictionary, as `(name:, icon:)`,
+with the name of an icon (@icons) or content:
+
+```typ
+#import "@preview/codly-languages:0.1.10": codly-languages
+#show: ufac-theme.with(
+  code-languages: codly-languages + (spice: (name: "SPICE", icon: none)),
+  config-info(..),
+)
+```
 
 A long block goes on to the next page of the slide, as any long content, with the `===` pill repeated at the top; the
 language pill appears only on its first part. A callout in the default style does not split (@callouts), so a long listing goes outside it. For a file
@@ -636,7 +671,7 @@ name, highlights or ranges, the deck takes codly (@codly).
 
 The theme speaks Portuguese by default (`lang: "pt-br"`); `lang: "en"` or `"es"` switches the language of the text and
 every word of the theme: the names of questions, examples and parts, the titles of the callouts, "Solution" and
-"Answer", "Output", "Thank you!", the dates and the tags of the cover. The names on the badges of the question and
+"Answer", "Output" and "Console", "Thank you!", the dates and the tags of the cover. The names on the badges of the question and
 example slides and the word of the section slides can also be given one by one (`question-name`, `example-name`,
 `part-name`); the initials of the first two open the bookmarks of the questions and examples (@items).
 
@@ -754,8 +789,8 @@ slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart he
 
 The theme draws its own code box (@code) and does not need codly. For codly's features (a file name, highlights,
 ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
-through codly with the same look, and codly's functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2
-requires Typst 0.15. The languages of the codly-languages package can be given to `ufac-theme(code-languages:)`.
+through codly with the same look, the same language pills included (those of codly-languages too), and codly's
+functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2 requires Typst 0.15.
 
 #see("code", "codly-ufac-theme")
 
@@ -787,12 +822,14 @@ the colored ones keep their colors.
 
 `"warning"` and `"caution"` are the same icon, under the name of 0.2.0 and the one of the callout. The Octicons the
 theme ships also answer to their own names: `"alert"`, `"light-bulb"`, `"info"`, `"note"`,
-`"history"`, `"pencil"`, `"beaker"`, `"file-code"`, `"terminal"` and `"mail"`. The icons come from
+`"history"`, `"pencil"`, `"beaker"`, `"file-code"`, `"terminal"` and `"mail"`. The logos of the languages of the
+code blocks (@code) are shipped too, under their full names, as `"devicon:r"`. The icons come from
 #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT license),
 #link("https://phosphoricons.com/")[Phosphor] (MIT license), #link("https://devicon.dev/")[Devicon] (MIT license),
 #link("https://simpleicons.org/")[Simple Icons] (CC0),
-#link("https://github.com/material-extensions/vscode-material-icon-theme")[Material Icon Theme] (MIT license) and
-#link("https://github.com/vscode-icons/vscode-icons")[VSCode Icons] (MIT license).
+#link("https://github.com/material-extensions/vscode-material-icon-theme")[Material Icon Theme] (MIT license),
+#link("https://github.com/vscode-icons/vscode-icons")[VSCode Icons] (MIT license) and
+#link("https://github.com/file-icons/icons")[File Icons] (ISC license).
 
 Any other icon comes from a collection in the JSON format of #link("https://iconify.design/")[Iconify], read by the
 #link("https://typst.app/universe/package/iconify")[iconify] package, which the theme imports: the deck gives the
