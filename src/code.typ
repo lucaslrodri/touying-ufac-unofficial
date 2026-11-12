@@ -46,7 +46,7 @@
     (("python", "py"), "Python", "python"),
     (("matlab", "m"), "MATLAB", "matlab"),
     (("c", "h"), "C", "material-icon-theme:c"),
-    (("cpp", "c++", "cc", "hpp"), "C++", "material-icon-theme:cpp"),
+    (("cpp", "cc", "hpp"), "C++", "material-icon-theme:cpp"),
     (("arduino", "ino"), "Arduino", "material-icon-theme:arduino"),
     (("rust", "rs"), "Rust", "material-icon-theme:rust"),
     (("fortran", "f90"), "Fortran", "material-icon-theme:fortran"),

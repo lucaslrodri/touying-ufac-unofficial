@@ -61,9 +61,15 @@
 // code: the languages of the theme and codly's theme as plain data
 #assert.eq(code-languages.python.name, "Python")
 #assert.eq(code-languages.m, code-languages.matlab)
-#assert.eq(code-languages.at("c++").name, "C++")
 #assert.eq(code-languages.console.name, auto)
-#assert.eq(type(icon(code-languages.lean.icon)), content)
+// the keys of the languages are API of the decks
+#assert.eq(code-languages.keys().sorted(), ("python", "py", "matlab", "m", "c", "h", "cpp", "cc", "hpp", "arduino", "ino",
+  "rust", "rs", "fortran", "f90", "r", "asm", "s", "assembly", "x86", "nasm", "arm", "armasm", "riscv", "vhdl", "vhd",
+  "verilog", "v", "systemverilog", "sv", "svh", "typst", "typ", "latex", "tex", "lean", "markdown", "md", "html",
+  "javascript", "js", "typescript", "ts", "openscad", "scad", "bash", "sh", "shell", "console", "text", "txt",
+  "output").sorted())
+// every icon of a language ships with the theme: its name resolves to a shipped collection, not to one of the deck
+#for (k, l) in code-languages { assert.eq(type(_icon-source(l.icon)), array, message: k) }
 #assert.eq(type(codly-ufac-theme), dictionary)
 #assert.eq(codly-ufac-theme.radius, 0pt)
 
@@ -221,7 +227,6 @@
   assert.eq(words.bar.keys().sorted(), _lang-db.pt.bar.keys().sorted(), message: lang)
 }
 
-API test done.
 
 // the names of 0.3.0 for a question stop with the new ones: the function, the options of the theme, the label of a
 // slide (when the theme is applied), a citation of it and the role of the icon
@@ -240,3 +245,5 @@ API test done.
 #assert("exercise" not in theme-icons)
 // the initial of the bookmark of a question comes from the text of a name given as content
 #assert.eq(_plain-text([*Tarefa* de casa]), "Tarefa de casa")
+
+API test done.
