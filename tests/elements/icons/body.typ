@@ -26,7 +26,7 @@ An unknown name is a compile error that says how to get the icon (checked in `te
 
 ---
 
-=== Every icon the theme ships (`theme-icons`)
+=== Every role of the theme (`theme-icons`)
 #[
 #set text(size: .8em)
 #grid(columns: (1fr,) * 8, row-gutter: .7em, align: center + top,

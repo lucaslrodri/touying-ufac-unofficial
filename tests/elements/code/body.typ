@@ -18,7 +18,7 @@ def mean(values, digits=2):
   item 2: value 0.512 ==no highlight==
   ```
 ][
-  Two other languages of the theme (`bash`, `matlab`; all of them in `elements/code-langs`):
+  Two other languages of the theme (`bash`, `matlab`; those new in 0.4.0 in `elements/code-langs`):
   ```bash
   typst compile slides.typ
   ```
