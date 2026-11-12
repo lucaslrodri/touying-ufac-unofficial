@@ -1,6 +1,7 @@
 // Shared body of the `config/lang-*` tests: the same deck rendered with `lang: "pt-br"` (the default), `"en"` and `"es"`.
 // Checked: `text.lang`/`region`, the smart quotes of the language, the titles of the callouts, the pill names, the
-// section prefix, a reference, the word of the solution and the pills of the output and of the console.
+// section prefix, a reference, the word of the solution, the pills of the output and of the console, and the initials of
+// the bookmarks of the PDF.
 #import "../common.typ": *
 #title-slide()
 
@@ -37,3 +38,7 @@ The word of the solution.
 ]
 
 #question-slide(title: [By function])[Same localized name from `#question-slide`.]
+
+== The bookmarks of the PDF
+The initial of a question or an example is the one of its name in the language of the deck (Typst's `std.outline`, with the text of the bookmarks):
+#std.outline(title: none, target: heading.where(level: 2))
