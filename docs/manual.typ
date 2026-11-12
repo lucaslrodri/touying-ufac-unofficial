@@ -58,8 +58,9 @@ and a thesis defense
 // in the examples of the integrations; touying first, then what the theme imports, then the optional
 #let found = {
   let files = ("lib.typ", "ufac.typ", "components.typ", "utils.typ", "icons.typ", "code.typ", "info.typ")
-    .map(f => read("../src/" + f)) + ("code-codly.typ", "icons-iconify.typ").map(f => read("examples/" + f))
-  let order = ("touying", "iconify", "codly")
+    .map(f => read("../src/" + f)) + ("code-codly.typ", "code-languages.typ", "icons-iconify.typ")
+    .map(f => read("examples/" + f))
+  let order = ("touying", "iconify", "codly", "codly-languages")
   files.join().matches(regex("@preview/([a-z0-9-]+):([0-9.]+)")).map(m => m.captures).dedup()
     .sorted(key: p => order.position(n => n == p.first()))
 }
@@ -67,6 +68,7 @@ and a thesis defense
   touying: [the slide engine; the deck imports it too, with the same version],
   iconify: [the icons of a collection the deck gives to `provide-icons`; the theme's own icons ship with the theme],
   codly: [optional: the code blocks through codly (requires Typst 0.15)],
+  codly-languages: [optional: hundreds more languages, with their logos, for the code blocks],
 )
 
 The theme needs *Typst #package.compiler or later*. Typst fetches the packages by itself:
@@ -80,7 +82,7 @@ The theme needs *Typst #package.compiler or later*. Typst fetches the packages b
 )
 
 touying 0.8 requires Typst 0.15; this version of the theme stays on touying 0.7.4, which also works with Typst 0.14.
-codly is imported by the deck that wants it (@codly).
+codly and codly-languages are imported by the deck that wants them (@codly, @codly-languages).
 
 #[
 #set par(justify: false)   // the long chips of this paragraph would leave wide gaps between the words
@@ -285,7 +287,7 @@ gives "Question 1.1", "Question 1.2"; `[3.]`, for the third unit of a course, gi
 ```
 
 In the bookmarks of the PDF (the outline of the document in the reader), a question or an example comes with the
-initial of its name, its number and, after a dash, its title: "Q3.1 — Tide table", "E3.2 — Wave speed"; "Q3.1" alone
+initial of its name, its number and, after a dash, its title: "Q3.1 — Tide table", "E3.1 — Wave speed"; "Q3.1" alone
 without a title, "Q1" with `counter-prefix: none`. The initial is the one of the name on the badge, in the language
 of the deck ("P" for "Pregunta") or of `question-name` and `example-name` (@language). The continuation pages of a
 question or example add no bookmark, and the other slides and the sections keep their titles alone. Typst's own
@@ -643,19 +645,9 @@ keeps its look. The theme knows the languages most used in engineering, each wit
   )
 }
 
-For other languages, the deck passes the dictionary of the
-#link("https://typst.app/universe/package/codly-languages")[codly-languages] package, with hundreds of languages and
-their logos, to `ufac-theme(code-languages:)`: the languages of the theme keep their pills, and the logos of the package
-come out at the height of the theme's. A language that neither has goes in the same dictionary, as `(name:, icon:)`,
-with the name of an icon (@icons) or content:
-
-```typ
-#import "@preview/codly-languages:0.1.10": codly-languages
-#show: ufac-theme.with(
-  code-languages: codly-languages + (spice: (name: "SPICE", icon: none)),
-  config-info(..),
-)
-```
+`ufac-theme(code-languages:)` adds other languages, as `(spice: (name: "SPICE", icon: none))`: a name and the name of
+an icon (@icons), content or `none`; the languages of the theme keep their pills. The codly-languages package gives
+hundreds more at once, with their logos (@codly-languages).
 
 A long block goes on to the next page of the slide, as any long content, with the `===` pill repeated at the top; the
 language pill appears only on its first part. A callout in the default style does not split (@callouts), so a long listing goes outside it. For a file
@@ -673,7 +665,7 @@ The theme speaks Portuguese by default (`lang: "pt-br"`); `lang: "en"` or `"es"`
 every word of the theme: the names of questions, examples and parts, the titles of the callouts, "Solution" and
 "Answer", "Output" and "Console", "Thank you!", the dates and the tags of the cover. The names on the badges of the question and
 example slides and the word of the section slides can also be given one by one (`question-name`, `example-name`,
-`part-name`); the initials of the first two open the bookmarks of the questions and examples (@items).
+`part-name`), and the first two also give the initials of the bookmarks of the PDF (@items).
 
 #slide-example("lang", pages: (1, 2))
 
@@ -753,8 +745,8 @@ in white for a dark background. With a function, it receives every field at once
 
 = Integrations <integrations>
 
-The theme sits on Touying and works with the packages a deck usually takes along: codly for the code blocks, and the
-icons of any collection of Iconify.
+The theme sits on Touying and works with the packages a deck usually takes along: codly for the code blocks,
+codly-languages for more languages in them, and the icons of any collection of Iconify.
 
 The theme exports short names that other packages also use, such as `example`, `remark` and `solution` of theorion:
 with two imports with `*`, the later one wins silently. Import the other package by its name,
@@ -789,12 +781,31 @@ slide with `#outline()`; `focus-slide` and `matrix-slide` have no counterpart he
 
 The theme draws its own code box (@code) and does not need codly. For codly's features (a file name, highlights,
 ranges, `diff`), the deck imports codly 2 and passes it to the theme, `ufac-theme(codly: codly)`: every block goes
-through codly with the same look, the same language pills included (those of codly-languages too), and codly's
-functions (`codly.new(..)`, `codly.set_(..)`) are at hand. codly 2 requires Typst 0.15.
+through codly with the same look, the same language pills included, and codly's functions (`codly.new(..)`,
+`codly.set_(..)`) are at hand. codly 2 requires Typst 0.15.
 
 #see("code", "codly-ufac-theme")
 
 #slide-example("code-codly", columns: (1fr, 1fr))
+
+== More languages: codly-languages <codly-languages>
+
+The theme knows the languages most used in engineering (@code). For the others, the
+#link("https://typst.app/universe/package/codly-languages")[codly-languages] package has hundreds, with their logos:
+the deck imports it and passes its dictionary to `ufac-theme(code-languages:)`, with or without codly. The languages of
+the theme keep their pills, so `python` still shows the logo of the theme and `m` is still MATLAB; the logos of the
+package come out at the height of the theme's. A language that neither the theme nor the package knows goes in the
+same dictionary, as SPICE here:
+
+```typ
+#import "@preview/codly-languages:0.1.10": codly-languages
+#show: ufac-theme.with(
+  code-languages: codly-languages + (spice: (name: "SPICE", icon: none)),
+  config-info(..),
+)
+```
+
+#slide-example("code-languages", columns: (1fr, 1fr))
 
 == Icons <icons>
 
@@ -823,7 +834,8 @@ the colored ones keep their colors.
 `"warning"` and `"caution"` are the same icon, under the name of 0.2.0 and the one of the callout. The Octicons the
 theme ships also answer to their own names: `"alert"`, `"light-bulb"`, `"info"`, `"note"`,
 `"history"`, `"pencil"`, `"beaker"`, `"file-code"`, `"terminal"` and `"mail"`. The logos of the languages of the
-code blocks (@code) are shipped too, under their full names, as `"devicon:r"`. The icons come from
+code blocks (@code) are shipped too, under their full names: `code-languages.rust.icon` gives
+`"material-icon-theme:rust"`, for `#icon(code-languages.rust.icon)`. The icons come from
 #link("https://primer.style/octicons/")[Octicons] (© GitHub Inc., MIT license),
 #link("https://phosphoricons.com/")[Phosphor] (MIT license), #link("https://devicon.dev/")[Devicon] (MIT license),
 #link("https://simpleicons.org/")[Simple Icons] (CC0),
@@ -855,8 +867,8 @@ and each collection has its own license.
 = Moving from 0.3.0 <migration>
 
 In 0.4.0 the exercises are questions: every name of the theme that said "exercise" says "question", and the badge
-reads "Questão" / "Question" / "Pregunta". A deck of 0.3.0 changes these names; `#answer` and everything else stay as
-they are. A name of 0.3.0 left in the deck stops it with the new one.
+reads "Questão" / "Question" / "Pregunta". A deck of 0.3.0 changes these names; `#answer` stays as it is. A name of
+0.3.0 left in the deck stops the compilation with an error that gives the new name.
 
 #table(
   columns: (1fr, 1fr),
@@ -866,8 +878,14 @@ they are. A name of 0.3.0 left in the deck stops it with the new one.
   [`#exercise-slide(..)`], [`#question-slide(..)`, with the same arguments],
   [`ufac-theme(exercise-name: ..)`], [`ufac-theme(question-name: ..)`],
   [`ufac-theme(exercise-icon: ..)`], [`ufac-theme(question-icon: ..)`],
-  [`#icon("exercise")`, `emph-box(icon: "exercise")`], [`#icon("question")`, `emph-box(icon: "question")`],
+  [`#icon("exercise")`, `emph-box(icon: "exercise")`, `#tip(icon: "exercise")`, `question-icon: "exercise"`],
+  [`#icon("question")`, `emph-box(icon: "question")`, `#tip(icon: "question")`, `question-icon: "question"`],
 )
+
+The languages of the theme keep their pills (@code): `ufac-theme(code-languages:)` adds languages but no longer replaces
+those the theme knows. A deck that gave a language of the theme another name or icon there
+(`python: (name: "Python 3", ..)`) now gets the pill of the theme, with no error; to keep its own, it writes its blocks
+under a key the theme does not use (`py3`).
 
 The bookmarks of the PDF of a question or example now carry its initial and number, "Q1.2 — Title" (@items); a deck
 needs no change for it.

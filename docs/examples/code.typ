@@ -19,6 +19,7 @@ def scale(grams, people, n=4):
 375.0
 ```
 
-```bash
-typst compile slides.typ
+```console
+$ python recipe.py
+375.0
 ```
