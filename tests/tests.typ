@@ -31,6 +31,7 @@
 #include "./elements/logo/body.typ"
 #include "./elements/equations/body.typ"
 #include "./elements/code/body.typ"
+#include "./elements/code-langs/body.typ"
 #include "./elements/quotes/body.typ"
 #include "./elements/layout/body.typ"
 
