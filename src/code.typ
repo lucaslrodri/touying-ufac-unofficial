@@ -31,9 +31,10 @@
 }
 
 /// The languages the theme knows, the most common in engineering: the name in the pill of a block and its icon (a
-/// name of `icon`, content or `none`). The logos keep their colors; the shell (`bash`, `sh`) shows a colored terminal.
-/// The output (`text`, `txt`, `output`) and the console (`console`) are words of the theme in the language of the deck
-/// (`name: auto`): "Saída" / "Output" / "Salida" and "Console" / "Console" / "Consola". `ufac-theme(code-languages:)`
+/// name of `icon`, content or `none`). The logos keep their colors, and those in one color take the color of the pill;
+/// the shell (`bash`, `sh`, `shell`) shows a colored terminal. The names of the output (`text`, `txt`, `output`) and of
+/// the console (`console`) are words of the theme in the language of the deck (`name: auto`): "Saída" / "Output" /
+/// "Salida" and "Console" / "Console" / "Consola". `ufac-theme(code-languages:)`
 /// adds others, in the same format, such as the hundreds of the codly-languages package; a language of this dictionary
 /// keeps its pill.
 ///
@@ -88,8 +89,9 @@
 }
 
 /// Icon of a language, in `c` (the logos keep their colors), centered on the capitals of the name: the name of an
-/// `icon` or content, such as a logo of the codly-languages package, an image at 130% of its box: in a box of 1/1.3 of
-/// the height, with its baseline at the bottom of the icon, it comes out at the height and place of the other icons.
+/// `icon` or content. A logo of the codly-languages package is an image at a share of its box (`box(image(height:
+/// 130%))`): in a box of 1/1.3 of the height, with its baseline at the bottom of the icon, it comes out at the height
+/// and place of the other icons. Other content (an emoji, text, an image) goes in the box of the icon as it is.
 /// -> content | none
 #let _lang-icon(
   /// Icon of the language. -> none | str | content
@@ -98,7 +100,15 @@
   c,
 ) = if ic == none { none } else if type(ic) == str {
   _centered(s => icon(ic, color: c, size: s, baseline: 0pt), 1em)
-} else { _centered(s => box(height: s, box(height: s / 1.3, baseline: s / 1.3 - s, ic)), 1em) }
+} else {
+  // the share of its box that an image in a box takes, as in the logos of codly-languages (`130% + 0pt`)
+  let h = if ic.func() == box and ic.has("body") and ic.body.func() == image { ic.body.at("height", default: auto) }
+  let share = if type(h) == ratio { h } else if type(h) == relative and h.length == 0pt { h.ratio }
+  if share != none and share > 0% {
+    let k = share / 100%
+    _centered(s => box(height: s, box(height: s / k, baseline: s / k - s, ic)), 1em)
+  } else { _centered(s => box(height: s, ic), 1em) }
+}
 
 /// Pill of the language of a block: white, with the border and the text in `c`, the icon and the name. The border is the
 /// color lightened 55%: a darker one weighed on the slide, mostly on a reduced one, where the PDF viewer draws the thin

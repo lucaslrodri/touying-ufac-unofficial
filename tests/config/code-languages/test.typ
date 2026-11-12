@@ -1,4 +1,4 @@
-/// Synopsis: `ufac-theme(code-languages:)` with the dictionary of the codly-languages package and entries of the deck: a language of the package (`julia`) gets its logo at the height of the icons of the theme, one of the deck (`spice`) its name without an icon and another (`cobol`) an icon given as content; the languages of the theme keep their pills over those of the dictionary (`python`, named "Python 3" in it, and `m`, which the package has as Objective-C), and so does the output (`text`, named "Log" in it).
+/// Synopsis: `ufac-theme(code-languages:)` with the dictionary of the codly-languages package and entries of the deck: a language of the package (`julia`) gets its logo at the height of the icons of the theme, one of the deck (`spice`) its name without an icon and another (`cobol`) an icon given as content; the languages of the theme keep their pills over those of the dictionary (`python`, named "Python 3" in it, and `m`, which the package has as Objective-C), and so does the output (`text`, named "Log" in it). On the second page, an image without a height as the icon of a language of the deck (`ufac`) keeps its place and the height of the pill; an emoji of the package (`http`) is text, as the "C" of COBOL, and is left out because the fonts of the CI have no emoji.
 #import "../../common.typ": *
 #import "@preview/codly-languages:0.1.10": codly-languages
 #show: ufac-theme.with(
@@ -9,6 +9,7 @@
     cobol: (name: "COBOL", icon: text(weight: "bold", fill: rgb("#CE422B"))[C]),
     python: (name: "Python 3", icon: none),
     text: (name: "Log", icon: "tip"),
+    ufac: (name: "UFAC", icon: image("../../logo.svg")),
   ),
 )
 
@@ -32,5 +33,16 @@
   ```
   ```text
   375.0
+  ```
+]
+
+== Other icons given as content
+#cols[
+  ```ufac
+  x = 1
+  ```
+][
+  ```python
+  print(375.0)
   ```
 ]

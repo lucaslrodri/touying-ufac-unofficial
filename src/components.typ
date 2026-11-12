@@ -131,7 +131,8 @@
 // ---------- icons ----------
 /// An icon, already wrapped in a `box` for inline use: a role of the theme (`"caution"` or `"warning"`, `"tip"`, `"info"`, `"note"`,
 /// `"question"`, `"example"`, `"file"`, `"terminal"`, `"contact"`, `"output"`, `"code"`, `"python"`, …), one of the
-/// Octicons the theme ships by its own name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …) or any icon of a
+/// Octicons the theme ships by its own name (`"alert"`, `"light-bulb"`, `"pencil"`, `"beaker"`, …), a logo of a language
+/// of the code blocks by its full name (`code-languages.rust.icon`, `"material-icon-theme:rust"`) or any icon of a
 /// collection given with `provide-icons`, as `"collection:name"` (`"octicon:rocket-16"`, `"mdi:home"`). An unknown name
 /// is a compile error that says how to get the icon.
 ///
